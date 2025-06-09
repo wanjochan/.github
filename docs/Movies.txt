@@ -129,7 +129,7 @@ Color: Color
 Sound mix: DTS-ESDolby Digital EXSDDSDolby Atmos
 Aspect ratio: 2.39 : 1
 #########################
-Director: Schindler's List
+Title: Schindler's List
 Year: 1993
 Director: Steven Spielberg
 Writers: Thomas Keneally; Steven Zaillian
