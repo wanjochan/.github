@@ -1,5 +1,8 @@
 # 泰国青柠叶 | Kaffir Lime Leaf | *Citrus hystrix*
 
+![Kaffir lime tree with distinctive leaves](https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Kaffir_lime_tree.jpg/640px-Kaffir_lime_tree.jpg)
+*Kaffir lime tree showing the characteristic double-leaf structure*
+
 | 属性 | 内容 |
 |------|------|
 | 中文名 | 泰国青柠叶 |
@@ -16,7 +19,13 @@
 
 叶片是该植物最独特的特征：具有罕见的双叶结构，看起来像两片叶子连接在一起，形成"8"字形或"葫芦"形。实际上这是由叶片和叶柄高度特化形成的复合结构，叶柄极度扩大成翼状，与叶片几乎同样大小。整个双叶结构长6-12厘米，宽3-6厘米，质地厚实，深绿色，表面光滑有光泽，边缘全缘或略带波状。
 
+![Kaffir lime leaves close-up](https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Citrus_hystrix_leaves.jpg/640px-Citrus_hystrix_leaves.jpg)
+*Close-up of kaffir lime leaves showing the unique double-leaf (figure-8) structure*
+
 花为白色，具强烈香气，单生或2-3朵簇生于叶腋。果实是其另一个显著特征：球形或卵圆形，直径4-6厘米，果皮极厚且表面粗糙，布满疣状突起，成熟时黄绿色至黄色。果肉少且酸，种子较大。
+
+![Kaffir lime fruits](https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/Citrus_hystrix_fruits.jpg/640px-Citrus_hystrix_fruits.jpg)
+*Kaffir lime fruits showing the characteristic bumpy, warted surface*
 
 轻揉叶片即散发出极其强烈而持久的柑橘香气，这种香气比任何其他柑橘叶都要浓郁，即使少量使用也能提供强烈的香气效果。植株喜温暖湿润的热带和亚热带气候，不耐寒，需要充足的阳光和良好的排水条件。
 
@@ -57,6 +66,9 @@
 ## 5. 用法与搭配（仅可食用类）
 
 泰国青柠叶是东南亚料理的灵魂香料之一，其独特而强烈的柑橘香气为无数经典菜肴提供了不可替代的风味基础。在泰式料理中，它是绿咖喱、红咖喱和黄咖喱的核心成分，与椰奶、辣椒、香茅等其他香料协同作用，创造出层次丰富的香气谱。著名的冬阴功汤（tom yum）中，泰国青柠叶与柠檬草、南姜一起构成了香气的三重奏。
+
+![Thai curry with kaffir lime leaves](https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/Thai_green_curry.jpg/640px-Thai_green_curry.jpg)
+*Thai green curry featuring kaffir lime leaves as a key aromatic ingredient*
 
 在印尼料理中，泰国青柠叶是仁当（rendang）等慢炖菜肴的重要成分，其香气能够在长时间烹饪过程中持续释放，为肉类提供独特的柑橘香气。马来西亚和新加坡的咖喱中也广泛使用，与椰奶的厚重形成完美平衡。柬埔寨的传统汤品阿莫克（amok）同样离不开泰国青柠叶的提香。
 

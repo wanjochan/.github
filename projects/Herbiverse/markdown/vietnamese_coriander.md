@@ -12,9 +12,17 @@
 
 ## 1. 形态与识别要点
 
+![Vietnamese Coriander Plant Growing](https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Persicaria_odorata_001.JPG/640px-Persicaria_odorata_001.JPG)
+*越南香菜整株植物，展示其匍匐茎和椭圆形叶片*
+
 越南香菜（Persicaria odorata）为蓼科蓼属多年生草本植物，原产于东南亚地区。植株具匍匐或半匍匐的茎，节间明显，节部易生根，这种生长习性使其能够快速扩展并形成地被。茎多分枝，绿色或带红褐色，质地较软，中空。
 
-叶片互生，椭圆形至披针形，长3-8厘米，宽1-3厘米，先端渐尖，基部楔形，边缘全缘或微波状。叶面深绿色，光滑无毛，常在叶片中央有暗红色或紫褐色的V形斑纹，这是识别该植物的重要特征。叶柄短，托叶鞘明显，这是蓼科植物的典型特征。
+叶片互生，椭圆形至披针形，长3-8厘米，宽1-3厘米，先端渐尖，基部楔形，边缘全缘或微波状。叶面深绿色，光滑无毛，常在叶片中央有暗红色或紫褐色的V形斑纹，这是识别该植物的重要特征。
+
+![Vietnamese Coriander Leaves](https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Persicaria_odorata_leaves.jpg/640px-Persicaria_odorata_leaves.jpg)
+*越南香菜叶片特写，可见特征性的V形暗色斑纹*
+
+叶柄短，托叶鞘明显，这是蓼科植物的典型特征。
 
 花序为顶生或腋生的穗状花序，花小而密集，粉红色或白色，花期因地区而异，在热带地区几乎四季开花。果实为瘦果，三角形，黑褐色。根系为须根系，主要分布在浅土层，适应性较强。
 
@@ -62,7 +70,13 @@
 
 柬埔寨和老挝的传统料理中，越南香菜常与鱼类搭配，其辛辣感能有效去除鱼腥味并增加风味层次。现代fusion料理中，越南香菜也被用于制作创新沙拉、调味酱和鸡尾酒。
 
+![Vietnamese coriander flowers](https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Persicaria_odorata_flowers.jpg/640px-Persicaria_odorata_flowers.jpg)
+*Vietnamese coriander flowers - small pink spikes typical of Persicaria genus*
+
 使用技巧：越南香菜最好生食使用，以保持其独特的辛辣感；可以整叶使用或切碎拌入菜肴；与柠檬汁搭配能激发更强烈的香气；在热汤中应最后加入，避免长时间烹煮；与其他东南亚香草（如香茅、泰式柠檬叶）搭配效果极佳。需要注意的是，其辛辣感因人而异，初次使用者建议少量尝试。
+
+![Vietnamese coriander culinary use](https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Vietnamese_herbs_platter.jpg/640px-Vietnamese_herbs_platter.jpg)
+*Vietnamese coriander served with other herbs as accompaniment to pho and other dishes*
 
 ### 保存方法
 

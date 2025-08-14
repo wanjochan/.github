@@ -12,9 +12,30 @@
 
 ## 1. 形态与识别要点
 
+![Water Hemlock Plant Growing](https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Cicuta_maculata_001.JPG/640px-Cicuta_maculata_001.JPG)
+*水芹毒整株植物，生长在湿地环境中*
 
+水芹毒（Cicuta maculata）是北美最危险的有毒植物之一，为伞形科毒芹属多年生草本植物。植株高大，可达1.8-2.5米，具有粗壮的中空茎杆，表面光滑，常有紫红色斑点或条纹。叶片为2-3回羽状复叶，小叶披针形，边缘具尖锐锯齿，叶脉清晰。
+
+![Water Hemlock Leaves Close-up](https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Cicuta_maculata_leaves.jpg/640px-Cicuta_maculata_leaves.jpg)
+*水芹毒叶片特写，显示其羽状复叶和锯齿边缘*
+
+花序为复伞形花序，由多个小伞形花序组成，白色小花密集。最危险的部分是其粗大的地下根茎，外观似防风或萝卜，但含有极高浓度的毒素环萜醇（cicutoxin）。
+
+![Water Hemlock Flowers](https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Cicuta_maculata_flowers.jpg/640px-Cicuta_maculata_flowers.jpg)
+*水芹毒白色伞形花序*
+
+![Water Hemlock Root](https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Cicuta_maculata_root.jpg/480px-Cicuta_maculata_root.jpg)
+*水芹毒的危险根茎，含有极高毒性的环萜醇*
 
 ### 与相似种的区别
+
+水芹毒常与可食用的水芹混淆，但有几个关键区别：
+1. **生长环境**：水芹毒主要生长在湿地、沼泽边缘
+2. **茎杆特征**：水芹毒茎杆更粗大，常有紫色斑点
+3. **根部形态**：水芹毒根茎粗大似萝卜，而安全水芹根系较细
+4. **叶片细节**：水芹毒叶片锯齿更尖锐，叶脉更明显
+5. **气味**：水芹毒切开后有刺鼻气味，而水芹有清香味
 
 
 

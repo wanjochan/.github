@@ -1,5 +1,8 @@
 # 马郁兰 | Marjoram | *Origanum majorana*
 
+![Marjoram plant](https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Origanum_majorana_plant.jpg/640px-Origanum_majorana_plant.jpg)
+*Marjoram plant showing characteristic compact growth with small rounded leaves*
+
 | 属性 | 内容 |
 |------|------|
 | 中文名 | 马郁兰 |
@@ -16,7 +19,13 @@
 
 叶片对生，椭圆形至卵形，长0.7-2.5厘米，宽0.5-1.5厘米，明显比牛至叶片更小更圆润。叶色灰绿至深绿，表面有细密的腺点，背面颜色较浅且有短柔毛。叶缘全缘，偶有不明显的细齿。叶柄很短，约1-3毫米。轻揉叶片散发温和甜美的香气，带有花香和轻微的松木香，比牛至温和得多，无辛辣刺激感。
 
+![Marjoram leaves close-up](https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Origanum_majorana_leaves.jpg/640px-Origanum_majorana_leaves.jpg)
+*Close-up of marjoram's small, rounded leaves with smooth edges*
+
 花序为紧密的头状或短穗状花序，通常3-5个成束生于枝端，形成复合花序。花序长1-3厘米，花序轴和苞片均有白色绒毛。花小，花冠长3-5毫米，白色或淡粉色，二唇形；雄蕊4枚，通常不伸出花冠外，区别于牛至；花期夏季，7-9月。果实为小坚果，褐色，约1毫米长。
+
+![Marjoram flowers](https://upload.wikimedia.org/wikipedia/commons/thumb/3/31/Origanum_majorana_flowers.jpg/640px-Origanum_majorana_flowers.jpg)
+*Marjoram's small white to pale pink flowers in dense clusters*
 
 根系为浅根系，主要分布在表土层，耐旱性不如牛至。整株植物质地柔软，茎叶均比牛至更嫩，适应性稍差但观赏价值更高。在温带地区通常作一年生栽培，霜冻后会死亡。
 

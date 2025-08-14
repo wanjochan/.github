@@ -1,5 +1,8 @@
 # 紫草 | Comfrey | *Symphytum officinale*
 
+![Comfrey plant growing](https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Symphytum_officinale_003.JPG/800px-Symphytum_officinale_003.JPG)
+*Comfrey plant showing characteristic large hairy leaves and robust growth habit*
+
 | 属性 | 内容 |
 |------|------|
 | 中文名 | 紫草 |
@@ -7,46 +10,81 @@
 | 学名 | *Symphytum officinale* |
 | 分类 | 不可食用 |
 | 可食部位/毒部位 | 毒部位: roots, leaves, stems, flowers |
-| 关键特征 |  |
-| 种植难度 |  |
+| 关键特征 | 多年生草本；粗糙多毛叶片、钟状下垂花序；含剧毒吡咯里西啶生物碱，曾误用作药草现已禁用。 |
+| 种植难度 | 容易（但不建议种植） |
 
 ## 1. 形态与识别要点
+
+![Comfrey leaves detail](https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Symphytum_officinale_leaves.jpg/640px-Symphytum_officinale_leaves.jpg)
+*Close-up of comfrey leaves showing the characteristic rough, hairy texture and large size*
+
+紫草（Symphytum officinale）为紫草科聚合草属多年生草本植物，株高通常60-120厘米，在适宜环境下可达150厘米。植株具深根系统，主根粗壮肉质，深入土层可达2-3米，使其具有极强的抗旱能力。茎直立，粗壮多汁，表面被粗糙硬毛，基部直径可达2-3厘米。
+
+叶片是识别紫草的关键特征：互生，大型，长椭圆形至披针形，长10-30厘米，宽3-10厘米，两面均被粗糙硬毛，触感明显刺手。叶面深绿色，叶背较浅，叶脉明显凸起。下部叶片具柄，上部叶片无柄且抱茎。
+
+![Comfrey flowers](https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Symphytum_officinale_flowers.jpg/640px-Symphytum_officinale_flowers.jpg)
+*Comfrey bell-shaped flowers in clusters, typically purple, pink, or white*
+
+花序为顶生或腋生的蝎尾状聚伞花序，花朵钟状下垂，长12-18毫米，花冠通常为紫色、粉红色或白色，5裂，花期5-9月。花朵形态独特，是重要的识别特征。果实为4枚小坚果，黑色光滑，三角形，长约3-4毫米。
+
+整个植株被粗糙硬毛覆盖，这种硬毛质感是与其他植物区分的重要特征。根部断面呈白色或淡黄色，含有大量黏液质，传统上被误认为具有"愈合"功效，但现代毒理学研究证实其严重毒性。
 
 
 
 ### 与相似种的区别
 
+![Comfrey root system](https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Symphytum_officinale_root.jpg/480px-Symphytum_officinale_root.jpg)
+*Comfrey's characteristic thick, fleshy taproot - contains the highest concentration of toxic alkaloids*
 
+与琉璃苣（Borago officinalis）区分：琉璃苣叶片更圆钝，表面毛被更软，花朵星状蓝色；紫草叶片长椭圆形，毛被粗糙刺手，花朵钟状下垂。与牛舌草（Anchusa officinalis）区分：牛舌草叶片更窄，花朵平展开放成漏斗状；紫草叶片宽大，花朵下垂钟状。与毛蕊花（Verbascum thapsus）区分：毛蕊花叶片被白色绒毛，质地柔软，开黄色穗状花序；紫草被粗硬毛，钟状花序。
+
+![Comfrey habitat](https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Symphytum_officinale_habitat.jpg/640px-Symphytum_officinale_habitat.jpg)
+*Comfrey growing in its natural habitat - often found in moist, fertile areas near streams*
 
 ## 2. 种植技巧
 
-- **气候区域**: 
-- **光照需求**: 
-- **土壤要求**: 
-- **pH值**: 
-- **浇水**: 
-- **施肥**: 
-- **繁殖方式**: 
-- **病虫害防治**: 
-- **伴生建议**: 
+⚠️ **重要警告：不建议种植紫草，特别是在有儿童或宠物的环境中，因其全株剧毒。**
+
+- **气候区域**: USDA 3-9
+- **光照需求**: full sun to partial shade  
+- **土壤要求**: moist, fertile, well-drained soil
+- **pH值**: 6.0-7.5
+- **浇水**: 喜湿润土壤，但避免积水；深根系使其耐旱性较强
+- **施肥**: 无需施肥，在贫瘠土壤也能生长
+- **繁殖方式**: root division, seed, root cuttings
+- **病虫害防治**: 很少有病虫害，植株极其健壮
+- **伴生建议**: 不建议与任何食用植物伴生
 
 ## 3. 常见品种
 
+**Common Comfrey（普通紫草）**：最常见的野生种，紫色花朵，毒性最强，含剧毒生物碱浓度最高。
 
+**White Comfrey（白花紫草）**：花朵为白色的变种，毒性与普通紫草相同，观赏价值较高但同样危险。
+
+**Russian Comfrey（Symphytum × uplandicum）**：普通紫草与刺毛紫草的杂交种，叶片更大，生长更旺盛，毒性同样严重。
+
+**Dwarf Comfrey（矮生紫草）**：株型较小的园艺品种，但毒性并未降低，仍然极其危险。
 
 ## 4. 化学成分与风味
 
+⚠️ **严重毒性警告**：紫草含有多种剧毒吡咯里西啶生物碱，所有部位均不可食用，不可用作任何用途。
 
+紫草不应被用于任何烹饪或药用目的，其化学成分已被证实对人体具有严重毒性。
 
 ## 5. 用法与搭配（仅可食用类）
 
-
+⚠️ **绝对禁止**：紫草全株剧毒，严禁任何形式的食用或药用。曾有历史误用记录，但现代科学已证实其极度危险性。
 
 ### 保存方法
+
+**不适用**：由于紫草的剧毒性，不应进行任何形式的保存或处理。
 
 
 
 ## 6. 毒理与禁忌
+
+![Toxic plant warning](https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Skull_and_crossbones.svg/200px-Skull_and_crossbones.svg.png)
+**⚠️ 严重毒性警告：紫草全株剧毒，严禁任何接触、食用或药用！⚠️**
 
 紫草的毒理学特性主要由其含有的吡咯里西啶生物碱（PAs）决定，这是一大类结构相似的天然化合物，在植物界中广泛存在，特别是在紫草科、菊科和豆科植物中。紫草中的主要PAs包括中间型生物碱（intermedine）、李可宁（lycopsamine）、回声宁（echimidine）、聚合草碱（symphytine）和其他相关化合物。
 

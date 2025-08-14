@@ -1,5 +1,8 @@
 # 香菜/芫荽 | Cilantro/Coriander | *Coriandrum sativum*
 
+![Cilantro young plants](https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Coriandrum_sativum_young_plants.jpg/800px-Coriandrum_sativum_young_plants.jpg)
+*Young cilantro plants showing the characteristic deeply divided leaves*
+
 | 属性 | 内容 |
 |------|------|
 | 中文名 | 香菜/芫荽 |
@@ -12,7 +15,17 @@
 
 ## 1. 形态与识别要点
 
-香菜/芫荽（Coriandrum sativum）为伞形科一年生香草。幼苗至营养生长期，叶片呈羽状深裂至三回裂，质地薄、颜色鲜绿，揉搓后释放明显的青绿与柑橘皮样混合气味。植株根系为直根系并具侧根，幼根与根颈处常用于东南亚烹饪调味（香菜根）。进入生殖生长期后易抽薹，茎秆拉长并分枝，于顶端与上部叶腋形成复伞形花序，花小而白至淡粉，五瓣，花期短促。果实为近球形干果（双悬果），成熟时呈浅褐色、表面具纵棱，常整体或轻压后分成两半（cremocarp），即烹饪中所用“芫荽籽”。整株高度常在25–60厘米，依品种与栽培密度而变。形态识别要点：营养期羽状裂叶、抽薹期羽状复叶逐渐变小，开伞形花序；揉叶即现强烈特征香。与欧芹相似，但欧芹叶片多更厚实与锯齿缘，揉叶气味偏“清香草本”，缺乏香菜特有的醛类“皂感”。
+香菜/芫荽（Coriandrum sativum）为伞形科一年生香草。幼苗至营养生长期，叶片呈羽状深裂至三回裂，质地薄、颜色鲜绿，揉搓后释放明显的青绿与柑橘皮样混合气味。植株根系为直根系并具侧根，幼根与根颈处常用于东南亚烹饪调味（香菜根）。进入生殖生长期后易抽薹，茎秆拉长并分枝，于顶端与上部叶腋形成复伞形花序，花小而白至淡粉，五瓣，花期短促。
+
+![Cilantro flowers](https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Coriandrum_sativum_flowers.jpg/640px-Coriandrum_sativum_flowers.jpg)
+*Cilantro flowers in umbel formation - small white to pale pink blooms*
+
+果实为近球形干果（双悬果），成熟时呈浅褐色、表面具纵棱，常整体或轻压后分成两半（cremocarp），即烹饪中所用"芫荽籽"。
+
+![Coriander seeds](https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Coriander_seeds_spice.jpg/640px-Coriander_seeds_spice.jpg)
+*Coriander seeds (the dried fruit of cilantro) used as spice*
+
+整株高度常在25–60厘米，依品种与栽培密度而变。形态识别要点：营养期羽状裂叶、抽薹期羽状复叶逐渐变小，开伞形花序；揉叶即现强烈特征香。与欧芹相似，但欧芹叶片多更厚实与锯齿缘，揉叶气味偏"清香草本"，缺乏香菜特有的醛类"皂感"。
 
 ### 与相似种的区别
 
@@ -42,7 +55,17 @@
 
 ## 5. 用法与搭配（仅可食用类）
 
-用途区分：叶（cilantro）适合生食点缀与短时加热；籽（coriander seed）为香料，常整粒或炒香后研磨入粉。亚洲：在中国与东南亚，鲜叶用于汤品、凉拌、火锅蘸料与粉面增香；泰式酱糊常以香菜根、蒜与胡椒打底；印度菜中，香菜叶用于 chutney 与装盘，香菜籽是 garam masala 与咖喱粉基础之一。拉美：墨西哥与中美洲菜肴大量使用香菜叶于 pico de gallo、guacamole、tacos 与汤品；香菜叶在热菜出锅前加入可保留芳香。中东：黎凡特地区以香菜叶与大蒜、柠檬汁炒香后拌入扁豆或菠菜，籽用于 harissa、烤肉腌料与腌渍。技巧：叶要避免长时间高温；籽用先小火干炒至出香再研磨，可释放柑橘与坚果香调。跨文化搭配：香菜叶与酸味（柠檬、青柠、番茄）、脂肪（橄榄油、芝士、坚果）与辛香（辣椒、孜然）具有高适配性；籽与孜然、茴香、豆蔻协同良好，适合烘焙和腌渍。
+用途区分：叶（cilantro）适合生食点缀与短时加热；籽（coriander seed）为香料，常整粒或炒香后研磨入粉。
+
+![Cilantro harvested bunch](https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Fresh_cilantro_harvest.jpg/640px-Fresh_cilantro_harvest.jpg)
+*Fresh cilantro harvest showing roots, stems and leaves - all parts are edible*
+
+亚洲：在中国与东南亚，鲜叶用于汤品、凉拌、火锅蘸料与粉面增香；泰式酱糊常以香菜根、蒜与胡椒打底；印度菜中，香菜叶用于 chutney 与装盘，香菜籽是 garam masala 与咖喱粉基础之一。拉美：墨西哥与中美洲菜肴大量使用香菜叶于 pico de gallo、guacamole、tacos 与汤品；香菜叶在热菜出锅前加入可保留芳香。中东：黎凡特地区以香菜叶与大蒜、柠檬汁炒香后拌入扁豆或菠菜，籽用于 harissa、烤肉腌料与腌渍。
+
+![Cilantro in cooking](https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Cilantro_salsa_preparation.jpg/640px-Cilantro_salsa_preparation.jpg)
+*Cilantro being used in fresh salsa preparation - a classic use in Mexican cuisine*
+
+技巧：叶要避免长时间高温；籽用先小火干炒至出香再研磨，可释放柑橘与坚果香调。跨文化搭配：香菜叶与酸味（柠檬、青柠、番茄）、脂肪（橄榄油、芝士、坚果）与辛香（辣椒、孜然）具有高适配性；籽与孜然、茴香、豆蔻协同良好，适合烘焙和腌渍。
 
 ### 保存方法
 

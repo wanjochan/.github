@@ -1,5 +1,8 @@
 # 罗勒 | Basil | *Ocimum basilicum*
 
+![Basil plant growing in garden](https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Basil-Basilico-Ocimum_basilicum-albahaca.jpg/800px-Basil-Basilico-Ocimum_basilicum-albahaca.jpg)
+*Healthy basil plant showing characteristic square stems and aromatic green leaves*
+
 | 属性 | 内容 |
 |------|------|
 | 中文名 | 罗勒 |
@@ -12,12 +15,18 @@
 
 ## 1. 形态与识别要点
 
+![Close-up of basil leaves](https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/Basilic_Grand_Vert.jpg/600px-Basilic_Grand_Vert.jpg)
+*Close-up view of basil leaves showing the characteristic ovate shape and smooth texture*
+
 罗勒（Ocimum basilicum）为唇形科罗勒属一年生或短命多年生草本，整体株高常见30–60厘米，适宜条件可更高。茎呈典型方形，节间明显，幼时多具细微柔毛。叶片对生，卵形至广卵形，边缘全缘或具不明显浅齿，叶面柔软且略具光泽，主脉清晰；轻揉即散发浓郁甜香，香气层次由花香、茴香样到丁香般辛辣依品种不同而异。花序多为顶生轮伞花序组合成的总状或穗状，苞叶明显；花小，常见白色或淡粉至淡紫，花冠二唇形；雄蕊4，花期夏季至初秋。根系为须根系，浅而分布广，适合松散、排水良好的基质。植株进入花期后顶端优势增强，若不及时打顶易导致叶片变小、质地变老，香气亦随之减弱。
 在形态识别上，可通过方茎、对生叶和揉叶后浓郁香气快速判断其为罗勒类；与圣罗勒相比，甜罗勒叶片更宽厚、叶色常较浅绿，气味甜、带果香；与柠檬罗勒相比，其叶缘通常较平整，茎部毛被较少。
 
 ### 与相似种的区别
 
 与圣罗勒（Ocimum tenuiflorum）区分：圣罗勒枝叶多毛、色深且香气辛烈带药草感；甜罗勒叶宽、甜香显著。与薄荷属植物区分：薄荷常具地下匍匐茎，气味偏薄荷醇清凉感，而罗勒则偏花香与茴香香调。
+
+![Basil flowers](https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/Ocimum_basilicum_flowers.jpg/600px-Ocimum_basilicum_flowers.jpg)
+*Basil flowers arranged in terminal spikes, showing the characteristic white to pale pink coloration*
 
 ## 2. 种植技巧
 
@@ -32,6 +41,9 @@
 - **伴生建议**: tomato, pepper, eggplant
 
 ## 3. 常见品种
+
+![Different basil varieties](https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Various_basil_cultivars.jpg/800px-Various_basil_cultivars.jpg)
+*Different basil varieties showing varied leaf colors, sizes, and textures*
 
 - Genovese：经典意式甜罗勒，叶片大而柔软，制酱体感细腻，青酱（Pesto）首选。
 - Thai（泰国罗勒）：茎叶略带紫色，茴香样与丁香样香气更足，耐高温，适合东南亚热厨。
@@ -48,9 +60,15 @@
 
 ## 5. 用法与搭配（仅可食用类）
 
+![Basil in culinary preparation](https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Making_Pesto.jpg/600px-Making_Pesto.jpg)
+*Fresh basil being prepared for pesto, showcasing its culinary versatility*
+
 罗勒在地中海与东南亚菜系中皆居核心地位。意式体系中，Genovese 罗勒与松子、帕玛森与橄榄油制成的 Pesto Genovese 是冷、热菜通用的基础酱；新鲜叶片点缀披萨可在出炉后立刻释放芳香，避免高温长时间破坏精油。东南亚烹饪中，泰罗勒能承受较高锅气，适合热炒肉类与咖喱；其茴香与丁香样香气可穿透椰奶与鱼露的厚重，带来明亮层次。生食方面，罗勒与番茄、莫扎里拉的经典组合（Caprese）展示其与酸味、乳脂的高适配性；冷饮或甜品中，与柠檬、草莓、百香果搭配可形成清新果香。注意：新鲜罗勒长时间加热香气易散，应尽量在出锅前或冷制应用。
 
 ### 保存方法
+
+![Dried basil leaves](https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Dried_basil_leaves.jpg/600px-Dried_basil_leaves.jpg)
+*Properly dried basil leaves maintaining color and aroma when stored correctly*
 
 鲜叶短存：湿纸巾包裹放入透气袋，冷藏保鲜层；或将插穗放清水杯中如鲜花保管并轻覆塑料袋保湿。长期：制作青酱后分装冷冻，或切碎后与橄榄油按1:3混合倒入冰格冷冻；干燥法需低温阴干以最大化保留香气，但整体仍逊于冷冻油封。
 

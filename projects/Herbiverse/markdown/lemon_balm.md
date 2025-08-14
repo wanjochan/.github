@@ -1,5 +1,8 @@
 # 柠檬香蜂草 | Lemon Balm | *Melissa officinalis*
 
+![Lemon balm plant](https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Melissa_officinalis_plant.jpg/640px-Melissa_officinalis_plant.jpg)
+*Lemon balm plant showing characteristic heart-shaped serrated leaves*
+
 | 属性 | 内容 |
 |------|------|
 | 中文名 | 柠檬香蜂草 |
@@ -16,7 +19,13 @@
 
 叶片对生，卵形至心形，长2-8厘米，宽1.5-5厘米，先端钝尖，基部心形或圆形。叶缘具钝锯齿，齿端略圆，不如薄荷锯齿尖锐。叶面深绿色，有明显的叶脉纹理，表面光滑但有细小腺点；叶背颜色较浅，有短柔毛。叶柄长5-25毫米，有浅槽。轻揉叶片立即散发强烈的柠檬香气，夹杂轻微的草本香，无薄荷的清凉感。
 
+![Lemon balm leaves close-up](https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Melissa_officinalis_leaves.jpg/640px-Melissa_officinalis_leaves.jpg)
+*Close-up of lemon balm leaves showing serrated edges and textured surface*
+
 花序为腋生的轮伞花序，通常6-12朵花组成，沿茎轴排列形成间断的穗状花序。花小，长约1厘米，花冠白色、淡黄色或淡粉色，二唇形，上唇2裂，下唇3裂；雄蕊4枚，2长2短；花萼钟形，有13脉。花期6-9月，花朵富含花蜜，是重要的蜜源植物。果实为4枚小坚果，卵形，长约1.5毫米，棕色光滑。
+
+![Lemon balm flowers](https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Melissa_officinalis_flowers.jpg/640px-Melissa_officinalis_flowers.jpg)
+*Small white lemon balm flowers arranged in axillary whorls*
 
 根系发达，为匍匐根茎，具有强大的扩展能力，常形成大片群落。在适宜条件下可通过根茎和自播种子快速繁殖，有时会变得侵略性。冬季地上部分枯萎，根系安全越冬，早春重新萌发。
 
@@ -64,6 +73,9 @@
 ## 5. 用法与搭配（仅可食用类）
 
 柠檬香蜂草在烹饪中以其独特的柠檬香气著称，是制作柠檬风味料理的天然替代品。在饮品方面，柠檬香蜂草茶是最经典的用途，可单独冲泡或与其他香草混合，具有天然的镇静效果，适合睡前饮用。新鲜叶片可用于调制鸡尾酒和夏日清凉饮品，与柠檬汁、蜂蜜搭配制作天然柠檬水。
+
+![Lemon balm tea](https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Lemon_balm_tea.jpg/640px-Lemon_balm_tea.jpg)
+*Lemon balm herbal tea showing the golden color and fresh leaves*
 
 在甜点制作中，柠檬香蜂草是优秀的天然香料：可制作香草糖浆、果酱和冰淇淋；与水果沙拉搭配，特别是与浆果、桃子、杏子等夏季水果；制作柠檬香蜂草司康饼、马德琳蛋糕等烘焙食品。在咸味料理中，新鲜叶片适合搭配鱼类和海鲜，其柠檬香气能去腥增鲜；用于制作沙拉调料和腌料；与鸡肉搭配制作地中海风味料理。
 

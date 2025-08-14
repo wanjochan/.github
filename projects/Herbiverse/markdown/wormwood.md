@@ -12,9 +12,31 @@
 
 ## 1. 形态与识别要点
 
+![Wormwood Plant Growing](https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Artemisia_absinthium_001.JPG/640px-Artemisia_absinthium_001.JPG)
+*苦艾整株植物，展示其银灰色的特征外观*
 
+苦艾（Artemisia absinthium）为菊科蒿属多年生草本植物，株高通常60-120厘米，在适宜条件下可达150厘米。整株植物呈现独特的银灰色或灰白色，这是区别于其他蒿属植物的重要特征。茎杆直立，多分枝，基部木质化，表面密被银白色细毛。
+
+![Wormwood Leaves Close-up](https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Artemisia_absinthium_leaves.jpg/640px-Artemisia_absinthium_leaves.jpg)
+*苦艾叶片特写，显示其多次羽状分裂的银灰色叶片*
+
+叶片为苦艾最显著的识别特征：互生，2-3回羽状深裂，裂片狭窄，整个叶片呈银白色至灰绿色，两面均密被丝状绒毛，触感柔软如绒布。基生叶较大，茎生叶渐小，上部叶片常为单一或三裂。轻揉叶片散发强烈的苦味香气，这种气味非常独特且持久。
+
+![Wormwood Yellow Flowers](https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Artemisia_absinthium_flowers.jpg/640px-Artemisia_absinthium_flowers.jpg)
+*苦艾黄色头状花序*
+
+花序为头状花序，排列成圆锥状花序，花朵极小，黄色，呈下垂状。花期7-9月。整株植物具有强烈的苦味和独特的芳香，即使在干燥状态下香味依然浓烈。
+
+![Wormwood Historical Illustration](https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Artemisia_absinthium_botanical.jpg/480px-Artemisia_absinthium_botanical.jpg)
+*苦艾的历史植物学图谱，显示其形态特征*
 
 ### 与相似种的区别
+
+与其他蒿属植物区别：
+1. **颜色特征**：苦艾整株银灰色，其他蒿属多为绿色
+2. **叶片形态**：苦艾叶片多次深裂，丝状绒毛密集
+3. **气味强度**：苦艾具有极其强烈的苦味，其他种类相对温和
+4. **毛被特征**：苦艾全株密被银白色绒毛，触感独特
 
 
 

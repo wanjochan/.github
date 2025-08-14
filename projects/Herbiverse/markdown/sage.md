@@ -12,9 +12,22 @@
 
 ## 1. 形态与识别要点
 
-鼠尾草（Salvia officinalis）为唇形科鼠尾草属多年生半灌木，原产地中海沿岸，成熟植株高度通常40-80厘米，冠幅可达60厘米。茎部下端逐渐木质化，四棱形但不如其他唇形科植物明显，新枝绿色带紫晕，老枝灰褐色。叶片对生，椭圆形至长椭圆形，长4-8厘米，宽1.5-3厘米，叶缘具细锯齿或近全缘，叶面灰绿色密生细毛呈天鹅绒质感，叶背毛被更密且带银白色光泽。质地厚实革质，揉搓散发浓郁的樟脑和草本混合香气，带有苦味后调。
+![Sage Plant Growing](https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/Salvia_officinalis_001.JPG/640px-Salvia_officinalis_001.JPG)
+*鼠尾草整株植物，展示其灌木状生长形态*
 
-花序为顶生轮伞花序，通常3-8朵花成轮状排列，花冠典型二唇形，颜色多为紫蓝色、淡紫色或白色，上唇2裂略呈兜状，下唇3裂中央裂片最大。花期夏季6-8月，蜜蜂和蝴蝶喜访。根系为主根系，主根粗壮深入，侧根分布广，极耐干旱。整体植株具有浓烈的芳香，即使在干燥状态下香气依然持久，这是鼠尾草区别于其他草本植物的显著特征。
+鼠尾草（Salvia officinalis）为唇形科鼠尾草属多年生半灌木，原产地中海沿岸，成熟植株高度通常40-80厘米，冠幅可达60厘米。茎部下端逐渐木质化，四棱形但不如其他唇形科植物明显，新枝绿色带紫晕，老枝灰褐色。叶片对生，椭圆形至长椭圆形，长4-8厘米，宽1.5-3厘米，叶缘具细锯齿或近全缘，叶面灰绿色密生细毛呈天鹅绒质感，叶背毛被更密且带银白色光泽。
+
+![Sage Leaves Close-up](https://upload.wikimedia.org/wikipedia/commons/thumb/c/c4/Salvia_officinalis_leaves.jpg/640px-Salvia_officinalis_leaves.jpg)
+*鼠尾草叶片特写，可见其灰绿色绒毛表面*
+
+质地厚实革质，揉搓散发浓郁的樟脑和草本混合香气，带有苦味后调。
+
+花序为顶生轮伞花序，通常3-8朵花成轮状排列，花冠典型二唇形，颜色多为紫蓝色、淡紫色或白色，上唇2裂略呈兜状，下唇3裂中央裂片最大。
+
+![Sage Purple Flowers](https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Salvia_officinalis_flowers.jpg/640px-Salvia_officinalis_flowers.jpg)
+*鼠尾草紫蓝色花期，展示典型的唇形花冠*
+
+花期夏季6-8月，蜜蜂和蝴蝶喜访。根系为主根系，主根粗壮深入，侧根分布广，极耐干旱。整体植株具有浓烈的芳香，即使在干燥状态下香气依然持久，这是鼠尾草区别于其他草本植物的显著特征。
 
 ### 与相似种的区别
 
@@ -52,7 +65,13 @@
 
 ## 5. 用法与搭配（仅可食用类）
 
+![Dried Sage Leaves](https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/Dried_sage_leaves.jpg/640px-Dried_sage_leaves.jpg)
+*干燥的鼠尾草叶片，是烹饪中常用的香料*
+
 鼠尾草在欧美烹饪中占据重要地位，尤其在传统节庆料理中不可缺少。感恩节火鸡填料中的鼠尾草是经典搭配，其浓郁的草本香气能穿透油脂，为禽肉增添层次。意大利料理中，鼠尾草黄油酱（Burro e Salvia）是土豆团子（Gnocchi）和各类意面的经典调味，制作时将黄油加热至微焦，加入鼠尾草叶片炸至酥脆，香气浓郁复杂。
+
+![Sage Culinary Use](https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/Sage_butter_sauce.jpg/640px-Sage_butter_sauce.jpg)
+*鼠尾草黄油酱，意大利料理的经典调味*
 
 在烹饪技巧上，鼠尾草叶片可以整片使用也可切碎，新鲜叶片直接加入会有较强的生涩味，建议先用油脂炒制或烘焙激发香气。干燥鼠尾草适合长时间炖煮，如豆类料理、烤蔬菜和肉类腌制。与迷迭香、百里香组成的地中海香草组合是烤肉和烤蔬菜的完美搭配。需要注意的是，鼠尾草香气浓烈，使用时应适量，避免掩盖食材本味。
 
