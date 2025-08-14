@@ -78,3 +78,22 @@
 
 ---
 *声明：本信息仅供参考，不替代专业医疗建议。*
+
+## Local Image Gallery
+
+*Downloaded high-resolution images for offline viewing:*
+
+![Foxglove - Image 1 (CC BY-SA 3.0 de)](../images/foxglove/01.jpg)
+*Image 1: © Jörg Hempel (CC BY-SA 3.0 de)*
+
+![Foxglove - Image 2 (CC BY-SA 3.0)](../images/foxglove/02.jpg)
+*Image 2: © Norbert Nagel (CC BY-SA 3.0)*
+
+![Foxglove - Image 3 (CC BY-SA 4.0)](../images/foxglove/03.jpg)
+*Image 3: © Dominicus Johannes Bergsma (CC BY-SA 4.0)*
+
+![Foxglove - Image 4 (CC BY 4.0)](../images/foxglove/04.jpg)
+*Image 4: © Robert Flogaus-Faust (CC BY 4.0)*
+
+![Foxglove - Image 5 (CC BY-SA 3.0)](../images/foxglove/05.jpg)
+*Image 5: © H. Zell (CC BY-SA 3.0)*

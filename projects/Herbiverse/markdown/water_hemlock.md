@@ -81,3 +81,21 @@
 
 ---
 *声明：本信息仅供参考，不替代专业医疗建议。*
+
+## Local Image Gallery
+
+*Downloaded high-resolution images for offline viewing:*
+
+![Water Hemlock - Image 1 (Public domain)](../images/water_hemlock/01.jpg)
+*Image 1: © Williammehlhorn at English Wikipedia (Public domain)*
+
+![Water Hemlock - Image 2 (CC BY-SA 3.0)](../images/water_hemlock/02.JPG)
+*Image 2: © Choess (CC BY-SA 3.0)*
+
+![Water Hemlock - Image 3 (CC BY-SA 3.0)](../images/water_hemlock/03.JPG)
+*Image 3: © Fritzflohrreynolds (CC BY-SA 3.0)*
+
+![Water Hemlock - Image 4 (CC BY-SA 2.0)](../images/water_hemlock/03.jpg)
+*Image 4: © Joshua Mayer from Madison, WI, USA (CC BY-SA 2.0)*
+
+![Water Hemlock - Image 5](../images/water_hemlock/04.jpg)

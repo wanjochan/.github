@@ -124,3 +124,19 @@
 
 ---
 *声明：本信息仅供参考，不替代专业医疗建议。*
+
+## Local Image Gallery
+
+*Downloaded high-resolution images for offline viewing:*
+
+![Lemongrass - Image 1 (CC BY 3.0)](../images/lemongrass/01.jpg)
+*Image 1: © Forest &amp; Kim Starr (CC BY 3.0)*
+
+![Lemongrass - Image 2 (CC BY-SA 4.0)](../images/lemongrass/02.jpg)
+*Image 2: © Rafael Ghidini (CC BY-SA 4.0)*
+
+![Lemongrass - Image 3 (CC0)](../images/lemongrass/03.jpg)
+*Image 3: © Obsidian Soul (CC0)*
+
+![Lemongrass - Image 4 (CC BY-SA 4.0)](../images/lemongrass/04.jpg)
+*Image 4: © Nativeplants garden (CC BY-SA 4.0)*

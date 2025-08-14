@@ -128,3 +128,20 @@
 
 ---
 *声明：本信息仅供参考，不替代专业医疗建议。*
+
+## Local Image Gallery
+
+*Downloaded high-resolution images for offline viewing:*
+
+![Tarragon - Image 1 (CC BY-SA 4.0)](../images/tarragon/01.jpg)
+*Image 1: © Joanna Boisse (CC BY-SA 4.0)*
+
+![Tarragon - Image 2 (CC BY-SA 4.0)](../images/tarragon/02.jpg)
+*Image 2: © Agnieszka Kwiecień, Nova (CC BY-SA 4.0)*
+
+![Tarragon - Image 3 (CC BY 4.0)](../images/tarragon/03.jpg)
+*Image 3: © Arkadiusz Nowak, Marcin Nobis, Sylwia Nowak, Agnieszka Nobis, Anna Wróbel, Sebastian Świerszcz, Ewelina Klichowska, Iwona Dembicz &amp; Grzegorz Kusza (CC BY 4.0)*
+
+![Tarragon - Image 4](../images/tarragon/03.png)
+
+![Tarragon - Image 5](../images/tarragon/04.png)

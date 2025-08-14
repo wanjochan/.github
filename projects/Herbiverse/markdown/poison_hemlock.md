@@ -85,3 +85,23 @@
 
 ---
 *声明：本信息仅供参考，不替代专业医疗建议。*
+
+## Local Image Gallery
+
+*Downloaded high-resolution images for offline viewing:*
+
+![Poison Hemlock - Image 1 (CC BY-SA 3.0)](../images/poison_hemlock/01.jpg)
+*Image 1: © MPF (CC BY-SA 3.0)*
+
+![Poison Hemlock - Image 2 (CC BY-SA 4.0)](../images/poison_hemlock/02.jpg)
+*Image 2: © Didier Descouens (CC BY-SA 4.0)*
+
+![Poison Hemlock - Image 3 (CC BY-SA 4.0)](../images/poison_hemlock/03.jpg)
+*Image 3: © Krzysztof Ziarnek, Kenraiz (CC BY-SA 4.0)*
+
+![Poison Hemlock - Image 4 (CC BY 4.0)](../images/poison_hemlock/04.jpg)
+*Image 4: © Arkadiusz Nowak, Marcin Nobis, Sylwia Nowak, Agnieszka Nobis, Anna Wróbel, Sebastian Świerszcz, Ewelina Klichowska, Iwona Dembicz &amp; Grzegorz Kusza (CC BY 4.0)*
+
+![Poison Hemlock - Image 5](../images/poison_hemlock/04.png)
+
+![Poison Hemlock - Image 6](../images/poison_hemlock/05.png)

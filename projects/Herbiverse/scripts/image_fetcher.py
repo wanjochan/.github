@@ -17,7 +17,7 @@ import logging
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
-from urllib.parse import urlencode
+from urllib.parse import urlencode, quote
 from urllib.request import Request, urlopen
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -100,7 +100,7 @@ def search_commons(query: str, limit: int = 10) -> List[Dict]:
             "author": (ext.get("Artist", {}) or {}).get("value"),
             "credit": (ext.get("Credit", {}) or {}).get("value"),
             "source": "Wikimedia Commons",
-            "page_url": f"https://commons.wikimedia.org/wiki/{title}" if title else "",
+            "page_url": f"https://commons.wikimedia.org/wiki/{quote(title, safe='/:')}" if title else "",
         })
     return result
 
@@ -132,12 +132,18 @@ def filter_by_config(images: List[Dict], config: Dict[str, Any]) -> List[Dict]:
     return filtered
 
 
-def download_image(url: str, out_path: Path) -> None:
-    req = Request(url, headers={"User-Agent": "HerbiverseBot/1.0"})
-    with urlopen(req, timeout=60) as resp:
-        data = resp.read()
-    out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_bytes(data)
+def download_image(url: str, out_path: Path) -> bool:
+    """Download image from URL. Returns True on success."""
+    try:
+        req = Request(url, headers={"User-Agent": "HerbiverseBot/1.0"})
+        with urlopen(req, timeout=60) as resp:
+            data = resp.read()
+        out_path.parent.mkdir(parents=True, exist_ok=True)
+        out_path.write_bytes(data)
+        return True
+    except Exception as e:
+        logger.error("Failed to download %s: %s", url, e)
+        return False
 
 
 def save_metadata(herb_id: str, images: List[Dict]) -> Path:
@@ -168,17 +174,17 @@ def main() -> None:
     logger.info("Found %d candidates; %d passed filters", len(candidates), len(filtered))
 
     if args.download:
+        downloaded = 0
         for i, img in enumerate(filtered, start=1):
             url = img.get("image_url")
             if not url:
                 continue
             ext = Path(url).suffix or ".jpg"
             out = IMAGES_DIR / args.id / f"{i:02d}{ext}"
-            try:
-                download_image(url, out)
+            if download_image(url, out):
                 logger.info("Downloaded: %s", out)
-            except Exception as e:
-                logger.error("Failed to download %s: %s", url, e)
+                downloaded += 1
+        logger.info("Downloaded %d/%d images", downloaded, len(filtered))
 
     meta_path = save_metadata(args.id, filtered)
     logger.info("Saved metadata: %s", meta_path)

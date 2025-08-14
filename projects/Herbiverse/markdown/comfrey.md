@@ -198,3 +198,22 @@ PAs被国际癌症研究机构（IARC）列为2B类致癌物（可能对人类�
 
 ---
 *声明：本信息仅供参考，不替代专业医疗建议。*
+
+## Local Image Gallery
+
+*Downloaded high-resolution images for offline viewing:*
+
+![Comfrey - Image 1 (CC BY-SA 3.0)](../images/comfrey/01.JPG)
+*Image 1: © Dominicus Johannes Bergsma (CC BY-SA 3.0)*
+
+![Comfrey - Image 2 (CC BY-SA 3.0)](../images/comfrey/02.JPG)
+*Image 2: © Dominicus Johannes Bergsma (CC BY-SA 3.0)*
+
+![Comfrey - Image 3 (CC BY-SA 3.0)](../images/comfrey/03.JPG)
+*Image 3: © Dominicus Johannes Bergsma (CC BY-SA 3.0)*
+
+![Comfrey - Image 4 (CC BY-SA 4.0)](../images/comfrey/04.jpg)
+*Image 4: © Reinhold Möller Ermell (CC BY-SA 4.0)*
+
+![Comfrey - Image 5 (CC BY 4.0)](../images/comfrey/05.jpg)
+*Image 5: © Robert Flogaus-Faust (CC BY 4.0)*

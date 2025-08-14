@@ -103,3 +103,22 @@
 
 ---
 *声明：本信息仅供参考，不替代专业医疗建议。*
+
+## Local Image Gallery
+
+*Downloaded high-resolution images for offline viewing:*
+
+![Dill - Image 1 (CC BY-SA 3.0)](../images/dill/01.jpg)
+*Image 1: © Tepeyac (CC BY-SA 3.0)*
+
+![Dill - Image 2 (CC BY-SA 3.0)](../images/dill/02.jpg)
+*Image 2: © Bff (CC BY-SA 3.0)*
+
+![Dill - Image 3 (CC BY-SA 3.0)](../images/dill/03.jpg)
+*Image 3: © JLPC (CC BY-SA 3.0)*
+
+![Dill - Image 4 (CC BY-SA 4.0)](../images/dill/04.jpg)
+*Image 4: © Photo by David J. Stang (CC BY-SA 4.0)*
+
+![Dill - Image 5 (CC BY-SA 4.0)](../images/dill/05.jpg)
+*Image 5: © Ermell (CC BY-SA 4.0)*

@@ -104,3 +104,22 @@
 
 ---
 *声明：本信息仅供参考，不替代专业医疗建议。*
+
+## Local Image Gallery
+
+*Downloaded high-resolution images for offline viewing:*
+
+![Lemon Balm - Image 1 (CC BY 3.0)](../images/lemon_balm/01.jpg)
+*Image 1: © Gideon Pisanty (Gidip) גדעון פיזנטי (CC BY 3.0)*
+
+![Lemon Balm - Image 2 (CC BY-SA 4.0)](../images/lemon_balm/02.JPG)
+*Image 2: © Lazaregagnidze (CC BY-SA 4.0)*
+
+![Lemon Balm - Image 3 (CC BY-SA 4.0)](../images/lemon_balm/03.jpg)
+*Image 3: © Otto Wilhelm Thomé (1885) (CC BY-SA 4.0)*
+
+![Lemon Balm - Image 4 (CC BY 4.0)](../images/lemon_balm/04.jpg)
+*Image 4: © Ben Keen (CC BY 4.0)*
+
+![Lemon Balm - Image 5 (CC0)](../images/lemon_balm/05.jpg)
+*Image 5: © Cbaile19 (CC0)*

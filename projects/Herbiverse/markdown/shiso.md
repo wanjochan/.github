@@ -99,3 +99,18 @@
 
 ---
 *声明：本信息仅供参考，不替代专业医疗建议。*
+
+## Local Image Gallery
+
+*Downloaded high-resolution images for offline viewing:*
+
+![Shiso - Image 1 (CC BY-SA 3.0)](../images/shiso/01.jpg)
+*Image 1: © Namazu-tron (CC BY-SA 3.0)*
+
+![Shiso - Image 2 (CC BY-SA 3.0)](../images/shiso/02.jpg)
+*Image 2: © Dalgial (CC BY-SA 3.0)*
+
+![Shiso - Image 3 (CC BY-SA 2.0)](../images/shiso/03.jpg)
+*Image 3: © George E. Koronaios (CC BY-SA 2.0)*
+
+![Shiso - Image 4](../images/shiso/04.jpg)

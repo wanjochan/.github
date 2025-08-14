@@ -108,3 +108,19 @@
 
 ---
 *声明：本信息仅供参考，不替代专业医疗建议。*
+
+## Local Image Gallery
+
+*Downloaded high-resolution images for offline viewing:*
+
+![Datura - Image 1 (CC BY-SA 3.0)](../images/datura/01.jpg)
+*Image 1: © No machine-readable author provided. Taka assumed (based on copyright claims). (CC BY-SA 3.0)*
+
+![Datura - Image 2 (CC BY-SA 3.0)](../images/datura/02.jpg)
+*Image 2: © Didier Descouens (CC BY-SA 3.0)*
+
+![Datura - Image 3 (CC BY-SA 4.0)](../images/datura/03.jpg)
+*Image 3: © Velvet (CC BY-SA 4.0)*
+
+![Datura - Image 4 (CC BY-SA 4.0)](../images/datura/04.jpg)
+*Image 4: © Velvet (CC BY-SA 4.0)*

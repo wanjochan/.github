@@ -90,3 +90,22 @@
 
 ---
 *声明：本信息仅供参考，不替代专业医疗建议。*
+
+## Local Image Gallery
+
+*Downloaded high-resolution images for offline viewing:*
+
+![Rosemary - Image 1 (CC BY 2.0)](../images/rosemary/01.jpg)
+*Image 1: © THOR (CC BY 2.0)*
+
+![Rosemary - Image 2 (CC BY-SA 3.0)](../images/rosemary/02.jpg)
+*Image 2: © T137 (CC BY-SA 3.0)*
+
+![Rosemary - Image 3 (CC BY-SA 3.0)](../images/rosemary/03.jpg)
+*Image 3: © Roger Culos (CC BY-SA 3.0)*
+
+![Rosemary - Image 4 (CC BY-SA 4.0)](../images/rosemary/04.jpg)
+*Image 4: © Basotxerri (CC BY-SA 4.0)*
+
+![Rosemary - Image 5 (CC BY 4.0)](../images/rosemary/05.jpg)
+*Image 5: © Christian Ferrer (CC BY 4.0)*

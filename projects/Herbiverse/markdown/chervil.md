@@ -131,3 +131,19 @@
 
 ---
 *声明：本信息仅供参考，不替代专业医疗建议。*
+
+## Local Image Gallery
+
+*Downloaded high-resolution images for offline viewing:*
+
+![Chervil - Image 1 (CC BY-SA 3.0)](../images/chervil/01.jpg)
+*Image 1: © Rasbak (CC BY-SA 3.0)*
+
+![Chervil - Image 2 (CC BY-SA 4.0)](../images/chervil/02.jpg)
+*Image 2: © Photo by David J. Stang (CC BY-SA 4.0)*
+
+![Chervil - Image 3 (CC BY-SA 4.0)](../images/chervil/03.jpg)
+*Image 3: © Photo by David J. Stang (CC BY-SA 4.0)*
+
+![Chervil - Image 4 (CC BY 4.0)](../images/chervil/04.jpg)
+*Image 4: © Schlaghecken Josef (CC BY 4.0)*

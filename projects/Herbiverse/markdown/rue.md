@@ -105,3 +105,18 @@
 
 ---
 *声明：本信息仅供参考，不替代专业医疗建议。*
+
+## Local Image Gallery
+
+*Downloaded high-resolution images for offline viewing:*
+
+![Rue - Image 1 (CC BY-SA 4.0)](../images/rue/01.jpg)
+*Image 1: © Didier Descouens (CC BY-SA 4.0)*
+
+![Rue - Image 2 (CC BY-SA 4.0)](../images/rue/02.jpg)
+*Image 2: © Krzysztof Ziarnek, Kenraiz (CC BY-SA 4.0)*
+
+![Rue - Image 3 (CC BY-SA 4.0)](../images/rue/03.jpg)
+*Image 3: © Krzysztof Ziarnek, Kenraiz (CC BY-SA 4.0)*
+
+![Rue - Image 4](../images/rue/04.jpg)

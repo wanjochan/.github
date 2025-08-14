@@ -104,3 +104,20 @@
 
 ---
 *声明：本信息仅供参考，不替代专业医疗建议。*
+
+## Local Image Gallery
+
+*Downloaded high-resolution images for offline viewing:*
+
+![Vietnamese Coriander - Image 1 (CC BY 3.0)](../images/vietnamese_coriander/01.jpg)
+*Image 1: © Vinayaraj (CC BY 3.0)*
+
+![Vietnamese Coriander - Image 2 (CC BY-SA 4.0)](../images/vietnamese_coriander/02.jpg)
+*Image 2: © Joditran (CC BY-SA 4.0)*
+
+![Vietnamese Coriander - Image 3 (CC BY-SA 4.0)](../images/vietnamese_coriander/03.JPG)
+*Image 3: © SarKaLay စာကလေး (CC BY-SA 4.0)*
+
+![Vietnamese Coriander - Image 4](../images/vietnamese_coriander/03.jpg)
+
+![Vietnamese Coriander - Image 5](../images/vietnamese_coriander/04.jpg)

@@ -98,3 +98,22 @@
 
 ---
 *声明：本信息仅供参考，不替代专业医疗建议。*
+
+## Local Image Gallery
+
+*Downloaded high-resolution images for offline viewing:*
+
+![Bay Leaf - Image 1 (CC BY-SA 4.0)](../images/bay_leaf/01.jpg)
+*Image 1: © Photo by David J. Stang (CC BY-SA 4.0)*
+
+![Bay Leaf - Image 2 (CC BY-SA 4.0)](../images/bay_leaf/02.jpg)
+*Image 2: © Photo by David J. Stang (CC BY-SA 4.0)*
+
+![Bay Leaf - Image 3 (CC BY-SA 4.0)](../images/bay_leaf/03.jpg)
+*Image 3: © Photo by David J. Stang (CC BY-SA 4.0)*
+
+![Bay Leaf - Image 4 (CC BY-SA 4.0)](../images/bay_leaf/04.jpg)
+*Image 4: © Photo by David J. Stang (CC BY-SA 4.0)*
+
+![Bay Leaf - Image 5 (CC BY-SA 4.0)](../images/bay_leaf/05.jpg)
+*Image 5: © Herusutimbul (CC BY-SA 4.0)*

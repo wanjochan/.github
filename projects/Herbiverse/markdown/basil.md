@@ -84,3 +84,22 @@
 
 ---
 *声明：本信息仅供参考，不替代专业医疗建议。*
+
+## Local Image Gallery
+
+*Downloaded high-resolution images for offline viewing:*
+
+![Basil - Image 1 (CC BY-SA 3.0)](../images/basil/01.jpg)
+*Image 1: © Andrey Butko (CC BY-SA 3.0)*
+
+![Basil - Image 2 (CC BY-SA 3.0)](../images/basil/02.jpg)
+*Image 2: © Castielli (CC BY-SA 3.0)*
+
+![Basil - Image 3 (CC BY-SA 4.0)](../images/basil/03.jpg)
+*Image 3: © PumpkinSky (CC BY-SA 4.0)*
+
+![Basil - Image 4 (CC BY-SA 4.0)](../images/basil/04.jpg)
+*Image 4: © Eiku en exil (CC BY-SA 4.0)*
+
+![Basil - Image 5 (CC BY-SA 4.0)](../images/basil/05.jpg)
+*Image 5: © BernaBotto (CC BY-SA 4.0)*

@@ -104,3 +104,22 @@
 
 ---
 *声明：本信息仅供参考，不替代专业医疗建议。*
+
+## Local Image Gallery
+
+*Downloaded high-resolution images for offline viewing:*
+
+![Kaffir Lime Leaf - Image 1 (CC BY-SA 2.0)](../images/kaffir_lime_leaf/01.jpg)
+*Image 1: © Robyn Jay from Sydney, Australia (CC BY-SA 2.0)*
+
+![Kaffir Lime Leaf - Image 2 (CC BY-SA 3.0)](../images/kaffir_lime_leaf/02.jpg)
+*Image 2: © Mokkie (CC BY-SA 3.0)*
+
+![Kaffir Lime Leaf - Image 3 (CC BY-SA 4.0)](../images/kaffir_lime_leaf/03.jpg)
+*Image 3: © Mokkie (CC BY-SA 4.0)*
+
+![Kaffir Lime Leaf - Image 4 (CC BY-SA 4.0)](../images/kaffir_lime_leaf/04.jpg)
+*Image 4: © Photo by David J. Stang (CC BY-SA 4.0)*
+
+![Kaffir Lime Leaf - Image 5 (CC BY-SA 4.0)](../images/kaffir_lime_leaf/05.jpg)
+*Image 5: © Jpbrigand2 (CC BY-SA 4.0)*

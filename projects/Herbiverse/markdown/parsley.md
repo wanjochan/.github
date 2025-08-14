@@ -82,3 +82,19 @@
 
 ---
 *声明：本信息仅供参考，不替代专业医疗建议。*
+
+## Local Image Gallery
+
+*Downloaded high-resolution images for offline viewing:*
+
+![Parsley - Image 1 (CC BY-SA 3.0)](../images/parsley/01.JPG)
+*Image 1: © H. Zell (CC BY-SA 3.0)*
+
+![Parsley - Image 2 (CC BY-SA 4.0)](../images/parsley/02.jpg)
+*Image 2: © Maurocatanese86 (CC BY-SA 4.0)*
+
+![Parsley - Image 3 (CC BY-SA 4.0)](../images/parsley/03.jpg)
+*Image 3: © Salicyna (CC BY-SA 4.0)*
+
+![Parsley - Image 4 (CC BY-SA 4.0)](../images/parsley/04.jpg)
+*Image 4: © Schlaghecken Josef (CC BY-SA 4.0)*
