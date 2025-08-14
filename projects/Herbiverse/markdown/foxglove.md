@@ -1,4 +1,4 @@
-# 毛地黄【注意有毒】 | Foxglove | *Digitalis purpurea*
+# 毛地黄 | Foxglove | *Digitalis purpurea*
 
 | 属性 | 内容 |
 |------|------|

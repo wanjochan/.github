@@ -1,0 +1,71 @@
+{
+  "error": "'extremely_toxic' is not one of ['safe', 'caution', 'toxic', 'external_only']\n\nFailed validating 'enum' in schema['properties']['toxicity']['properties']['status']:\n    {'type': 'string',\n     'enum': ['safe', 'caution', 'toxic', 'external_only']}\n\nOn instance['toxicity']['status']:\n    'extremely_toxic'",
+  "record": {
+    "id": "datura",
+    "cn_name": "曼陀罗",
+    "en_name": "Datura/Jimsonweed",
+    "scientific_name": "Datura stramonium",
+    "category": "non_edible",
+    "edible_parts": [],
+    "toxicity": {
+      "status": "extremely_toxic",
+      "toxic_parts": [
+        "leaves",
+        "flower",
+        "stem",
+        "root",
+        "seeds",
+        "fruit"
+      ],
+      "notes": "曼陀罗全株含有剧毒的托品烷生物碱，主要包括阿托品（atropine）、东莨菪碱（scopolamine）和天仙子胺（hyoscyamine）。这些化合物是强效的毒蕈碱受体拮抗剂和中枢神经系统抑制剂，能够引起严重的抗胆碱能中毒症状。种子的毒性浓度最高，每颗种子约含0.1mg生物碱。致死剂量极低：成人误食4-5g种子即可致命，儿童误食15-20颗种子就可能死亡。即使是少量接触也会导致严重的精神症状，包括幻觉、妄想、躁动不安和完全的现实感丧失，这种状态可持续12-48小时。与其他致幻剂不同，曼陀罗中毒时患者通常无法区分幻觉与现实，极易发生意外伤害。",
+      "sources": [
+        "Preissel U, Preissel HG. Brugmansia and Datura: Angel's Trumpets and Thorn Apples. Firefly Books, 2002",
+        "Gaire BP, Subedi L. A review on the pharmacology and toxicology of Datura stramonium L. Journal of Integrative Medicine, 2013"
+      ]
+    },
+    "cultivation": {
+      "hardiness": "",
+      "sun": "",
+      "soil": "",
+      "pH": "",
+      "watering": "",
+      "propagation": [],
+      "companion": [],
+      "pests": []
+    },
+    "varieties": [],
+    "chemistry": [],
+    "culinary_uses": [],
+    "storage": "",
+    "lookalikes": [],
+    "images": [],
+    "references": [
+      {
+        "title": "Brugmansia and Datura: Angel's Trumpets and Thorn Apples",
+        "org": "Firefly Books",
+        "year": 2002,
+        "url": "https://www.fireflybooks.com/brugmansia-and-datura"
+      },
+      {
+        "title": "A review on the pharmacology and toxicology of Datura stramonium L.",
+        "org": "Journal of Integrative Medicine",
+        "year": 2013,
+        "url": "https://www.sciencedirect.com/science/article/pii/S2095496413600929"
+      },
+      {
+        "title": "Tropane alkaloids: chemistry, pharmacology, biosynthesis and production",
+        "org": "Phytochemistry Reviews",
+        "year": 2016,
+        "url": "https://link.springer.com/article/10.1007/s11101-016-9477-x"
+      },
+      {
+        "title": "Clinical management of Datura stramonium poisoning",
+        "org": "Emergency Medicine Journal",
+        "year": 2018,
+        "url": "https://emj.bmj.com/content/35/12/731"
+      }
+    ],
+    "tags": [],
+    "toxicology_content": "曼陀罗的毒理学特征极其复杂且危险。植物含有的托品烷生物碱是天然的毒蕈碱受体拮抗剂，主要作用于中枢和外周神经系统。阿托品主要影响外周神经系统，导致副交感神经阻断，表现为瞳孔散大、心率加快、口干、皮肤干燥发热等症状。东莨菪碱则更容易穿过血脑屏障，对中央神经系统产生强烈影响，导致严重的精神症状包括幻觉、妄想、兴奋和昏迷。天仙子胺的作用介于两者之间。\n\n这些生物碱的药代动力学特点是吸收快速但代谢缓慢，半衰期长达13-38小时，这意味着中毒症状可能持续数天。口服后30-60分钟开始显效，2-4小时达到峰效应。毒素主要通过肝脏代谢，肾脏排泄，但由于代谢缓慢，体内蓄积效应明显。\n\n致死机制主要包括：1）中枢神经系统抑制导致呼吸衰竭；2）严重脱水和电解质紊乱；3）体温调节失常导致的高热；4）心律失常；5）由于幻觉和意识障碍导致的意外伤害。特别需要注意的是，曼陀罗中毒与其他药物中毒的重要区别在于患者会出现完全的现实感丧失，无法区分幻觉与现实，这使得患者极易发生跳楼、交通事故等致命意外。\n\n不同部位的毒性浓度差异显著：种子含量最高（0.2-0.4%），其次是叶片（0.2-0.5%），花朵（0.1-0.2%），茎干最低但仍有毒性。即使是干燥的植物材料也保持毒性，储存多年后仍然危险。"
+  }
+}

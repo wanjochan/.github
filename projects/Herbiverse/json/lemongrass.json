@@ -1,0 +1,186 @@
+{
+  "id": "lemongrass",
+  "cn_name": "柠檬草/香茅",
+  "en_name": "Lemongrass",
+  "scientific_name": "Cymbopogon citratus",
+  "category": "edible",
+  "edible_parts": [
+    "stem",
+    "leaves"
+  ],
+  "toxicity": {
+    "status": "safe",
+    "toxic_parts": [],
+    "notes": "一般安全可食用，精油浓度制品需注意剂量。孕期和哺乳期建议适量使用。极少数人可能对柠檬草成分过敏。",
+    "sources": [
+      "USDA",
+      "WHO",
+      "Kew Gardens"
+    ]
+  },
+  "cultivation": {
+    "hardiness": "USDA 9-11",
+    "sun": "full sun to partial shade",
+    "soil": "well-drained, fertile, sandy loam",
+    "pH": "6.0-7.5",
+    "watering": "喜湿润但排水良好的环境，生长期需充足水分但避免积水。干旱时增加浇水频率。",
+    "propagation": [
+      "division",
+      "stem cuttings"
+    ],
+    "companion": [
+      "tomato",
+      "basil",
+      "cilantro",
+      "peppers"
+    ],
+    "pests": [
+      "grasshoppers",
+      "aphids",
+      "rust disease",
+      "leaf blight"
+    ]
+  },
+  "varieties": [
+    {
+      "name": "West Indian Lemongrass (Cymbopogon citratus)"
+    },
+    {
+      "name": "East Indian Lemongrass (Cymbopogon flexuosus)"
+    },
+    {
+      "name": "Ceylon Citronella (Cymbopogon nardus)"
+    },
+    {
+      "name": "Java Citronella (Cymbopogon winterianus)"
+    }
+  ],
+  "chemistry": [
+    {
+      "compound": "Citral (Geranial + Neral)",
+      "class": "monoterpene aldehyde",
+      "role": "primary lemony aroma",
+      "notes": "占精油60-80%，赋予强烈柠檬香气，是柠檬草的主要活性成分。",
+      "sources": [
+        "PubChem",
+        "Journal of Essential Oil Research"
+      ]
+    },
+    {
+      "compound": "Myrcene",
+      "class": "monoterpene",
+      "role": "herbal-earthy note",
+      "notes": "提供草本和土质香调，调和柠檬香的尖锐感。",
+      "sources": [
+        "PubChem",
+        "Phytochemistry Reviews"
+      ]
+    },
+    {
+      "compound": "Limonene",
+      "class": "monoterpene",
+      "role": "citrus freshness",
+      "notes": "增强柑橘清新感，与柠檬醛形成协同效应。",
+      "sources": [
+        "PubChem",
+        "Food Chemistry"
+      ]
+    },
+    {
+      "compound": "Geraniol",
+      "class": "monoterpene alcohol",
+      "role": "floral-rose note",
+      "notes": "带来淡雅花香，平衡整体香气层次。",
+      "sources": [
+        "PubChem",
+        "Essential Oil Studies"
+      ]
+    },
+    {
+      "compound": "Citronellol",
+      "class": "monoterpene alcohol",
+      "role": "rose-citrus balance",
+      "notes": "具有玫瑰与柑橘的平衡香调，增加复杂度。",
+      "sources": [
+        "PubChem",
+        "Natural Product Research"
+      ]
+    }
+  ],
+  "culinary_uses": [
+    "Thai tom yum soup",
+    "Vietnamese pho",
+    "Thai green curry",
+    "Indonesian rendang",
+    "herbal teas",
+    "marinades",
+    "seafood dishes",
+    "coconut-based curries",
+    "Asian stir-fries"
+  ],
+  "storage": "鲜茎可冷藏保存2-3周，用湿纸巾包裹防脱水；冷冻前先切段可保存3-6个月。干燥叶片应密封保存避光处，可保持香气1-2年。制成膏状（与少量油打成泥）冷冻分装便于使用。",
+  "lookalikes": [
+    {
+      "name": "Citronella grass (Cymbopogon nardus)",
+      "how_to_tell": "柠檬桉叶片更宽且偏蓝绿色，香气更偏桉树味而非纯柠檬香。"
+    },
+    {
+      "name": "Lemon verbena (Aloysia citrodora)",
+      "how_to_tell": "柠檬马鞭草叶片较小且有锯齿边缘，为木本植物；柠檬草为丛生草本，叶片细长无锯齿。"
+    },
+    {
+      "name": "Lemon balm (Melissa officinalis)",
+      "how_to_tell": "柠檬薄荷叶片呈心形有锯齿，植株较矮；柠檬草叶片细长如带状，株型高大。"
+    }
+  ],
+  "images": [],
+  "references": [
+    {
+      "title": "Plants of the World Online: Cymbopogon citratus",
+      "org": "Kew Gardens",
+      "year": 2024,
+      "url": "https://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:405321-1"
+    },
+    {
+      "title": "USDA PLANTS Database: Cymbopogon citratus",
+      "org": "USDA",
+      "year": 2023,
+      "url": "https://plants.usda.gov/home/plantProfile?symbol=CYCI2"
+    },
+    {
+      "title": "Essential oil composition of Cymbopogon citratus",
+      "org": "Journal of Essential Oil Research",
+      "year": 2022,
+      "url": "https://www.tandfonline.com/journals/tjeo20"
+    },
+    {
+      "title": "Lemongrass: A review of its traditional uses, phytochemistry and pharmacology",
+      "org": "Journal of Ethnopharmacology",
+      "year": 2023,
+      "url": "https://www.sciencedirect.com/journal/journal-of-ethnopharmacology"
+    },
+    {
+      "title": "Chemical composition and antimicrobial activity of Cymbopogon citratus essential oil",
+      "org": "Food Chemistry",
+      "year": 2023,
+      "url": "https://www.sciencedirect.com/journal/food-chemistry"
+    }
+  ],
+  "tags": [
+    "aromatic",
+    "perennial",
+    "tropical",
+    "culinary",
+    "Poaceae",
+    "essential oil"
+  ],
+  "key_features": "多年生丛生草本；细长带状叶片；强烈柠檬香气；热带亚热带植物。",
+  "difficulty": "中等（需温暖气候）",
+  "morphology_content": "柠檬草（Cymbopogon citratus）为禾本科香茅属多年生丛生草本植物，原产热带亚洲。植株呈典型丛生状，可达1-2米高，基部形成密集的假鳞茎结构。叶片呈细长带状，长60-150厘米，宽0.5-2厘米，质地坚韧略粗糙，叶缘锋利需小心处理。叶片颜色从基部的浅黄绿到顶端的深绿色渐变，中脉明显，平行脉清晰可见。\n\n最显著的识别特征是揉搓叶片或茎部时散发的强烈柠檬香气，这是由高含量的柠檬醛（citral）所致。基部的假鳞茎部分呈白色至淡黄色，质地较嫩且含有最高浓度的精油，是烹饪中最常用的部位。根系发达，为须根系，适应性强但不耐寒。\n\n花序为大型顶生圆锥花序，长20-50厘米，由多个总状花序组成，但在温带地区很少开花。小穗成对排列，含1-2朵小花，花期夏末至秋季。种子很少成熟，主要通过分株繁殖。植株在霜冻来临前会逐渐枯黄，在热带地区则可常年保持绿色。",
+  "lookalike_comparison": "与柠檬桉（Cymbopogon nardus）区分：柠檬桉叶片更宽，颜色偏蓝绿，香气带有桉树味而非纯柠檬香。与柠檬马鞭草（Aloysia citrodora）区分：马鞭草为木本灌木，叶片小且有锯齿，而柠檬草为草本，叶片大且光滑。与柠檬薄荷（Melissa officinalis）区分：薄荷叶片呈心形有锯齿，植株矮小，而柠檬草叶片细长无锯齿，植株高大。",
+  "varieties_content": "柠檬草主要有两个商业品种：\n\n**西印度柠檬草（Cymbopogon citratus）**：最常见的食用品种，假鳞茎部分较厚实，柠檬醛含量60-80%，香气浓郁纯正。叶片相对较宽，基部膨大明显，是东南亚料理的首选。耐湿性强，适合温室栽培。\n\n**东印度柠檬草（Cymbopogon flexuosus）**：主要用于精油提取，植株更高大，叶片更细长。柠檬醛含量可达85%，但基部假鳞茎较细，食用价值相对较低。更适应较干燥的环境，精油产量高。\n\n**柠檬桉草（Cymbopogon nardus 和 C. winterianus）**：主要用于提取柠檬桉醇，具有驱虫效果。香气偏桉树味，不适合食用但可用于制作天然驱蚊剂。\n\n在选择栽培品种时，食用目的应选择西印度柠檬草，精油提取选择东印度品种，驱虫用途则选择柠檬桉草系列。",
+  "chemistry_content": "柠檬草的化学成分主要集中在其挥发油中，含量约占鲜重的0.25-0.45%。主要活性成分为单萜类化合物：\n\n**柠檬醛（Citral）**：由香叶醛（geranial）和橙花醛（neral）组成，是柠檬草精油的主要成分，占60-80%。柠檬醛具有强烈的柠檬香气，同时具有抗菌、抗炎和抗氧化特性。在传统医学中被认为有助消化、镇静和驱虫。\n\n**月桂烯（Myrcene）**：占精油5-25%，提供草本和土质香调，具有肌肉松弛和镇静效果。\n\n**柠檬烯（Limonene）**：增强柑橘清新感，具有抗癌潜力和情绪提升效果。\n\n**香叶醇（Geraniol）**：带来花香调，具有抗菌和抗炎性质。\n\n**柠檬醇（Citronellol）**：平衡香气层次，具有驱虫效果。\n\n精油含量和组成受品种、生长环境、收获时期和提取方法影响。晨间收获的柠檬草精油含量最高，而基部假鳞茎的精油浓度最高。",
+  "culinary_content": "柠檬草在东南亚料理中占据重要地位，其独特的柠檬香气为众多经典菜肴提供不可替代的风味基础。在泰式料理中，柠檬草是冬阴功汤（Tom Yum）的核心香料之一，与南姜、青柠叶形成经典的香气三角。制作时通常使用基部嫩白部分，拍松后加入汤中煮制，释放浓郁柠檬香气但不食用纤维部分。\n\n在越南河粉（Pho）中，柠檬草与八角、桂皮等香料一同慢炖，为清澈的牛肉汤底增添清香层次。印尼仁当（Rendang）和马来咖喱中，柠檬草与椰浆和香料形成复合香气，平衡辛辣和甜腻。\n\n**处理技巧**：使用前需去除外层老叶，保留内部嫩白至淡绿部分。可以拍松、切段或制成泥状，拍松释放香气但保持形状便于取出，制泥则完全融入菜肴。干燥的柠檬草叶可制茶，具有舒缓和助消化效果。\n\n**搭配原理**：柠檬草的柠檬醛与椰浆的脂肪形成良好平衡，与辣椒的辣素产生协同增香效果，与鱼露的鲜味相互促进。在腌制海鲜时，柠檬草可有效去腥并增香。",
+  "storage_methods": "**鲜品保存**：整根柠檬草用湿纸巾包裹，置于冰箱冷藏室可保存2-3周。或将根部浸在少量水中如插花保养，覆盖塑料袋保湿，可延长保鲜期。\n\n**冷冻保存**：去除外层老叶后切成5-8厘米段，平铺冷冻后装袋，可保存3-6个月。冷冻的柠檬草无需解冻可直接使用。\n\n**制泥保存**：将嫩部分切碎与少量植物油打成泥状，分装在冰格中冷冻，使用时取一块即可，便于分量控制。\n\n**干燥保存**：叶片洗净晾干后密封保存，避光阴凉处可保存1-2年，主要用于泡茶。干品香气虽有所减弱但仍具价值。\n\n**精油保存**：自制或购买的柠檬草精油应存放在深色玻璃瓶中，避光低温保存，可保持香气2-3年。\n\n注意新鲜柠檬草不宜常温长期保存，容易失水变硬且香气散失。",
+  "toxicology_content": "柠檬草在一般食用剂量下被认为是安全的，被美国FDA列为Generally Recognized as Safe（GRAS）食品添加剂。然而，需要注意以下几点：\n\n**一般安全性**：柠檬草作为食品香料和茶饮原料使用历史悠久，未发现严重毒副作用。其主要成分柠檬醛在正常摄入量下对人体无害。\n\n**过敏反应**：极少数人可能对柠檬草或其主要成分过敏，症状包括皮肤红疹、呼吸困难等。首次使用建议少量试用。\n\n**精油使用注意**：高浓度柠檬草精油不应直接口服或大量摄入。外用时需适当稀释，避免皮肤刺激。\n\n**特殊人群**：孕期和哺乳期妇女应适量食用，避免大量摄入精油制品。虽然传统上柠檬草被用作助产草药，但现代医学建议谨慎使用。\n\n**药物相互作用**：柠檬草可能影响某些药物的代谢，特别是肝脏代谢的药物。正在服用药物的人群应咨询医生。\n\n**传统医学应用**：在传统医学中，柠檬草被用于治疗消化不良、发热、关节疼痛等，但这些用途需要更多科学验证。现代研究显示其具有抗菌、抗炎和抗氧化特性，但治疗剂量使用需专业指导。"
+}

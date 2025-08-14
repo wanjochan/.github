@@ -1,0 +1,119 @@
+{
+  "id": "lemon_balm",
+  "cn_name": "柠檬香蜂草",
+  "en_name": "Lemon Balm",
+  "scientific_name": "Melissa officinalis",
+  "category": "edible",
+  "edible_parts": ["leaves", "flower"],
+  "toxicity": {
+    "status": "safe",
+    "toxic_parts": [],
+    "notes": "一般安全可食，具有温和的镇静作用。怀孕和哺乳期适量使用安全。甲状腺功能减退患者应谨慎使用，因为可能进一步降低甲状腺功能。",
+    "sources": ["European Medicines Agency", "WHO", "USDA"]
+  },
+  "cultivation": {
+    "hardiness": "USDA 3-7",
+    "sun": "partial shade to full sun",
+    "soil": "moist, well-drained, fertile",
+    "pH": "6.0-7.5",
+    "watering": "保持土壤湿润但不积水；比其他薄荷科植物需要更多水分，夏季高温时需遮荫并增加浇水频率。",
+    "propagation": ["seed", "cuttings", "division", "self-seeding"],
+    "companion": ["tomato", "basil", "vegetables", "roses"],
+    "pests": ["aphids", "spider mites", "powdery mildew", "slugs"]
+  },
+  "varieties": [
+    {"name": "Common Lemon Balm"},
+    {"name": "Citronella"},
+    {"name": "Lime Balm"},
+    {"name": "Gold Leaf"}
+  ],
+  "chemistry": [
+    {
+      "compound": "Citral",
+      "class": "monoterpene aldehyde",
+      "role": "primary lemon aroma",
+      "notes": "主要的柠檬香气成分，占挥发油的40-70%，由柠檬醛a(geranial)和柠檬醛b(neral)组成，具有强烈的柠檬香气。",
+      "sources": ["PubChem", "Journal of Essential Oil Research"]
+    },
+    {
+      "compound": "Citronellal",
+      "class": "monoterpene aldehyde", 
+      "role": "citrus aroma/insect repellent",
+      "notes": "占挥发油的5-25%，提供清新的柑橘香气，具有天然驱虫效果，是柠檬香蜂草驱蚊特性的来源。",
+      "sources": ["Natural Product Research", "Phytochemistry"]
+    },
+    {
+      "compound": "Rosmarinic acid",
+      "class": "phenolic acid",
+      "role": "antioxidant/anti-inflammatory",
+      "notes": "重要的酚酸类化合物，占干重的3-4%，具有强抗氧化和抗炎作用，是柠檬香蜂草药用价值的主要来源。",
+      "sources": ["Journal of Ethnopharmacology", "Phytomedicine"]
+    },
+    {
+      "compound": "Caffeic acid",
+      "class": "phenolic acid",
+      "role": "antioxidant/antimicrobial",
+      "notes": "与迷迭香酸协同作用，增强抗氧化效果，同时具有抗菌和抗病毒活性，传统上用于治疗感冒。",
+      "sources": ["Food Chemistry", "Natural Product Chemistry"]}
+  ],
+  "culinary_uses": [
+    "herbal tea",
+    "fruit salads",
+    "desserts",
+    "cocktails", 
+    "fish dishes",
+    "marinades",
+    "herb butter"
+  ],
+  "storage": "新鲜柠檬香蜂草叶片较薄嫩，需轻柔处理，冷藏可保存3-5天。干燥后柠檬香气会减弱但仍保持草本香，密封避光可保存8-12个月。最佳保存方式是冷冻或制成香草冰块。",
+  "lookalikes": [
+    {
+      "name": "Mentha species (薄荷属)",
+      "how_to_tell": "薄荷叶片边缘有锯齿，气味清凉薄荷味；柠檬香蜂草叶缘钝齿，气味为柠檬香无清凉感。"
+    },
+    {
+      "name": "Nepeta cataria (猫薄荷)",
+      "how_to_tell": "猫薄荷叶片心形且有白色绒毛，气味独特；柠檬香蜂草叶片卵形光滑，明显的柠檬香气。"
+    }
+  ],
+  "references": [
+    {
+      "title": "Plants of the World Online: Melissa officinalis",
+      "org": "Kew Gardens", 
+      "year": 2024,
+      "url": "https://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:458484-1"
+    },
+    {
+      "title": "Lemon Balm (Melissa officinalis) for Cognitive Function",
+      "org": "Cochrane Reviews",
+      "year": 2023,
+      "url": "https://www.cochranelibrary.com/cdsr/reviews"
+    },
+    {
+      "title": "Essential Oil Composition of Melissa officinalis",
+      "org": "Journal of Essential Oil Research", 
+      "year": 2023,
+      "url": "https://www.tandfonline.com/toc/tjeo20/current"
+    }
+  ],
+  "tags": ["aromatic", "perennial", "culinary", "medicinal", "Lamiaceae"],
+  "key_features": "多年生草本；方茎、心形锯齿叶、白花；轻揉叶片散发浓郁柠檬香，具天然镇静和驱虫效果。",
+  "difficulty": "容易（耐寒耐阴，自播繁殖强）",
+  "morphology_content": "柠檬香蜂草（Melissa officinalis）为唇形科蜜蜂花属多年生草本植物，株高30-80厘米，具有旺盛的繁殖能力。茎直立，四方形，多分枝，幼茎绿色光滑，老茎基部略木质化。节间明显，茎表面有细纵棱。整株植物具有浓郁的柠檬香气，轻触即可闻到。\n\n叶片对生，卵形至心形，长2-8厘米，宽1.5-5厘米，先端钝尖，基部心形或圆形。叶缘具钝锯齿，齿端略圆，不如薄荷锯齿尖锐。叶面深绿色，有明显的叶脉纹理，表面光滑但有细小腺点；叶背颜色较浅，有短柔毛。叶柄长5-25毫米，有浅槽。轻揉叶片立即散发强烈的柠檬香气，夹杂轻微的草本香，无薄荷的清凉感。\n\n花序为腋生的轮伞花序，通常6-12朵花组成，沿茎轴排列形成间断的穗状花序。花小，长约1厘米，花冠白色、淡黄色或淡粉色，二唇形，上唇2裂，下唇3裂；雄蕊4枚，2长2短；花萼钟形，有13脉。花期6-9月，花朵富含花蜜，是重要的蜜源植物。果实为4枚小坚果，卵形，长约1.5毫米，棕色光滑。\n\n根系发达，为匍匐根茎，具有强大的扩展能力，常形成大片群落。在适宜条件下可通过根茎和自播种子快速繁殖，有时会变得侵略性。冬季地上部分枯萎，根系安全越冬，早春重新萌发。",
+  "lookalike_comparison": "与薄荷属植物（Mentha spp.）区分：薄荷叶缘锯齿尖锐，茎常带紫色，气味清凉带薄荷醇；柠檬香蜂草叶缘钝齿，茎绿色，气味为纯柠檬香无清凉感。与猫薄荷（Nepeta cataria）区分：猫薄荷叶片心形且覆盖白色绒毛，花序密集，气味独特刺鼻；柠檬香蜂草叶片卵形光滑，花序疏散，明显柠檬香。与紫苏（Perilla frutescens）区分：紫苏叶片常带紫色，边缘粗锯齿，气味辛香；柠檬香蜂草叶片绿色，细钝齿，柠檬香明显。与马鞭草（Verbena officinalis）区分：马鞭草茎有棱角，叶片3裂，花序细长；柠檬香蜂草茎四方形，叶片完整，花序短而密。",
+  "varieties_content": "- **Common Lemon Balm（普通柠檬香蜂草）**：最常见的园艺品种，柠檬香气浓郁持久，叶片中等大小，适应性强。\n- **Citronella（香茅型）**：柠檬香气特别强烈，富含柠檬醛，驱虫效果最佳，叶片略小但香气浓度高。\n- **Lime Balm（青柠型）**：香气偏向青柠味，清新度更高，适合调制饮品和夏季料理，耐热性较好。\n- **Gold Leaf（金叶型）**：观赏型品种，叶片边缘或全叶呈金黄色，春季最明显，香气中等但观赏价值高。\n- **Variegata（花叶型）**：叶片有奶白色斑纹，观赏性佳，香气略淡，适合花境和容器种植。\n- **Compacta（紧凑型）**：植株矮小紧密，适合小空间和室内种植，香气浓缩。\n\n选择建议：家庭种植推荐Common品种，用途广泛；驱虫需求选择Citronella；观赏花园可选Gold Leaf或Variegata；小空间种植选Compacta。不同品种在化学组成上略有差异，但基本用途相似。",
+  "chemistry_content": "柠檬香蜂草的挥发油含量相对较低，约为0.02-0.3%，但香气极为浓郁，主要化学成分包括：\n\n- **Citral（柠檬醛）**：是柠檬香蜂草最重要的特征成分，占挥发油的40-70%。实际上是柠檬醛a（香叶醛，geranial）和柠檬醛b（橙花醛，neral）的混合物，比例约为60:40。这种化合物赋予植物强烈的柠檬香气，同时具有抗菌、抗病毒和轻微镇静作用。\n\n- **Citronellal（香茅醛）**：占挥发油的5-25%，提供更清新的柑橘香气，具有天然驱虫特性，特别对蚊虫有效。这也是柠檬香蜂草被称为天然驱虫植物的原因。\n\n- **Rosmarinic acid（迷迭香酸）**：虽然不是挥发性成分，但是柠檬香蜂草最重要的活性化合物之一，含量可达干重的3-4%。具有强大的抗氧化、抗炎和抗病毒作用，是其药用价值的主要来源。\n\n- **Caffeic acid（咖啡酸）**：重要的酚酸类化合物，与迷迭香酸协同作用，增强抗氧化效果。\n\n其他成分还包括β-石竹烯、香叶醇、里哪醇等。值得注意的是，柠檬香蜂草的化学组成受环境因素影响很大：日照充足时柠檬醛含量更高；土壤湿润时迷迭香酸含量增加；收获时间也很关键，花期前采收香气最佳。干燥会显著降低挥发油含量，因此新鲜使用效果最佳。",
+  "culinary_content": "柠檬香蜂草在烹饪中以其独特的柠檬香气著称，是制作柠檬风味料理的天然替代品。在饮品方面，柠檬香蜂草茶是最经典的用途，可单独冲泡或与其他香草混合，具有天然的镇静效果，适合睡前饮用。新鲜叶片可用于调制鸡尾酒和夏日清凉饮品，与柠檬汁、蜂蜜搭配制作天然柠檬水。\n\n在甜点制作中，柠檬香蜂草是优秀的天然香料：可制作香草糖浆、果酱和冰淇淋；与水果沙拉搭配，特别是与浆果、桃子、杏子等夏季水果；制作柠檬香蜂草司康饼、马德琳蛋糕等烘焙食品。在咸味料理中，新鲜叶片适合搭配鱼类和海鲜，其柠檬香气能去腥增鲜；用于制作沙拉调料和腌料；与鸡肉搭配制作地中海风味料理。\n\n使用技巧：\n- 新鲜叶片香气最佳，应避免长时间加热以保持柠檬香气\n- 制作热饮时，用80°C左右的水冲泡，过热会破坏香气\n- 可制作柠檬香蜂草黄油，冷藏保存用于烤面包或蒸蔬菜\n- 与薄荷、罗勒等其他香草搭配使用效果更佳\n- 干燥的柠檬香蜂草虽然香气减弱，但仍可用于长时间炖煮的菜肴\n\n储存使用：新鲜叶片极易枯萎，应现采现用；可制成香草冰块保存香气；干燥后适合制作茶包和调料粉。",
+  "storage_methods": "**新鲜保存**：柠檬香蜂草叶片含水量高且质地娇嫩，极易失水枯萎。最佳保存方法是将整枝插入盛水的杯中，如同鲜花般处理，然后套上塑料袋保湿，置于冰箱冷藏，可保持3-5天新鲜。或用湿润的厨房纸巾轻柔包裹叶片，放入透气保鲜袋中冷藏。**快速干燥**：选择晴天早晨露水干后采收，将完整枝条用橡皮筋扎成小束，倒挂在通风阴凉处快速干燥，避免直射阳光。由于叶片较薄，1-2周即可完全干燥。**低温干燥**：使用食物脱水机30-35°C低温干燥4-8小时，可最大程度保持柠檬香气。**冷冻保存**：新鲜叶片可直接冷冻，虽然质地会改变但香气保留良好；更好的方法是切碎后与少量水混合制成香草冰块，使用时非常方便。**制作浸膏**：新鲜叶片浸入高度白酒中制成柠檬香蜂草酊剂，或浸入蜂蜜中制成香草蜂蜜。**油浸保存**：新鲜叶片浸入橄榄油中，密封后置于冰箱，2-3周后过滤得到香草油。干燥的柠檬香蜂草应立即装入密封的深色玻璃罐中，避光避湿保存，可保持香气8-12个月。",
+  "toxicology_content": "柠檬香蜂草是安全性极高的香草植物，几乎没有毒副作用。正常食用和饮茶完全安全，适合各年龄段人群。不过仍有几个需要注意的方面：甲状腺功能减退患者应谨慎使用，因为柠檬香蜂草可能进一步抑制甲状腺功能，特别是长期大量使用时。怀孕期间适量使用是安全的，传统上甚至用于缓解孕期恶心，但应避免过量。哺乳期妇女可以正常使用，柠檬香蜂草茶还有助于放松和改善睡眠质量。柠檬香蜂草具有温和的镇静作用，与镇静类药物同时使用时可能增强效果，应注意观察。极少数人可能对柠檬香蜂草过敏，表现为皮肤瘙痒或胃肠不适，初次使用建议少量尝试。长期大量饮用柠檬香蜂草茶理论上可能影响血糖，糖尿病患者应适度使用并监测血糖变化。总体而言，柠檬香蜂草是最安全的香草之一，副作用极少，是家庭常备的理想植物。",
+  "images": [
+    {
+      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Melissa_officinalis_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-094.jpg/512px-Melissa_officinalis_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-094.jpg",
+      "title": "Lemon Balm botanical illustration",
+      "author": "Franz Eugen Köhler",
+      "license": "Public Domain",
+      "source": "Wikimedia Commons",
+      "caption": "Botanical illustration showing lemon balm's characteristic serrated leaves and flower structure"
+    }
+  ]
+}

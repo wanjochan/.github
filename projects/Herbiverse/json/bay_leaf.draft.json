@@ -1,0 +1,163 @@
+{
+  "error": "'bay_leaf' does not match '^[a-z-]+$'\n\nFailed validating 'pattern' in schema['properties']['id']:\n    {'type': 'string', 'pattern': '^[a-z-]+$'}\n\nOn instance['id']:\n    'bay_leaf'",
+  "record": {
+    "id": "bay_leaf",
+    "cn_name": "月桂叶",
+    "en_name": "Bay Leaf",
+    "scientific_name": "Laurus nobilis",
+    "category": "edible",
+    "edible_parts": [
+      "leaves"
+    ],
+    "toxicity": {
+      "status": "safe",
+      "toxic_parts": [],
+      "notes": "叶片烹饪安全，但须烹饪后取出，避免整叶吞咽造成消化道损伤。注意与有毒的山月桂（Kalmia latifolia）区分。",
+      "sources": [
+        "FDA GRAS",
+        "Kew Gardens",
+        "European Food Safety Authority"
+      ]
+    },
+    "cultivation": {
+      "hardiness": "USDA 8-10",
+      "sun": "full sun to partial shade",
+      "soil": "well-drained, sandy loam",
+      "pH": "6.5-7.5",
+      "watering": "深度浇水但间隔时间长，避免积水；成株具一定耐旱性；冬季减少浇水频率。",
+      "propagation": [
+        "semi-hardwood cuttings",
+        "seed",
+        "layering"
+      ],
+      "companion": [
+        "rosemary",
+        "thyme",
+        "olive"
+      ],
+      "pests": [
+        "scale insects",
+        "bay psyllid",
+        "anthracnose"
+      ]
+    },
+    "varieties": [
+      {
+        "name": "Turkish Bay (Laurus nobilis)"
+      },
+      {
+        "name": "California Bay (Umbellularia californica)"
+      },
+      {
+        "name": "Indian Bay (Cinnamomum tamala)"
+      },
+      {
+        "name": "West Indian Bay (Pimenta racemosa)"
+      }
+    ],
+    "chemistry": [
+      {
+        "compound": "1,8-Cineole",
+        "class": "monoterpene oxide",
+        "role": "primary aroma",
+        "notes": "占精油成分45-50%，提供典型的桉树样清香与穿透性，是月桂叶香气识别的关键成分。",
+        "sources": [
+          "Journal of Essential Oil Research",
+          "Phytochemistry"
+        ]
+      },
+      {
+        "compound": "Eugenol",
+        "class": "phenylpropene",
+        "role": "warm spice note",
+        "notes": "贡献丁香样温暖香气，与1,8-桉叶油醇形成层次平衡，增强整体香气复杂度。",
+        "sources": [
+          "PubChem",
+          "Essential Oil Research"
+        ]
+      },
+      {
+        "compound": "Alpha-pinene",
+        "class": "monoterpene",
+        "role": "fresh piney note",
+        "notes": "提供松针样清新气息，在地中海月桂中含量较高，与烘焙香料具有良好协调性。",
+        "sources": [
+          "Phytochemical Analysis",
+          "Food Chemistry"
+        ]
+      }
+    ],
+    "culinary_uses": [
+      "bouquet garni",
+      "stocks and broths",
+      "stews and braises",
+      "biryani and pilaf",
+      "pickling and marinades",
+      "slow-cooked dishes"
+    ],
+    "storage": "新鲜叶片应冷藏保存，用湿纸巾包裹可延长保鲜期；干燥叶片密封储存于阴凉干燥处，避光保存可维持香气12-18个月；研磨成粉末会快速失香，建议使用前现磨。",
+    "lookalikes": [
+      {
+        "name": "Kalmia latifolia (Mountain Laurel/山月桂)",
+        "how_to_tell": "山月桂叶片更宽且有毒，花为粉红色簇状；真月桂叶片狭长、革质，花小黄绿色。绝不可混淆！"
+      },
+      {
+        "name": "Prunus laurocerasus (Cherry Laurel/樱桃月桂)",
+        "how_to_tell": "樱桃月桂叶片更大更厚，有轻微杏仁味，含氰化物有毒；真月桂叶片较小，香气清香无苦杏仁味。"
+      },
+      {
+        "name": "Rhododendron maximum (Great Laurel/大杜鹃)",
+        "how_to_tell": "大杜鹃叶背有锈色绒毛，叶片更宽大且有毒；真月桂叶片光滑无毛，狭椭圆形。"
+      }
+    ],
+    "images": [],
+    "references": [
+      {
+        "title": "Plants of the World Online: Laurus nobilis",
+        "org": "Kew Gardens",
+        "year": 2024,
+        "url": "https://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:325198-2"
+      },
+      {
+        "title": "GRAS Substances (SCOGS) Database: Bay leaves",
+        "org": "FDA",
+        "year": 2023,
+        "url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-substances-scogs-database"
+      },
+      {
+        "title": "Essential oil composition of Laurus nobilis L. leaves",
+        "org": "Journal of Essential Oil Research",
+        "year": 2022,
+        "url": "https://doi.org/10.1080/10412905.2022.2058895"
+      },
+      {
+        "title": "Phytochemical analysis and biological activities of Laurus nobilis",
+        "org": "Phytotherapy Research",
+        "year": 2021,
+        "url": "https://doi.org/10.1002/ptr.7089"
+      },
+      {
+        "title": "Mediterranean aromatic plants and their culinary use",
+        "org": "Food Chemistry",
+        "year": 2023,
+        "url": "https://doi.org/10.1016/j.foodchem.2023.135467"
+      }
+    ],
+    "tags": [
+      "aromatic",
+      "evergreen",
+      "culinary",
+      "Lauraceae",
+      "Mediterranean"
+    ],
+    "key_features": "常绿灌木或小乔木；革质椭圆形叶片，揉碎具强烈芳香；小黄花簇生。",
+    "difficulty": "中等（需温暖气候）",
+    "morphology_content": "月桂（Laurus nobilis）为樟科月桂属常绿灌木或小乔木，原产地中海沿岸，在适宜环境下可达10-18米高，盆栽通常控制在2-5米。树皮灰褐色，光滑；幼枝绿色，具纵向浅沟。叶片革质，椭圆形至倒卵状椭圆形，长5-10厘米，宽2-4厘米，先端急尖，基部楔形，全缘略呈波状，叶面深绿色具光泽，叶背较淡；主脉明显，侧脉羽状；叶柄短粗，长约1厘米。揉碎叶片散发浓郁芳香，具桉叶样穿透性香气。\n\n花单性，雌雄异株，花小而不显著，黄绿色，4-6朵聚生成伞形花序，腋生；花被片4，雄花具雄蕊8-12；花期春季3-5月。果实为浆果状核果，椭圆形，成熟时黑色，长约1-1.3厘米；种子1枚。根系发达，主根深扎，侧根横向分布广泛，具强韧的适应性。\n\n在形态识别上，月桂叶片的革质特征、椭圆形轮廓和揉碎后的特征性芳香是关键识别点。与其他\"月桂\"植物相比，真月桂叶片相对较小且狭长，香气清香无毒性；而山月桂等有毒植物叶片通常更宽大，且缺乏这种特征性的烹饪香气。",
+    "lookalike_comparison": "月桂最危险的混淆对象是山月桂（Kalmia latifolia）和樱桃月桂（Prunus laurocerasus），两者都有毒。山月桂叶片更宽大，叶缘内卷，花为粉红色簇状，含有毒的木藜芦毒素；樱桃月桂叶片更大更厚，揉碎有苦杏仁味，含氰化物。真月桂叶片狭长、革质光滑，香气清香怡人，绝无苦味。野外采集时务必谨慎辨识，建议仅使用确认无疑的栽培品种。",
+    "varieties_content": "- Turkish Bay (Laurus nobilis)：正宗地中海月桂，香气浓郁平衡，1,8-桉叶油醇含量高，是国际烹饪标准用材。叶片较小，香气细腻持久，适合长时间炖煮。\n- California Bay (Umbellularia californica)：加州月桂，香气更强烈刺激，含有大量1,8-桉叶油醇和樟脑，味道更为浓重。叶片稍大，需减少用量，适合短时间调味。\n- Indian Bay (Cinnamomum tamala)：印度月桂，实为樟科肉桂属，香气带肉桂调性，常用于印度香料混合物。叶片更大，脉络明显，香气温暖甘甜。\n- West Indian Bay (Pimenta racemosa)：西印度月桂，为桃金娘科，香气类似众香子，带有丁香和肉豆蔻调性。主要用于制作Bay Rum。",
+    "chemistry_content": "月桂叶的芳香主要来自其丰富的挥发油，含量约为1-3%，主要成分包括：\n- 1,8-Cineole（桉叶油醇）：占总挥发油的45-50%，是月桂香气的主导成分，提供清凉、穿透性强的桉树样香气。此化合物具有良好的抗菌性和保鲜效果，也是月桂叶在食品保存中的功能基础。\n- Eugenol（丁香酚）：占5-15%，贡献温暖的丁香样香气，与桉叶油醇的清凉形成很好的平衡，增加香气的复杂度和温暖感。\n- Alpha-pinene（α-蒎烯）：占8-12%，提供松针样的清新气息，特别是在地中海产区的月桂中含量较高。\n- Sabinene（桧烯）：占3-8%，带来轻微的胡椒样辛辣感。\n- Beta-pinene（β-蒎烯）和Myrcene（月桂烯）等：提供额外的层次和复杂性。\n\n这些化学成分在不同产地、季节和处理方式下会有显著变化，影响最终的香气表现和烹饪适用性。干燥过程中某些挥发性成分会减少，但主要的香气骨架成分相对稳定。",
+    "culinary_content": "月桂叶是欧洲古典烹饪的基础香料之一，其使用历史可追溯至古希腊罗马时期。在法式烹饪中，月桂叶是bouquet garni（香草束）的核心成分，与百里香、欧芹一同使用，为汤品、炖菜和酱汁提供深层香气基础。其独特的桉叶样香气能够穿透浓郁的肉汁和蔬菜甜味，带来清新的提升。\n\n在制作高汤时，月桂叶通常在开始阶段加入，经过长时间加热释放香气精华；制作酱汁时则在middle stage加入，避免过早加入导致苦味。意式烹饪中，月桂叶常用于Ragu肉酱、Osso Buco等慢炖菜肴，与番茄酸度和肉类鲜味形成很好的平衡。\n\n印度菜系中，月桂叶是Biryani（手抓饭）和各类Curry的重要香料，通常与肉桂、豆蔻等温性香料配合，在起锅时需要挑出。中东菜系中常用于腌制肉类和制作Pilaf。现代分子美食学中，月桂叶精油被用于制作香气胶囊和泡沫，带来innovative的感官体验。\n\n烹饪要点：新鲜叶片香气更加清新但较温和，干叶片香气浓缩、更加持久；整叶加入便于取出，切碎或研磨会释放更多香气但难以分离；长时间加热（超过2小时）可能产生轻微苦味，需适当控制。绝对禁止整叶食用，其革质纤维可能造成消化道损伤。",
+    "storage_methods": "新鲜月桂叶：冷藏保存，用湿纸巾轻包后置于密封袋中，可保鲜7-10天；或插入清水中如插花保存，套塑料袋保湿，可延长至2周。干燥月桂叶：密封储存于阴凉干燥处，避免阳光直射，properly stored可保持香气12-18个月；整叶储存优于碎叶，能更好地保持精油不挥发。冷冻保存：新鲜叶片可直接冷冻，使用时无需解冻直接加入烹饪；制作月桂油：将叶片浸泡于橄榄油中密封保存，既延长保质期又制得调味油。避免研磨储存：月桂粉末会迅速失香，建议使用前现磨。检查品质：干叶应保持绿色，如变黄褐色或失去香气则应更换。",
+    "toxicology_content": "月桂叶在正常烹饪用量下是安全的，被FDA列为GRAS（一般认为安全）物质。但需注意以下几点：整叶误食风险：月桂叶革质坚硬，整叶吞食可能造成食道或肠道阻塞、划伤，因此烹饪后必须取出。精油浓缩风险：月桂精油浓度极高，不应直接口服，大量摄入可能引起中枢神经系统抑制。皮肤敏感：部分人群对月桂叶汁液敏感，接触后可能引起接触性皮炎。孕期谨慎：虽然烹饪用量安全，但孕期妇女应避免大量摄入或使用浓缩制品。宠物安全：对猫狗等宠物可能有轻微毒性，应避免宠物接触。最重要的是与有毒植物的区分：绝不可与山月桂、樱桃月桂等有毒'月桂'混淆，这些植物含有严重毒素，可致命。"
+  }
+}
