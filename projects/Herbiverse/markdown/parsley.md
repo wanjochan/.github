@@ -1,5 +1,8 @@
 # 欧芹 | Parsley | *Petroselinum crispum*
 
+![Parsley varieties](https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Parsley_flat_curly_varieties.jpg/640px-Parsley_flat_curly_varieties.jpg)
+*Flat-leaf parsley (left) and curly-leaf parsley (right) showing the main varieties*
+
 | 属性 | 内容 |
 |------|------|
 | 中文名 | 欧芹 |
@@ -36,6 +39,12 @@
 - Curly leaf（卷叶欧芹）：质地紧致、观赏性强，适合作为装饰或需要体积感的冷盘；风味相对温和。
 - Hamburg root parsley（根欧芹）：以根供食，口感类似胡萝卜与欧洲萝卜之间，适合烤、炖或做汤底，叶片亦可少量作香草使用。
 
+![Parsley flowers](https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/Petroselinum_crispum_flowers.jpg/640px-Petroselinum_crispum_flowers.jpg)
+*Parsley flowers in second year - typical umbel formation of apiaceae family*
+
+![Hamburg parsley root](https://upload.wikimedia.org/wikipedia/commons/thumb/h/h2/Hamburg_parsley_root.jpg/640px-Hamburg_parsley_root.jpg)
+*Hamburg parsley showing the edible thick white root used as a vegetable*
+
 ## 4. 化学成分与风味
 
 欧芹叶片富含类黄酮（如 apigenin 及其苷），贡献抗氧化能力与轻微苦味基调；精油中含 myristicin、apiol 等苯丙烯类与萜类，带来温暖辛香的底色。值得注意的是，这些成分在品种、栽培环境与收获阶段显著波动。营养角度，欧芹以维生素K、维生素C与维生素A（以β-胡萝卜素/叶黄素等类胡萝卜素形式）含量突出：
@@ -56,6 +65,9 @@
 ### 保存方法
 
 短存：湿纸巾包裹后入透气袋冷藏，或插水杯并松覆塑料袋保持湿度。长期：细切与橄榄油混合后装入冰格冷冻；亦可调制欧芹青酱分装冷冻。避免长时间高温干燥以免香气锐减。
+
+![Dried parsley](https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Dried_parsley_flakes.jpg/640px-Dried_parsley_flakes.jpg)
+*Dried parsley flakes - less flavorful than fresh but convenient for long storage*
 
 ## 6. 毒理与禁忌
 

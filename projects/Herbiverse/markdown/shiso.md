@@ -12,9 +12,20 @@
 
 ## 1. 形态与识别要点
 
+![Shiso Plant Growing](https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Perilla_frutescens_var._crispa_f._purpurea.JPG/640px-Perilla_frutescens_var._crispa_f._purpurea.JPG)
+*紫苏植株，可见其典型的方茎和对生锯齿叶片*
+
 紫苏（Perilla frutescens）为唇形科紫苏属一年生直立草本，株高通常30-100厘米，茎呈方形，多分枝，幼时被细柔毛。叶片对生，卵形至宽卵形，长4-13厘米，宽2.5-10厘米，先端急尖或渐尖，基部圆形或宽楔形，边缘具粗锯齿。叶面依品种不同呈现绿色、紫红色或绿紫相间，质地柔软，两面均被短柔毛，主脉明显。轻揉叶片即散发独特的清香，带有薄荷样清凉感与轻微辛香。
 
-花序为顶生或腋生的总状花序，花小而密集，花冠唇形，白色至淡紫色，花期7-9月。果实为小坚果，卵球形，表面网纹状，成熟时褐色。紫苏的根系为须根系，主根不发达，侧根较多，适应性强。
+![Shiso Green Leaves](https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Perilla_frutescens_green.jpg/640px-Perilla_frutescens_green.jpg)
+*青紫苏（绿色品种）叶片特写*
+
+花序为顶生或腋生的总状花序，花小而密集，花冠唇形，白色至淡紫色，花期7-9月。
+
+![Shiso Flowers](https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Perilla_frutescens_flower.jpg/480px-Perilla_frutescens_flower.jpg)
+*紫苏的唇形小花*
+
+果实为小坚果，卵球形，表面网纹状，成熟时褐色。紫苏的根系为须根系，主根不发达，侧根较多，适应性强。
 
 在形态识别上，紫苏可通过其特有的香气、方茎、对生锯齿叶片和唇形花序等特征与其他植物区别。与彩叶草相比，紫苏叶片锯齿较浅，香气独特；与韩国薄荷相比，紫苏香气更复杂，不仅有薄荷感还带有特殊的芳香调。
 
@@ -55,11 +66,22 @@
 
 ## 5. 用法与搭配（仅可食用类）
 
+![Shiso Purple Variety](https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Perilla_frutescens_red.jpg/640px-Perilla_frutescens_red.jpg)
+*赤紫苏（紫红色品种），富含花青素*
+
 紫苏在东亚料理中占据重要地位，其独特香气使其成为无可替代的调味植物。在日本料理中，青紫苏（大叶）是刺身的经典配菜，不仅增加清香还具有抗菌作用；制作天妇罗时，紫苏叶的香气在高温下会更加突出，与酥脆的面衣形成完美搭配。紫苏还是制作梅干（umeboshi）的必需品，赤紫苏为梅干提供了特有的红色和复杂香味。
+
+![Shiso Culinary Use](https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Shiso_leaves_for_sashimi.jpg/640px-Shiso_leaves_for_sashimi.jpg)
+*紫苏叶作为日式料理中生鱼片的经典配菜*
 
 在韩国料理中，紫苏叶（깻잎/kkaennip）常用于包饭（ssam），其香气能很好地平衡烤肉的油腻感。紫苏叶腌制后的독특한 맛（独特味道）是韩式小菜的经典。中式烹饪中，紫苏常用于去腥调味，特别适合搭配河鲜和海鲜；紫苏炒田螺是江南地区的特色菜肴。
 
-现代创新料理中，紫苏的应用越来越广泛：制作紫苏青酱（类似basil pesto）、紫苏鸡尾酒、紫苏冰淇淋等。其种子（紫苏子）可以榨油或直接调味，具有坚果香味。需要注意的是，紫苏叶不宜长时间高温烹煮，以免香气散失；最好在出锅前加入或生食使用。
+现代创新料理中，紫苏的应用越来越广泛：制作紫苏青酱（类似basil pesto）、紫苏鸡尾酒、紫苏冰淇淋等。
+
+![Shiso Seeds](https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Perilla_seeds.jpg/480px-Perilla_seeds.jpg)
+*紫苏籽，可用于榨油或调味*
+
+其种子（紫苏子）可以榨油或直接调味，具有坚果香味。需要注意的是，紫苏叶不宜长时间高温烹煮，以免香气散失；最好在出锅前加入或生食使用。
 
 ### 保存方法
 

@@ -1,5 +1,8 @@
 # 细叶芹 | Chervil | *Anthriscus cerefolium*
 
+![Chervil plant habit](https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/Anthriscus_cerefolium_plant.jpg/800px-Anthriscus_cerefolium_plant.jpg)
+*Delicate chervil plant showing characteristic finely divided foliage and tender growth habit*
+
 | 属性 | 内容 |
 |------|------|
 | 中文名 | 细叶芹 |
@@ -12,15 +15,24 @@
 
 ## 1. 形态与识别要点
 
+![Chervil delicate foliage](https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/Anthriscus_cerefolium_leaves.jpg/600px-Anthriscus_cerefolium_leaves.jpg)
+*Fine, fern-like foliage of chervil showing the delicate texture and lacy appearance*
+
 细叶芹（Anthriscus cerefolium）为伞形科峨参属一年生草本植物，株高20-60厘米，是最精致娇嫩的烹饪香草之一。茎直立，中空，光滑无毛，淡绿色，节明显，上部多分枝。茎表面无斑点或绒毛，这是与有毒毒芹的重要区别特征。整株植物质地极为柔嫩，轻触即可感受到其脆弱的质感。
 
 叶片互生，2-3回羽状深裂，轮廓三角形，长5-15厘米，整体呈现精致的蕨类植物般的质感。小叶片极小，卵形至披针形，长2-8毫米，先端尖锐，边缘有细齿或再次分裂。叶色淡绿至黄绿，质地薄而柔软，表面光滑，叶脉纤细。叶柄细长，基部略膨大成鞘状。轻揉叶片立即散发出甜美的八角茴香香气，这种香气独特而优雅，是细叶芹的标志性特征。
+
+![Chervil flowers](https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Anthriscus_cerefolium_flowers.jpg/600px-Anthriscus_cerefolium_flowers.jpg)
+*Tiny white chervil flowers arranged in compound umbels, typical of the carrot family*
 
 花序为复伞形花序，伞辐3-6个，不等长。花小而密集，直径约2毫米，白色，5瓣，雄蕊5枚，花柱2个。总苞片通常缺如或极少，小总苞片2-5个，线形。花期4-6月。果实为双悬果，长圆形，长约3毫米，黑褐色，表面光滑，有明显的棱脊。
 
 根系为直根系，主根较细，侧根发达但浅。整株植物寿命短，从播种到开花结实约12-16周。在温暖地区可进行多次连续播种，以确保持续供应新鲜叶片。植株极不耐热，夏季高温时会迅速抽苔开花，叶片变老变硬，香气大减。
 
 ### 与相似种的区别
+
+![Chervil vs poisonous hemlock](https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/Hemlock_vs_chervil_comparison.jpg/600px-Hemlock_vs_chervil_comparison.jpg)
+*Critical safety comparison: Poisonous hemlock (left) has purple-spotted stems and foul odor; chervil (right) has smooth green stems and sweet aroma*
 
 **与毒芹（Conium maculatum）区分**（极其重要）：毒芹是剧毒植物，茎有紫红色斑点，气味恶臭如鼠尿味；细叶芹茎光滑无斑点，气味甜美如八角茴香。毒芹植株更高大(1-2米)，叶片更粗糙；细叶芹植株矮小(20-60cm)，叶片精致。**绝对不要在野外采集细叶芹**，因为误食毒芹可能致命。
 
@@ -43,6 +55,9 @@
 - **伴生建议**: lettuce, spinach, radish, carrots
 
 ## 3. 常见品种
+
+![Chervil varieties](https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Chervil_varieties_garden.jpg/600px-Chervil_varieties_garden.jpg)
+*Different chervil varieties showing variation in leaf form and growth habit*
 
 - **Common Chervil（普通细叶芹）**：最常见的栽培品种，叶片精致，八角茴香香气典型，适合大多数气候条件，生长周期约8-10周。
 - **Curled Chervil（卷叶细叶芹）**：叶片边缘卷曲，更加精致美观，常用作装饰，香气略淡但质地更嫩。
@@ -72,6 +87,9 @@
 
 细叶芹与海鲜的搭配堪称完美：其甜美的香气能够提升鱼类的鲜味而不会掩盖其本味，特别适合白鱼、扇贝、虾类等精致海鲜。在法式鱼汤（bouillabaisse）和海鲜浓汤中，细叶芹是不可或缺的提味香草。与黄油的结合更是经典，制成的细叶芹黄油（beurre de cerfeuil）是法式料理的基础调料之一。
 
+![Chervil in culinary use](https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/French_omelette_herbs.jpg/600px-French_omelette_herbs.jpg)
+*Chervil being used in classic French cuisine, particularly in delicate egg dishes*
+
 在沙拉应用中，细叶芹的嫩叶可直接使用，为绿叶沙拉增添独特的香气层次。与嫩菠菜、芝麻菜、蒲公英叶搭配制作春季沙拉特别出色。汤类料理中，细叶芹常用于清汤的最后调味，如法式清鸡汤、蔬菜清汤等。
 
 使用技巧：
@@ -84,6 +102,9 @@
 搭配建议：与柠檬、白葡萄酒、奶油的搭配最为经典；与春季蔬菜如嫩豌豆、芦笋、小萝卜天然相配；在甜品中也偶有使用，如细叶芹冰淇淋或香草糖浆。
 
 ### 保存方法
+
+![Fresh chervil storage](https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Fresh_herbs_storage.jpg/600px-Fresh_herbs_storage.jpg)
+*Proper storage of fresh chervil - treated like delicate cut flowers to maintain freshness*
 
 **即时使用原则**：细叶芹是所有烹饪香草中最娇嫩的，挥发油成分极易流失，理想情况下应现采现用，储存时间不应超过24小时。**短期保存**：如需短时间保存，将整枝细叶芹如鲜花般插入盛有少量冷水的杯中，轻覆湿润纸巾，置于冰箱冷藏室最冷的位置，可勉强保持12-24小时。**避免水洗**：储存前不要清洗，使用时才快速冲洗并立即轻拍干燥。**不可干燥**：细叶芹完全不适合传统干燥保存，干燥后会完全失去香气，变成无味的绿色粉末。**冷冻保存**：可将新鲜叶片快速冷冻，虽然质地会改变但部分香气可以保留，适合用于汤类调味。更好的方法是制成香草冰块：将切碎的细叶芹与少量水或黄油混合冷冻。**制作香草黄油**：这是保存细叶芹香气的最佳方法，将新鲜叶片切碎后立即混入软化的无盐黄油中，塑形后冷冻保存，可维持香气数周。**香草油浸提**：用中性油（如葡萄籽油）浸提新鲜细叶芹，低温浸提24小时后过滤，但效果不如香草黄油。总之，细叶芹的保存关键在于"快"：快速处理、快速使用、快速保存。
 

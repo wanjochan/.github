@@ -1,5 +1,8 @@
 # 铃兰 | Lily of the Valley | *Convallaria majalis*
 
+![Lily of the valley flowers](https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Convallaria_majalis_flowers.jpg/640px-Convallaria_majalis_flowers.jpg)
+*Lily of the valley's characteristic bell-shaped white flowers hanging from arched stems*
+
 | 属性 | 内容 |
 |------|------|
 | 中文名 | 铃兰 |
@@ -12,11 +15,24 @@
 
 ## 1. 形态与识别要点
 
+铃兰（Convallaria majalis）为天门冬科铃兰属多年生草本植物，原产欧洲、亚洲和北美洲的温带和亚寒带地区。植株高度通常15-25厘米，具有地下匍匐根茎，在适宜环境下可形成大片群落。叶片通常2-3片，基生，椭圆形至宽披针形，长10-25厘米，宽3-8厘米，先端急尖，基部渐狭成鞘状柄。叶片深绿色，表面光滑有光泽，叶脉平行，质地较厚。
 
+![Lily of the valley plant](https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Convallaria_majalis_plant.jpg/480px-Convallaria_majalis_plant.jpg)
+*Complete lily of the valley plant showing leaves and flower arrangement*
+
+花茎从叶丛中抽出，高度15-20厘米，通常5-15朵花单侧下垂排列。花白色，钟形或壶形，长5-10毫米，花冠6裂，裂片向外卷曲，具浓郁甘美的香气。雄蕊6枚，花丝短，花药黄色。花期5-6月。果实为浆果，球形，直径5-7毫米，成熟时红色，内含1-3粒种子，果期8-9月。
+
+![Lily of the valley berries](https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Convallaria_majalis_berries.jpg/480px-Convallaria_majalis_berries.jpg)
+*Red berries of lily of the valley in autumn - these are highly toxic*
+
+根系为匍匐根茎，节间有不定芽，能够发育成新植株。整株植物在冬季地上部分枯萎，但地下根茎可安全过冬，春季重新萌发。
 
 ### 与相似种的区别
 
+与蜘蛛抱蛋（Aspidistra elatior）区别：蜘蛛抱蛋叶片更大更宽，呈披针形，高可达60厘米，不开花或花极不显著；铃兰叶片较小，花显著且香气浓郁。与雪花莲（Galanthus）区别：雪花莲早春开放，花朵下垂但显著小于铃兰，花瓣有绿色斑点；铃兰春末夏初开放，花朵较大且纯白。与白三七（Trillium）区别：白三七叶片通常3片轮生，花单朵顶生；铃兰叶片基生，花多朵侧向下垂。需要特别注意的是，铃兰全株都含有剧毒的强心苷类化合物，绝不可以食用。
 
+![Lily of the valley habitat](https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Convallaria_majalis_forest.jpg/640px-Convallaria_majalis_forest.jpg)
+*Lily of the valley in its natural woodland habitat*
 
 ## 2. 种植技巧
 

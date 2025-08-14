@@ -1,5 +1,8 @@
 # 莳萝/刁草 | Dill | *Anethum graveolens*
 
+![Dill plant in garden](https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Anethum_graveolens_003.JPG/800px-Anethum_graveolens_003.JPG)
+*Growing dill plant showing characteristic feathery foliage and umbel flowers*
+
 | 属性 | 内容 |
 |------|------|
 | 中文名 | 莳萝/刁草 |
@@ -14,7 +17,16 @@
 
 莳萝（Anethum graveolens）为伞形科莳萝属一年生草本植物，株高通常60–90厘米，在理想条件下可达120厘米。茎直立，圆柱形，光滑无毛，具纵沟纹，常呈蓝绿色调，节间明显。叶片互生，2–4回羽状全裂，裂片线形至丝状，极其细致，长1–3厘米，宽约0.5毫米，质地柔软，色泽蓝绿至深绿。轻触叶片即可闻到清新的茴芹香气，这种香气比茴香更为清淡、更具草本感。
 
+![Dill leaves close-up](https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Anethum_graveolens_leaves_close-up.jpg/640px-Anethum_graveolens_leaves_close-up.jpg)
+*Close-up view of dill's characteristic feathery, thread-like leaves*
+
 花序为复伞形花序，直径5–15厘米，伞辐8–25个，无总苞片或偶有1–2片；小伞形花序具花15–30朵，小花黄色，花瓣5片，卵形，先端内卷。花期通常在夏季6–8月。果实为分果，椭圆形，长3–5毫米，宽2–3毫米，扁平，边缘具翅，成熟时褐色。种子具强烈芳香，是重要的香料来源。
+
+![Dill flowers umbel](https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/Anethum_graveolens_flowers.jpg/640px-Anethum_graveolens_flowers.jpg)
+*Dill's yellow umbel flowers arranged in compound umbels*
+
+![Dill seeds](https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Dill_seeds.jpg/640px-Dill_seeds.jpg)
+*Mature dill seeds showing their characteristic oval shape and ridged surface*
 
 根系为主根系，主根发达但侧根较少，因此移植时需小心处理。植株具有明显的顶端优势，若不及时采收嫩叶，会迅速抽薹开花，此时叶片质地变硬，香气也会发生变化。
 
@@ -61,6 +73,9 @@
 
 **种子应用**：莳萝籽在腌制蔬菜中不可或缺，特别是腌黄瓜（Dill Pickles），其浓郁的香芹酮香气能渗透整个腌制液，赋予蔬菜独特风味。在面包烘焙中，莳萝籽常用于黑麦面包和欧式酸面包，增添复杂的香气层次。
 
+![Dill pickles](https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Dill_pickles.jpg/640px-Dill_pickles.jpg)
+*Classic dill pickles showcasing the traditional use of dill in food preservation*
+
 **叶片应用**：新鲜莳萝叶质地柔嫩，适合生食或短时间加热。在酸奶酱（如希腊Tzatziki）中，莳萝提供清新的草本香气，与黄瓜的清爽和大蒜的辛辣形成完美平衡。俄式菜系中，莳萝叶常用于土豆沙拉、汤品和炖菜。
 
 **营养搭配原理**：莳萝的精油成分具有促进消化的作用，特别适合搭配油腻或难消化的食物。其清新香气还能有效掩盖某些食材的异味，如鱼腥味或蛋类的腥膻味。在食品保鲜方面，莳萝的抗菌成分有助于延长腌制食品的保质期。
@@ -68,6 +83,9 @@
 ### 保存方法
 
 **新鲜叶片**：最佳保存方法是将茎部插入清水中，如同鲜花般处理，上部覆盖塑料袋后冷藏，可保持1–2周新鲜。也可将叶片洗净晾干后切碎，与橄榄油混合制成香草油冷冻保存。
+
+![Fresh and dried dill](https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Dill_fresh_and_dried.jpg/640px-Dill_fresh_and_dried.jpg)
+*Comparison between fresh dill (left) and dried dill (right) showing preservation methods*
 
 **种子保存**：应在种子完全成熟、呈褐色时收获，晾干后存放在密封容器中，避光阴凉处可保存2–3年而不失香气。正确干燥的种子应具有清脆的质地和浓郁香气。
 

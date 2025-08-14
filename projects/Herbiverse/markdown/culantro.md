@@ -1,5 +1,8 @@
 # 刺芹 | Culantro | *Eryngium foetidum*
 
+![Culantro plant rosette](https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Eryngium_foetidum_plant.jpg/800px-Eryngium_foetidum_plant.jpg)
+*Culantro showing characteristic rosette growth with spiny-edged leaves*
+
 | 属性 | 内容 |
 |------|------|
 | 中文名 | 刺芹 |
@@ -12,13 +15,24 @@
 
 ## 1. 形态与识别要点
 
+![Culantro leaves close-up](https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Eryngium_foetidum_leaves.jpg/640px-Eryngium_foetidum_leaves.jpg)
+*Close-up of culantro leaves showing the distinctive serrated spiny edges*
+
 刺芹（Eryngium foetidum）为伞形科刺芹属双年生草本植物，原产于热带美洲，现广泛栽培于加勒比海、南美洲和东南亚地区。植株呈莲座状生长，无明显主茎，株高15-25厘米。叶片是其最显著的特征：长条状披针形，长5-25厘米，宽1-4厘米，深绿色，叶面光滑有光泽，叶缘具明显的刺状锯齿，这也是"刺芹"名称的由来。
 
-叶片质地坚韧而富有弹性，中脉明显，侧脉羽状排列。在生长初期，叶片较为柔嫩，随着植株成熟逐渐变硬。第二年植株会抽出花茎，高度可达60厘米，开白色或淡绿色小花，排列成复合伞形花序，被刺状苞片包围。果实为分果，椭圆形，表面被鳞片。
+叶片质地坚韧而富有弹性，中脉明显，侧脉羽状排列。在生长初期，叶片较为柔嫩，随着植株成熟逐渐变硬。第二年植株会抽出花茎，高度可达60厘米，开白色或淡绿色小花，排列成复合伞形花序，被刺状苞片包围。
+
+![Culantro flowers](https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Eryngium_foetidum_flowers.jpg/640px-Eryngium_foetidum_flowers.jpg)
+*Culantro flowering heads with characteristic spiny bracts typical of the Eryngium genus*
+
+果实为分果，椭圆形，表面被鳞片。
 
 根系为直根系，主根粗壮，深入土层，这使得刺芹具有一定的抗旱能力。轻揉叶片即散发出极其强烈的香气，类似香菜但更加浓郁持久，这种香气即使在烹饪过程中也不易散失。整个植株无毛，在热带气候下四季常绿，冬季温度过低时地上部分可能枯萎，但根部仍然存活。
 
 ### 与相似种的区别
+
+![Culantro harvested leaves](https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Eryngium_foetidum_harvested.jpg/640px-Eryngium_foetidum_harvested.jpg)
+*Fresh harvested culantro leaves ready for culinary use, showing the thick, sturdy texture*
 
 与香菜（Coriandrum sativum）区分：香菜叶片为羽状复叶，呈扇形分裂；刺芹叶片为单叶，长条状且边缘带刺。两者香气相似但刺芹更浓烈，而且刺芹耐热性远超香菜。与幼嫩芭蕉叶区分：芭蕉叶边缘光滑无锯齿，叶脉平行排列，且完全无香气；刺芹叶缘明显带刺，叶脉羽状，香气浓郁。与同科的海冬青区分：海冬青叶片更厚硬，常呈蓝绿色，刺更硬更尖；刺芹叶片相对较薄软，纯绿色，边缘的齿较细密。
 
@@ -56,7 +70,12 @@
 
 刺芹在加勒比海、南美洲和东南亚料理中扮演着核心角色，其浓郁的香气和优异的耐热性使其成为热带烹饪的首选香草。在波多黎各料理中，刺芹是制作sofrito（香料底料）的必需品，与洋葱、大蒜、辣椒等一起打成泥状，作为众多菜肴的基础调料。在多米尼加和其他加勒比海国家，recaito（绿色调料）同样离不开刺芹。
 
-在越南菜中，刺芹常被称为"越南香菜"，虽然植物学上与越南香菜（Persicaria odorata）不同，但在河粉（pho）和其他汤品中都有应用，其强烈的香气能够在热汤中持久保持。泰式咖喱中，刺芹也是重要的香料成分，特别是在需要长时间炖煮的菜肴中。
+在越南菜中，刺芹常被称为"越南香菜"，虽然植物学上与越南香菜（Persicaria odorata）不同，但在河粉（pho）和其他汤品中都有应用，其强烈的香气能够在热汤中持久保持。
+
+![Culantro in cooking](https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/Culantro_in_sofrito.jpg/640px-Culantro_in_sofrito.jpg)
+*Culantro being used in traditional sofrito preparation - a key ingredient in Caribbean cuisine*
+
+泰式咖喱中，刺芹也是重要的香料成分，特别是在需要长时间炖煮的菜肴中。
 
 印度和中东地区将刺芹用于制作chutneys（酸辣酱）和marinades（腌料），其浓郁的香气能够很好地穿透肉类，起到去腥增香的作用。现代fusion料理中，刺芹也被用于制作香草黄油、调味盐和创新酱料。
 

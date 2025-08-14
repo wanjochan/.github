@@ -1,5 +1,8 @@
 # 薄荷 | Mint | *Mentha spp.*
 
+![Mint plants growing](https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Mentha_spicata_plant.jpg/640px-Mentha_spicata_plant.jpg)
+*Spearmint plants showing characteristic spreading growth habit and serrated leaves*
+
 | 属性 | 内容 |
 |------|------|
 | 中文名 | 薄荷 |
@@ -34,6 +37,9 @@
 
 **胡椒薄荷（Mentha × piperita）**：最常见的商业品种，是水薄荷与留兰香的杂交种。精油含量高，薄荷醇含量可达50%，具有强烈的清凉感。叶片深绿带紫色叶脉，茎常呈紫红色。医药价值高，用于消化不良、感冒症状缓解。适合制作薄荷茶、薄荷糖。
 
+![Peppermint variety](https://upload.wikimedia.org/wikipedia/commons/thumb/d/da/Mentha_piperita_flowers.jpg/640px-Mentha_piperita_flowers.jpg)
+*Peppermint showing purple-tinged stems and flower spikes*
+
 **留兰香（Mentha spicata）**：又称绿薄荷，是口香糖和牙膏的经典香味来源。主要含香芹酮而非薄荷醇，因此清凉感较温和，带有甜味。叶片亮绿色，披针形，几乎无柄。是中东和地中海料理的重要香草，特别适合搭配羊肉、酸奶和夏季饮品。
 
 **巧克力薄荷**：胡椒薄荷的栽培变种，茎部呈深褐色，具有独特的巧克力香气层次。适合甜点制作和特调饮品。生长较其他品种缓慢，香气在傍晚最浓。
@@ -57,6 +63,9 @@
 ## 5. 用法与搭配（仅可食用类）
 
 薄荷在全球烹饪中扮演着多样化的角色，从饮品到主菜，从开胃菜到甜点：
+
+![Mint tea and cocktails](https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Mint_tea_mojito.jpg/640px-Mint_tea_mojito.jpg)
+*Fresh mint used in tea and cocktails like mojito*
 
 **中东和北非料理**：薄荷是这一地区的灵魂香草。摩洛哥薄荷茶将绿茶、大量新鲜薄荷和糖完美结合，既是日常饮品也是待客之道。黎巴嫩的塔布勒沙拉（Tabbouleh）中，薄荷与欧芹同为主角，提供清新对比。在烤羊肉料理中，薄荷既可制成酱汁（mint sauce）解腻，也可作为腌料香料。
 

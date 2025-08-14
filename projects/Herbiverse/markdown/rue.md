@@ -12,7 +12,18 @@
 
 ## 1. 形态与识别要点
 
+![Rue Plant Growing](https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Ruta_graveolens_001.JPG/640px-Ruta_graveolens_001.JPG)
+*芸香整株植物，展示其灌木状生长形态*
 
+芸香（Ruta graveolens）为芸香科芸香属多年生半灌木植物，株高30-80厘米，具有强烈的特殊气味。茎基部木质化，上部草质，表面光滑，呈蓝绿色。叶片互生，2-3回羽状复叶，小叶倒卵形或匙形，厚质，蓝绿色，表面有透明的腺点，这些腺点含有丰富的精油。
+
+![Rue Leaves Close-up](https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/Ruta_graveolens_leaves.jpg/640px-Ruta_graveolens_leaves.jpg)
+*芸香叶片特写，可见其特征性的蓝绿色和腺点*
+
+花序为顶生的聚伞花序，花朵小而黄色，具4-5个花瓣，雄蕊8-10个。花期为夏季。果实为蒴果，4-5裂，含有黑色种子。整株植物散发浓烈的特殊气味，有些人形容为类似猫尿的味道。
+
+![Rue Yellow Flowers](https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Ruta_graveolens_flowers.jpg/640px-Ruta_graveolens_flowers.jpg)
+*芸香黄色小花组成的聚伞花序*
 
 ### 与相似种的区别
 
@@ -47,6 +58,9 @@
 
 
 ## 6. 毒理与禁忌
+
+![Rue Phototoxicity Warning](https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Ruta_graveolens_botanical_illustration.jpg/480px-Ruta_graveolens_botanical_illustration.jpg)
+*芸香的植物学图谱，展示其各部分结构*
 
 芸香的毒理学机制主要涉及两个方面：光毒性反应和系统性毒性效应。这种双重毒性机制使得芸香成为一种特别危险的植物。
 

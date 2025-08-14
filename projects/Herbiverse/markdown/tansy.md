@@ -7,14 +7,29 @@
 | 学名 | *Tanacetum vulgare* |
 | 分类 | 不可食用 |
 | 可食部位/毒部位 | 毒部位: leaves, flowers, stems, essential_oil |
-| 关键特征 |  |
-| 种植难度 |  |
+| 关键特征 | 多年生草本；羽状深裂叶片、黄色纽扣状花朵密集成伞房状；含剧毒侧柏酮，严禁接触。 |
+| 种植难度 | 极易（但严禁种植） |
 
 ## 1. 形态与识别要点
 
+![Tansy plant growing](https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Tanacetum_vulgare_plant.jpg/800px-Tanacetum_vulgare_plant.jpg)
+*Tansy plant showing robust perennial growth habit - highly toxic and dangerous*
 
+艾菊（Tanacetum vulgare）为菊科艾菊属多年生草本植物，株高通常60-120厘米，在适宜条件下可达150厘米。植株直立，茎秆粗壮，多分枝，表面有棱，基部木质化，具有浓烈的芳香气味，但此气味极其危险。
+
+叶片互生，羽状深裂，裂片线形或线状披针形，边缘有锯齿，叶面深绿色，质地较厚，表面光滑或被稀疏短毛。
+
+![Tansy flowers yellow](https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Tanacetum_vulgare_flowers.jpg/640px-Tanacetum_vulgare_flowers.jpg)
+*Tansy's characteristic bright yellow button-like flower heads in dense clusters*
+
+花序为复伞房状，由多个头状花序组成，花朵小而密集，呈鲜黄色，形如小纽扣，无舌状花瓣，花期7-9月。果实为瘦果，细小，顶端有短冠毛。
 
 ### 与相似种的区别
+
+![Tansy leaves detail](https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/Tanacetum_vulgare_leaves.jpg/640px-Tanacetum_vulgare_leaves.jpg)
+*Close-up of tansy leaves showing the characteristic deeply divided fern-like foliage*
+
+与菊花区分：菊花头状花序有明显的舌状花瓣，花色多样；艾菊花朵小且无舌状花瓣，仅黄色。与艾草区分：艾草叶背有白色绒毛，气味苦涩；艾菊叶片光滑，气味浓郁但剧毒。与万寿菊区分：万寿菊花朵大型，有舌状花瓣；艾菊花朵小型，无舌状花瓣。
 
 
 
@@ -47,6 +62,9 @@
 
 
 ## 6. 毒理与禁忌
+
+![Tansy Warning](https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Tanacetum_vulgare_botanical.jpg/480px-Tanacetum_vulgare_botanical.jpg)
+*艾菊的植物学图谱，显示其各部分特征*
 
 艾菊的毒理学特性主要由其含有的挥发油成分决定，其中侧柏酮（thujone）是最重要的毒性化合物。侧柏酮存在两种异构体：α-侧柏酮和β-侧柏酮，其中α-侧柏酮的神经毒性更强，在艾菊中的含量也更高。
 

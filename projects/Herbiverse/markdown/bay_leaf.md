@@ -1,5 +1,8 @@
 # 月桂叶 | Bay Leaf | *Laurus nobilis*
 
+![Bay laurel tree](https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Laurus_nobilis.jpg/800px-Laurus_nobilis.jpg)
+*Mature bay laurel tree (*Laurus nobilis*) showing dense evergreen foliage and characteristic growth habit*
+
 | 属性 | 内容 |
 |------|------|
 | 中文名 | 月桂叶 |
@@ -12,7 +15,13 @@
 
 ## 1. 形态与识别要点
 
+![Bay leaves close-up](https://upload.wikimedia.org/wikipedia/commons/thumb/d/da/Laurus_nobilis_leaves.jpg/600px-Laurus_nobilis_leaves.jpg)
+*Close-up of bay leaves showing leathery texture, elliptical shape, and prominent venation*
+
 月桂（Laurus nobilis）为樟科月桂属常绿灌木或小乔木，原产地中海沿岸，在适宜环境下可达10-18米高，盆栽通常控制在2-5米。树皮灰褐色，光滑；幼枝绿色，具纵向浅沟。叶片革质，椭圆形至倒卵状椭圆形，长5-10厘米，宽2-4厘米，先端急尖，基部楔形，全缘略呈波状，叶面深绿色具光泽，叶背较淡；主脉明显，侧脉羽状；叶柄短粗，长约1厘米。揉碎叶片散发浓郁芳香，具桉叶样穿透性香气。
+
+![Bay laurel flowers](https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Laurus_nobilis_flowers.jpg/600px-Laurus_nobilis_flowers.jpg)
+*Small yellowish bay laurel flowers arranged in axillary umbels*
 
 花单性，雌雄异株，花小而不显著，黄绿色，4-6朵聚生成伞形花序，腋生；花被片4，雄花具雄蕊8-12；花期春季3-5月。果实为浆果状核果，椭圆形，成熟时黑色，长约1-1.3厘米；种子1枚。根系发达，主根深扎，侧根横向分布广泛，具强韧的适应性。
 
@@ -36,6 +45,9 @@
 
 ## 3. 常见品种
 
+![Different bay varieties](https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/Bay_leaf_varieties.jpg/600px-Bay_leaf_varieties.jpg)
+*Comparison of different bay leaf varieties showing size and shape variations*
+
 - Turkish Bay (Laurus nobilis)：正宗地中海月桂，香气浓郁平衡，1,8-桉叶油醇含量高，是国际烹饪标准用材。叶片较小，香气细腻持久，适合长时间炖煮。
 - California Bay (Umbellularia californica)：加州月桂，香气更强烈刺激，含有大量1,8-桉叶油醇和樟脑，味道更为浓重。叶片稍大，需减少用量，适合短时间调味。
 - Indian Bay (Cinnamomum tamala)：印度月桂，实为樟科肉桂属，香气带肉桂调性，常用于印度香料混合物。叶片更大，脉络明显，香气温暖甘甜。
@@ -56,6 +68,9 @@
 
 月桂叶是欧洲古典烹饪的基础香料之一，其使用历史可追溯至古希腊罗马时期。在法式烹饪中，月桂叶是bouquet garni（香草束）的核心成分，与百里香、欧芹一同使用，为汤品、炖菜和酱汁提供深层香气基础。其独特的桉叶样香气能够穿透浓郁的肉汁和蔬菜甜味，带来清新的提升。
 
+![Bay leaves in cooking](https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Bay_leaves_in_soup.jpg/600px-Bay_leaves_in_soup.jpg)
+*Bay leaves being used in soup preparation, demonstrating their culinary application*
+
 在制作高汤时，月桂叶通常在开始阶段加入，经过长时间加热释放香气精华；制作酱汁时则在middle stage加入，避免过早加入导致苦味。意式烹饪中，月桂叶常用于Ragu肉酱、Osso Buco等慢炖菜肴，与番茄酸度和肉类鲜味形成很好的平衡。
 
 印度菜系中，月桂叶是Biryani（手抓饭）和各类Curry的重要香料，通常与肉桂、豆蔻等温性香料配合，在起锅时需要挑出。中东菜系中常用于腌制肉类和制作Pilaf。现代分子美食学中，月桂叶精油被用于制作香气胶囊和泡沫，带来innovative的感官体验。
@@ -63,6 +78,9 @@
 烹饪要点：新鲜叶片香气更加清新但较温和，干叶片香气浓缩、更加持久；整叶加入便于取出，切碎或研磨会释放更多香气但难以分离；长时间加热（超过2小时）可能产生轻微苦味，需适当控制。绝对禁止整叶食用，其革质纤维可能造成消化道损伤。
 
 ### 保存方法
+
+![Dried bay leaves](https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/Dried_bay_leaves.jpg/600px-Dried_bay_leaves.jpg)
+*Properly dried bay leaves maintaining their green color and essential oil content*
 
 新鲜月桂叶：冷藏保存，用湿纸巾轻包后置于密封袋中，可保鲜7-10天；或插入清水中如插花保存，套塑料袋保湿，可延长至2周。干燥月桂叶：密封储存于阴凉干燥处，避免阳光直射，properly stored可保持香气12-18个月；整叶储存优于碎叶，能更好地保持精油不挥发。冷冻保存：新鲜叶片可直接冷冻，使用时无需解冻直接加入烹饪；制作月桂油：将叶片浸泡于橄榄油中密封保存，既延长保质期又制得调味油。避免研磨储存：月桂粉末会迅速失香，建议使用前现磨。检查品质：干叶应保持绿色，如变黄褐色或失去香气则应更换。
 

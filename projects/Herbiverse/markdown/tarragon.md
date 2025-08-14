@@ -12,9 +12,17 @@
 
 ## 1. 形态与识别要点
 
+![Tarragon Plant Growing](https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Artemisia_dracunculus_001.JPG/640px-Artemisia_dracunculus_001.JPG)
+*龙蒿整株植物，展示其直立丛生形态*
+
 龙蒿（Artemisia dracunculus）为菊科蒿属多年生草本植物，株高通常60-120厘米，在理想条件下可达150厘米。植株具发达的地下根茎系统，能够通过根茎分蘖形成丛状生长。茎秆直立，光滑无毛，呈绿色至淡红褐色，节间明显，分枝性强，形成密集的灌丛状外观。
 
-叶片为龙蒿最具识别性的特征：互生，线状披针形至线形，长2-8厘米，宽2-10毫米，全缘不分裂（这是与其他蒿属植物的重要区别），叶面光滑无毛，呈亮绿色至深绿色，叶脉不明显。叶片质地较厚实，轻揉即释放出独特的甘草与茴香混合香气，这种香气是识别龙蒿的关键特征。
+叶片为龙蒿最具识别性的特征：互生，线状披针形至线形，长2-8厘米，宽2-10毫米，全缘不分裂（这是与其他蒿属植物的重要区别），叶面光滑无毛，呈亮绿色至深绿色，叶脉不明显。
+
+![Tarragon Leaves Close-up](https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Artemisia_dracunculus_leaves.jpg/640px-Artemisia_dracunculus_leaves.jpg)
+*龙蒿叶片特写，可见其线形全缘的特征*
+
+叶片质地较厚实，轻揉即释放出独特的甘草与茴香混合香气，这种香气是识别龙蒿的关键特征。
 
 花序为典型的头状花序，排列成圆锥状花序，花极小，直径2-4毫米，花色淡绿黄色，无明显观赏价值。花期7-9月，但法国龙蒿品种很少开花结实。果实为瘦果，但在温带地区常不育。
 
@@ -74,6 +82,9 @@
 
 **使用技巧**：龙蒿的香气成分易挥发，应避免长时间高温烹煮；新鲜龙蒿在出锅前加入效果最佳；干燥龙蒿虽然便于保存，但香气大幅减弱，仅适合炖煮类菜肴；与奶制品、鸡蛋类食材搭配时，龙蒿能发挥最佳的香气协同效果。
 
+![Tarragon varieties comparison](https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/French_Russian_tarragon.jpg/640px-French_Russian_tarragon.jpg)
+*Comparison between French tarragon (left, more flavorful) and Russian tarragon (right, hardier but less flavor)*
+
 ### 保存方法
 
 **鲜品保存**：新鲜龙蒿极易失水萎蔫，应立即处理。短期保存（3-5天）可将茎部浸入清水中，如插花般放置，并用塑料袋轻覆叶片保湿，置于冰箱冷藏。或用微湿纸巾包裹整束龙蒿，装入透气保鲜袋冷藏保存。
@@ -85,6 +96,9 @@
 **冷冻保存法**：将洗净的龙蒿叶片切碎，与软化的黄油混合制成香草黄油，用保鲜膜包成条状冷冻，可保存6个月。使用时切片即可，特别适合制作酱汁或涂抹面包。
 
 **干燥保存法**：虽然干燥会大幅损失香气，但仍是一种保存选择。将龙蒿束成小把，悬挂在阴凉通风处自然风干，避免阳光直射。完全干燥后密封保存，保质期1年，但香气仅为鲜品的10-20%。
+
+![Dried tarragon](https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/Dried_tarragon_herb.jpg/480px-Dried_tarragon_herb.jpg)
+*Dried tarragon - much less flavorful than fresh but useful for long-term storage*
 
 **盐腌保存法**：将新鲜龙蒿叶片与粗海盐分层装入密封罐中，龙蒿与盐的比例约为1:2，可保存数月。使用时需漂洗去除多余盐分，适合制作腌渍食品或汤品。
 

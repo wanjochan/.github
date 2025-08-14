@@ -1,5 +1,8 @@
 # 牛至/披萨草 | Oregano | *Origanum vulgare*
 
+![Oregano plant](https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Origanum_vulgare_plant.jpg/640px-Origanum_vulgare_plant.jpg)
+*Oregano plant showing characteristic square stems and opposite leaves*
+
 | 属性 | 内容 |
 |------|------|
 | 中文名 | 牛至/披萨草 |
@@ -14,7 +17,12 @@
 
 牛至（Origanum vulgare）为唇形科牛至属多年生草本植物，株高通常20-80厘米，在适宜环境下可形成密集的地被覆盖。茎呈四方形，多分枝，基部常木质化，幼茎绿色至红褐色，节间明显。叶片对生，卵形至椭圆形，长1-4厘米，边缘全缘或具细齿，叶面深绿色带有腺点，背面颜色较浅；叶柄短，约2-7毫米；轻揉叶片即可散发强烈的辛香气味，比马郁兰更为浓烈刺激。
 
-花序为顶生的密集圆锥花序或伞房花序，由多个小的轮伞花序组成；花小而密集，花冠长4-7毫米，淡紫色、粉红色或白色，二唇形；雄蕊4枚，伸出花冠外；花期夏季至初秋，蜜源丰富。果实为4枚小坚果，深褐色，光滑。根系为须根系，耐旱性强，能深入土壤寻找水分。
+花序为顶生的密集圆锥花序或伞房花序，由多个小的轮伞花序组成；花小而密集，花冠长4-7毫米，淡紫色、粉红色或白色，二唇形；雄蕊4枚，伸出花冠外；花期夏季至初秋，蜜源丰富。
+
+![Oregano flowers](https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Origanum_vulgare_flowers.jpg/640px-Origanum_vulgare_flowers.jpg)
+*Oregano flowers in full bloom showing typical purple-pink color and clustered formation*
+
+果实为4枚小坚果，深褐色，光滑。根系为须根系，耐旱性强，能深入土壤寻找水分。
 
 在形态识别上，牛至可通过其方茎、对生叶片和强烈辛香快速识别；与近缘的马郁兰相比，牛至叶片更大更尖，香气更为强烈和辛辣；与百里香相比，牛至叶片明显更大，植株更高大。冬季地上部分在寒冷地区会枯萎，但根系可安全越冬。
 
@@ -42,6 +50,9 @@
 - Mexican Oregano（墨西哥牛至）：实际上是不同属植物（Monarda或Lippia），味道更辛辣带柑橘香，适合墨西哥和德州墨西哥菜。
 
 选择建议：披萨和意面酱推荐Greek或Italian品种；墨西哥菜肴使用Mexican Oregano；日常烹饪Italian品种最为适中。
+
+![Oregano varieties comparison](https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Oregano_varieties_display.jpg/640px-Oregano_varieties_display.jpg)
+*Different oregano varieties showing variation in leaf size and color*
 
 ## 4. 化学成分与风味
 
@@ -71,7 +82,13 @@
 
 储存和使用：干牛至在密封避光条件下可保持香气1-2年；新鲜牛至可制成香草黄油或冷冻保存。
 
+![Greek oregano variety](https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Greek_oregano_plant.jpg/640px-Greek_oregano_plant.jpg)
+*Greek oregano variety - the most potent and preferred type for Mediterranean cuisine*
+
 ### 保存方法
+
+![Dried oregano](https://upload.wikimedia.org/wikipedia/commons/thumb/d/da/Dried_oregano_spice.jpg/640px-Dried_oregano_spice.jpg)
+*Dried oregano - the most common form used in cooking, retains strong flavor when properly stored*
 
 **新鲜牛至**：用湿纸巾轻包后放入透气保鲜袋，冷藏可保存5-7天；或如鲜花般插入水杯，轻覆塑料袋保湿。**干燥保存**：将新鲜枝条倒挂在通风阴凉处2-3周至完全干燥，然后搓下叶片密封保存；或使用烘干机低温(35-40°C)烘干。**冷冻保存**：新鲜叶片可直接冷冻，或切碎后与橄榄油混合制成香草冰块。**香草油制作**：新鲜牛至浸入橄榄油中，低温浸提2-4周后过滤，可保存数月。干牛至应存放在密封的深色玻璃瓶中，避光避湿，可保持香气1-2年。
 

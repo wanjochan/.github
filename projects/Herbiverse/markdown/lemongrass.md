@@ -1,5 +1,8 @@
 # 柠檬草/香茅 | Lemongrass | *Cymbopogon citratus*
 
+![Lemongrass growing](https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/Cymbopogon_citratus_growing.jpg/640px-Cymbopogon_citratus_growing.jpg)
+*Lemongrass growing in clumps showing characteristic tall grass-like appearance*
+
 | 属性 | 内容 |
 |------|------|
 | 中文名 | 柠檬草/香茅 |
@@ -15,6 +18,9 @@
 柠檬草（Cymbopogon citratus）为禾本科香茅属多年生丛生草本植物，原产热带亚洲。植株呈典型丛生状，可达1-2米高，基部形成密集的假鳞茎结构。叶片呈细长带状，长60-150厘米，宽0.5-2厘米，质地坚韧略粗糙，叶缘锋利需小心处理。叶片颜色从基部的浅黄绿到顶端的深绿色渐变，中脉明显，平行脉清晰可见。
 
 最显著的识别特征是揉搓叶片或茎部时散发的强烈柠檬香气，这是由高含量的柠檬醛（citral）所致。基部的假鳞茎部分呈白色至淡黄色，质地较嫩且含有最高浓度的精油，是烹饪中最常用的部位。根系发达，为须根系，适应性强但不耐寒。
+
+![Lemongrass stems close-up](https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Lemongrass_stems.jpg/640px-Lemongrass_stems.jpg)
+*Close-up of lemongrass stems showing the white tender base used in cooking*
 
 花序为大型顶生圆锥花序，长20-50厘米，由多个总状花序组成，但在温带地区很少开花。小穗成对排列，含1-2朵小花，花期夏末至秋季。种子很少成熟，主要通过分株繁殖。植株在霜冻来临前会逐渐枯黄，在热带地区则可常年保持绿色。
 
@@ -68,6 +74,9 @@
 
 在越南河粉（Pho）中，柠檬草与八角、桂皮等香料一同慢炖，为清澈的牛肉汤底增添清香层次。印尼仁当（Rendang）和马来咖喱中，柠檬草与椰浆和香料形成复合香气，平衡辛辣和甜腻。
 
+![Vietnamese pho with lemongrass](https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/Vietnamese_pho.jpg/640px-Vietnamese_pho.jpg)
+*Vietnamese pho soup featuring lemongrass as a key aromatic ingredient*
+
 **处理技巧**：使用前需去除外层老叶，保留内部嫩白至淡绿部分。可以拍松、切段或制成泥状，拍松释放香气但保持形状便于取出，制泥则完全融入菜肴。干燥的柠檬草叶可制茶，具有舒缓和助消化效果。
 
 **搭配原理**：柠檬草的柠檬醛与椰浆的脂肪形成良好平衡，与辣椒的辣素产生协同增香效果，与鱼露的鲜味相互促进。在腌制海鲜时，柠檬草可有效去腥并增香。
@@ -79,6 +88,9 @@
 **冷冻保存**：去除外层老叶后切成5-8厘米段，平铺冷冻后装袋，可保存3-6个月。冷冻的柠檬草无需解冻可直接使用。
 
 **制泥保存**：将嫩部分切碎与少量植物油打成泥状，分装在冰格中冷冻，使用时取一块即可，便于分量控制。
+
+![Lemongrass dried and fresh](https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Lemongrass_dried_fresh.jpg/640px-Lemongrass_dried_fresh.jpg)
+*Comparison of fresh lemongrass stalks and dried lemongrass for different culinary applications*
 
 **干燥保存**：叶片洗净晾干后密封保存，避光阴凉处可保存1-2年，主要用于泡茶。干品香气虽有所减弱但仍具价值。
 

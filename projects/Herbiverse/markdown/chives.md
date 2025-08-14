@@ -1,5 +1,8 @@
 # 韭葱/细香葱 | Chives | *Allium schoenoprasum*
 
+![Chives clumping habit](https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Allium_schoenoprasum_clumps.jpg/800px-Allium_schoenoprasum_clumps.jpg)
+*Chives showing characteristic dense clumping growth habit with hollow cylindrical leaves*
+
 | 属性 | 内容 |
 |------|------|
 | 中文名 | 韭葱/细香葱 |
@@ -12,7 +15,13 @@
 
 ## 1. 形态与识别要点
 
+![Chives purple flowers](https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Allium_schoenoprasum_flowers.jpg/600px-Allium_schoenoprasum_flowers.jpg)
+*Beautiful purple globe-shaped flower heads characteristic of chives in summer bloom*
+
 韭葱（Allium schoenoprasum）为石蒜科葱属多年生草本植物，是葱属中叶片最为纤细的成员。植株通常高15-30厘米，偶尔可达50厘米。地下具小型鳞茎，直径约1厘米，通常聚生成丛。叶片基生，线形至丝状，长10-25厘米，直径2-4毫米，横截面近圆形且中空，质地柔软，颜色深绿至蓝绿，轻折即散发温和的葱香。花茎直立，光滑无毛，顶端着生球状伞形花序，直径2-4厘米；花序由20-30朵小花组成，呈紧密球状；单花小而精致，花被片6枚，淡紫色至深紫色，偶有粉红或白色变种，花期夏季。果实为蒴果，内含黑色三角形种子。根系为须根系，分布较浅但密集，易于分株繁殖。整体植株具有明显的分蘖特性，成熟植株可形成致密的丛状结构，既具观赏价值又便于采收。
+
+![Chives growing tips](https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Chives_garden_growing.jpg/640px-Chives_garden_growing.jpg)
+*Chives growing in garden showing dense clumping habit and easy cultivation*
 
 ### 与相似种的区别
 
@@ -54,9 +63,15 @@
 
 韭葱的烹饪特点在于其热敏感性：长时间加热会失去大部分香气，因此最佳使用方式为生食或最后阶段添加。与鸡蛋的经典搭配（如韭葱炒蛋、韭葱蛋卷）展现了其与蛋白质的良好融合性。在汤品中，韭葱应在起锅前1-2分钟加入以保持最佳香气。新鲜韭葱花朵具有温和的葱味和轻微甜感，可直接用于沙拉或作为摆盘装饰。
 
+![Chives cut for harvest](https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/Chives_cutting_harvest.jpg/640px-Chives_cutting_harvest.jpg)
+*Proper way to harvest chives by cutting rather than pulling, ensuring continuous growth*
+
 ### 保存方法
 
 新鲜保存：将韭葱根部修剪后放入盛有少量清水的容器中，如同养花般保存，上方轻覆塑料袋保湿，可在冰箱中保持1-2周新鲜。或用略湿的纸巾包裹后装入透气保鲜袋，冷藏保存一周左右。冷冻保存：切碎后与少量橄榄油混合，装入冰格冷冻，使用时直接取用无需解冻。制成韭葱盐：将切碎的韭葱与粗盐按1:3比例混合，密封冷冻，可保持数月。干燥保存：选择低温阴干法，避免高温破坏挥发油，干燥后密封保存，但香气会明显减弱，建议优先使用冷冻法。
+
+![Dried chives](https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Dried_chives_spice.jpg/480px-Dried_chives_spice.jpg)
+*Dried chives for long-term storage, though fresh is always preferred for best flavor*
 
 ## 6. 毒理与禁忌
 
