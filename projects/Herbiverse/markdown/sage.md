@@ -91,3 +91,19 @@
 
 ---
 *声明：本信息仅供参考，不替代专业医疗建议。*
+
+## Local Image Gallery
+
+*Downloaded high-resolution images for offline viewing:*
+
+![Sage - Image 1 (CC BY-SA 4.0)](../images/sage/01.jpg)
+*Image 1: © Krzysztof Golik (CC BY-SA 4.0)*
+
+![Sage - Image 2 (CC0)](../images/sage/02.jpg)
+*Image 2: © iNaturalist.org (Alina Majcen) (Alina%20Majcen) (CC0)*
+
+![Sage - Image 3 (CC BY 4.0)](../images/sage/03.jpg)
+*Image 3: © Schlaghecken Josef (CC BY 4.0)*
+
+![Sage - Image 4 (CC BY 4.0)](../images/sage/04.jpg)
+*Image 4: © Schlaghecken Josef (CC BY 4.0)*

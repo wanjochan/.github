@@ -104,3 +104,16 @@
 
 ---
 *声明：本信息仅供参考，不替代专业医疗建议。*
+
+## Local Image Gallery
+
+*Downloaded high-resolution images for offline viewing:*
+
+![Oregano - Image 1 (CC BY-SA 3.0)](../images/oregano/01.jpg)
+*Image 1: © Ivar Leidus (CC BY-SA 3.0)*
+
+![Oregano - Image 2 (CC BY-SA 4.0)](../images/oregano/02.jpg)
+*Image 2: © GT1976 (CC BY-SA 4.0)*
+
+![Oregano - Image 3 (CC BY-SA 4.0)](../images/oregano/03.jpg)
+*Image 3: © Ivar Leidus (CC BY-SA 4.0)*

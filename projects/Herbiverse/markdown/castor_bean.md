@@ -112,3 +112,22 @@
 
 ---
 *声明：本信息仅供参考，不替代专业医疗建议。*
+
+## Local Image Gallery
+
+*Downloaded high-resolution images for offline viewing:*
+
+![Castor Bean - Image 1 (CC BY 2.5)](../images/castor_bean/01.jpg)
+*Image 1: © Marc Ryckaert (MJJR) (CC BY 2.5)*
+
+![Castor Bean - Image 2 (CC BY-SA 3.0)](../images/castor_bean/02.jpg)
+*Image 2: © Alvesgaspar (CC BY-SA 3.0)*
+
+![Castor Bean - Image 3 (CC BY-SA 3.0)](../images/castor_bean/03.jpg)
+*Image 3: © Moonik (CC BY-SA 3.0)*
+
+![Castor Bean - Image 4 (CC BY-SA 4.0)](../images/castor_bean/04.jpg)
+*Image 4: © Filo gèn' (CC BY-SA 4.0)*
+
+![Castor Bean - Image 5 (CC BY 4.0)](../images/castor_bean/05.jpg)
+*Image 5: © Cayambe (CC BY 4.0)*

@@ -84,3 +84,22 @@
 
 ---
 *声明：本信息仅供参考，不替代专业医疗建议。*
+
+## Local Image Gallery
+
+*Downloaded high-resolution images for offline viewing:*
+
+![Cilantro - Image 1 (CC BY-SA 4.0)](../images/cilantro/01.jpg)
+*Image 1: © Krzysztof Ziarnek, Kenraiz (CC BY-SA 4.0)*
+
+![Cilantro - Image 2 (CC BY-SA 4.0)](../images/cilantro/02.jpg)
+*Image 2: © Krzysztof Ziarnek, Kenraiz (CC BY-SA 4.0)*
+
+![Cilantro - Image 3 (CC BY-SA 4.0)](../images/cilantro/03.jpg)
+*Image 3: © Armando Olivo Martín del Campo (CC BY-SA 4.0)*
+
+![Cilantro - Image 4 (CC BY-SA 4.0)](../images/cilantro/04.jpg)
+*Image 4: © Herusutimbul (CC BY-SA 4.0)*
+
+![Cilantro - Image 5 (CC BY-SA 4.0)](../images/cilantro/05.jpg)
+*Image 5: © CuetzpalinTonatiuh (CC BY-SA 4.0)*

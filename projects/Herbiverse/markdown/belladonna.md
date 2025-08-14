@@ -107,3 +107,22 @@
 
 ---
 *声明：本信息仅供参考，不替代专业医疗建议。*
+
+## Local Image Gallery
+
+*Downloaded high-resolution images for offline viewing:*
+
+![Belladonna - Image 1 (CC BY 4.0)](../images/belladonna/01.jpg)
+*Image 1: © Robert Flogaus-Faust (CC BY 4.0)*
+
+![Belladonna - Image 2 (CC BY-SA 4.0)](../images/belladonna/02.jpg)
+*Image 2: © Krzysztof Ziarnek, Kenraiz (CC BY-SA 4.0)*
+
+![Belladonna - Image 3 (CC BY-SA 4.0)](../images/belladonna/03.jpg)
+*Image 3: © Krzysztof Ziarnek, Kenraiz (CC BY-SA 4.0)*
+
+![Belladonna - Image 4 (CC BY-SA 4.0)](../images/belladonna/04.jpg)
+*Image 4: © Flobbadob (CC BY-SA 4.0)*
+
+![Belladonna - Image 5 (CC BY-SA 4.0)](../images/belladonna/05.jpg)
+*Image 5: © Krzysztof Ziarnek, Kenraiz (CC BY-SA 4.0)*

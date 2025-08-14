@@ -203,3 +203,19 @@
 
 ---
 *声明：本信息仅供参考，不替代专业医疗建议。*
+
+## Local Image Gallery
+
+*Downloaded high-resolution images for offline viewing:*
+
+![Wormwood - Image 1 (CC BY-SA 3.0)](../images/wormwood/01.jpg)
+*Image 1: © David Monniaux (CC BY-SA 3.0)*
+
+![Wormwood - Image 2 (CC BY-SA 4.0)](../images/wormwood/02.jpg)
+*Image 2: © Krzysztof Ziarnek, Kenraiz (CC BY-SA 4.0)*
+
+![Wormwood - Image 3 (CC BY 4.0)](../images/wormwood/03.jpg)
+*Image 3: © Tournasol7 (CC BY 4.0)*
+
+![Wormwood - Image 4 (CC BY 4.0)](../images/wormwood/04.jpg)
+*Image 4: © Tournasol7 (CC BY 4.0)*

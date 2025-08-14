@@ -87,3 +87,13 @@
 
 ---
 *声明：本信息仅供参考，不替代专业医疗建议。*
+
+## Local Image Gallery
+
+*Downloaded high-resolution images for offline viewing:*
+
+![Thyme - Image 1 (CC BY-SA 4.0)](../images/thyme/01.jpg)
+*Image 1: © Christian Ferrer (CC BY-SA 4.0)*
+
+![Thyme - Image 2 (CC BY 4.0)](../images/thyme/02.jpg)
+*Image 2: © Naturpuur (CC BY 4.0)*

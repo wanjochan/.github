@@ -102,3 +102,21 @@
 
 ---
 *声明：本信息仅供参考，不替代专业医疗建议。*
+
+## Local Image Gallery
+
+*Downloaded high-resolution images for offline viewing:*
+
+![Tansy - Image 1 (CC BY-SA 4.0)](../images/tansy/01.jpg)
+*Image 1: © Dmitry Makeev (CC BY-SA 4.0)*
+
+![Tansy - Image 2 (CC BY-SA 4.0)](../images/tansy/02.jpg)
+*Image 2: © Dmitry Makeev (CC BY-SA 4.0)*
+
+![Tansy - Image 3 (CC BY-SA 4.0)](../images/tansy/03.jpg)
+*Image 3: © Dmitry Makeev (CC BY-SA 4.0)*
+
+![Tansy - Image 4 (CC BY-SA 4.0)](../images/tansy/04.jpg)
+*Image 4: © Dmitry Makeev (CC BY-SA 4.0)*
+
+![Tansy - Image 5](../images/tansy/05.jpg)

@@ -86,3 +86,22 @@
 
 ---
 *声明：本信息仅供参考，不替代专业医疗建议。*
+
+## Local Image Gallery
+
+*Downloaded high-resolution images for offline viewing:*
+
+![Chives - Image 1 (CC BY-SA 3.0)](../images/chives/01.JPG)
+*Image 1: © Jamain (CC BY-SA 3.0)*
+
+![Chives - Image 2 (CC BY-SA 4.0)](../images/chives/02.jpg)
+*Image 2: © Dominicus Johannes Bergsma (CC BY-SA 4.0)*
+
+![Chives - Image 3 (CC BY-SA 4.0)](../images/chives/03.jpg)
+*Image 3: © Agnes Monkelbaan (CC BY-SA 4.0)*
+
+![Chives - Image 4 (CC BY-SA 4.0)](../images/chives/04.jpg)
+*Image 4: © Krzysztof Ziarnek, Kenraiz (CC BY-SA 4.0)*
+
+![Chives - Image 5 (CC BY-SA 4.0)](../images/chives/05.jpg)
+*Image 5: © Krzysztof Ziarnek, Kenraiz (CC BY-SA 4.0)*

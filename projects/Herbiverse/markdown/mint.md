@@ -109,3 +109,19 @@
 
 ---
 *声明：本信息仅供参考，不替代专业医疗建议。*
+
+## Local Image Gallery
+
+*Downloaded high-resolution images for offline viewing:*
+
+![Mint - Image 1 (Public domain)](../images/mint/01.jpg)
+*Image 1: © Rob Hille (Public domain)*
+
+![Mint - Image 2 (CC BY 3.0)](../images/mint/02.jpg)
+*Image 2:  (CC BY 3.0)*
+
+![Mint - Image 3 (CC BY-SA 4.0)](../images/mint/03.jpg)
+*Image 3: © Photo by David J. Stang (CC BY-SA 4.0)*
+
+![Mint - Image 4 (CC BY-SA 4.0)](../images/mint/04.jpg)
+*Image 4: © Kızıl (CC BY-SA 4.0)*
