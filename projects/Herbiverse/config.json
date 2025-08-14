@@ -1,0 +1,26 @@
+{
+  "project": "Herbiverse",
+  "version": "1.0.0",
+  "languages": ["zh-CN", "en"],
+  "categories": ["edible", "non_edible"],
+  "minWordCount": 1200,
+  "requiredSections": [
+    "morphology",
+    "cultivation",
+    "varieties",
+    "chemistry",
+    "culinary_uses",
+    "toxicology",
+    "references"
+  ],
+  "trustedSources": {
+    "priority1": ["RHS", "Kew Gardens", "USDA", "Missouri Botanical Garden"],
+    "priority2": ["PubChem", "ChemSpider", "WHO", "EFSA", "FDA"],
+    "priority3": ["NCBI", "Academic Reviews"]
+  },
+  "imageRequirements": {
+    "licenses": ["CC BY", "CC BY-SA", "CC0", "Public Domain"],
+    "attribution": true,
+    "minResolution": "800x600"
+  }
+}

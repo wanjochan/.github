@@ -1,0 +1,135 @@
+{
+  "id": "basil",
+  "cn_name": "罗勒",
+  "en_name": "Basil",
+  "scientific_name": "Ocimum basilicum",
+  "category": "edible",
+  "edible_parts": [
+    "leaves",
+    "flower"
+  ],
+  "toxicity": {
+    "status": "safe",
+    "toxic_parts": [],
+    "notes": "一般安全可食，但精油浓缩制品需注意剂量，孕期与哺乳期人群建议适量。",
+    "sources": [
+      "Kew Gardens",
+      "WHO"
+    ]
+  },
+  "cultivation": {
+    "hardiness": "USDA 10-11",
+    "sun": "full sun",
+    "soil": "well-drained, fertile loam",
+    "pH": "6.0-7.0",
+    "watering": "保持土壤微湿但不积水，炎热季节增加频率；避免叶面长时段潮湿。",
+    "propagation": [
+      "seed",
+      "softwood cuttings"
+    ],
+    "companion": [
+      "tomato",
+      "pepper",
+      "eggplant"
+    ],
+    "pests": [
+      "aphids",
+      "whiteflies",
+      "downy mildew"
+    ]
+  },
+  "varieties": [
+    {
+      "name": "Genovese"
+    },
+    {
+      "name": "Thai"
+    },
+    {
+      "name": "Purple Ruffles"
+    },
+    {
+      "name": "Lemon"
+    }
+  ],
+  "chemistry": [
+    {
+      "compound": "Linalool",
+      "class": "monoterpene alcohol",
+      "role": "aroma/flavor",
+      "notes": "赋予花香与甜感，是甜罗勒的重要芳香成分。",
+      "sources": [
+        "PubChem",
+        "NCBI"
+      ]
+    },
+    {
+      "compound": "Eugenol",
+      "class": "phenylpropene",
+      "role": "clove-like note",
+      "notes": "带有丁香般辛香，在某些品种（如泰国罗勒）含量更高。",
+      "sources": [
+        "PubChem",
+        "Academic Reviews"
+      ]
+    },
+    {
+      "compound": "Methyl chavicol (Estragole)",
+      "class": "phenylpropene",
+      "role": "anise-like note",
+      "notes": "赋予茴香样清甜气息，泰国罗勒与柠檬罗勒常见。",
+      "sources": [
+        "PubChem"
+      ]
+    }
+  ],
+  "culinary_uses": [
+    "pesto",
+    "pizza",
+    "Thai cuisine",
+    "salads"
+  ],
+  "storage": "鲜叶短期可冷藏并用湿纸巾包裹保持水分；长期可制成青酱（与油/坚果/芝士搅拌）冷冻分装，或以橄榄油浸泡后冰格冷冻；不建议长时间干燥后再研磨，香气易散。",
+  "lookalikes": [
+    {
+      "name": "Ocimum tenuiflorum (圣罗勒)",
+      "how_to_tell": "圣罗勒叶片多有细毛且气味更辛烈；甜罗勒叶片较宽厚、气味甜。"
+    }
+  ],
+  "images": [],
+  "references": [
+    {
+      "title": "Plants of the World Online: Ocimum basilicum",
+      "org": "Kew Gardens",
+      "year": 2024,
+      "url": "https://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:453474-1"
+    },
+    {
+      "title": "USDA PLANTS Database: Ocimum basilicum",
+      "org": "USDA",
+      "year": 2020,
+      "url": "https://plants.usda.gov/home/plantProfile?symbol=OCBA2"
+    },
+    {
+      "title": "PubChem Compound Summary: Linalool",
+      "org": "PubChem",
+      "year": 2024,
+      "url": "https://pubchem.ncbi.nlm.nih.gov/compound/Linalool"
+    }
+  ],
+  "tags": [
+    "aromatic",
+    "annual",
+    "culinary",
+    "Lamiaceae"
+  ],
+  "key_features": "一年生草本；方茎、对生叶、轮伞花序；揉叶具强烈甜香。",
+  "difficulty": "容易（温暖季节）",
+  "morphology_content": "罗勒（Ocimum basilicum）为唇形科罗勒属一年生或短命多年生草本，整体株高常见30–60厘米，适宜条件可更高。茎呈典型方形，节间明显，幼时多具细微柔毛。叶片对生，卵形至广卵形，边缘全缘或具不明显浅齿，叶面柔软且略具光泽，主脉清晰；轻揉即散发浓郁甜香，香气层次由花香、茴香样到丁香般辛辣依品种不同而异。花序多为顶生轮伞花序组合成的总状或穗状，苞叶明显；花小，常见白色或淡粉至淡紫，花冠二唇形；雄蕊4，花期夏季至初秋。根系为须根系，浅而分布广，适合松散、排水良好的基质。植株进入花期后顶端优势增强，若不及时打顶易导致叶片变小、质地变老，香气亦随之减弱。\n在形态识别上，可通过方茎、对生叶和揉叶后浓郁香气快速判断其为罗勒类；与圣罗勒相比，甜罗勒叶片更宽厚、叶色常较浅绿，气味甜、带果香；与柠檬罗勒相比，其叶缘通常较平整，茎部毛被较少。",
+  "lookalike_comparison": "与圣罗勒（Ocimum tenuiflorum）区分：圣罗勒枝叶多毛、色深且香气辛烈带药草感；甜罗勒叶宽、甜香显著。与薄荷属植物区分：薄荷常具地下匍匐茎，气味偏薄荷醇清凉感，而罗勒则偏花香与茴香香调。",
+  "varieties_content": "- Genovese：经典意式甜罗勒，叶片大而柔软，制酱体感细腻，青酱（Pesto）首选。\n- Thai（泰国罗勒）：茎叶略带紫色，茴香样与丁香样香气更足，耐高温，适合东南亚热厨。\n- Purple Ruffles：深紫色皱叶，观赏性强，香气较辛；可点缀沙拉与鸡尾酒。\n- Lemon（柠檬罗勒）：富含柠檬烯及甲基平儿茶酚醚，散发清晰柑橘香；适合冷饮与海鲜。",
+  "chemistry_content": "罗勒的挥发油以单萜与苯丙素类为主，关键化合物包括：\n- Linalool：带来花香与甜感，提升整体圆润度；与热加工中产生的Maillard香型相容性良好。\n- Eugenol：贡献丁香般辛辣与温暖气息，增强层次与厚度；与番茄、肉类风味具有协同作用。\n- Methyl chavicol（Estragole）：赋予茴香样清甜与轻盈感；在泰罗勒与柠檬罗勒中更常见。\n化学型（chemotype）在罗勒中显著，受品种、产地、栽培环境与收获时期影响，不同化学型在烹饪适配性上亦有差异。",
+  "culinary_content": "罗勒在地中海与东南亚菜系中皆居核心地位。意式体系中，Genovese 罗勒与松子、帕玛森与橄榄油制成的 Pesto Genovese 是冷、热菜通用的基础酱；新鲜叶片点缀披萨可在出炉后立刻释放芳香，避免高温长时间破坏精油。东南亚烹饪中，泰罗勒能承受较高锅气，适合热炒肉类与咖喱；其茴香与丁香样香气可穿透椰奶与鱼露的厚重，带来明亮层次。生食方面，罗勒与番茄、莫扎里拉的经典组合（Caprese）展示其与酸味、乳脂的高适配性；冷饮或甜品中，与柠檬、草莓、百香果搭配可形成清新果香。注意：新鲜罗勒长时间加热香气易散，应尽量在出锅前或冷制应用。",
+  "storage_methods": "鲜叶短存：湿纸巾包裹放入透气袋，冷藏保鲜层；或将插穗放清水杯中如鲜花保管并轻覆塑料袋保湿。长期：制作青酱后分装冷冻，或切碎后与橄榄油按1:3混合倒入冰格冷冻；干燥法需低温阴干以最大化保留香气，但整体仍逊于冷冻油封。",
+  "toxicology_content": "一般安全可食；对罗勒精油或其主要成分（如丁香酚）敏感者应减少接触。市售高浓度精油非食品级，不建议口服。孕期、哺乳期及小儿应避免摄入高剂量精油。"
+}

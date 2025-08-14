@@ -1,0 +1,80 @@
+{
+  "id": "foxglove",
+  "cn_name": "毛地黄【注意有毒】",
+  "en_name": "Foxglove",
+  "scientific_name": "Digitalis purpurea",
+  "category": "non_edible",
+  "edible_parts": [],
+  "toxicity": {
+    "status": "toxic",
+    "toxic_parts": [
+      "leaves",
+      "flower",
+      "stem",
+      "root",
+      "seeds"
+    ],
+    "notes": "毛地黄全株含有剧毒的强心苷类化合物，主要包括洋地黄毒苷（digitoxin）、地高辛（digoxin）、洋地黄皂苷A（digitonin）等。这些化合物对心肌具有强烈的兴奋作用，能够增强心肌收缩力并减慢心率。强心苷的治疗剂量与中毒剂量之间的安全范围极其狭窄，即使是少量的误食也可能导致严重后果。儿童仅需食用2-3片叶子就可能致命，成人误食10-20克新鲜叶片也可能导致死亡。中毒症状包括恶心、呕吐、视觉异常（黄视症）、心律不齐、意识模糊等，严重时可导致心脏骤停死亡。",
+    "sources": [
+      "Williamson EM, et al. Major Herbs of Ayurveda. Churchill Livingstone, 2002",
+      "European Medicines Agency. Assessment report on Digitalis purpurea L., folium. 2016"
+    ]
+  },
+  "cultivation": {
+    "hardiness": "USDA zones 4-8, 耐寒性较强，适合北京以南大部分地区",
+    "sun": "半阴，避免强烈阳光直射，林缘环境最佳",
+    "soil": "排水良好的酸性至中性土壤，富含腐殖质",
+    "pH": "5.5-7.0",
+    "watering": "保持土壤适度湿润，避免积水",
+    "propagation": [
+      "种子播种",
+      "春季3-4月播种",
+      "秋季9-10月播种"
+    ],
+    "companion": [
+      "蕨类植物",
+      "苔藓",
+      "其他喜阴植物",
+      "适合林缘花境"
+    ],
+    "pests": [
+      "蚜虫",
+      "红蜘蛛",
+      "白粉病",
+      "需注意通风"
+    ]
+  },
+  "varieties": [],
+  "chemistry": [],
+  "culinary_uses": [],
+  "storage": "",
+  "lookalikes": [],
+  "images": [],
+  "references": [
+    {
+      "title": "An Account of the Foxglove and some of its Medical Uses",
+      "org": "William Withering",
+      "year": 1785,
+      "url": "https://archive.org/details/b21357805"
+    },
+    {
+      "title": "Assessment report on Digitalis purpurea L., folium",
+      "org": "European Medicines Agency",
+      "year": 2016,
+      "url": "https://www.ema.europa.eu/en/documents/herbal-report/final-assessment-report-digitalis-purpurea-l-folium_en.pdf"
+    },
+    {
+      "title": "Poisonous Plants of North America",
+      "org": "CABI Publishing",
+      "year": 2021,
+      "url": "https://www.cabi.org/bookshop/book/9781780641447"
+    },
+    {
+      "title": "Major Herbs of Ayurveda",
+      "org": "Churchill Livingstone",
+      "year": 2002,
+      "url": "https://www.elsevier.com/books/major-herbs-of-ayurveda/williamson/978-0-443-07032-9"
+    }
+  ],
+  "tags": []
+}

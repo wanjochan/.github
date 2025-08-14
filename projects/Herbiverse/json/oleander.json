@@ -1,0 +1,90 @@
+{
+  "id": "oleander",
+  "cn_name": "夹竹桃",
+  "en_name": "Oleander",
+  "scientific_name": "Nerium oleander",
+  "category": "non_edible",
+  "edible_parts": [],
+  "toxicity": {
+    "status": "toxic",
+    "toxic_parts": ["leaves", "flowers", "stems", "roots", "bark", "nectar", "smoke"],
+    "notes": "夹竹桃全株含有剧毒的强心苷类化合物（主要是oleandrin），即使少量摄入也可能导致严重中毒甚至死亡。燃烧产生的烟雾同样有毒。中毒症状包括恶心、呕吐、心律失常、瞳孔放大等。一旦怀疑中毒必须立即就医，切勿催吐。",
+    "sources": ["toxicological studies", "medical literature", "botanical references"]
+  },
+  "description": "夹竹桃是一种极其危险的有毒观赏植物，原产于地中海沿岸地区。这种常绿灌木因其美丽的花朵而被广泛种植作为观赏植物，但其全株含有剧毒的强心苷类化合物，特别是oleandrin（夹竹桃苷）、digitoxigenin和neriifolin等毒素。夹竹桃的毒性极强，即使是少量摄入也可能导致严重中毒甚至死亡。",
+  "cultivation": {
+    "hardiness": "USDA植物耐寒区8-11区，年平均气温15-25°C",
+    "sun": "喜欢充足阳光，能耐半阴环境",
+    "soil": "对土壤要求不严格，能在贫瘠土壤中生长，但在肥沃、排水良好的土壤中生长更旺盛",
+    "pH": "适应性强，耐盐碱",
+    "watering": "耐旱性强，适量浇水，避免积水",
+    "propagation": ["扦插", "播种"],
+    "companion": [],
+    "pests": []
+  },
+  "varieties": [
+    {
+      "name": "粉花夹竹桃",
+      "description": "花朵为粉红色，最常见的品种"
+    },
+    {
+      "name": "白花夹竹桃", 
+      "description": "花朵为纯白色，观赏价值高"
+    },
+    {
+      "name": "黄花夹竹桃",
+      "description": "花朵为黄色，相对少见"
+    },
+    {
+      "name": "重瓣夹竹桃",
+      "description": "花瓣重重叠叠，花型丰满"
+    }
+  ],
+  "chemistry": [
+    {
+      "compound": "Oleandrin（夹竹桃苷）",
+      "content": "主要毒性成分，强心苷类化合物"
+    },
+    {
+      "compound": "Digitoxigenin",
+      "content": "强心苷类毒素，影响心脏功能"
+    },
+    {
+      "compound": "Neriifolin",
+      "content": "强心苷类毒素，抑制Na+/K+-ATPase酶"
+    }
+  ],
+  "culinary_uses": [],
+  "storage": "不适用，有毒植物",
+  "morphology": "常绿灌木或小乔木，高1-6米。叶片革质，披针形，长8-20厘米，通常3片轮生，深绿色有光泽。花朵聚伞花序顶生，直径3-4厘米，5片花瓣，花色有粉红、白色、黄色等。果实为长条形蒴果。",
+  "lookalikes": [
+    {
+      "species": "桃花",
+      "distinction": "桃花为落叶植物，春季开花后长叶，而夹竹桃为常绿植物，叶片革质轮生"
+    },
+    {
+      "species": "月季花",
+      "distinction": "月季花有刺，叶片为羽状复叶，而夹竹桃无刺，叶片为单叶轮生"
+    },
+    {
+      "species": "杜鹃花",
+      "distinction": "杜鹃花为酸性土植物，花朵形状和雄蕊数量不同，叶片形状也不同"
+    }
+  ],
+  "safety_precautions": [
+    "种植位置应远离儿童和宠物活动区域",
+    "所有园艺作业必须佩戴手套，作业后彻底清洗双手",
+    "修剪下的枝叶不能焚烧，应作为有害垃圾处理",
+    "家中有夹竹桃的应告知所有家庭成员其毒性",
+    "避免在有风天气进行修剪作业"
+  ],
+  "emergency_treatment": "一旦怀疑夹竹桃中毒，必须立即就医。切勿催吐，保持患者安静，避免剧烈运动。如果意识清醒可漱口吐出，记录摄入时间和症状发展情况。",
+  "images": [],
+  "references": [
+    "毒理学研究文献",
+    "植物学分类资料", 
+    "中毒案例报告",
+    "园艺安全指南"
+  ],
+  "tags": ["有毒植物", "观赏植物", "常绿灌木", "强心苷", "地中海植物", "夹竹桃科"]
+}
