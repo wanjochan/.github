@@ -1,0 +1,137 @@
+{
+  "id": "dill",
+  "cn_name": "莳萝/刁草",
+  "en_name": "Dill",
+  "scientific_name": "Anethum graveolens",
+  "category": "edible",
+  "edible_parts": [
+    "leaves",
+    "seeds",
+    "flower"
+  ],
+  "toxicity": {
+    "status": "safe",
+    "toxic_parts": [],
+    "notes": "一般安全可食，种子和叶片均无毒性；但精油浓缩制品应适量使用，孕期人群建议咨询医师。",
+    "sources": [
+      "Kew Gardens",
+      "USDA"
+    ]
+  },
+  "cultivation": {
+    "hardiness": "USDA 2-11",
+    "sun": "full sun",
+    "soil": "well-drained, fertile loam",
+    "pH": "6.1-7.5",
+    "watering": "生长期需均匀水分，避免积水；开花后可适度减少浇水以浓缩精油含量。",
+    "propagation": [
+      "seed"
+    ],
+    "companion": [
+      "cabbage",
+      "lettuce",
+      "onion",
+      "cucumber"
+    ],
+    "pests": [
+      "aphids",
+      "carrot fly",
+      "cutworms"
+    ]
+  },
+  "varieties": [
+    {
+      "name": "Mammoth Long Island"
+    },
+    {
+      "name": "Fernleaf"
+    },
+    {
+      "name": "Dukat"
+    },
+    {
+      "name": "Hercules"
+    }
+  ],
+  "chemistry": [
+    {
+      "compound": "Carvone",
+      "class": "monoterpene ketone",
+      "role": "characteristic aroma",
+      "notes": "莳萝籽的主要香气成分，带有清新的茴芹香；与薄荷中的香芹酮为对映异构体。",
+      "sources": [
+        "PubChem",
+        "NCBI"
+      ]
+    },
+    {
+      "compound": "Limonene",
+      "class": "monoterpene",
+      "role": "citrus note",
+      "notes": "赋予柑橘样清香，在新鲜叶片中含量较高，提升整体明亮感。",
+      "sources": [
+        "PubChem"
+      ]
+    },
+    {
+      "compound": "α-Phellandrene",
+      "class": "monoterpene",
+      "role": "fresh green note",
+      "notes": "贡献清新的绿叶香气，在叶片中含量显著，为莳萝草特有的青草气息来源。",
+      "sources": [
+        "Academic Reviews"
+      ]
+    }
+  ],
+  "culinary_uses": [
+    "pickled vegetables",
+    "salmon dishes",
+    "yogurt sauces",
+    "Nordic cuisine",
+    "bread and pastries"
+  ],
+  "storage": "鲜叶可束成小把插入水中如花束般保存，覆盖塑料袋冷藏；种子应在完全成熟后收集晾干，密封避光保存；叶片可冷冻保存但质地会变软，适合制作调料。",
+  "lookalikes": [
+    {
+      "name": "Foeniculum vulgare (茴香)",
+      "how_to_tell": "茴香为多年生具球茎，叶片更粗壮，种子更大且带甘草香；莳萝为一年生，叶片更细致，种子较小且香气更清新。"
+    }
+  ],
+  "images": [],
+  "references": [
+    {
+      "title": "Plants of the World Online: Anethum graveolens",
+      "org": "Kew Gardens",
+      "year": 2024,
+      "url": "https://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:839351-1"
+    },
+    {
+      "title": "USDA PLANTS Database: Anethum graveolens",
+      "org": "USDA",
+      "year": 2023,
+      "url": "https://plants.usda.gov/home/plantProfile?symbol=ANGR"
+    },
+    {
+      "title": "PubChem Compound Summary: Carvone",
+      "org": "PubChem",
+      "year": 2024,
+      "url": "https://pubchem.ncbi.nlm.nih.gov/compound/Carvone"
+    }
+  ],
+  "tags": [
+    "aromatic",
+    "annual",
+    "culinary",
+    "Apiaceae",
+    "Nordic"
+  ],
+  "key_features": "一年生草本；细致羽状复叶、黄色伞形花序；种子与叶片均具独特茴芹香气。",
+  "difficulty": "容易（耐寒性强）",
+  "morphology_content": "莳萝（Anethum graveolens）为伞形科莳萝属一年生草本植物，株高通常60–90厘米，在理想条件下可达120厘米。茎直立，圆柱形，光滑无毛，具纵沟纹，常呈蓝绿色调，节间明显。叶片互生，2–4回羽状全裂，裂片线形至丝状，极其细致，长1–3厘米，宽约0.5毫米，质地柔软，色泽蓝绿至深绿。轻触叶片即可闻到清新的茴芹香气，这种香气比茴香更为清淡、更具草本感。\n\n花序为复伞形花序，直径5–15厘米，伞辐8–25个，无总苞片或偶有1–2片；小伞形花序具花15–30朵，小花黄色，花瓣5片，卵形，先端内卷。花期通常在夏季6–8月。果实为分果，椭圆形，长3–5毫米，宽2–3毫米，扁平，边缘具翅，成熟时褐色。种子具强烈芳香，是重要的香料来源。\n\n根系为主根系，主根发达但侧根较少，因此移植时需小心处理。植株具有明显的顶端优势，若不及时采收嫩叶，会迅速抽薹开花，此时叶片质地变硬，香气也会发生变化。",
+  "lookalike_comparison": "与茴香（Foeniculum vulgare）最易混淆，但有明显区别：茴香为多年生，具膨大的球茎状基部，叶片较粗壮呈蓝绿色，种子更大且具甘草样香气；莳萝为一年生，无球茎，叶片更纤细，种子较小且香气更清新。与胡萝卜叶区分：胡萝卜叶更粗糙有毛，无特殊香气；莳萝叶光滑细致，具明显芳香。",
+  "varieties_content": "- Mammoth Long Island：经典美式品种，植株高大，叶片产量高，种子饱满，适合商业种植与家庭菜园。\n- Fernleaf：矮生品种，株高仅30–45厘米，叶片密集，慢抽薹，适合盆栽与连续采收嫩叶。\n- Dukat：丹麦选育品种，叶片香气浓郁，慢抽薹特性优秀，在北欧地区广受欢迎。\n- Hercules：晚熟品种，植株强健，抗病性好，种子产量高，适合以收获种子为主的栽培。",
+  "chemistry_content": "莳萝的精油化学组成复杂，主要活性成分包括：\n\n**香芹酮(Carvone)**：占种子精油的40–60%，是莳萝种子特有香气的主要来源，具有清新的茴芹香调。有趣的是，莳萝中的香芹酮为右旋体，而薄荷中的为左旋体，两者虽为对映异构体但香气截然不同。\n\n**柠檬烯(Limonene)**：在新鲜叶片中含量较高，约占15–30%，赋予明亮的柑橘样清香，这也是莳萝叶与种子香气差异的重要原因。\n\n**α-水芹烯(α-Phellandrene)**：主要存在于叶片中，贡献清新的绿叶香气和草本感，是莳萝草独特青草气息的来源。\n\n**桉叶油醇(1,8-Cineole)**：具有清凉感，增强香气的穿透力和持久性。\n\n叶片与种子的精油组成存在显著差异：叶片以柠檬烯和α-水芹烯为主，香气清新草本；种子以香芹酮为主，香气浓郁持久。这种差异使得莳萝在烹饪中具有双重特性。",
+  "culinary_content": "莳萝在北欧、东欧及中东菜系中占据重要地位，被誉为'北欧的香菜'。在斯堪的纳维亚半岛，新鲜莳萝叶是三文鱼的经典搭配，其清新的香气能很好地平衡鱼类的腥味，同时提升整体的清香层次。瑞典的腌制三文鱼（Gravlax）中，莳萝与盐、糖的组合是传统配方的核心。\n\n**种子应用**：莳萝籽在腌制蔬菜中不可或缺，特别是腌黄瓜（Dill Pickles），其浓郁的香芹酮香气能渗透整个腌制液，赋予蔬菜独特风味。在面包烘焙中，莳萝籽常用于黑麦面包和欧式酸面包，增添复杂的香气层次。\n\n**叶片应用**：新鲜莳萝叶质地柔嫩，适合生食或短时间加热。在酸奶酱（如希腊Tzatziki）中，莳萝提供清新的草本香气，与黄瓜的清爽和大蒜的辛辣形成完美平衡。俄式菜系中，莳萝叶常用于土豆沙拉、汤品和炖菜。\n\n**营养搭配原理**：莳萝的精油成分具有促进消化的作用，特别适合搭配油腻或难消化的食物。其清新香气还能有效掩盖某些食材的异味，如鱼腥味或蛋类的腥膻味。在食品保鲜方面，莳萝的抗菌成分有助于延长腌制食品的保质期。",
+  "storage_methods": "**新鲜叶片**：最佳保存方法是将茎部插入清水中，如同鲜花般处理，上部覆盖塑料袋后冷藏，可保持1–2周新鲜。也可将叶片洗净晾干后切碎，与橄榄油混合制成香草油冷冻保存。\n\n**种子保存**：应在种子完全成熟、呈褐色时收获，晾干后存放在密封容器中，避光阴凉处可保存2–3年而不失香气。正确干燥的种子应具有清脆的质地和浓郁香气。\n\n**冷冻技巧**：新鲜叶片可直接冷冻，虽然质地会变软但香气保持良好，适合用于汤品、炖菜等需要加热的料理。制作成莳萝黄油后冷冻，是保存香气的绝佳方法。",
+  "toxicology_content": "莳萝一般被认为是安全的食品香料，无明显毒性报告。种子和叶片的常规食用量下不会产生不良反应。但需注意以下几点：高剂量的精油可能对敏感人群造成皮肤刺激；孕妇应避免摄入大量莳萝精油，因其可能具有子宫刺激作用；极少数人群可能对伞形科植物过敏，初次食用建议少量尝试。"
+}

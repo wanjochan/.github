@@ -1,0 +1,465 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "last_updated": "2025-01-14",
+    "description": "Herbiverse项目植物索引系统"
+  },
+  "alphabetical_index": [
+    {
+      "id": "basil",
+      "en_name": "Basil",
+      "cn_name": "罗勒",
+      "scientific_name": "Ocimum basilicum",
+      "category": "edible"
+    },
+    {
+      "id": "chives",
+      "en_name": "Chives",
+      "cn_name": "韭葱/细香葱",
+      "scientific_name": "Allium schoenoprasum",
+      "category": "edible"
+    },
+    {
+      "id": "cilantro",
+      "en_name": "Cilantro/Coriander",
+      "cn_name": "香菜/芫荽",
+      "scientific_name": "Coriandrum sativum",
+      "category": "edible"
+    },
+    {
+      "id": "dill",
+      "en_name": "Dill",
+      "cn_name": "莳萝/刁草",
+      "scientific_name": "Anethum graveolens",
+      "category": "edible"
+    },
+    {
+      "id": "foxglove",
+      "en_name": "Foxglove",
+      "cn_name": "毛地黄【注意有毒】",
+      "scientific_name": "Digitalis purpurea",
+      "category": "non_edible"
+    },
+    {
+      "id": "mint",
+      "en_name": "Mint",
+      "cn_name": "薄荷",
+      "scientific_name": "Mentha spp.",
+      "category": "edible"
+    },
+    {
+      "id": "oleander",
+      "en_name": "Oleander",
+      "cn_name": "夹竹桃",
+      "scientific_name": "Nerium oleander",
+      "category": "non_edible"
+    },
+    {
+      "id": "oregano",
+      "en_name": "Oregano",
+      "cn_name": "牛至/披萨草",
+      "scientific_name": "Origanum vulgare",
+      "category": "edible"
+    },
+    {
+      "id": "parsley",
+      "en_name": "Parsley",
+      "cn_name": "欧芹",
+      "scientific_name": "Petroselinum crispum",
+      "category": "edible"
+    },
+    {
+      "id": "rosemary",
+      "en_name": "Rosemary",
+      "cn_name": "迷迭香",
+      "scientific_name": "Rosmarinus officinalis",
+      "category": "edible"
+    },
+    {
+      "id": "sage",
+      "en_name": "Sage",
+      "cn_name": "鼠尾草",
+      "scientific_name": "Salvia officinalis",
+      "category": "edible"
+    },
+    {
+      "id": "thyme",
+      "en_name": "Thyme",
+      "cn_name": "百里香",
+      "scientific_name": "Thymus vulgaris",
+      "category": "edible"
+    }
+  ],
+  "chinese_index": [
+    {
+      "id": "oleander",
+      "en_name": "Oleander",
+      "cn_name": "夹竹桃",
+      "scientific_name": "Nerium oleander",
+      "category": "non_edible"
+    },
+    {
+      "id": "parsley",
+      "en_name": "Parsley",
+      "cn_name": "欧芹",
+      "scientific_name": "Petroselinum crispum",
+      "category": "edible"
+    },
+    {
+      "id": "foxglove",
+      "en_name": "Foxglove",
+      "cn_name": "毛地黄【注意有毒】",
+      "scientific_name": "Digitalis purpurea",
+      "category": "non_edible"
+    },
+    {
+      "id": "oregano",
+      "en_name": "Oregano",
+      "cn_name": "牛至/披萨草",
+      "scientific_name": "Origanum vulgare",
+      "category": "edible"
+    },
+    {
+      "id": "thyme",
+      "en_name": "Thyme",
+      "cn_name": "百里香",
+      "scientific_name": "Thymus vulgaris",
+      "category": "edible"
+    },
+    {
+      "id": "mint",
+      "en_name": "Mint",
+      "cn_name": "薄荷",
+      "scientific_name": "Mentha spp.",
+      "category": "edible"
+    },
+    {
+      "id": "basil",
+      "en_name": "Basil",
+      "cn_name": "罗勒",
+      "scientific_name": "Ocimum basilicum",
+      "category": "edible"
+    },
+    {
+      "id": "rosemary",
+      "en_name": "Rosemary",
+      "cn_name": "迷迭香",
+      "scientific_name": "Rosmarinus officinalis",
+      "category": "edible"
+    },
+    {
+      "id": "sage",
+      "en_name": "Sage",
+      "cn_name": "鼠尾草",
+      "scientific_name": "Salvia officinalis",
+      "category": "edible"
+    },
+    {
+      "id": "dill",
+      "en_name": "Dill",
+      "cn_name": "莳萝/刁草",
+      "scientific_name": "Anethum graveolens",
+      "category": "edible"
+    },
+    {
+      "id": "cilantro",
+      "en_name": "Cilantro/Coriander",
+      "cn_name": "香菜/芫荽",
+      "scientific_name": "Coriandrum sativum",
+      "category": "edible"
+    },
+    {
+      "id": "chives",
+      "en_name": "Chives",
+      "cn_name": "韭葱/细香葱",
+      "scientific_name": "Allium schoenoprasum",
+      "category": "edible"
+    }
+  ],
+  "category_index": {
+    "edible": [
+      {
+        "id": "basil",
+        "en_name": "Basil",
+        "cn_name": "罗勒"
+      },
+      {
+        "id": "mint",
+        "en_name": "Mint",
+        "cn_name": "薄荷"
+      },
+      {
+        "id": "cilantro",
+        "en_name": "Cilantro/Coriander",
+        "cn_name": "香菜/芫荽"
+      },
+      {
+        "id": "parsley",
+        "en_name": "Parsley",
+        "cn_name": "欧芹"
+      },
+      {
+        "id": "chives",
+        "en_name": "Chives",
+        "cn_name": "韭葱/细香葱"
+      },
+      {
+        "id": "dill",
+        "en_name": "Dill",
+        "cn_name": "莳萝/刁草"
+      },
+      {
+        "id": "oregano",
+        "en_name": "Oregano",
+        "cn_name": "牛至/披萨草"
+      },
+      {
+        "id": "thyme",
+        "en_name": "Thyme",
+        "cn_name": "百里香"
+      },
+      {
+        "id": "rosemary",
+        "en_name": "Rosemary",
+        "cn_name": "迷迭香"
+      },
+      {
+        "id": "sage",
+        "en_name": "Sage",
+        "cn_name": "鼠尾草"
+      }
+    ],
+    "non_edible": [
+      {
+        "id": "oleander",
+        "en_name": "Oleander",
+        "cn_name": "夹竹桃"
+      },
+      {
+        "id": "foxglove",
+        "en_name": "Foxglove",
+        "cn_name": "毛地黄【注意有毒】"
+      }
+    ]
+  },
+  "usage_index": {
+    "culinary": [
+      {
+        "id": "basil",
+        "en_name": "Basil",
+        "cn_name": "罗勒"
+      },
+      {
+        "id": "mint",
+        "en_name": "Mint",
+        "cn_name": "薄荷"
+      },
+      {
+        "id": "cilantro",
+        "en_name": "Cilantro/Coriander",
+        "cn_name": "香菜/芫荽"
+      },
+      {
+        "id": "parsley",
+        "en_name": "Parsley",
+        "cn_name": "欧芹"
+      },
+      {
+        "id": "chives",
+        "en_name": "Chives",
+        "cn_name": "韭葱/细香葱"
+      },
+      {
+        "id": "dill",
+        "en_name": "Dill",
+        "cn_name": "莳萝/刁草"
+      },
+      {
+        "id": "oregano",
+        "en_name": "Oregano",
+        "cn_name": "牛至/披萨草"
+      },
+      {
+        "id": "thyme",
+        "en_name": "Thyme",
+        "cn_name": "百里香"
+      },
+      {
+        "id": "rosemary",
+        "en_name": "Rosemary",
+        "cn_name": "迷迭香"
+      },
+      {
+        "id": "sage",
+        "en_name": "Sage",
+        "cn_name": "鼠尾草"
+      }
+    ],
+    "medicinal": [
+      {
+        "id": "mint",
+        "en_name": "Mint",
+        "cn_name": "薄荷"
+      },
+      {
+        "id": "oregano",
+        "en_name": "Oregano",
+        "cn_name": "牛至/披萨草"
+      },
+      {
+        "id": "rosemary",
+        "en_name": "Rosemary",
+        "cn_name": "迷迭香"
+      },
+      {
+        "id": "sage",
+        "en_name": "Sage",
+        "cn_name": "鼠尾草"
+      }
+    ],
+    "ornamental": [],
+    "aromatic": [
+      {
+        "id": "basil",
+        "en_name": "Basil",
+        "cn_name": "罗勒"
+      },
+      {
+        "id": "mint",
+        "en_name": "Mint",
+        "cn_name": "薄荷"
+      },
+      {
+        "id": "cilantro",
+        "en_name": "Cilantro/Coriander",
+        "cn_name": "香菜/芫荽"
+      },
+      {
+        "id": "parsley",
+        "en_name": "Parsley",
+        "cn_name": "欧芹"
+      },
+      {
+        "id": "chives",
+        "en_name": "Chives",
+        "cn_name": "韭葱/细香葱"
+      },
+      {
+        "id": "dill",
+        "en_name": "Dill",
+        "cn_name": "莳萝/刁草"
+      },
+      {
+        "id": "oregano",
+        "en_name": "Oregano",
+        "cn_name": "牛至/披萨草"
+      },
+      {
+        "id": "thyme",
+        "en_name": "Thyme",
+        "cn_name": "百里香"
+      },
+      {
+        "id": "rosemary",
+        "en_name": "Rosemary",
+        "cn_name": "迷迭香"
+      },
+      {
+        "id": "sage",
+        "en_name": "Sage",
+        "cn_name": "鼠尾草"
+      }
+    ]
+  },
+  "difficulty_index": {
+    "easy": [
+      {
+        "id": "basil",
+        "en_name": "Basil",
+        "cn_name": "罗勒",
+        "difficulty": "容易（温暖季节）"
+      },
+      {
+        "id": "mint",
+        "en_name": "Mint",
+        "cn_name": "薄荷",
+        "difficulty": "容易（需控制蔓延）"
+      },
+      {
+        "id": "chives",
+        "en_name": "Chives",
+        "cn_name": "韭葱/细香葱",
+        "difficulty": "极易（新手友好）"
+      },
+      {
+        "id": "dill",
+        "en_name": "Dill",
+        "cn_name": "莳萝/刁草",
+        "difficulty": "容易（耐寒性强）"
+      },
+      {
+        "id": "oregano",
+        "en_name": "Oregano",
+        "cn_name": "牛至/披萨草",
+        "difficulty": "容易（耐旱耐寒）"
+      },
+      {
+        "id": "thyme",
+        "en_name": "Thyme",
+        "cn_name": "百里香",
+        "difficulty": "容易（耐旱耐寒）"
+      },
+      {
+        "id": "rosemary",
+        "en_name": "Rosemary",
+        "cn_name": "迷迭香",
+        "difficulty": "容易（适应性强）"
+      },
+      {
+        "id": "sage",
+        "en_name": "Sage",
+        "cn_name": "鼠尾草",
+        "difficulty": "容易（耐旱耐寒）"
+      }
+    ],
+    "medium": [
+      {
+        "id": "cilantro",
+        "en_name": "Cilantro/Coriander",
+        "cn_name": "香菜/芫荽",
+        "difficulty": "中等（偏凉爽季节更易成功）"
+      }
+    ],
+    "hard": [
+      {
+        "id": "parsley",
+        "en_name": "Parsley",
+        "cn_name": "欧芹",
+        "difficulty": "容易至中等（耐凉爽、幼苗期生长缓慢）"
+      },
+      {
+        "id": "foxglove",
+        "en_name": "Foxglove",
+        "cn_name": "毛地黄【注意有毒】",
+        "difficulty": ""
+      },
+      {
+        "id": "oleander",
+        "en_name": "Oleander",
+        "cn_name": "夹竹桃",
+        "difficulty": ""
+      }
+    ]
+  },
+  "statistics": {
+    "total_entries": 12,
+    "edible_count": 10,
+    "toxic_count": 2,
+    "culinary_count": 10,
+    "medicinal_count": 4,
+    "aromatic_count": 10,
+    "easy_to_grow": 8,
+    "medium_difficulty": 1,
+    "hard_to_grow": 3
+  }
+}

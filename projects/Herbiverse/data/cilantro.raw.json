@@ -1,0 +1,81 @@
+{
+  "id": "cilantro",
+  "cn_name": "香菜/芫荽",
+  "en_name": "Cilantro/Coriander",
+  "scientific_name": "Coriandrum sativum",
+  "category": "edible",
+  "edible_parts": ["leaves", "seeds"],
+  "toxicity": {
+    "status": "safe",
+    "toxic_parts": [],
+    "notes": "一般认为安全食用。个别人群对伞形科植物花粉或精油成分可能过敏，过量摄入精油制品需谨慎。",
+    "sources": ["Kew Gardens", "WHO"]
+  },
+  "cultivation": {
+    "hardiness": "USDA 2-11",
+    "sun": "full sun to partial shade",
+    "soil": "well-drained, fertile loam or sandy loam",
+    "pH": "6.2-7.5",
+    "watering": "保持土壤均匀湿润但避免积水；高温干燥期适当增水减轻抽薹压力。",
+    "propagation": ["seed"],
+    "companion": ["lettuce", "spinach", "onion"],
+    "pests": ["aphids", "leafminers", "bolting"]
+  },
+  "varieties": [
+    {"name": "Slow-bolt（耐抽薹型）"},
+    {"name": "Long-standing"},
+    {"name": "Leisure"},
+    {"name": "Santo"}
+  ],
+  "chemistry": [
+    {"compound": "(E)-2-Decenal", "class": "unsaturated aldehyde", "role": "green/citrus-like, soapy note", "notes": "关键气味活性物，赋予部分人感知到的“肥皂味”。", "sources": ["PubChem", "NCBI"]},
+    {"compound": "Decanal", "class": "aldehyde", "role": "fatty, citrus peel", "notes": "与柑橘皮样气味相关，增强清新感。", "sources": ["PubChem"]},
+    {"compound": "(E)-2-Dodecenal", "class": "unsaturated aldehyde", "role": "green, cilantro-characteristic", "notes": "被认为是香菜“特征气味”核心分子之一。", "sources": ["PubChem", "Academic Reviews"]}
+  ],
+  "culinary_uses": [
+    "leaves: fresh garnish, salads, salsas",
+    "seeds: spice blends, pickling, curry powders",
+    "roots: Southeast Asian soups & pastes (limited use)"
+  ],
+  "storage": "叶用（cilantro）宜低温高湿短存，套袋并以湿纸巾保持；可将茎部插入清水并松覆塑料袋。籽用（coriander seed）阴凉干燥密封储存，研磨前现烘香可提升风味。",
+  "lookalikes": [
+    {"name": "Parsley (Petroselinum crispum)", "how_to_tell": "欧芹叶缘更卷曲或平展锯齿，揉叶多为清新草香；香菜揉叶则出现典型醛类青香或部分人感知的肥皂味。"}
+  ],
+  "references": [
+    {
+      "title": "Plants of the World Online: Coriandrum sativum",
+      "org": "Kew Gardens",
+      "year": 2024,
+      "url": "https://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:84255-2"
+    },
+    {
+      "title": "USDA PLANTS Database: Coriandrum sativum",
+      "org": "USDA",
+      "year": 2020,
+      "url": "https://plants.usda.gov/home/plantProfile?symbol=COSA2"
+    },
+    {
+      "title": "Genetic association of cilantro soapy-taste perception with OR6A2",
+      "org": "NCBI",
+      "year": 2012,
+      "url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3510774/"
+    },
+    {
+      "title": "PubChem Compound Summary: (E)-2-Decenal",
+      "org": "PubChem",
+      "year": 2024,
+      "url": "https://pubchem.ncbi.nlm.nih.gov/compound/5283347"
+    }
+  ],
+  "tags": ["annual", "Apiaceae", "aromatic", "culinary"],
+
+  "key_features": "一年生伞形科草本；叶用期叶片羽状分裂明显，揉叶散发强烈醛类青香；抽薹开伞形复合花序，结球形干果即芫荽籽。",
+  "difficulty": "中等（偏凉爽季节更易成功）",
+  "morphology_content": "香菜/芫荽（Coriandrum sativum）为伞形科一年生香草。幼苗至营养生长期，叶片呈羽状深裂至三回裂，质地薄、颜色鲜绿，揉搓后释放明显的青绿与柑橘皮样混合气味。植株根系为直根系并具侧根，幼根与根颈处常用于东南亚烹饪调味（香菜根）。进入生殖生长期后易抽薹，茎秆拉长并分枝，于顶端与上部叶腋形成复伞形花序，花小而白至淡粉，五瓣，花期短促。果实为近球形干果（双悬果），成熟时呈浅褐色、表面具纵棱，常整体或轻压后分成两半（cremocarp），即烹饪中所用“芫荽籽”。整株高度常在25–60厘米，依品种与栽培密度而变。形态识别要点：营养期羽状裂叶、抽薹期羽状复叶逐渐变小，开伞形花序；揉叶即现强烈特征香。与欧芹相似，但欧芹叶片多更厚实与锯齿缘，揉叶气味偏“清香草本”，缺乏香菜特有的醛类“皂感”。",
+  "lookalike_comparison": "与欧芹（Parsley）区分：外观虽近，但香菜叶裂更深、叶薄且味强，揉叶显著醛类青香与部分人感知的肥皂味；欧芹则更草本清新、辛香度弱。与芹菜幼苗区分：芹菜具更强的纤维与芹菜素气味，叶形与植株结构亦不同。",
+  "varieties_content": "- Slow-bolt/Long-standing 系：通过育种延后抽薹，更适合较温暖季节栽培或延长采叶窗口。\n- Leisure/Santo：平衡产量与叶片大小，适合连续播种与商业包装。\n- 地方型香菜：印度、北非与中东常见地方种，在叶片厚薄、香强与适温范围上各具差异。",
+  "chemistry_content": "香菜独特香气以醛类为核心，尤其是不饱和醛：(E)-2-decenal、(E)-2-dodecenal 等，辅以 decanal、dodecanal 等饱和醛，呈现“青绿、柑橘皮、略带蜡质/皂感”的复合气味。这些醛类具有较低气味阈值与强烈的感官特征，因此即使微量也主导整体嗅觉印象。重要的是，嗅觉受体基因差异导致人群对这类醛的敏感度不同，其中 OR6A2 及其邻近位点被报告与“香菜尝起来像肥皂”现象有关。部分个体由于对醛类极高敏感或特定通路的偏好激活，导致其将香菜的青绿-脂蜡感直接联想到日化香精的“肥皂”气味，从而产生强烈厌恶。化学与遗传双重因素解释了“有人酷爱香菜、有人嗅之生厌”的分化现象。",
+  "culinary_content": "用途区分：叶（cilantro）适合生食点缀与短时加热；籽（coriander seed）为香料，常整粒或炒香后研磨入粉。亚洲：在中国与东南亚，鲜叶用于汤品、凉拌、火锅蘸料与粉面增香；泰式酱糊常以香菜根、蒜与胡椒打底；印度菜中，香菜叶用于 chutney 与装盘，香菜籽是 garam masala 与咖喱粉基础之一。拉美：墨西哥与中美洲菜肴大量使用香菜叶于 pico de gallo、guacamole、tacos 与汤品；香菜叶在热菜出锅前加入可保留芳香。中东：黎凡特地区以香菜叶与大蒜、柠檬汁炒香后拌入扁豆或菠菜，籽用于 harissa、烤肉腌料与腌渍。技巧：叶要避免长时间高温；籽用先小火干炒至出香再研磨，可释放柑橘与坚果香调。跨文化搭配：香菜叶与酸味（柠檬、青柠、番茄）、脂肪（橄榄油、芝士、坚果）与辛香（辣椒、孜然）具有高适配性；籽与孜然、茴香、豆蔻协同良好，适合烘焙和腌渍。",
+  "storage_methods": "叶子短存：低温高湿、避免挤压并适度通气；可将茎部插入清水并松覆塑料袋延长新鲜度。长期处理：切碎后与橄榄油冻存或制青酱分装；风味损失低于单纯冷冻叶片。种子：密封避光干燥保存，使用前轻烘增香。",
+  "toxicology_content": "可安全食用；个别人群对伞形科或香菜花粉过敏，处理或进食时出现口腔瘙痒、荨麻疹等应停止并就医。市售高浓度精油非食品级，不宜直接摄入。"
+}

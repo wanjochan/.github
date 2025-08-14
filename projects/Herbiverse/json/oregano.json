@@ -1,0 +1,153 @@
+{
+  "id": "oregano",
+  "cn_name": "牛至/披萨草",
+  "en_name": "Oregano",
+  "scientific_name": "Origanum vulgare",
+  "category": "edible",
+  "edible_parts": [
+    "leaves",
+    "flower"
+  ],
+  "toxicity": {
+    "status": "safe",
+    "toxic_parts": [],
+    "notes": "一般安全可食，但精油浓缩制品需注意剂量。怀孕期间大量摄入可能刺激子宫收缩，建议适量。",
+    "sources": [
+      "Kew Gardens",
+      "USDA"
+    ]
+  },
+  "cultivation": {
+    "hardiness": "USDA 4-9",
+    "sun": "full sun to partial shade",
+    "soil": "well-drained, alkaline to neutral",
+    "pH": "6.0-8.0",
+    "watering": "耐旱性强，土壤微干时再浇水；避免过度潮湿导致根腐。地中海气候最适宜。",
+    "propagation": [
+      "seed",
+      "division",
+      "cuttings"
+    ],
+    "companion": [
+      "tomato",
+      "eggplant",
+      "pepper",
+      "basil"
+    ],
+    "pests": [
+      "spider mites",
+      "aphids",
+      "root rot"
+    ]
+  },
+  "varieties": [
+    {
+      "name": "Greek Oregano"
+    },
+    {
+      "name": "Italian Oregano"
+    },
+    {
+      "name": "Turkish Oregano"
+    },
+    {
+      "name": "Mexican Oregano"
+    }
+  ],
+  "chemistry": [
+    {
+      "compound": "Carvacrol",
+      "class": "monoterpene phenol",
+      "role": "primary flavor/antimicrobial",
+      "notes": "牛至最重要的活性成分，赋予特征性辛香与强烈香气，具天然抗菌性。",
+      "sources": [
+        "PubChem",
+        "NCBI"
+      ]
+    },
+    {
+      "compound": "Thymol",
+      "class": "monoterpene phenol",
+      "role": "antimicrobial/flavor",
+      "notes": "与香芹酚协同作用，提供药草香与防腐性；在某些品种中含量较高。",
+      "sources": [
+        "PubChem",
+        "Academic Reviews"
+      ]
+    },
+    {
+      "compound": "p-Cymene",
+      "class": "monoterpene",
+      "role": "aromatic precursor",
+      "notes": "香芹酚的前体化合物，本身具有清新柑橘样香气。",
+      "sources": [
+        "PubChem"
+      ]
+    },
+    {
+      "compound": "γ-Terpinene",
+      "class": "monoterpene",
+      "role": "flavor enhancement",
+      "notes": "增强整体香气复杂度，与其他萜烯类协同作用。",
+      "sources": [
+        "Essential Oil Research"
+      ]
+    }
+  ],
+  "culinary_uses": [
+    "pizza",
+    "pasta sauce",
+    "Greek cuisine",
+    "Mexican cuisine",
+    "marinades",
+    "herb blends"
+  ],
+  "storage": "鲜叶可短期冷藏保存；干燥后密封避光存放可保持香气数月。新鲜叶片可冷冻保存或制成香草油。干牛至是最常用形式，香气浓缩且便于储存。",
+  "lookalikes": [
+    {
+      "name": "Origanum majorana (马郁兰)",
+      "how_to_tell": "马郁兰叶片更小更圆，香气更温和甜美；牛至叶片更大更尖，味道更强烈辛辣。"
+    },
+    {
+      "name": "Thymus vulgaris (百里香)",
+      "how_to_tell": "百里香叶片极小呈针状，植株更矮小；牛至叶片明显更大且卵形。"
+    }
+  ],
+  "images": [],
+  "references": [
+    {
+      "title": "Plants of the World Online: Origanum vulgare",
+      "org": "Kew Gardens",
+      "year": 2024,
+      "url": "https://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:454728-1"
+    },
+    {
+      "title": "USDA PLANTS Database: Origanum vulgare",
+      "org": "USDA",
+      "year": 2020,
+      "url": "https://plants.usda.gov/home/plantProfile?symbol=ORVU"
+    },
+    {
+      "title": "Carvacrol: From Ancient Flavoring to Modern Antimicrobial Agent",
+      "org": "Journal of Applied Microbiology",
+      "year": 2023,
+      "url": "https://onlinelibrary.wiley.com/journal/13652672"
+    }
+  ],
+  "tags": [
+    "aromatic",
+    "perennial",
+    "culinary",
+    "medicinal",
+    "Lamiaceae"
+  ],
+  "key_features": "多年生草本；方茎、对生卵形叶、紫白色花序；揉叶具强烈辛香，比马郁兰味道更浓烈。",
+  "difficulty": "容易（耐旱耐寒）",
+  "morphology_content": "牛至（Origanum vulgare）为唇形科牛至属多年生草本植物，株高通常20-80厘米，在适宜环境下可形成密集的地被覆盖。茎呈四方形，多分枝，基部常木质化，幼茎绿色至红褐色，节间明显。叶片对生，卵形至椭圆形，长1-4厘米，边缘全缘或具细齿，叶面深绿色带有腺点，背面颜色较浅；叶柄短，约2-7毫米；轻揉叶片即可散发强烈的辛香气味，比马郁兰更为浓烈刺激。\n\n花序为顶生的密集圆锥花序或伞房花序，由多个小的轮伞花序组成；花小而密集，花冠长4-7毫米，淡紫色、粉红色或白色，二唇形；雄蕊4枚，伸出花冠外；花期夏季至初秋，蜜源丰富。果实为4枚小坚果，深褐色，光滑。根系为须根系，耐旱性强，能深入土壤寻找水分。\n\n在形态识别上，牛至可通过其方茎、对生叶片和强烈辛香快速识别；与近缘的马郁兰相比，牛至叶片更大更尖，香气更为强烈和辛辣；与百里香相比，牛至叶片明显更大，植株更高大。冬季地上部分在寒冷地区会枯萎，但根系可安全越冬。",
+  "lookalike_comparison": "与马郁兰（Origanum majorana）区分：马郁兰叶片较小较圆，香气温和甜美带花香；牛至叶片更大更尖，味道强烈辛辣。与百里香（Thymus vulgaris）区分：百里香叶片极小呈线形或椭圆形，植株矮小；牛至叶片明显更大且卵形。与薄荷区分：薄荷具地下匍匐茎，叶片更大更薄，气味清凉；牛至无匍匐茎，香气辛辣无清凉感。",
+  "varieties_content": "- Greek Oregano（希腊牛至）：香芹酚含量最高，味道最强烈，是正宗地中海料理的首选，耐热性强。\n- Italian Oregano（意大利牛至）：味道相对温和，适合意式菜肴，与番茄酱搭配经典。\n- Turkish Oregano（土耳其牛至）：介于希腊和意大利品种之间，香气浓郁但不过于刺激。\n- Mexican Oregano（墨西哥牛至）：实际上是不同属植物（Monarda或Lippia），味道更辛辣带柑橘香，适合墨西哥和德州墨西哥菜。\n\n选择建议：披萨和意面酱推荐Greek或Italian品种；墨西哥菜肴使用Mexican Oregano；日常烹饪Italian品种最为适中。",
+  "chemistry_content": "牛至的挥发油含量高达0.15-4%，主要由酚类单萜组成，关键化合物包括：\n\n- **Carvacrol（香芹酚）**：占挥发油的50-80%，是牛至特征香味的主要来源，具有强烈的辛香和轻微的焦糖样甜感。同时具有显著的抗菌、抗真菌和抗氧化活性，是天然食品防腐剂。\n\n- **Thymol（百里香酚）**：通常占5-15%，与香芹酚结构相似，提供类似但更温和的香气，增强抗菌效果。\n\n- **p-Cymene（对伞花烃）**：香芹酚的生物合成前体，本身具有清新的柑橘样香气，占5-20%。\n\n- **γ-Terpinene（γ-萜品烯）**：另一个重要前体化合物，增强整体香气的复杂度和层次感。\n\n不同产地和品种的化学组成差异显著：地中海品种通常香芹酚含量更高，北欧品种则百里香酚相对较多。收获时机也影响化学组成：花期前采收香芹酚含量最高。",
+  "culinary_content": "牛至是地中海和墨西哥料理的灵魂香草，有\\\"披萨草\\\"之称。在意式烹饪中，干牛至是披萨不可或缺的调料，能够承受高温烘烤而保持香气；番茄酱中加入牛至可平衡酸味并增加层次。希腊料理中，牛至与橄榄油、柠檬汁和羊乳酪是经典组合，如希腊沙拉（Greek Salad）和烤肉调料。\n\n墨西哥菜系中，墨西哥牛至（实为不同植物）用于调制莎莎酱、肉类腌料和豆类料理，其辛辣和柑橘香气与辣椒、孜然形成完美平衡。法式料理中，牛至是普罗旺斯香草混合（Herbes de Provence）的重要成分。\n\n使用技巧：\n- 干牛至香气浓缩，适合长时间炖煮；新鲜牛至更适合最后加入或凉拌\n- 与番茄、茄子、土豆等茄科蔬菜有天然亲和力\n- 肉类腌制时加入可去腥增香，特别适合猪肉和鸡肉\n- 制作香草橄榄油时，牛至是首选香草之一\n\n储存和使用：干牛至在密封避光条件下可保持香气1-2年；新鲜牛至可制成香草黄油或冷冻保存。",
+  "storage_methods": "**新鲜牛至**：用湿纸巾轻包后放入透气保鲜袋，冷藏可保存5-7天；或如鲜花般插入水杯，轻覆塑料袋保湿。**干燥保存**：将新鲜枝条倒挂在通风阴凉处2-3周至完全干燥，然后搓下叶片密封保存；或使用烘干机低温(35-40°C)烘干。**冷冻保存**：新鲜叶片可直接冷冻，或切碎后与橄榄油混合制成香草冰块。**香草油制作**：新鲜牛至浸入橄榄油中，低温浸提2-4周后过滤，可保存数月。干牛至应存放在密封的深色玻璃瓶中，避光避湿，可保持香气1-2年。",
+  "toxicology_content": "牛至作为食用香草一般安全，但有几点需要注意：大剂量摄入牛至精油可能刺激胃肠道，引起恶心或胃部不适。怀孕期间应避免大量摄入，因为高浓度的牛至可能刺激子宫收缩。对薄荷科植物过敏者可能对牛至也有过敏反应。牛至精油浓度极高，不应直接口服，必须稀释使用。儿童和敏感人群建议从少量开始尝试。总体而言，作为调料正常使用是安全的。"
+}

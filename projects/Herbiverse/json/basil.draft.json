@@ -1,0 +1,154 @@
+{
+  "error": "'flowers' is not one of ['leaves', 'seeds', 'flower', 'stem', 'root', 'fruit', 'bark']\n\nFailed validating 'enum' in schema['properties']['edible_parts']['items']:\n    {'type': 'string',\n     'enum': ['leaves', 'seeds', 'flower', 'stem', 'root', 'fruit', 'bark']}\n\nOn instance['edible_parts'][1]:\n    'flowers'",
+  "record": {
+    "id": "basil",
+    "cn_name": "罗勒",
+    "en_name": "Basil",
+    "scientific_name": "Ocimum basilicum",
+    "category": "edible",
+    "edible_parts": [
+      "leaves",
+      "flowers"
+    ],
+    "toxicity": {
+      "status": "safe",
+      "toxic_parts": [],
+      "notes": "Generally recognized as safe (GRAS) for culinary use. Essential oil should be used with caution in concentrated forms.",
+      "sources": [
+        "FDA GRAS",
+        "RHS"
+      ]
+    },
+    "cultivation": {
+      "hardiness": "USDA 10-11",
+      "sun": "full sun",
+      "soil": "well-drained, fertile soil",
+      "pH": "6.0-7.0",
+      "watering": "keep evenly moist, avoid waterlogging",
+      "propagation": [
+        "seed",
+        "cutting"
+      ],
+      "companion": [
+        "tomato",
+        "pepper",
+        "oregano"
+      ],
+      "pests": [
+        "aphids",
+        "slugs",
+        "japanese beetles"
+      ]
+    },
+    "varieties": [
+      {
+        "name": "Genovese Basil",
+        "description": "Classic Italian variety, large leaves, traditional pesto basil"
+      },
+      {
+        "name": "Thai Basil",
+        "description": "Anise-flavored, purple stems, essential in Southeast Asian cuisine"
+      },
+      {
+        "name": "Purple Ruffles",
+        "description": "Ornamental purple variety with ruffled leaves, mild flavor"
+      },
+      {
+        "name": "Lemon Basil",
+        "description": "Citrus-scented variety, excellent for fish and tea"
+      },
+      {
+        "name": "Holy Basil (Tulsi)",
+        "description": "Sacred in Hindu tradition, medicinal properties, clove-like aroma"
+      }
+    ],
+    "chemistry": [
+      {
+        "compound": "linalool",
+        "class": "monoterpenoid",
+        "role": "floral, sweet aroma; anti-inflammatory",
+        "concentration": "20-60% of essential oil",
+        "sources": [
+          "PubChem CID: 6549"
+        ]
+      },
+      {
+        "compound": "eugenol",
+        "class": "phenylpropanoid",
+        "role": "clove-like aroma; antimicrobial",
+        "concentration": "5-20% of essential oil",
+        "sources": [
+          "PubChem CID: 3314"
+        ]
+      },
+      {
+        "compound": "methyl chavicol (estragole)",
+        "class": "phenylpropene",
+        "role": "anise-like aroma; characteristic of basil",
+        "concentration": "10-40% of essential oil",
+        "sources": [
+          "PubChem CID: 8815"
+        ]
+      },
+      {
+        "compound": "1,8-cineole (eucalyptol)",
+        "class": "monoterpenoid",
+        "role": "fresh, camphor-like aroma",
+        "concentration": "3-10% of essential oil",
+        "sources": [
+          "PubChem CID: 2758"
+        ]
+      }
+    ],
+    "culinary_uses": [
+      "Fresh pesto sauce",
+      "Pizza and pasta garnish",
+      "Caprese salad with tomato and mozzarella",
+      "Thai curries and stir-fries",
+      "Infused oils and vinegars",
+      "Herbal teas",
+      "Cocktail garnish (basil mojito, gin basil smash)"
+    ],
+    "storage": "Fresh: wrap in damp paper towel and refrigerate up to 1 week, or place stems in water at room temperature. Freezing: blanch and freeze in ice cube trays with water or oil. Drying: hang in bundles or use dehydrator at 35°C. Preserve in oil or make into pesto and freeze.",
+    "lookalikes": [
+      {
+        "name": "Mint vs Basil",
+        "how_to_tell": "Basil has smooth leaves with prominent veins; mint has serrated edges and spreads via runners"
+      },
+      {
+        "name": "Shiso vs Thai Basil",
+        "how_to_tell": "Shiso has larger, more serrated leaves with purple undersides; Thai basil has smaller, smoother leaves"
+      }
+    ],
+    "images": [],
+    "references": [
+      {
+        "title": "How to grow basil",
+        "org": "RHS",
+        "year": 2024,
+        "url": "https://www.rhs.org.uk/herbs/basil/grow-your-own"
+      },
+      {
+        "title": "Ocimum basilicum",
+        "org": "Missouri Botanical Garden",
+        "year": 2024,
+        "url": "https://www.missouribotanicalgarden.org/PlantFinder/PlantFinderDetails.aspx?taxonid=281506"
+      },
+      {
+        "title": "USDA Plants Database - Ocimum basilicum",
+        "org": "USDA",
+        "year": 2024,
+        "url": "https://plants.usda.gov/"
+      }
+    ],
+    "tags": [
+      "aromatic",
+      "annual",
+      "mediterranean",
+      "asian",
+      "culinary",
+      "medicinal",
+      "ornamental"
+    ]
+  }
+}

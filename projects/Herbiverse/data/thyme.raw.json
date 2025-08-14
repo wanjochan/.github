@@ -1,0 +1,82 @@
+{
+  "id": "thyme",
+  "cn_name": "百里香",
+  "en_name": "Thyme",
+  "scientific_name": "Thymus vulgaris",
+  "category": "edible",
+  "edible_parts": ["leaves", "flower", "stem"],
+  "toxicity": {
+    "status": "safe",
+    "toxic_parts": [],
+    "notes": "一般安全可食，但精油浓缩制品需注意剂量。含百里香酚，大量摄入可能刺激皮肤和粘膜。孕期与哺乳期人群建议适量。",
+    "sources": ["Kew Gardens", "WHO"]
+  },
+  "cultivation": {
+    "hardiness": "USDA 5-9",
+    "sun": "full sun",
+    "soil": "well-drained, alkaline to neutral",
+    "pH": "7.0-8.0",
+    "watering": "耐旱性强，成株后可忍受干旱；避免过度浇水，土壤排水性比保湿更重要。",
+    "propagation": ["seed", "cuttings", "division"],
+    "companion": ["rosemary", "lavender", "oregano", "cabbage", "tomato"],
+    "pests": ["aphids", "spider mites", "root rot"]
+  },
+  "varieties": [
+    {"name": "Common Thyme (Thymus vulgaris)"},
+    {"name": "Lemon Thyme (Thymus citriodorus)"},
+    {"name": "Woolly Thyme (Thymus pseudolanuginosus)"},
+    {"name": "Caraway Thyme (Thymus herba-barona)"},
+    {"name": "Silver Thyme (Thymus vulgaris 'Argenteus')"}
+  ],
+  "chemistry": [
+    {"compound": "Thymol", "class": "monoterpene phenol", "role": "antiseptic/flavor", "notes": "百里香的主要活性成分，具有强烈的防腐和杀菌特性，赋予独特的辛辣香味。", "sources": ["PubChem", "NCBI"]},
+    {"compound": "Carvacrol", "class": "monoterpene phenol", "role": "antimicrobial/flavor", "notes": "与百里香酚协同作用，增强抗菌效果，贡献温暖辛辣的气息。", "sources": ["PubChem", "Academic Reviews"]},
+    {"compound": "Linalool", "class": "monoterpene alcohol", "role": "floral note", "notes": "提供花香和柔和感，平衡百里香酚的辛辣，在柠檬百里香中含量更高。", "sources": ["PubChem"]},
+    {"compound": "p-Cymene", "class": "aromatic hydrocarbon", "role": "carrier/enhancer", "notes": "作为其他活性成分的载体，增强整体香气的穿透力和持久性。", "sources": ["Scientific Literature"]}
+  ],
+  "culinary_uses": [
+    "herbes de Provence",
+    "roasted meats",
+    "Mediterranean stews",
+    "bouquet garni",
+    "herb butter"
+  ],
+  "storage": "鲜叶可用湿纸巾包裹冷藏保存3-5天；干燥保存效果优秀，可将整枝悬挂阴干或低温烘干，密封储存可保持香味数月；冷冻保存时建议先切碎与橄榄油混合制成香草油冰块。",
+  "lookalikes": [
+    {"name": "Origanum vulgare (牛至)", "how_to_tell": "牛至叶片更宽大，香气偏向辛辣而非百里香的清香；花序更密集。"},
+    {"name": "Satureja montana (冬香薄荷)", "how_to_tell": "冬香薄荷叶片更窄长，香气更强烈辛辣，植株形态更紧密。"}
+  ],
+  "references": [
+    {
+      "title": "Plants of the World Online: Thymus vulgaris",
+      "org": "Kew Gardens",
+      "year": 2024,
+      "url": "https://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:448982-1"
+    },
+    {
+      "title": "USDA PLANTS Database: Thymus vulgaris",
+      "org": "USDA",
+      "year": 2020,
+      "url": "https://plants.usda.gov/home/plantProfile?symbol=THYVU"
+    },
+    {
+      "title": "PubChem Compound Summary: Thymol",
+      "org": "PubChem",
+      "year": 2024,
+      "url": "https://pubchem.ncbi.nlm.nih.gov/compound/Thymol"
+    }
+  ],
+  "tags": ["aromatic", "perennial", "culinary", "Mediterranean", "Lamiaceae"],
+
+  "key_features": "多年生小灌木；细小对生叶、方茎、轮生小花；揉叶散发强烈百里香香味。",
+  "difficulty": "容易（耐旱耐寒）",
+  "morphology_content": "百里香（Thymus vulgaris）为唇形科百里香属多年生小灌木，株高通常15-30厘米，呈丛生状生长形态。茎杆木质化明显，呈方形截面，多分枝，幼枝带有细微柔毛，成熟后变为光滑的灰褐色。叶片极小，对生排列，椭圆形至线形，长约3-8毫米，宽1-4毫米，叶缘全缘，叶面深绿色，背面略带银白色调，质地较厚且革质，具明显的油腺点。轻触或揉搓时释放浓郁的百里香特有香气，清香中带有温暖的辛辣感和轻微的薄荷凉感。花序为头状聚伞花序，顶生或腋生，花朵极小，通常为淡紫色、粉红色或白色，花冠筒状二唇形，上唇直立，下唇三裂。花期主要在春末夏初（5-7月），花后结小坚果。根系发达，主根深扎，侧根广布，具有极强的耐旱适应能力。植株整体呈半球形紧密丛状，枝叶茂密，是典型的地中海气候植物形态特征。\n\n形态识别要点：方形茎杆配合极小的对生叶片，以及揉叶后独特的百里香香味是最可靠的识别特征。与其他唇形科香草相比，百里香的叶片明显更小更厚，植株更加木质化。",
+  "lookalike_comparison": "与牛至（Origanum vulgare）区分：牛至叶片明显更宽大（长1-4厘米），卵形，香气更偏向辛辣而非百里香的清香温暖感；花序呈密集的圆锥状。与冬香薄荷（Satureja montana）区分：冬香薄荷叶片更窄长呈线形，香气更强烈尖锐，植株更加直立紧密。与迷迭香幼株区分：迷迭香叶片呈针形且更长，香气偏向松针樟脑味而非百里香的温暖香甜。",
+  "varieties_content": "- Common Thyme（普通百里香）：最经典的品种，香气浓郁平衡，百里香酚含量高，是烹饪和药用的首选，耐寒性强。\n- Lemon Thyme（柠檬百里香）：带有明显的柠檬香气，柠檬烯含量高，叶片略大且边缘有时呈金黄色，适合搭配鱼类和家禽。\n- Woolly Thyme（羊毛百里香）：匍匐生长型，叶片表面有细密绒毛呈银灰色，主要用作地被植物，香气较淡。\n- Caraway Thyme（葛缕子百里香）：带有葛缕子样的辛辣香气，叶片极小，匍匐生长，常用于岩石花园。\n- Silver Thyme（银叶百里香）：叶缘带有银白色斑纹，观赏性强，香气温和，耐寒性佳。",
+  "chemistry_content": "百里香的化学成分极其丰富，其独特香气和药理活性主要来自挥发油，含量通常占干重的1-3%。主要活性成分包括：\n- Thymol（百里香酚）：含量20-60%，是百里香最重要的标志性成分，具有强烈的杀菌、抗真菌和抗氧化作用，赋予百里香独特的温暖辛辣香味。\n- Carvacrol（香芹酚）：含量5-30%，与百里香酚结构相似但香气更加辛辣强烈，两者协同增强抗菌效果。\n- Linalool（芳樟醇）：提供花香和柔和感，平衡整体香气的辛辣度，在柠檬百里香中含量特别高。\n- p-Cymene（对伞花烃）：作为萜类化合物的前体和载体，增强香气的持久性和穿透力。\n\n化学型变异在百里香中极为显著，同一物种在不同地理环境下可表现出百里香酚型、芳樟醇型、香叶醇型等不同的化学特征，这直接影响其香气特点和用途适配性。",
+  "culinary_content": "百里香是地中海料理的灵魂香草之一，其在法式烹饪中地位尤为重要。在经典的法式香草束（Bouquet Garni）中，百里香与月桂叶、欧芹共同构成基础三角，为炖菜、汤品和酱汁提供深层香气基础。普罗旺斯香草混合（Herbes de Provence）中，百里香占据核心地位，与迷迭香、牛至、薰衣草等调配，是烤肉、烤蔬菜的经典调味。\n\n在肉类烹饪中，百里香与羊肉、牛肉、鸡肉都有极佳的搭配效果，其百里香酚成分能够穿透肉类纤维，同时起到天然防腐和去腥作用。制作香草黄油时，新鲜百里香叶与软化黄油混合，可用于涂抹面包或最后调味牛排。在地中海炖菜如Ratatouille、希腊炖羊肉中，百里香的加入时机通常在炖煮中期，既能释放香气又不会因长时间加热而失去活性。\n\n值得注意的是，百里香的干燥形式在某些应用中甚至优于新鲜，因为干燥过程能够浓缩精油并改善某些化合物的生物可利用性。烹饪用量一般为每人份0.5-1茶匙干燥百里香或1-2茶匙新鲜叶片。",
+  "nutrition_content": "百里香不仅是调味品，更是营养丰富的功能性食材。每100克鲜叶含有：维生素C 160-200mg（是柠檬的2-3倍），维生素A 4750 IU，铁17.5mg，锰7.9mg，钙405mg，以及丰富的膳食纤维。其抗氧化能力（ORAC值）高达27426，在常见香草中名列前茅。百里香酚和香芹酚具有天然抗菌防腐作用，传统上用于食物保存。现代研究显示其对呼吸系统、消化系统和免疫系统都有积极影响。",
+  "growing_tips": "百里香适应性强，在USDA 5-9区都能良好生长。选择排水良好、略带碱性的土壤（pH 7.0-8.0），全日照环境最佳。春季播种或分株繁殖，也可用半硬化枝条扦插。成株后极耐旱，过度浇水反而有害。在寒冷地区，可在根部覆盖护根物越冬。定期修剪能促进新梢萌发，维持植株紧密形态。适合岩石花园、边界种植或容器栽培。与其他地中海香草如迷迭香、薰衣草搭配种植效果良好。",
+  "storage_methods": "鲜叶保存：用湿纸巾轻包后放入透气塑料袋，冷藏可保存3-5天。长期保存以干燥法最佳：将整枝悬挂在通风阴凉处2-3周至叶片脆化，然后搓下叶片密封保存，香味可维持1-2年。也可制成香草油：新鲜叶片与橄榄油1:3比例混合，用料理机打碎后倒入冰格冷冻，制成香草油冰块便于日常使用。",
+  "toxicology_content": "一般情况下食用安全，但百里香精油浓度极高不可直接口服。百里香酚对皮肤和粘膜有轻微刺激性，敏感体质者应先少量试用。孕期、哺乳期及幼儿应避免大量摄入或使用精油制品。癫痫患者需谨慎使用，因为某些萜类化合物可能影响神经系统。正常烹饪用量下完全安全。"
+}

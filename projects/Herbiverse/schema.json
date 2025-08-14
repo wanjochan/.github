@@ -1,0 +1,183 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "required": ["id", "cn_name", "en_name", "scientific_name", "category", "toxicity", "cultivation", "references"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z-]+$"
+    },
+    "cn_name": {
+      "type": "string"
+    },
+    "en_name": {
+      "type": "string"
+    },
+    "scientific_name": {
+      "type": "string"
+    },
+    "category": {
+      "type": "string",
+      "enum": ["edible", "non_edible"]
+    },
+    "edible_parts": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": ["leaves", "seeds", "flower", "stem", "root", "fruit", "bark"]
+      }
+    },
+    "toxicity": {
+      "type": "object",
+      "required": ["status", "toxic_parts", "notes", "sources"],
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": ["safe", "caution", "toxic", "external_only"]
+        },
+        "toxic_parts": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "notes": {
+          "type": "string"
+        },
+        "sources": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "cultivation": {
+      "type": "object",
+      "properties": {
+        "hardiness": {
+          "type": "string"
+        },
+        "sun": {
+          "type": "string"
+        },
+        "soil": {
+          "type": "string"
+        },
+        "pH": {
+          "type": "string"
+        },
+        "watering": {
+          "type": "string"
+        },
+        "propagation": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "companion": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "pests": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "varieties": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "image": {
+            "type": "object",
+            "properties": {
+              "url": {"type": "string"},
+              "title": {"type": "string"},
+              "author": {"type": "string"},
+              "license": {"type": "string"},
+              "source": {"type": "string"}
+            }
+          }
+        }
+      }
+    },
+    "chemistry": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "compound": {"type": "string"},
+          "class": {"type": "string"},
+          "role": {"type": "string"},
+          "notes": {"type": "string"},
+          "sources": {
+            "type": "array",
+            "items": {"type": "string"}
+          }
+        }
+      }
+    },
+    "culinary_uses": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "storage": {
+      "type": "string"
+    },
+    "lookalikes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {"type": "string"},
+          "how_to_tell": {"type": "string"}
+        }
+      }
+    },
+    "images": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "url": {"type": "string"},
+          "title": {"type": "string"},
+          "author": {"type": "string"},
+          "license": {"type": "string"},
+          "source": {"type": "string"},
+          "caption": {"type": "string"}
+        }
+      }
+    },
+    "references": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["title", "org", "year", "url"],
+        "properties": {
+          "title": {"type": "string"},
+          "org": {"type": "string"},
+          "year": {"type": "integer"},
+          "url": {"type": "string"}
+        }
+      }
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

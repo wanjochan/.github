@@ -1,0 +1,113 @@
+{
+  "id": "sage",
+  "cn_name": "鼠尾草",
+  "en_name": "Sage",
+  "scientific_name": "Salvia officinalis",
+  "category": "edible",
+  "edible_parts": ["leaves", "flower"],
+  "toxicity": {
+    "status": "safe",
+    "toxic_parts": [],
+    "notes": "一般安全可食，但精油浓度高时需适量。孕期哺乳期人群应控制剂量；高剂量可能抑制泌乳。",
+    "sources": ["European Medicines Agency", "WHO"]
+  },
+  "cultivation": {
+    "hardiness": "USDA 4-8",
+    "sun": "full sun to partial shade",
+    "soil": "well-drained, sandy or loamy, poor soil tolerated",
+    "pH": "6.0-7.0",
+    "watering": "干旱耐受，偏爱干燥条件；春季适度浇水，夏季减少，避免根部积水。",
+    "propagation": ["seed", "softwood cuttings", "division"],
+    "companion": ["rosemary", "thyme", "oregano", "cabbage", "carrots"],
+    "pests": ["spider mites", "aphids", "powdery mildew", "root rot"]
+  },
+  "varieties": [
+    {"name": "Common Sage (Salvia officinalis)"},
+    {"name": "Purple Sage (Purpurascens)"},
+    {"name": "Golden Sage (Icterina)"},
+    {"name": "Tricolor Sage (Tricolor)"},
+    {"name": "Berggarten Sage"}
+  ],
+  "chemistry": [
+    {
+      "compound": "Thujone",
+      "class": "monoterpene ketone",
+      "role": "main active compound",
+      "notes": "侧柏酮，鼠尾草的主要活性成分，具有苦味和樟脑样香气；高剂量有毒性。",
+      "sources": ["PubChem", "NCBI"]
+    },
+    {
+      "compound": "Camphor",
+      "class": "monoterpene ketone",
+      "role": "aromatic compound",
+      "notes": "樟脑，贡献清凉刺激感和防腐特性，传统用于防虫驱蛇。",
+      "sources": ["PubChem"]
+    },
+    {
+      "compound": "1,8-Cineole",
+      "class": "monoterpene oxide",
+      "role": "eucalyptus-like aroma",
+      "notes": "桉叶素，带来类似桉树的清新香气，具有抗菌和祛痰作用。",
+      "sources": ["Academic Reviews"]
+    },
+    {
+      "compound": "Rosmarinic acid",
+      "class": "phenolic acid",
+      "role": "antioxidant",
+      "notes": "迷迭香酸，强效抗氧化剂，具有抗炎和神经保护作用。",
+      "sources": ["Phytochemistry Research"]
+    }
+  ],
+  "culinary_uses": [
+    "thanksgiving turkey",
+    "brown butter sage sauce",
+    "Italian gnocchi",
+    "roasted vegetables",
+    "herbed breads"
+  ],
+  "storage": "鲜叶可短期冷藏，用纸巾包裹避免过湿；长期保存可干燥制成调料粉，或制成鼠尾草黄油冷冻保存；干燥叶片密封避光可保存1-2年。",
+  "lookalikes": [
+    {
+      "name": "Lamb's ear (Stachys byzantina)",
+      "how_to_tell": "羊耳草叶片更厚实绒毛更密，无鼠尾草特有的樟脑香气，不可食用。"
+    },
+    {
+      "name": "Mullein (Verbascum thapsus)",
+      "how_to_tell": "毛蕊花叶片更大更厚，植株可达2米高，叶面绒毛更粗糙，无芳香。"
+    }
+  ],
+  "references": [
+    {
+      "title": "Plants of the World Online: Salvia officinalis",
+      "org": "Kew Gardens",
+      "year": 2024,
+      "url": "https://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:457428-1"
+    },
+    {
+      "title": "USDA PLANTS Database: Salvia officinalis",
+      "org": "USDA",
+      "year": 2024,
+      "url": "https://plants.usda.gov/home/plantProfile?symbol=SAOF"
+    },
+    {
+      "title": "European Medicines Agency Assessment Report on Salvia officinalis",
+      "org": "EMA",
+      "year": 2016,
+      "url": "https://www.ema.europa.eu/documents/herbal-report/final-assessment-report-salvia-officinalis-l-folium_en.pdf"
+    }
+  ],
+  "tags": ["aromatic", "perennial", "culinary", "medicinal", "Mediterranean", "Lamiaceae"],
+
+  "key_features": "多年生半灌木；灰绿色绒毛叶片，木质茎，紫蓝色唇形花；强烈樟脑与草本香气。",
+  "difficulty": "容易（耐旱耐寒）",
+  "morphology_content": "鼠尾草（Salvia officinalis）为唇形科鼠尾草属多年生半灌木，原产地中海沿岸，成熟植株高度通常40-80厘米，冠幅可达60厘米。茎部下端逐渐木质化，四棱形但不如其他唇形科植物明显，新枝绿色带紫晕，老枝灰褐色。叶片对生，椭圆形至长椭圆形，长4-8厘米，宽1.5-3厘米，叶缘具细锯齿或近全缘，叶面灰绿色密生细毛呈天鹅绒质感，叶背毛被更密且带银白色光泽。质地厚实革质，揉搓散发浓郁的樟脑和草本混合香气，带有苦味后调。\n\n花序为顶生轮伞花序，通常3-8朵花成轮状排列，花冠典型二唇形，颜色多为紫蓝色、淡紫色或白色，上唇2裂略呈兜状，下唇3裂中央裂片最大。花期夏季6-8月，蜜蜂和蝴蝶喜访。根系为主根系，主根粗壮深入，侧根分布广，极耐干旱。整体植株具有浓烈的芳香，即使在干燥状态下香气依然持久，这是鼠尾草区别于其他草本植物的显著特征。",
+  "lookalike_comparison": "与羊耳草（Stachys byzantina）区分：羊耳草叶片更宽厚，绒毛如羊毛般密集银白，无芳香且不可食用；鼠尾草叶片较窄，灰绿色具强烈樟脑香。与毛蕊花区分：毛蕊花植株高大可达2米，叶片巨大基生呈莲座状，绒毛粗糙刺手；鼠尾草为灌木状，叶片中等大小对生。与其他鼠尾草属植物区分：药用鼠尾草叶片灰绿厚实，而观赏性鼠尾草多叶片较绿较薄，香气也不如药用种浓郁。",
+  "varieties_content": "- Common Sage（普通鼠尾草）：标准药用和烹饪品种，灰绿色叶片，香气浓郁平衡，适应性最强。\n- Purple Sage（紫叶鼠尾草）：嫩叶带紫红色，成熟后紫绿混合，香气略比普通种温和，观赏价值高。\n- Golden Sage（金叶鼠尾草）：叶片边缘金黄色，中心绿色，生长较慢但耐寒性强，适合装饰花园。\n- Tricolor Sage（三色鼠尾草）：叶片具绿、白、粉红三色斑纹，极具观赏性但香气较淡，多用于园艺。\n- Berggarten Sage：德国培育品种，叶片特别宽大厚实，几乎不开花，适合专门收获叶片使用。",
+  "chemistry_content": "鼠尾草的化学成分复杂，挥发油含量1-3%，主要活性成分包括：\n- Thujone（侧柏酮）：α-侧柏酮和β-侧柏酮，是鼠尾草特征性成分，具有苦味和樟脑样香气。适量具有抗菌、驱虫作用，但高剂量有神经毒性，因此传统使用需控制剂量。\n- Camphor（樟脑）：提供清凉刺激感和防腐特性，是鼠尾草防虫驱蛇传统用途的化学基础。\n- 1,8-Cineole（桉叶素）：贡献清新的桉树样香气，具有祛痰、抗菌和轻微的局部麻醉作用。\n- Rosmarinic acid（迷迭香酸）：强效天然抗氧化剂，具有抗炎、抗过敏和神经保护功能，是鼠尾草药理活性的重要基础。\n\n不同产地和收获时期的鼠尾草化学成分有显著差异，地中海气候下生长的植株通常挥发油含量更高，侧柏酮比例也更高，香气更加浓郁。",
+  "culinary_content": "鼠尾草在欧美烹饪中占据重要地位，尤其在传统节庆料理中不可缺少。感恩节火鸡填料中的鼠尾草是经典搭配，其浓郁的草本香气能穿透油脂，为禽肉增添层次。意大利料理中，鼠尾草黄油酱（Burro e Salvia）是土豆团子（Gnocchi）和各类意面的经典调味，制作时将黄油加热至微焦，加入鼠尾草叶片炸至酥脆，香气浓郁复杂。\n\n在烹饪技巧上，鼠尾草叶片可以整片使用也可切碎，新鲜叶片直接加入会有较强的生涩味，建议先用油脂炒制或烘焙激发香气。干燥鼠尾草适合长时间炖煮，如豆类料理、烤蔬菜和肉类腌制。与迷迭香、百里香组成的地中海香草组合是烤肉和烤蔬菜的完美搭配。需要注意的是，鼠尾草香气浓烈，使用时应适量，避免掩盖食材本味。",
+  "storage_methods": "鲜叶保存：短期可用湿纸巾轻包后放入密封袋冷藏，约可保持5-7天；或将茎部浸入清水如插花般保存，套上塑料袋冷藏。长期保存最佳方法是自然风干，将枝条倒挂在通风阴凉处2-3周，充分干燥后密封避光保存，可维持香气1-2年。制作鼠尾草黄油也是很好的保存方法：将黄油软化后混入切碎的鼠尾草，塑形包装冷冻，可保存3-6个月。",
+  "toxicology_content": "鼠尾草在正常烹饪用量下安全可食，但需注意侧柏酮的毒性。长期大量摄入或使用高浓度精油可能引起癫痫样症状。孕期和哺乳期妇女应避免大量食用，因为侧柏酮可能影响荷尔蒙分泌并抑制泌乳。一般建议每日鲜叶使用量不超过6-8片，干燥叶片不超过1茶匙。对唇形科植物过敏者需谨慎使用。传统药用剂量需在专业指导下使用。",
+  "nutritional_content": "鼠尾草富含多种营养成分，每100克新鲜叶片含有：维生素K约1714微克（超过每日推荐量的1400%），是凝血功能和骨骼健康的重要支持；维生素A约295微克，有益视力和免疫系统；还含有丰富的铁、锰、钙等矿物质。抗氧化物质含量极高，包括迷迭香酸、鼠尾草酸等多酚化合物，ORAC值（氧自由基吸收能力）在香草中名列前茅。精油成分不仅提供独特香气，还具有抗菌、抗炎等生物活性。",
+  "growing_tips": "鼠尾草栽培相对容易，关键是提供充足阳光和良好排水。种植土壤以沙质壤土为佳，过于肥沃的土壤会使植株徒长而香气减弱。春季播种或扦插，扦插成活率高且能保持母株特性。生长期间避免过度浇水，特别是夏季高温时期，宁干勿湿。定期摘心促进分枝，花蕾形成后及时摘除可延长叶片收获期。耐寒性强，在USDA 4区以上可露地越冬，寒冷地区可覆盖越冬或盆栽移入室内。",
+  "traditional_uses": "鼠尾草在传统医学中有悠久历史，拉丁学名'Salvia'来源于'salvere'意为'拯救'，体现其药用价值。传统用途包括治疗喉咙痛、口腔溃疡，制成漱口水或茶饮；用于消化不良、胃胀气等消化系统问题；外用可治疗小伤口、皮肤炎症。在民间传说中，鼠尾草还被认为具有提高记忆力、驱邪避疫的功效，常用于宗教仪式和传统庆典。现代研究证实了其抗菌、抗氧化、抗炎等多种生物活性，为传统用途提供了科学依据。"
+}
