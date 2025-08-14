@@ -13,4 +13,8 @@ UPDATE
 4，只要任务树没全部处理完你就回到上面第1步
 ```
 
-有想法可以联系我 wanjochan[at]azu.edu 但不一定会回复，Heil Yolo！
+有想法可以联系 wanjochan[at]azu.edu 但不一定会回复。
+
+做好失业的预期吧骚年们！
+
+Heil Yolo！Ebrace your unemployment!
