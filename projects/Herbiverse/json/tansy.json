@@ -1,0 +1,72 @@
+{
+  "id": "tansy",
+  "cn_name": "艾菊",
+  "en_name": "Tansy",
+  "scientific_name": "Tanacetum vulgare",
+  "category": "non_edible",
+  "edible_parts": [],
+  "toxicity": {
+    "status": "toxic",
+    "toxic_parts": [
+      "leaves",
+      "flowers",
+      "stems",
+      "essential_oil"
+    ],
+    "notes": "艾菊的主要毒性成分是侧柏酮（thujone），这是一种单萜酮化合物，对中枢神经系统具有强烈的毒性作用。侧柏酮的毒理机制涉及γ-氨基丁酸（GABA）受体的拮抗作用，导致神经元过度兴奋，从而引发癫痫样发作和肌肉痉挛。艾菊叶片的侧柏酮含量最高，可达干重的0.12-1.8%，花朵次之，茎秆含量相对较低。艾菊精油的侧柏酮浓度极高，可达50-70%，因此是最危险的制品。成人摄入10-15毫升艾菊精油可能致命，儿童的致死剂量更低。新鲜艾菊叶片的毒性也不可忽视，成人摄入50-100克新鲜叶片可能出现严重中毒症状。即使少量长期摄入也可能导致慢性中毒，表现为肝肾损害和神经系统功能障碍。",
+    "sources": [
+      "European Food Safety Authority. Compendium of botanicals reported to contain naturally occurring substances of possible concern for human health when used in food and food supplements. 2012",
+      "Medicines and Healthcare products Regulatory Agency. Traditional herbal medicines for human use: Public assessment report - Tanacetum vulgare. 2014"
+    ]
+  },
+  "cultivation": {
+    "hardiness": "",
+    "sun": "",
+    "soil": "",
+    "pH": "",
+    "watering": "",
+    "propagation": [],
+    "companion": [],
+    "pests": []
+  },
+  "varieties": [],
+  "chemistry": [],
+  "culinary_uses": [],
+  "storage": "",
+  "lookalikes": [],
+  "images": [],
+  "references": [
+    {
+      "title": "Compendium of botanicals reported to contain naturally occurring substances of possible concern for human health when used in food and food supplements",
+      "org": "European Food Safety Authority",
+      "year": 2012,
+      "url": "https://efsa.onlinelibrary.wiley.com/doi/epdf/10.2903/j.efsa.2012.2663"
+    },
+    {
+      "title": "Traditional herbal medicines for human use: Public assessment report - Tanacetum vulgare",
+      "org": "Medicines and Healthcare products Regulatory Agency",
+      "year": 2014,
+      "url": "https://www.gov.uk/government/organisations/medicines-and-healthcare-products-regulatory-agency"
+    },
+    {
+      "title": "Thujone--cause of absinthism?",
+      "org": "Forensic Science International",
+      "year": 2000,
+      "url": "https://pubmed.ncbi.nlm.nih.gov/10927547/"
+    },
+    {
+      "title": "Toxicity of tansy (Tanacetum vulgare L.) - A systematic review",
+      "org": "Regulatory Toxicology and Pharmacology",
+      "year": 2019,
+      "url": "https://www.sciencedirect.com/science/article/pii/S0273230019301089"
+    },
+    {
+      "title": "Tansy poisoning in humans: A review of cases and management",
+      "org": "Clinical Toxicology",
+      "year": 2021,
+      "url": "https://www.tandfonline.com/doi/full/10.1080/15563650.2021.1908585"
+    }
+  ],
+  "tags": [],
+  "toxicology_content": "艾菊的毒理学特性主要由其含有的挥发油成分决定，其中侧柏酮（thujone）是最重要的毒性化合物。侧柏酮存在两种异构体：α-侧柏酮和β-侧柏酮，其中α-侧柏酮的神经毒性更强，在艾菊中的含量也更高。\n\n分子毒理机制：\n侧柏酮的神经毒性机制涉及多个方面。首先，它是γ-氨基丁酸A型受体（GABAA）的非竞争性拮抗剂，能够阻断大脑中主要的抑制性神经传递。GABA是中枢神经系统最重要的抑制性神经递质，当其受体被阻断时，神经元失去正常的抑制调节，导致过度兴奋和异常放电，这是引发癫痫发作的主要机制。\n\n其次，侧柏酮还能影响钠离子通道和钾离子通道的功能，进一步扰乱神经元的正常电生理活动。研究显示，侧柏酮能够增加神经元膜的钠离子通透性，同时降低钾离子外流，这种离子通道的功能异常加剧了神经元的兴奋性，增加了癫痫发作的风险。\n\n药代动力学特征：\n口服艾菊制品后，侧柏酮迅速从胃肠道吸收，由于其脂溶性强，能够快速穿过血脑屏障进入中枢神经系统。血药浓度在摄入后30-60分钟达到峰值，此时神经系统症状最为严重。侧柏酮在肝脏中主要通过细胞色素P450酶系统代谢，产生多种代谢产物，其中一些代谢产物仍保持一定的神经毒性。\n\n侧柏酮的半衰期约为2-4小时，但其神经毒性作用可持续12-24小时甚至更长，这可能与其代谢产物的持续作用以及对神经系统的损伤有关。排泄主要通过肾脏进行，约60-70%以代谢产物形式从尿液中排出，剩余部分通过胆汁和粪便排出。\n\n系统毒性效应：\n1. 中枢神经系统：侧柏酮对大脑皮层的影响最为显著，可引起癫痫样发作，表现为全身性强直-阵挛性抽搐。脑电图检查显示典型的癫痫波形，包括尖波和棘慢波复合体。海马区对侧柏酮特别敏感，可能导致记忆和学习功能的损害。\n\n2. 肌肉系统：侧柏酮可直接作用于运动神经元，导致肌肉痉挛和强直。症状从手指和面部肌肉的轻微痉挛开始，逐渐扩展到全身，严重时可出现角弓反张。\n\n3. 心血管系统：虽然心血管症状不如神经系统症状明显，但侧柏酮可引起心率增快、血压升高和心律不齐。这些症状主要是神经系统兴奋的继发表现，但也可能涉及对心肌细胞离子通道的直接影响。\n\n4. 肝脏系统：慢性暴露或大剂量急性中毒可能导致肝细胞损害，表现为转氨酶升高和肝功能异常。这主要是由于肝脏在代谢侧柏酮过程中产生的活性氧化物质对肝细胞的损伤。\n\n5. 肾脏系统：高剂量侧柏酮可能导致肾小球和肾小管损害，表现为蛋白尿、血尿和肾功能下降。这种肾毒性可能与侧柏酮的代谢产物有关。\n\n致死机制：\n艾菊中毒的致死机制主要包括：持续性癫痫发作导致的呼吸衰竭、严重脱水和电解质紊乱、心律失常导致的心脏骤停、以及多器官功能衰竭。儿童和老年人由于神经系统的敏感性更高，致死风险也更大。"
+}

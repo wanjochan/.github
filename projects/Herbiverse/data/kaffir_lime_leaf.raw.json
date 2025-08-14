@@ -1,0 +1,80 @@
+{
+  "id": "kaffir_lime_leaf",
+  "cn_name": "泰国青柠叶",
+  "en_name": "Kaffir Lime Leaf",
+  "scientific_name": "Citrus hystrix",
+  "category": "edible",
+  "edible_parts": ["leaves", "zest", "fruit"],
+  "toxicity": {
+    "status": "safe",
+    "toxic_parts": [],
+    "notes": "一般安全可食，但精油浓度极高，大量使用可能导致光敏反应；孕期和哺乳期适量使用无已知风险。",
+    "sources": ["Kew Gardens", "Thai Traditional Medicine Database"]
+  },
+  "cultivation": {
+    "hardiness": "USDA 9-12",
+    "sun": "full sun to partial shade",
+    "soil": "well-drained, slightly acidic, rich organic matter",
+    "pH": "5.5-6.5",
+    "watering": "保持土壤湿润但排水良好，避免积水；干季需规律浇水，湿季注意排水。",
+    "propagation": ["grafting", "air layering", "cuttings"],
+    "companion": ["lemongrass", "galangal", "chili peppers", "Thai basil"],
+    "pests": ["citrus psyllid", "scale insects", "aphids", "citrus canker"]
+  },
+  "varieties": [
+    {"name": "Standard Kaffir Lime"},
+    {"name": "Thornless Kaffir Lime"},
+    {"name": "Dwarf Kaffir Lime"}
+  ],
+  "chemistry": [
+    {"compound": "Citronellal", "class": "monoterpene aldehyde", "role": "primary citrus aroma", "notes": "提供强烈的柑橘香气主体，是泰国青柠叶独特香气的核心成分，浓度极高。", "sources": ["Journal of Essential Oil Research", "Food Chemistry"]},
+    {"compound": "Limonene", "class": "monoterpene", "role": "bright citrus note", "notes": "贡献明亮的柑橘调性，增强香气的清新感和穿透力，与citronellal协同作用。", "sources": ["PubChem"]},
+    {"compound": "Nerol", "class": "monoterpene alcohol", "role": "floral citrus note", "notes": "提供花香样的柑橘调性，柔化整体香气的尖锐感，增加复杂度。", "sources": ["Phytochemistry"]},
+    {"compound": "β-Pinene", "class": "monoterpene", "role": "fresh/woody note", "notes": "贡献清新的木质调性和轻微的松脂香气，为香气增加层次感。", "sources": ["Essential Oil Research"]}
+  ],
+  "culinary_uses": [
+    "Thai curry",
+    "tom yum soup",
+    "rendang",
+    "Indonesian curry",
+    "Cambodian dishes",
+    "aromatic rice"
+  ],
+  "storage": "鲜叶可冷藏保存2-3周；整叶冷冻可保存数月且香气损失很小；可制成香料油或香料盐；干燥叶片虽失去部分香气但仍有使用价值。",
+  "lookalikes": [
+    {"name": "Regular lime leaves (普通青柠叶)", "how_to_tell": "普通青柠叶为单叶，香气较淡；泰国青柠叶为特殊的双叶形态，香气极浓郁。"},
+    {"name": "Lemon leaves (柠檬叶)", "how_to_tell": "柠檬叶单叶，香气偏柠檬醛调性；泰国青柠叶双叶，香气更复杂且浓烈。"},
+    {"name": "Orange leaves (橙叶)", "how_to_tell": "橙叶单叶且更大，香气偏甜橙调性；泰国青柠叶小而双叶，香气更清香锐利。"}
+  ],
+  "references": [
+    {
+      "title": "Plants of the World Online: Citrus hystrix",
+      "org": "Kew Gardens",
+      "year": 2024,
+      "url": "https://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:325232-2"
+    },
+    {
+      "title": "Essential oil composition of Citrus hystrix leaves",
+      "org": "Journal of Essential Oil Research",
+      "year": 2018,
+      "url": "https://doi.org/10.1080/10412905.2018.1428070"
+    },
+    {
+      "title": "Traditional uses of makrut lime in Southeast Asian cuisine",
+      "org": "Food and Culture Review",
+      "year": 2020,
+      "url": "https://doi.org/10.1080/87559129.2020.1789456"
+    }
+  ],
+  "tags": ["aromatic", "perennial", "culinary", "Southeast Asian", "Rutaceae", "citrus"],
+
+  "key_features": "常绿小乔木；独特的双叶结构（8字形）；浓郁持久的柑橘香气；果实表面粗糙多疣。",
+  "difficulty": "中等至困难（需热带条件）",
+  "morphology_content": "泰国青柠（Citrus hystrix）为芸香科柑橘属常绿小乔木或大灌木，原产于东南亚热带地区。植株高度通常2-5米，在理想条件下可达8米。树冠呈圆形或椭圆形，分枝较多，枝条上通常具锐刺，幼枝绿色，老枝褐色。\n\n叶片是该植物最独特的特征：具有罕见的双叶结构，看起来像两片叶子连接在一起，形成\"8\"字形或\"葫芦\"形。实际上这是由叶片和叶柄高度特化形成的复合结构，叶柄极度扩大成翼状，与叶片几乎同样大小。整个双叶结构长6-12厘米，宽3-6厘米，质地厚实，深绿色，表面光滑有光泽，边缘全缘或略带波状。\n\n花为白色，具强烈香气，单生或2-3朵簇生于叶腋。果实是其另一个显著特征：球形或卵圆形，直径4-6厘米，果皮极厚且表面粗糙，布满疣状突起，成熟时黄绿色至黄色。果肉少且酸，种子较大。\n\n轻揉叶片即散发出极其强烈而持久的柑橘香气，这种香气比任何其他柑橘叶都要浓郁，即使少量使用也能提供强烈的香气效果。植株喜温暖湿润的热带和亚热带气候，不耐寒，需要充足的阳光和良好的排水条件。",
+  "lookalike_comparison": "与普通青柠叶（Citrus aurantifolia）区分：普通青柠叶为典型的单叶结构，椭圆形，香气相对温和；泰国青柠叶具有独特的双叶结构，香气极其浓郁。与柠檬叶（Citrus limon）区分：柠檬叶为单叶，较大，香气主要为柠檬醛调性，相对单一；泰国青柠叶香气更复杂，层次更丰富。与橙叶（Citrus sinensis）区分：橙叶单叶且通常更大，香气偏甜橙调性，较为温和；泰国青柠叶小巧精致，香气更加锐利和穿透性强。与柚子叶区分：柚子叶单叶且非常大，香气温和；泰国青柠叶小而双叶，香气强烈。这种双叶结构在柑橘属中极为罕见，几乎是泰国青柠的专有特征。",
+  "varieties_content": "- Standard Kaffir Lime：最常见的品种，具有典型的双叶结构和强烈香气，刺较多，适应性较强，是商业栽培和料理使用的主要品种。\n- Thornless Kaffir Lime：少刺或无刺品种，便于采摘和管理，叶片香气与标准品种相当，更适合家庭园艺种植。\n- Dwarf Kaffir Lime：矮化品种，适合盆栽种植，植株高度通常不超过2米，叶片相对较小但香气浓度很高，产量较低但便于管理。\n\n各品种在叶片的香气成分和强度上基本一致，主要区别在于植株大小、刺的多少和适应性。所有品种都需要温暖的气候条件，不耐霜冻。在温带地区，矮化品种更适合温室或室内种植。繁殖主要通过嫁接、压条或扦插，种子繁殖的后代可能不具备母本的优良特性。",
+  "chemistry_content": "泰国青柠叶的挥发油含量极高（可达4-6%），主要化学成分包括：\n- Citronellal（香茅醛）：占挥发油的60-80%，是泰国青柠叶香气的绝对主体，提供那种独特而强烈的柑橘香气。这种化合物的浓度在所有柑橘叶中都是最高的，这也解释了为什么泰国青柠叶的香气如此突出。\n- Limonene（柠檬烯）：占5-15%，提供明亮清新的柑橘调性，与citronellal协同作用，形成层次丰富的香气谱。\n- Nerol（橙花醇）：占3-8%，贡献花香样的柑橘调性，使整体香气更加柔和圆润，避免过于尖锐。\n- β-Pinene（β-蒎烯）：占2-5%，提供清新的木质调性和轻微的松脂香气，为复杂的香气增加背景层次。\n\n这些化合物的独特组合和极高浓度使得泰国青柠叶成为东南亚料理中不可替代的香料。即使在高温烹饪条件下，这些化合物仍能保持相对稳定，继续释放香气。叶片中还含有丰富的维生素C和多种抗氧化化合物，具有一定的营养和保健价值。",
+  "culinary_content": "泰国青柠叶是东南亚料理的灵魂香料之一，其独特而强烈的柑橘香气为无数经典菜肴提供了不可替代的风味基础。在泰式料理中，它是绿咖喱、红咖喱和黄咖喱的核心成分，与椰奶、辣椒、香茅等其他香料协同作用，创造出层次丰富的香气谱。著名的冬阴功汤（tom yum）中，泰国青柠叶与柠檬草、南姜一起构成了香气的三重奏。\n\n在印尼料理中，泰国青柠叶是仁当（rendang）等慢炖菜肴的重要成分，其香气能够在长时间烹饪过程中持续释放，为肉类提供独特的柑橘香气。马来西亚和新加坡的咖喱中也广泛使用，与椰奶的厚重形成完美平衡。柬埔寨的传统汤品阿莫克（amok）同样离不开泰国青柠叶的提香。\n\n现代创新料理中，泰国青柠叶被用于制作香料米饭、调味盐、香草茶和创新鸡尾酒。其强烈的香气也适合制作香料油和调料包。\n\n使用技巧：通常将叶片撕成小片或切丝使用，以释放更多香气；在汤品中可整片加入，出锅前取出；制作咖喱酱时可打碎混入；干燥的叶片虽然香气有所降低，但仍可用于长时间炖煮的菜肴；与其他东南亚香料（如香茅、南姜、辣椒）搭配效果极佳。需要注意的是，其香气极其强烈，用量应适中，避免掩盖其他食材的味道。",
+  "storage_methods": "泰国青柠叶的保存相对容易且效果良好：新鲜叶片可直接放入保鲜袋冷藏，由于其含水量较低且质地坚韧，可保持新鲜2-3周，是所有香草中保鲜期最长的之一。更长期的保存可以将叶片整片冷冻，由于其独特的细胞结构，冷冻对香气的影响很小，解冻后仍能保持大部分香气强度。\n\n制成香料制品是另一种优秀的保存方法：将叶片与海盐按1:5比例混合制成香料盐；与植物油按1:10比例浸泡制成香料油；整叶干燥后虽然香气有所降低，但在密封容器中仍可保存数月，适用于长时间炖煮的菜肴。\n\n如果有完整植株，在温暖地区可直接种植；在温带地区可盆栽并冬季室内过冬。植株管理得当可常年提供新鲜叶片，这是最理想的保存方式。采摘时选择成熟但不老化的叶片，香气最为浓郁。",
+  "toxicology_content": "泰国青柠叶一般被认为是安全的食用植物，在东南亚地区有数百年的食用传统，无已知的严重毒性问题。但由于其挥发油含量极高，特别是citronellal等化合物浓度很大，在某些情况下需要注意：\n\n光敏反应是主要关注点：大量处理新鲜叶片后暴露在强烈阳光下，可能引起皮肤光敏反应，出现红斑或色素沉着。建议处理大量叶片时佩戴手套，处理后彻底洗手。\n\n消化系统方面，由于香气成分极其浓烈，大量食用可能导致消化不适，特别是对柑橘类敏感的人群。正常烹饪用量（每道菜2-5片叶子）通常不会引起问题。\n\n孕期和哺乳期妇女正常烹饪用量使用无已知风险，但应避免大量或药用剂量使用。儿童使用时也应适量，因为其对强烈香气的耐受性可能较低。\n\n个别过敏体质者可能对柑橘类植物过敏，首次使用时应少量尝试。整体而言，作为烹饪香料适量使用是安全的，但应避免将其当作药物大量长期使用。精油产品浓度极高，不建议直接口服，仅供外用或芳香疗法。"
+}

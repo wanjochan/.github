@@ -1,0 +1,68 @@
+{
+  "error": "'castor_bean' does not match '^[a-z-]+$'\n\nFailed validating 'pattern' in schema['properties']['id']:\n    {'type': 'string', 'pattern': '^[a-z-]+$'}\n\nOn instance['id']:\n    'castor_bean'",
+  "record": {
+    "id": "castor_bean",
+    "cn_name": "蓖麻",
+    "en_name": "Castor Bean",
+    "scientific_name": "Ricinus communis",
+    "category": "non_edible",
+    "edible_parts": [],
+    "toxicity": {
+      "status": "extremely_toxic",
+      "toxic_parts": [
+        "seeds",
+        "leaves",
+        "stem"
+      ],
+      "notes": "蓖麻的主要毒性成分是蓖麻毒蛋白（ricin），这是一种极其致命的细胞毒素，主要集中在种子中，其毒性强度是氰化物的6000倍。蓖麻毒蛋白是一种核糖体失活蛋白（RIP），能够不可逆地破坏细胞内的蛋白质合成机制，导致细胞死亡。致死剂量极低：儿童误食1-3颗种子即可致命，成人误食4-8颗种子就可能死亡。即使咀嚼但不吞咽种子也可能导致严重中毒。叶片和茎干也含有毒素，但浓度远低于种子。需要特别注意的是，蓖麻毒蛋白无解药，一旦中毒只能进行支持性治疗，这使得预防成为唯一的保护措施。",
+      "sources": [
+        "Audi J, et al. Ricin poisoning: a comprehensive review. JAMA. 2005",
+        "Roxas-Duncan V, Smith LA. Of beans and beads: ricin and abrin in bioterrorism and biocrime. J Bioterr Biodef. 2012"
+      ]
+    },
+    "cultivation": {
+      "hardiness": "",
+      "sun": "",
+      "soil": "",
+      "pH": "",
+      "watering": "",
+      "propagation": [],
+      "companion": [],
+      "pests": []
+    },
+    "varieties": [],
+    "chemistry": [],
+    "culinary_uses": [],
+    "storage": "",
+    "lookalikes": [],
+    "images": [],
+    "references": [
+      {
+        "title": "Ricin poisoning: a comprehensive review",
+        "org": "JAMA",
+        "year": 2005,
+        "url": "https://jamanetwork.com/journals/jama/fullarticle/201716"
+      },
+      {
+        "title": "Of beans and beads: ricin and abrin in bioterrorism and biocrime",
+        "org": "Journal of Bioterrorism & Biodefense",
+        "year": 2012,
+        "url": "https://www.omicsgroup.org/journals/bioterrorism-biodefense.php"
+      },
+      {
+        "title": "Ricin: mechanisms of toxicity, clinical manifestations, and vaccine development",
+        "org": "Journal of Toxicology",
+        "year": 2011,
+        "url": "https://www.hindawi.com/journals/jt/2011/417830/"
+      },
+      {
+        "title": "The castor oil plant: botany, ecology and uses",
+        "org": "Economic Botany",
+        "year": 2018,
+        "url": "https://link.springer.com/journal/12231"
+      }
+    ],
+    "tags": [],
+    "toxicology_content": "蓖麻毒蛋白（ricin）是自然界中已知毒性最强的蛋白质毒素之一，其毒理学机制极其复杂且致命。这是一种由两条多肽链组成的异二聚体糖蛋白，分子量约65kDa，由A链（酶活性链）和B链（结合链）通过二硫键连接。B链负责与细胞表面受体结合并促进毒素进入细胞，A链则是具有核糖体失活酶（RIP）活性的催化组分。\n\n毒素的作用机制是通过与细胞表面的半乳糖和N-乙酰半乳糖胺残基结合，经内吞作用进入细胞。在细胞内，毒素通过逆转录转运途径到达内质网，然后A链被释放到细胞质中。A链具有N-糖苷酶活性，能够特异性地切断60S核糖体亚基上28S rRNA的特定腺嘌呤残基，导致蛋白质合成完全停止，最终引起细胞死亡。\n\n蓖麻毒蛋白的致死机制包括：1）蛋白质合成停止导致的细胞功能衰竭；2）广泛的组织坏死，特别是胃肠道、肝、肾和免疫系统；3）严重的炎症反应和血管通透性增加；4）循环衰竭和多器官功能障碍综合征。\n\n毒素的药代动力学特点是吸收快速但分布广泛。口服后在胃肠道迅速被吸收，2-4小时内达到血药峰浓度。毒素主要通过淋巴系统和血液循环分布到全身各组织，特别是富血管的器官如肝、肾、脾。蓖麻毒蛋白不易通过血脑屏障，但可以通过胎盘屏障。毒素在体内的半衰期约为30-36小时，主要通过肾脏排泄，但排泄缓慢，体内蓄积明显。\n\n不同给药途径的毒性差异显著：静脉注射的致死剂量最低（约0.1-1μg/kg），肌肉注射次之，皮下注射和吸入的毒性相对较低，而口服的毒性相对最低但仍极其危险。这是因为胃肠道的蛋白酶可以部分降解毒蛋白，但这种保护作用非常有限。\n\n种子中蓖麻毒蛋白的含量约为1-5%，但在不同品种和生长条件下有所变化。除了蓖麻毒蛋白外，种子还含有其他有毒物质如蓖麻碱（ricinine）、凝集素等，这些化合物虽然毒性较低，但可能增强蓖麻毒蛋白的毒性效应。"
+  }
+}

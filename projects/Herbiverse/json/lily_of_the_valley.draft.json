@@ -1,0 +1,88 @@
+{
+  "error": "'lily_of_the_valley' does not match '^[a-z-]+$'\n\nFailed validating 'pattern' in schema['properties']['id']:\n    {'type': 'string', 'pattern': '^[a-z-]+$'}\n\nOn instance['id']:\n    'lily_of_the_valley'",
+  "record": {
+    "id": "lily_of_the_valley",
+    "cn_name": "铃兰",
+    "en_name": "Lily of the Valley",
+    "scientific_name": "Convallaria majalis",
+    "category": "non_edible",
+    "edible_parts": [],
+    "toxicity": {
+      "status": "highly_toxic",
+      "toxic_parts": [
+        "leaves",
+        "flower",
+        "berries",
+        "stem",
+        "root",
+        "rhizome"
+      ],
+      "notes": "铃兰全株含有剧毒的强心苷类化合物，毒性比毛地黄更强。主要毒性成分包括铃兰毒苷（convallatoxin）、铃兰苦苷（convallamarin）、铃兰苷（convallarin）等40多种强心苷化合物。这些化合物对心肌具有极强的毒性作用，能够严重干扰心脏的电传导系统，导致心律失常和心脏骤停。铃兰的红色果实看起来很诱人，特别容易被儿童误食，仅需2-3颗果实就足以致命。即使是花瓶中铃兰花束的水也含有毒素，误饮可能导致中毒。所有部分在干燥后仍保持毒性，制成的干花同样危险。",
+      "sources": [
+        "Frohne D, Pfänder HJ. Poisonous Plants: A Handbook for Doctors, Pharmacists, Toxicologists, Biologists and Veterinarians. Timber Press, 2005",
+        "European Food Safety Authority. Compendium of botanicals reported to contain naturally occuring substances of possible concern for human health. EFSA Journal, 2012"
+      ]
+    },
+    "cultivation": {
+      "hardiness": "USDA zones 2-7, 极其耐寒，适合中国大部分地区",
+      "sun": "半阴至全阴，避免强烈直射阳光",
+      "soil": "湿润、排水良好的酸性至中性土壤，富含有机质",
+      "pH": "6.0-7.5",
+      "watering": "保持土壤湿润但不积水，夏季需要更多水分",
+      "propagation": [
+        "分株繁殖",
+        "根状茎分割",
+        "春季或秋季进行"
+      ],
+      "companion": [
+        "蕨类植物",
+        "玉簪",
+        "落新妇",
+        "适合林荫花境"
+      ],
+      "pests": [
+        "蜗牛",
+        "蛞蝓",
+        "红蜘蛛",
+        "需保持良好通风"
+      ]
+    },
+    "varieties": [],
+    "chemistry": [],
+    "culinary_uses": [],
+    "storage": "",
+    "lookalikes": [],
+    "images": [],
+    "references": [
+      {
+        "title": "Poisonous Plants: A Handbook for Doctors, Pharmacists, Toxicologists, Biologists and Veterinarians",
+        "org": "Timber Press",
+        "author": "Dietrich Frohne, Hans Jürgen Pfänder",
+        "year": 2005,
+        "url": "https://www.timberpress.com/book/9780881927511/poisonous-plants"
+      },
+      {
+        "title": "Compendium of botanicals reported to contain naturally occuring substances of possible concern for human health",
+        "org": "European Food Safety Authority",
+        "year": 2012,
+        "url": "https://efsa.onlinelibrary.wiley.com/doi/abs/10.2903/j.efsa.2012.2663"
+      },
+      {
+        "title": "Cardiac Glycosides in Convallaria majalis",
+        "org": "Journal of Natural Products",
+        "author": "Krenn L, Kopp B",
+        "year": 1998,
+        "url": "https://pubs.acs.org/doi/abs/10.1021/np970444t"
+      },
+      {
+        "title": "Plant Poisoning Emergency Medicine",
+        "org": "Emergency Medicine Clinics of North America",
+        "author": "Krenzelok EP, Mrvos R",
+        "year": 2011,
+        "url": "https://www.emed.theclinics.com/article/S0733-8627(11)00013-1/abstract"
+      }
+    ],
+    "tags": [],
+    "toxicology_content": "铃兰的毒理学特征极其复杂且危险，是植物毒理学研究的重要对象。铃兰全株含有超过40种不同的强心苷类化合物，这是所有已知植物中强心苷种类最多的之一。主要毒性成分包括：1）铃兰毒苷（convallatoxin）：分子式C29H42O10，是毒性最强的成分，比洋地黄毒苷的毒性强约10倍；2）铃兰苦苷（convallamarin）：分子式C23H34O12，毒性略低于铃兰毒苷但仍然极其危险；3）铃兰苷（convallarin）：分子式C23H34O12，具有强烈的利尿作用，可导致严重脱水；4）其他次要强心苷：包括铃兰毒苷A、B、C等多种同系物。这些化合物的毒理机制主要通过抑制Na+/K+-ATP酶，导致细胞内Na+浓度升高，进而引起Ca2+内流增加，使心肌收缩异常增强。同时还能直接作用于心脏传导系统，引起严重的心律失常。铃兰强心苷的药代动力学特点是吸收快速、分布广泛、代谢缓慢。口服后15-30分钟即可被胃肠道吸收，1-2小时达到血药浓度峰值。这些化合物主要与心肌细胞膜上的Na+/K+-ATP酶结合，半衰期长达36-48小时，这解释了为什么铃兰中毒的症状持续时间长且难以治疗。致死机制主要是严重的心律失常导致心脏骤停，其次是呼吸中枢抑制导致呼吸衰竭。实验动物研究显示，铃兰毒苷的LD50（半数致死剂量）极低：小鼠静脉注射LD50为0.08mg/kg，口服LD50为0.3mg/kg。根据这些数据推算，成人的潜在致死剂量约为15-20颗成熟果实或30-40克新鲜叶片。"
+  }
+}

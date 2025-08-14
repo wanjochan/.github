@@ -1,0 +1,120 @@
+{
+  "id": "marjoram",
+  "cn_name": "马郁兰",
+  "en_name": "Marjoram",
+  "scientific_name": "Origanum majorana",
+  "category": "edible",
+  "edible_parts": ["leaves", "flower"],
+  "toxicity": {
+    "status": "safe",
+    "toxic_parts": [],
+    "notes": "一般安全可食，但精油浓缩制品需注意剂量。怀孕期间大量摄入可能刺激子宫收缩，建议适量。相比牛至更为温和，副作用更少。",
+    "sources": ["Kew Gardens", "USDA", "European Medicines Agency"]
+  },
+  "cultivation": {
+    "hardiness": "USDA 9-10 (annual in colder zones)",
+    "sun": "full sun to partial shade",
+    "soil": "well-drained, fertile, slightly alkaline",
+    "pH": "6.5-7.5",
+    "watering": "保持土壤微湿但不积水；比牛至需要更多水分，但忌涝。夏季高温需适当遮荫。",
+    "propagation": ["seed", "cuttings", "division"],
+    "companion": ["tomato", "eggplant", "cabbage", "carrots", "spinach"],
+    "pests": ["aphids", "spider mites", "rust", "powdery mildew"]
+  },
+  "varieties": [
+    {"name": "Sweet Marjoram"},
+    {"name": "Pot Marjoram"},
+    {"name": "Wild Marjoram"},
+    {"name": "French Marjoram"}
+  ],
+  "chemistry": [
+    {
+      "compound": "Carvacrol",
+      "class": "monoterpene phenol", 
+      "role": "antimicrobial/flavor",
+      "notes": "含量比牛至低，约占挥发油的5-15%，提供温和的辛香，抗菌性较弱但更温和。",
+      "sources": ["PubChem", "Journal of Essential Oil Research"]
+    },
+    {
+      "compound": "Thymol", 
+      "class": "monoterpene phenol",
+      "role": "antimicrobial/aromatic", 
+      "notes": "含量约3-12%，与香芹酚协同，提供药草香气，是马郁兰防腐性的来源之一。",
+      "sources": ["PubChem", "Phytochemistry Reviews"]
+    },
+    {
+      "compound": "Terpinen-4-ol",
+      "class": "monoterpene alcohol",
+      "role": "floral aroma/antimicrobial",
+      "notes": "马郁兰特征性成分，占挥发油的10-30%，赋予温和甜美的花香，区别于牛至的辛辣。",
+      "sources": ["Essential Oil Research", "Natural Product Chemistry"]
+    },
+    {
+      "compound": "Sabinene hydrate",
+      "class": "monoterpene alcohol",
+      "role": "sweet aroma enhancement",
+      "notes": "增强马郁兰的甜美气息，使其比牛至更温和可口，特别是在法式料理中备受推崇。",
+      "sources": ["Journal of Agricultural Food Chemistry"]
+    }
+  ],
+  "culinary_uses": [
+    "French cuisine",
+    "herb blends", 
+    "sauces",
+    "meat seasoning",
+    "vegetable dishes",
+    "egg dishes",
+    "soups"
+  ],
+  "storage": "新鲜马郁兰叶片较嫩，需小心处理，冷藏可保存3-5天。干燥后香气更温和但持久，密封避光可保存1年。可制成香草黄油或橄榄油浸提。冷冻保存会破坏质地但保留香气。",
+  "lookalikes": [
+    {
+      "name": "Origanum vulgare (牛至)",
+      "how_to_tell": "牛至叶片更大更尖，香气更强烈辛辣；马郁兰叶片小而圆润，香气温和甜美带花香。"
+    },
+    {
+      "name": "Thymus vulgaris (百里香)",
+      "how_to_tell": "百里香叶片极小呈线形，植株更矮小紧密；马郁兰叶片明显更大且椭圆形，植株更开展。"
+    }
+  ],
+  "references": [
+    {
+      "title": "Plants of the World Online: Origanum majorana", 
+      "org": "Kew Gardens",
+      "year": 2024,
+      "url": "https://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:454726-1"
+    },
+    {
+      "title": "Sweet Marjoram: Chemical Composition and Biological Activity",
+      "org": "Journal of Essential Oil Research",
+      "year": 2023,
+      "url": "https://www.tandfonline.com/toc/tjeo20/current"
+    },
+    {
+      "title": "Marjoram in European Traditional Medicine",
+      "org": "European Medicines Agency", 
+      "year": 2022,
+      "url": "https://www.ema.europa.eu/en/medicines/herbal"
+    }
+  ],
+  "tags": ["aromatic", "annual", "culinary", "medicinal", "Lamiaceae"],
+  "key_features": "一年生草本；茎细软、小叶椭圆、白花密集；温和甜美香气，比牛至更温和，常用于精致料理。",
+  "difficulty": "中等（喜温暖，需保护过冬）",
+  "morphology_content": "马郁兰（Origanum majorana）为唇形科牛至属一年生草本植物，原产地中海东部，现广泛栽培。株高通常15-60厘米，整体比牛至更紧凑精致。茎直立，四方形但较细软，多分枝，幼茎淡绿色带微红晕，表面有细绒毛，质地较牛至更嫩。节间较短，使植株显得更紧密。\n\n叶片对生，椭圆形至卵形，长0.7-2.5厘米，宽0.5-1.5厘米，明显比牛至叶片更小更圆润。叶色灰绿至深绿，表面有细密的腺点，背面颜色较浅且有短柔毛。叶缘全缘，偶有不明显的细齿。叶柄很短，约1-3毫米。轻揉叶片散发温和甜美的香气，带有花香和轻微的松木香，比牛至温和得多，无辛辣刺激感。\n\n花序为紧密的头状或短穗状花序，通常3-5个成束生于枝端，形成复合花序。花序长1-3厘米，花序轴和苞片均有白色绒毛。花小，花冠长3-5毫米，白色或淡粉色，二唇形；雄蕊4枚，通常不伸出花冠外，区别于牛至；花期夏季，7-9月。果实为小坚果，褐色，约1毫米长。\n\n根系为浅根系，主要分布在表土层，耐旱性不如牛至。整株植物质地柔软，茎叶均比牛至更嫩，适应性稍差但观赏价值更高。在温带地区通常作一年生栽培，霜冻后会死亡。",
+  "lookalike_comparison": "与牛至（Origanum vulgare）区分最为重要：牛至叶片更大(2-4cm)且尖，呈卵形，香气强烈辛辣；马郁兰叶片更小(0.7-2.5cm)且圆，呈椭圆形，香气温和甜美。牛至雄蕊伸出花冠外，马郁兰雄蕊藏于花冠内。与百里香区分：百里香叶片极小(2-8mm)呈线形或椭圆形，植株低矮(10-30cm)；马郁兰叶片明显更大，植株更高。与薄荷区分：薄荷具地下匍匐茎，叶片更大更薄，边缘有明显锯齿，气味清凉；马郁兰无匍匐茎，叶缘全缘，香气温和无清凉感。",
+  "varieties_content": "- **Sweet Marjoram（甜马郁兰）**：最常见的栽培品种，香气最温和甜美，叶片小而圆，适合精致烹饪，不耐寒。\n- **Pot Marjoram（花盆马郁兰，O. onites）**：实际为不同种，更耐寒，可多年生，香气介于马郁兰和牛至之间，叶片稍大。\n- **Wild Marjoram（野马郁兰）**：实际指牛至（O. vulgare），名称容易混淆，香气更强烈，叶片更大更尖。\n- **French Marjoram（法国马郁兰）**：选育品种，香气特别温和，适合法式料理，植株紧凑，观赏价值高。\n\n选择建议：家庭种植推荐Sweet Marjoram，香气最佳且用途广泛；寒冷地区可尝试Pot Marjoram过冬；精致烹饪首选French品种。注意Wild Marjoram实为牛至，购买时需仔细区分学名。",
+  "chemistry_content": "马郁兰挥发油含量为0.7-3%，化学组成与牛至相似但比例差异显著，造就了其独特的温和甜美香气：\n\n- **Terpinen-4-ol（松油烯-4-醇）**：马郁兰的特征性成分，占挥发油的15-35%，是区别于牛至的关键化合物。提供温和的花香和轻微的松木香，具有抗菌和抗炎作用，但比香芹酚温和得多。\n\n- **Carvacrol（香芹酚）**：含量远低于牛至，仅占5-20%，因此马郁兰的辛辣感大大降低。仍然具有抗菌性，但强度适中，使马郁兰更适合敏感人群。\n\n- **Thymol（百里香酚）**：含量约5-15%，与香芹酚协同作用，提供药草香气。含量比例的平衡使马郁兰香气更协调。\n\n- **Sabinene hydrate（柠檬烯水合物）**：约占5-15%，赋予马郁兰特有的甜美气息和轻微的柑橘香，这是牛至所缺少的成分。\n\n其他重要成分包括α-萜品醇、里哪醇、丁香酚等，它们共同构成了马郁兰复杂而和谐的香气谱。收获时机对化学组成影响显著：花芽期采收香气最佳，过晚采收会使香气变粗糙。干燥过程中需控制温度，高温会破坏挥发性成分。",
+  "culinary_content": "马郁兰在欧洲料理中被誉为\"温柔的牛至\"，其温和甜美的香气使其成为精致烹饪的首选。在法式料理中，马郁兰是经典香草束（bouquet garni）和精细香草（fines herbes）的重要成分，与百里香、迷迭香搭配用于炖肉和酱汁。德国料理中，马郁兰是香肠制作的传统调料，特别是慕尼黑白香肠，其温和的香气不会掩盖肉香。\n\n意大利料理虽然更常用牛至，但在需要细腻口感的菜肴中会选择马郁兰，如奶油酱汁、精致的鱼类料理和蛋类菜肴。英式料理中，马郁兰常用于烤肉的腌料和蔬菜汤，其甜美的香气与根茎类蔬菜特别搭配。\n\n使用技巧：\n- 新鲜马郁兰应在烹饪最后阶段加入，避免长时间加热破坏其细腻香气\n- 干马郁兰香气更浓缩，适合腌制和长时间炖煮\n- 与鸡肉、猪肉、蛋类的搭配效果极佳，能去腥增香而不抢夺主味\n- 制作香草黄油时，马郁兰是首选，其温和特质不会产生刺激感\n- 蔬菜料理中，与胡萝卜、南瓜、土豆等根茎类蔬菜天然契合\n\n储存使用：新鲜马郁兰质地较嫩，应现采现用；干马郁兰在玻璃密封罐中可保持香气12-18个月。制作调料油时，马郁兰需要较长的浸提时间才能释放完整香气。",
+  "storage_methods": "**新鲜马郁兰保存**：由于叶片较嫩，应用湿润厨房纸巾轻柔包裹，放入透气保鲜袋中冷藏，可保持3-5天新鲜。或将整枝插入盛水的杯中，套上塑料袋保湿，置于冰箱中。**干燥保存**：选择晴天早晨露水干后采收，将完整枝条倒挂在通风阴凉处，避免直射阳光，2-3周后叶片完全干燥变脆时，轻轻搓下叶片，筛去茎屑。**机械干燥**：使用食物脱水机35-40°C低温干燥6-12小时，保持最佳香气。**冷冻保存**：新鲜叶片可直接冷冻，虽然质地会改变但香气保留良好；或切碎后与橄榄油混合制成香草冰块。**浸油保存**：新鲜马郁兰浸入优质橄榄油中，密封后置于阴凉处2-4周，制成香草调料油。干燥的马郁兰应存放在深色玻璃瓶中，贴上标签注明日期，避光避湿保存。",
+  "toxicology_content": "马郁兰作为食用香草安全性很高，副作用比牛至更少。正常烹饪用量完全安全，儿童和老人都可以放心食用。不过仍需注意几个方面：怀孕期间应避免大量摄入马郁兰，特别是精油形式，因为可能刺激子宫收缩，但正常调料用量不会有问题。哺乳期妇女可正常食用，马郁兰甚至有传统上促进乳汁分泌的用途。对薄荷科植物过敏者可能对马郁兰也有过敏反应，初次使用建议少量尝试。马郁兰精油浓度很高，不应直接口服，需要稀释后使用，且用量要严格控制。长期大量摄入可能引起轻微的胃肠道不适，但比牛至温和得多。糖尿病患者使用马郁兰时应注意，因为有研究显示它可能影响血糖水平，虽然作用轻微。总体而言，马郁兰比大多数香料香草都要温和安全，是家庭烹饪的理想选择。",
+  "images": [
+    {
+      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Origanum_majorana_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-195.jpg/512px-Origanum_majorana_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-195.jpg",
+      "title": "Marjoram botanical illustration", 
+      "author": "Franz Eugen Köhler",
+      "license": "Public Domain",
+      "source": "Wikimedia Commons",
+      "caption": "Historical botanical illustration showing marjoram's characteristic small rounded leaves and compact flower clusters"
+    }
+  ]
+}
