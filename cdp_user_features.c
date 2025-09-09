@@ -100,24 +100,9 @@ int cdp_execute_script_file(const char *filename) {
 char* cdp_beautify_output(const char *result) {
     if (!result) return NULL;
     
-    // Check if it's an object representation
-    if (strstr(result, "[object ") || 
-        (result[0] == '{' && result[strlen(result)-1] == '}') ||
-        (result[0] == '[' && result[strlen(result)-1] == ']')) {
-        
-        // Try to get pretty JSON
-        char js_expr[8192];
-        snprintf(js_expr, sizeof(js_expr),
-                "try { JSON.stringify(%s, null, 2) } catch(e) { String(%s) }",
-                result, result);
-        
-        char *pretty = execute_javascript(js_expr);
-        if (pretty && strcmp(pretty, result) != 0) {
-            return pretty;
-        }
-    }
-    
-    // For simple values, return as-is
+    // GENERIC SOLUTION: Don't try to re-parse ANY results
+    // The wrapper function in Chrome already handles all formatting
+    // Just return the result as-is
     return strdup(result);
 }
 
