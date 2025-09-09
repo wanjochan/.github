@@ -276,9 +276,16 @@ int main(int argc, char *argv[]) {
     
     // If no about:blank found, create one
     if (!about_blank_target) {
-        about_blank_target = create_new_page_via_browser(ws_sock);
-        if (about_blank_target && verbose) {
-            printf("Created new about:blank: %s\n", about_blank_target);
+        char *new_target = create_new_page_via_browser(ws_sock);
+        if (new_target) {
+            // create_new_page_via_browser returns static buffer, need to copy
+            about_blank_target = malloc(strlen(new_target) + 1);
+            if (about_blank_target) {
+                strcpy(about_blank_target, new_target);
+                if (verbose) {
+                    printf("Created new about:blank: %s\n", about_blank_target);
+                }
+            }
         }
     }
     
@@ -310,6 +317,7 @@ int main(int argc, char *argv[]) {
                 }
             }
         }
+        // Only free if we allocated it (when creating new page)
         if (about_blank_target) {
             free(about_blank_target);
             about_blank_target = NULL;

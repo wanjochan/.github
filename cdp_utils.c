@@ -13,6 +13,7 @@
 #include <sys/time.h>
 #include <fcntl.h>
 #include <unistd.h>
+#include <sys/utsname.h>
 
 /* JSON Utilities */
 
@@ -548,4 +549,31 @@ int parse_json_command(const char *json, int *id, char *cmd, size_t cmd_size) {
     }
     
     return 0;
+}
+
+/* Detect operating system at runtime */
+const char* cdp_detect_os(void) {
+    static char os_name[32];
+    struct utsname sys_info;
+    
+    if (uname(&sys_info) == 0) {
+        // Convert to lowercase for easier comparison
+        str_copy_safe(os_name, sys_info.sysname, sizeof(os_name));
+        for (int i = 0; os_name[i]; i++) {
+            os_name[i] = tolower(os_name[i]);
+        }
+        return os_name;
+    }
+    
+    // Cosmopolitan's uname should always work
+    // If it fails, we can check some runtime hints
+    if (getenv("WINDIR") || getenv("SYSTEMROOT")) {
+        return "windows";
+    } else if (getenv("HOME") && access("/System", F_OK) == 0) {
+        return "darwin";
+    } else if (access("/proc", F_OK) == 0) {
+        return "linux";
+    }
+    
+    return "unknown";
 }
