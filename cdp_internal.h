@@ -208,4 +208,16 @@ void* cdp_check_ptr(void *ptr, const char *what);
 void sigchld_handler(int sig);
 void print_usage(const char *prog_name);
 
+/* User features module (cdp_user_features.c) */
+int cdp_execute_script_file(const char *filename);
+int cdp_execute_script_files(char **filenames, int count);
+char* cdp_beautify_output(const char *result);
+const char* cdp_get_shortcut(const char *command);
+void cdp_show_shortcuts(void);
+void cdp_perf_init(void);
+void cdp_perf_track(double time_ms);
+void cdp_show_stats(void);
+char* cdp_process_user_command(const char *input);
+int cdp_inject_helpers(void);
+
 #endif /* CDP_INTERNAL_H */
