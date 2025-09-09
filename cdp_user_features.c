@@ -299,33 +299,30 @@ const char* cdp_js_helpers =
 int cdp_inject_helpers(void) {
     // Check if WebSocket is connected
     if (ws_sock <= 0) {
-        if (verbose) {
-            printf("Warning: Cannot inject helpers, WebSocket not connected\n");
-        }
-        return -1;
+        return -1;  // Silently fail if no connection
     }
     
     // Inject helpers in smaller chunks to avoid buffer overflow
     const char *helpers[] = {
         "window.$ = (s) => document.querySelector(s)",
         "window.$$ = (s) => Array.from(document.querySelectorAll(s))",
-        "window.$x = (xpath) => { const result = []; const nodes = document.evaluate(xpath, document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null); for (let i = 0; i < nodes.snapshotLength; i++) { result.push(nodes.snapshotItem(i)); } return result; }",
         "window.sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms))",
-        "window.copy = (text) => { const el = document.createElement('textarea'); el.value = text; document.body.appendChild(el); el.select(); document.execCommand('copy'); document.body.removeChild(el); return 'Copied'; }",
         NULL
     };
+    
+    // Don't inject complex functions that might cause issues
+    // Skip $x() and copy() for now
     
     int success = 0;
     for (int i = 0; helpers[i] != NULL; i++) {
         char *result = execute_javascript(helpers[i]);
         if (result) {
             success++;
+            // Don't keep references to the result
+            // execute_javascript returns a static buffer
         }
     }
     
-    if (verbose && success > 0) {
-        printf("Helper functions injected: $(), $$(), $x(), sleep(), copy()\n");
-    }
-    
+    // Return success silently
     return success > 0 ? 0 : -1;
 }

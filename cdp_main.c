@@ -305,20 +305,8 @@ int main(int argc, char *argv[]) {
                 // Initialize performance tracking after connection
                 cdp_perf_init();
                 
-                // Only inject helpers if we have a valid WebSocket connection
-                if (ws_sock > 0 && g_ctx.runtime.runtime_ready) {
-                    // Small delay to ensure Runtime is fully ready
-                    // Cosmopolitan provides usleep for all platforms
-                    usleep(100000);  // 100ms delay
-                    
-                    if (cdp_inject_helpers() == 0 && verbose) {
-                        printf("Helper functions injected: $(), $$(), $x(), sleep(), copy()\n");
-                    }
-                }
-                
                 if (verbose) {
-                    printf("Attached to page endpoint, JavaScript execution ready\n");
-                    printf("Type .help for shortcuts, .stats for statistics\n\n");
+                    printf("Attached to page endpoint, JavaScript execution ready\n\n");
                 }
             }
         }
