@@ -151,21 +151,12 @@ static int run_repl(void) {
             continue;
         }
         
-        // Handle special commands
-        if (strcmp(input, ".help") == 0) {
-            printf("Commands:\n");
-            printf("  .help    Show this help\n");
-            printf("  .exit    Exit REPL\n");
-            printf("  .quit    Exit REPL\n");
-            printf("\nOr type any JavaScript expression\n");
-            continue;
-        }
-        
+        // Handle exit commands directly
         if (strcmp(input, ".exit") == 0 || strcmp(input, ".quit") == 0) {
             break;
         }
         
-        // Process with user features (shortcuts, beautification, etc.)
+        // Process all commands including .help through user features
         char *result = cdp_process_user_command(input);
         if (result && *result) {
             printf("%s\n", result);
