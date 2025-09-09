@@ -39,6 +39,7 @@
 
 #include "cdp_internal.h"
 #include <getopt.h>
+#include <unistd.h>
 
 /* Global variables */
 CDPContext g_ctx = {
@@ -164,8 +165,8 @@ static int run_repl(void) {
             break;
         }
         
-        // Execute JavaScript
-        char *result = execute_javascript(input);
+        // Process with user features (shortcuts, beautification, etc.)
+        char *result = cdp_process_user_command(input);
         if (result && *result) {
             printf("%s\n", result);
         }
@@ -232,6 +233,9 @@ int main(int argc, char *argv[]) {
     }
     
     // Auto-attach to JavaScript context
+    // Initialize performance tracking
+    cdp_perf_init();
+    
     if (verbose) {
         printf("\n=== Chrome DevTools Protocol Client ===\n");
         printf("Auto-attaching to JavaScript context...\n");
@@ -261,7 +265,7 @@ int main(int argc, char *argv[]) {
                     if (id_end) {
                         size_t id_len = id_end - id_start;
                         about_blank_target = malloc(id_len + 1);
-                        strncpy(about_blank_target, id_start, id_len);
+                        memcpy(about_blank_target, id_start, id_len);
                         about_blank_target[id_len] = '\0';
                         if (verbose) printf("Found existing about:blank: %s\n", about_blank_target);
                     }
@@ -298,12 +302,30 @@ int main(int argc, char *argv[]) {
                 ws_recv_text(ws_sock, buf, sizeof(buf));
                 g_ctx.runtime.runtime_ready = 1;
                 
+                // Initialize performance tracking after connection
+                cdp_perf_init();
+                
+                // Only inject helpers if we have a valid WebSocket connection
+                if (ws_sock > 0 && g_ctx.runtime.runtime_ready) {
+                    // Small delay to ensure Runtime is fully ready
+                    // Cosmopolitan provides usleep for all platforms
+                    usleep(100000);  // 100ms delay
+                    
+                    if (cdp_inject_helpers() == 0 && verbose) {
+                        printf("Helper functions injected: $(), $$(), $x(), sleep(), copy()\n");
+                    }
+                }
+                
                 if (verbose) {
-                    printf("Attached to page endpoint, JavaScript execution ready\n\n");
+                    printf("Attached to page endpoint, JavaScript execution ready\n");
+                    printf("Type .help for shortcuts, .stats for statistics\n\n");
                 }
             }
         }
-        free(about_blank_target);
+        if (about_blank_target) {
+            free(about_blank_target);
+            about_blank_target = NULL;
+        }
     }
     
     // Check if input is from pipe
@@ -317,7 +339,7 @@ int main(int argc, char *argv[]) {
             }
             
             if (strlen(input) > 0) {
-                char *result = execute_javascript(input);
+                char *result = cdp_process_user_command(input);
                 if (result && *result) {
                     printf("%s\n", result);
                 }
