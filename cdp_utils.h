@@ -59,4 +59,7 @@ void cdp_message_free(CDPMessage* msg);
 /* JSON Command Parsing */
 int parse_json_command(const char *json, int *id, char *cmd, size_t cmd_size);
 
+/* System utilities */
+const char* cdp_detect_os(void);
+
 #endif /* CDP_UTILS_H */

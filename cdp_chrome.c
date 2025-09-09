@@ -8,7 +8,6 @@
 #include <sys/wait.h>
 #include <fcntl.h>
 #include <errno.h>
-#include <sys/utsname.h>
 #include <ctype.h>
 
 /* External global variables */
@@ -20,37 +19,12 @@ extern int ws_cmd_id;
 /* Static variables */
 static pid_t chrome_pid = -1;
 
-/* Detect operating system */
-static const char* detect_os(void) {
-    static char os_name[32];
-    struct utsname sys_info;
-    
-    if (uname(&sys_info) == 0) {
-        // Convert to lowercase for easier comparison
-        for (int i = 0; sys_info.sysname[i]; i++) {
-            os_name[i] = tolower(sys_info.sysname[i]);
-        }
-        return os_name;
-    }
-    
-    // Fallback detection
-    #ifdef __linux__
-        return "linux";
-    #elif __APPLE__
-        return "darwin";
-    #elif _WIN32
-        return "windows";
-    #else
-        return "unknown";
-    #endif
-}
-
 /* Find Chrome/Chromium executable */
 char* find_chrome_executable(void) {
     static char chrome_path[512];
     chrome_path[0] = '\0';
     
-    const char *os = detect_os();
+    const char *os = cdp_detect_os();
     
     // Paths to check based on OS
     const char *paths_linux[] = {
@@ -176,7 +150,7 @@ char* find_chrome_executable(void) {
 
 /* Launch Chrome with debugging enabled */
 void launch_chrome(void) {
-    const char *os = detect_os();
+    const char *os = cdp_detect_os();
     if (verbose) {
         printf("Detected OS: %s\n", os);
     }
