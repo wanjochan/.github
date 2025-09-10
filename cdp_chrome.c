@@ -15,6 +15,8 @@ extern CDPContext g_ctx;
 extern int verbose;
 extern int ws_sock;
 extern int ws_cmd_id;
+extern int gui_mode;  // Add support for GUI mode
+extern char proxy_server[];  // Proxy server setting
 
 /* Static variables */
 static pid_t chrome_pid = -1;
@@ -28,6 +30,7 @@ char* find_chrome_executable(void) {
     
     // Paths to check based on OS
     const char *paths_linux[] = {
+        "/opt/google/chrome/chrome",     // Direct Chrome binary (avoiding wrapper scripts)
         "/usr/bin/google-chrome",
         "/usr/bin/google-chrome-stable",
         "/usr/bin/chromium-browser",
@@ -178,10 +181,9 @@ void launch_chrome(void) {
     if (!chrome_path) {
         chrome_path = find_chrome_executable();
         if (!chrome_path) {
-            fprintf(stderr, "Error: Chrome is not running on port %d\n", g_ctx.config.debug_port);
-            fprintf(stderr, "Please start Chrome with: chrome --remote-debugging-port=%d\n", 
-                    g_ctx.config.debug_port);
-            fprintf(stderr, "Or set CDP_LAUNCH_CHROME=1 to auto-launch\n");
+            fprintf(stderr, "Error: Chrome executable not found in PATH\n");
+            fprintf(stderr, "Please install Chrome or specify the path\n");
+            fprintf(stderr, "To disable auto-launch, set CDP_NOLAUNCH_CHROME=1\n");
             exit(1);
         }
     }
@@ -191,53 +193,208 @@ void launch_chrome(void) {
     if (chrome_pid == 0) {
         // Child process - launch Chrome
         
-        // Build command
-        char cmd[2048];
-        int len = 0;
+        // Always redirect stdout/stderr to /dev/null for Chrome
+        // Chrome's output is too noisy even for verbose mode
+        int devnull = open("/dev/null", O_RDWR);
+        if (devnull >= 0) {
+            dup2(devnull, STDOUT_FILENO);
+            dup2(devnull, STDERR_FILENO);
+            close(devnull);
+        }
         
-        // Chrome executable
-        len += snprintf(cmd + len, sizeof(cmd) - len, "%s", chrome_path);
+        // Build argument array
+        char port_arg[32];
+        snprintf(port_arg, sizeof(port_arg), "--remote-debugging-port=%d", g_ctx.config.debug_port);
         
-        // Debugging port
-        len += snprintf(cmd + len, sizeof(cmd) - len, " --remote-debugging-port=%d", 
-                       g_ctx.config.debug_port);
-        
-        // Common flags for headless operation
-        len += snprintf(cmd + len, sizeof(cmd) - len, " --no-sandbox");
-        len += snprintf(cmd + len, sizeof(cmd) - len, " --disable-dev-shm-usage");
-        
-        // Headless mode (new syntax)
-        len += snprintf(cmd + len, sizeof(cmd) - len, " --headless=new");
-        
-        // Disable GPU for better compatibility
-        len += snprintf(cmd + len, sizeof(cmd) - len, " --disable-gpu");
-        
-        // User data directory
+        char user_data_arg[256];
         if (g_ctx.config.user_data_dir) {
-            len += snprintf(cmd + len, sizeof(cmd) - len, " --user-data-dir=%s", 
-                           g_ctx.config.user_data_dir);
+            snprintf(user_data_arg, sizeof(user_data_arg), "--user-data-dir=%s", 
+                     g_ctx.config.user_data_dir);
         } else {
-            len += snprintf(cmd + len, sizeof(cmd) - len, " --user-data-dir=/tmp/cdp-chrome-profile");
+            // Use a unique profile directory for each port to avoid SingletonLock conflicts
+            snprintf(user_data_arg, sizeof(user_data_arg), "--user-data-dir=/tmp/cdp-chrome-profile-%d", 
+                     g_ctx.config.debug_port);
         }
         
-        // Additional flags
-        len += snprintf(cmd + len, sizeof(cmd) - len, " --disable-extensions");
-        len += snprintf(cmd + len, sizeof(cmd) - len, " --disable-background-timer-throttling");
-        len += snprintf(cmd + len, sizeof(cmd) - len, " --disable-backgrounding-occluded-windows");
-        len += snprintf(cmd + len, sizeof(cmd) - len, " --disable-renderer-backgrounding");
-        
-        // Start page - use about:blank
-        len += snprintf(cmd + len, sizeof(cmd) - len, " about:blank");
-        
-        // Run in background
-        len += snprintf(cmd + len, sizeof(cmd) - len, " > /dev/null 2>&1 &");
-        
-        if (verbose) {
-            printf("Launching Chrome: %s\n", cmd);
+        // Prepare proxy argument if specified
+        char proxy_arg[600] = "";
+        if (strlen(proxy_server) > 0) {
+            snprintf(proxy_arg, sizeof(proxy_arg), "--proxy-server=%s", proxy_server);
         }
         
-        // Execute
-        execl("/bin/sh", "sh", "-c", cmd, NULL);
+        // Execute Chrome directly (no shell)
+        // Note: Chrome may fork and the parent process may exit, which is normal
+        // Use execl instead of execlp when we have an absolute path
+        if (chrome_path[0] == '/') {
+            if (gui_mode || getenv("CDP_GUI_MODE")) {
+                // GUI mode - visible Chrome window
+                if (strlen(proxy_server) > 0) {
+                    execl(chrome_path, chrome_path,
+                       port_arg,
+                       proxy_arg,
+                       "--no-sandbox",
+                       "--disable-dev-shm-usage",
+                       user_data_arg,
+                       "--disable-extensions",
+                       "--disable-background-timer-throttling",
+                       "--disable-renderer-backgrounding",
+                       "--disable-features=TranslateUI",
+                       "--disable-ipc-flooding-protection",
+                       "--no-first-run",
+                       "--enable-automation",
+                       "about:blank",
+                       NULL);
+                } else {
+                    execl(chrome_path, chrome_path,
+                       port_arg,
+                       "--no-sandbox",
+                       "--disable-dev-shm-usage",
+                       user_data_arg,
+                       "--disable-extensions",
+                       "--disable-background-timer-throttling",
+                       "--disable-renderer-backgrounding",
+                       "--disable-features=TranslateUI",
+                       "--disable-ipc-flooding-protection",
+                       "--no-first-run",
+                       "--enable-automation",
+                       "about:blank",
+                       NULL);
+                }
+            } else {
+                // Headless mode (default)
+                if (strlen(proxy_server) > 0) {
+                    execl(chrome_path, chrome_path,
+                       port_arg,
+                       proxy_arg,
+                       "--no-sandbox",
+                       "--disable-dev-shm-usage",
+                       "--headless=new",
+                       "--disable-gpu",
+                       user_data_arg,
+                       "--disable-extensions",
+                       "--disable-background-timer-throttling",
+                       "--disable-backgrounding-occluded-windows",
+                       "--disable-renderer-backgrounding",
+                       "--disable-features=TranslateUI",
+                       "--disable-ipc-flooding-protection",
+                       "--no-first-run",
+                       "--disable-default-apps",
+                       "--disable-sync",
+                       "--enable-automation",
+                       "--password-store=basic",
+                       "--use-mock-keychain",
+                       "about:blank",
+                       NULL);
+                } else {
+                    execl(chrome_path, chrome_path,
+                       port_arg,
+                       "--no-sandbox",
+                       "--disable-dev-shm-usage",
+                       "--headless=new",
+                       "--disable-gpu",
+                       user_data_arg,
+                       "--disable-extensions",
+                       "--disable-background-timer-throttling",
+                       "--disable-backgrounding-occluded-windows",
+                       "--disable-renderer-backgrounding",
+                       "--disable-features=TranslateUI",
+                       "--disable-ipc-flooding-protection",
+                       "--no-first-run",
+                       "--disable-default-apps",
+                       "--disable-sync",
+                       "--enable-automation",
+                       "--password-store=basic",
+                       "--use-mock-keychain",
+                       "about:blank",
+                       NULL);
+                }
+            }
+        } else {
+            // Use execlp for PATH lookups
+            if (gui_mode || getenv("CDP_GUI_MODE")) {
+                // GUI mode - visible Chrome window
+                if (strlen(proxy_server) > 0) {
+                    execlp(chrome_path, chrome_path,
+                           port_arg,
+                           proxy_arg,
+                           "--no-sandbox",
+                           "--disable-dev-shm-usage",
+                           user_data_arg,
+                           "--disable-extensions",
+                           "--disable-background-timer-throttling",
+                           "--disable-renderer-backgrounding",
+                           "--disable-features=TranslateUI",
+                           "--disable-ipc-flooding-protection",
+                           "--no-first-run",
+                           "--enable-automation",
+                           "about:blank",
+                           NULL);
+                } else {
+                    execlp(chrome_path, chrome_path,
+                           port_arg,
+                           "--no-sandbox",
+                           "--disable-dev-shm-usage",
+                           user_data_arg,
+                           "--disable-extensions",
+                           "--disable-background-timer-throttling",
+                           "--disable-renderer-backgrounding",
+                           "--disable-features=TranslateUI",
+                           "--disable-ipc-flooding-protection",
+                           "--no-first-run",
+                           "--enable-automation",
+                           "about:blank",
+                           NULL);
+                }
+            } else {
+                // Headless mode (default)
+                if (strlen(proxy_server) > 0) {
+                    execlp(chrome_path, chrome_path,
+                           port_arg,
+                           proxy_arg,
+                           "--no-sandbox",
+                           "--disable-dev-shm-usage",
+                           "--headless=new",
+                           "--disable-gpu",
+                           user_data_arg,
+                           "--disable-extensions",
+                           "--disable-background-timer-throttling",
+                           "--disable-backgrounding-occluded-windows",
+                           "--disable-renderer-backgrounding",
+                           "--disable-features=TranslateUI",
+                           "--disable-ipc-flooding-protection",
+                           "--no-first-run",
+                           "--disable-default-apps",
+                           "--disable-sync",
+                           "--enable-automation",
+                           "--password-store=basic",
+                           "--use-mock-keychain",
+                           "about:blank",
+                           NULL);
+                } else {
+                    execlp(chrome_path, chrome_path,
+                           port_arg,
+                           "--no-sandbox",
+                           "--disable-dev-shm-usage",
+                           "--headless=new",
+                           "--disable-gpu",
+                           user_data_arg,
+                           "--disable-extensions",
+                           "--disable-background-timer-throttling",
+                           "--disable-backgrounding-occluded-windows",
+                           "--disable-renderer-backgrounding",
+                           "--disable-features=TranslateUI",
+                           "--disable-ipc-flooding-protection",
+                           "--no-first-run",
+                           "--disable-default-apps",
+                           "--disable-sync",
+                           "--enable-automation",
+                           "--password-store=basic",
+                           "--use-mock-keychain",
+                           "about:blank",
+                           NULL);
+                }
+            }
+        }
         
         // If we get here, exec failed
         perror("Failed to launch Chrome");
@@ -250,14 +407,33 @@ void launch_chrome(void) {
     // Parent process - wait for Chrome to start
     if (verbose) {
         printf("Chrome launched with PID %d\n", chrome_pid);
+        printf("Waiting for Chrome to start listening on port %d...\n", g_ctx.config.debug_port);
     }
     
     // Wait for Chrome to be ready
     int attempts = 0;
-    int max_attempts = 30;  // 3 seconds
+    int max_attempts = 100;  // 10 seconds - Chrome can be slow to start in headless mode
+    int child_exited = 0;
     
     while (attempts < max_attempts) {
         usleep(100000);  // 100ms
+        
+        // Check if Chrome process exited (this is normal - Chrome may fork and parent exits)
+        if (!child_exited && attempts > 0 && attempts % 5 == 0) {
+            int status;
+            pid_t result = waitpid(chrome_pid, &status, WNOHANG);
+            if (result == chrome_pid) {
+                child_exited = 1;
+                if (verbose) {
+                    if (WIFEXITED(status)) {
+                        printf("Chrome parent process exited with status %d (this is normal)\n", 
+                               WEXITSTATUS(status));
+                    }
+                }
+                // Don't return here - Chrome may have forked and parent exited
+                // Continue checking if port is open
+            }
+        }
         
         int test_sock = socket(AF_INET, SOCK_STREAM, 0);
         if (test_sock >= 0) {
@@ -275,10 +451,19 @@ void launch_chrome(void) {
             }
             close(test_sock);
         }
+        
+        if (verbose && attempts == 30) {
+            printf("Still waiting for Chrome to start...\n");
+        }
+        if (verbose && attempts == 60) {
+            printf("Chrome is taking longer than usual to start...\n");
+        }
+        
         attempts++;
     }
     
     fprintf(stderr, "Warning: Chrome may not have started correctly\n");
+    fprintf(stderr, "Chrome process (PID %d) may still be starting\n", chrome_pid);
 }
 
 /* Get Chrome target ID from /json/version endpoint */
@@ -417,28 +602,43 @@ int ensure_chrome_running(void) {
     }
     close(test_sock);
     
-    // Chrome not running, check if we should launch it
-    const char *launch_env = getenv("CDP_LAUNCH_CHROME");
-    if (!launch_env || strcmp(launch_env, "1") != 0) {
+    // Chrome not running, check if we should NOT launch it
+    const char *no_launch_env = getenv("CDP_NOLAUNCH_CHROME");
+    if (no_launch_env && strcmp(no_launch_env, "1") == 0) {
         fprintf(stderr, "Error: Chrome is not running on port %d\n", g_ctx.config.debug_port);
         fprintf(stderr, "Please start Chrome with: chrome --remote-debugging-port=%d\n", 
                 g_ctx.config.debug_port);
-        fprintf(stderr, "Or set CDP_LAUNCH_CHROME=1 to auto-launch\n");
+        fprintf(stderr, "(Auto-launch disabled by CDP_NOLAUNCH_CHROME=1)\n");
         return -1;
     }
     
-    // Launch Chrome
+    // Auto-launch Chrome by default
+    if (verbose) {
+        printf("Chrome not found on port %d, auto-launching...\n", g_ctx.config.debug_port);
+    }
     launch_chrome();
     
-    // Verify it started
-    test_sock = socket(AF_INET, SOCK_STREAM, 0);
-    if (test_sock >= 0) {
-        if (connect(test_sock, (struct sockaddr*)&addr, sizeof(addr)) == 0) {
+    // Verify it started - give it a bit more time if needed
+    int verify_attempts = 0;
+    while (verify_attempts < 30) {  // 3 more seconds
+        test_sock = socket(AF_INET, SOCK_STREAM, 0);
+        if (test_sock >= 0) {
+            if (connect(test_sock, (struct sockaddr*)&addr, sizeof(addr)) == 0) {
+                close(test_sock);
+                return 0;
+            }
             close(test_sock);
-            return 0;
         }
-        close(test_sock);
+        
+        if (verify_attempts == 0 && verbose) {
+            printf("Verifying Chrome startup...\n");
+        }
+        
+        usleep(100000);  // 100ms
+        verify_attempts++;
     }
     
+    fprintf(stderr, "Error: Failed to connect to Chrome after launch\n");
+    fprintf(stderr, "Chrome may still be starting. Try running again in a few seconds.\n");
     return -1;
 }
