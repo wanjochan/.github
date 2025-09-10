@@ -269,12 +269,20 @@ int connect_chrome_websocket(const char *target_id) {
 
 /* Reconnect WebSocket with exponential backoff */
 int reconnect_websocket_with_backoff(void) {
+    // Show reconnection status to user
+    if (!verbose && g_ctx.conn.reconnect_attempts == 0) {
+        fprintf(stderr, "\nConnection lost. Reconnecting");
+        fflush(stderr);
+    }
+    
     DEBUG_LOG("WebSocket reconnection attempt %d/%d", 
               g_ctx.conn.reconnect_attempts + 1, 
               g_ctx.conn.max_reconnect_attempts);
     
     if (g_ctx.conn.reconnect_attempts >= g_ctx.conn.max_reconnect_attempts) {
-        fprintf(stderr, "Max reconnection attempts reached. Giving up.\n");
+        fprintf(stderr, "\nMax reconnection attempts reached. Giving up.\n");
+        fprintf(stderr, "Hint: Check if Chrome is still running on port %d\n", 
+                g_ctx.config.debug_port);
         return -1;
     }
     
@@ -289,6 +297,10 @@ int reconnect_websocket_with_backoff(void) {
         int delay_ms = g_ctx.conn.reconnect_delay_ms * (1 << (g_ctx.conn.reconnect_attempts - 1));
         if (delay_ms > 30000) delay_ms = 30000;  // Cap at 30 seconds
         
+        if (!verbose) {
+            fprintf(stderr, ".");
+            fflush(stderr);
+        }
         DEBUG_LOG("Waiting %dms before reconnection attempt", delay_ms);
         usleep(delay_ms * 1000);
     }
@@ -302,9 +314,24 @@ int reconnect_websocket_with_backoff(void) {
         g_ctx.conn.last_activity = time(NULL);
         g_ctx.conn.reconnect_attempts = 0;  // Reset on success
         
-        if (verbose) {
+        if (!verbose) {
+            fprintf(stderr, " Reconnected!\n");
+        } else {
             printf("[RECONNECT] Successfully reconnected to WebSocket\n");
         }
+        
+        // Re-enable Runtime if we're on a page endpoint
+        if (strstr(g_ctx.conn.target_id, "page/")) {
+            char enable_cmd[128];
+            extern int ws_cmd_id;
+            snprintf(enable_cmd, sizeof(enable_cmd), 
+                    "{\"id\":%d,\"method\":\"Runtime.enable\"}", ws_cmd_id++);
+            ws_send_text(ws_sock, enable_cmd);
+            char buf[4096];
+            ws_recv_text(ws_sock, buf, sizeof(buf));
+            g_ctx.runtime.runtime_ready = 1;
+        }
+        
         return ws_sock;
     }
     
