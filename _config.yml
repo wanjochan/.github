@@ -1,0 +1,82 @@
+# Site settings
+title: "wanjochan blogs"
+subtitle: "Advanced Quantitative Trading & Financial Technology"
+description: "Exploring the intersection of artificial intelligence, quantitative finance, and cutting-edge technology"
+baseurl: ""
+url: "https://wanjochan.github.io"
+timezone: UTC
+
+# Author information
+author:
+  name: "WanJo Chan"
+  email: "wanjochan@asu.edu"
+  bio: "Quantitative Finance Researcher & AI Engineer"
+  avatar: "/assets/images/avatar.jpg"
+  linkedin: "wanjochan"
+  github: "wanjochan"
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+permalink: /:year/:month/:day/:title/
+paginate: 10
+paginate_path: "/page:num/"
+
+# Plugins
+plugins:
+  - jekyll-paginate
+  - jekyll-sitemap
+  - jekyll-feed
+  - jekyll-seo-tag
+
+# Collections
+collections:
+  posts:
+    output: true
+    permalink: /:collection/:year/:month/:day/:title/
+
+# Sass
+sass:
+  sass_dir: _sass
+  style: compressed
+
+# Exclude from processing
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
+  - README.md
+
+# Theme configuration
+theme_config:
+  primary_color: "#00ff88"
+  secondary_color: "#0066ff"
+  accent_color: "#ff6600"
+  background_color: "#0a0a0a"
+  text_color: "#ffffff"
+  
+# Navigation
+navigation:
+  - title: "Home"
+    url: "/"
+
+# Social links
+social:
+  github: "wanjochan"
+  linkedin: "wanjochan"
+  twitter: "wanjochan"
+  email: "wanjochan@asu.edu"
+
+# Analytics
+google_analytics: "G-XXXXXXXXXX"
+
+# SEO
+seo:
+  type: "Person"
+  name: "WanJo Chan"
+  links:
+    - "https://wanjochan.github.io"
