@@ -9,6 +9,7 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <errno.h>
+#include "cdp_log.h"
 #include <signal.h>
 #include <dirent.h>
 
@@ -405,7 +406,7 @@ static int launch_chrome_process(const cdp_chrome_config_t* config, cdp_chrome_i
         /* Child process - exec Chrome */
         execv(chrome_path, args);
         /* If we get here, exec failed */
-        fprintf(stderr, "Failed to exec Chrome: %s\n", strerror(errno));
+        cdp_log(CDP_LOG_ERR, "PROC", "Failed to exec Chrome: %s", strerror(errno));
         _exit(1);
     }
 

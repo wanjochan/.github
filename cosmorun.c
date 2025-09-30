@@ -37,20 +37,23 @@
 
 #include "libtcc.h"
 #include "tcc.h"
-
 #include "config.h"
+
 #include "libc/dce.h"
 #include "libc/log/backtrace.internal.h"
 #include "libc/nt/memory.h"
 #include "libc/nt/enum/pageflags.h"
 
-
-
-#if defined(_WIN32) || defined(_WIN64)
-#define cosmorun_unlink _unlink
-#else
-#define cosmorun_unlink unlink
+/* macOS ARM64 JIT support - export pthread_jit_write_protect_np for TCC weak reference */
+#ifdef __APPLE__
+extern void pthread_jit_write_protect_np(int enabled);
 #endif
+
+// #if defined(_WIN32) || defined(_WIN64)
+// #define cosmorun_unlink _unlink
+// #else
+// #define cosmorun_unlink unlink
+// #endif
 
 #undef malloc
 #undef calloc
@@ -1003,8 +1006,7 @@ typedef struct {
 static SymbolResolver g_resolver = {{0}, 0, 0};
 
 static void tcc_error_func(void *opaque, const char *msg);
-static void* resolve_symbol_internal(const char* name);
-// static int init_symbol_resolver(void);
+
 static void register_default_include_paths(TCCState *s, const struct utsname *uts);
 static void register_default_library_paths(TCCState *s);
 
@@ -1050,6 +1052,7 @@ static const SymbolEntry builtin_symbol_table[] = {
 {"cosmo_dlsym", (void*)cosmorun_dlsym},
 {"cosmo_dlclose", (void*)cosmo_dlclose},
 {"cosmo_dlerror", (void*)cosmo_dlerror},
+
     // POSIX-style dynamic loading functions (mostly stubs under Cosmopolitan)
     // {"dlopen", (void*)dlopen},
     // {"dlsym", (void*)dlsym},
@@ -1071,7 +1074,10 @@ static const SymbolEntry builtin_symbol_table[] = {
     // POSIX-style file descriptors
     {"open", (void*)open},
     {"read", (void*)read},
+    {"write", (void*)write},
     {"close", (void*)close},
+    {"unlink", (void*)unlink},
+    {"access", (void*)access},
     {"fork", (void*)fork},
     {"waitpid", (void*)waitpid},
     {"_exit", (void*)_exit},
@@ -1293,53 +1299,6 @@ static const char *host_api_getenv_default(const char *name) {
     return getenv(name);
 }
 
-// // Enhanced symbol cache
-// static SymbolCacheEntry symbol_cache[] = {
-//     // Level 1: Pre-cached high-priority symbols
-//     {"puts", (void*)puts, 1},
-//     {"printf", (void*)printf, 1},
-//     {"malloc", (void*)malloc, 1},
-//     {"free", (void*)free, 1},
-//     {"strlen", (void*)strlen, 1},
-//     {"strcmp", (void*)strcmp, 1},
-//     {"memcpy", (void*)memcpy, 1},
-//     {"memset", (void*)memset, 1},
-
-//     // Level 2: Dynamic resolution candidates (will be resolved on demand)
-//     {"strcpy", NULL, 0},
-//     {"strcat", NULL, 0},
-//     {"strchr", NULL, 0},
-//     {"strstr", NULL, 0},
-//     {"atoi", NULL, 0},
-//     {"atof", NULL, 0},
-//     {"sprintf", NULL, 0},
-//     {"snprintf", NULL, 0},
-//     {"fopen", NULL, 0},
-//     {"fclose", NULL, 0},
-//     {"fread", NULL, 0},
-//     {"fwrite", NULL, 0},
-//     {"__printf_chk", NULL, 0},
-//     {"__fprintf_chk", NULL, 0},
-//     {"__snprintf_chk", NULL, 0},
-//     {"__sprintf_chk", NULL, 0},
-//     {"__vsnprintf_chk", NULL, 0},
-//     {"__vsprintf_chk", NULL, 0},
-//     {"__stack_chk_fail", NULL, 0},
-
-//     {NULL, NULL, 0}  // Sentinel
-// };
-
-// static void cache_symbol_result(const char* name, void* addr) {
-//     if (!name || !addr) return;
-//     for (int i = 0; symbol_cache[i].name; ++i) {
-//         if (strcmp(symbol_cache[i].name, name) == 0) {
-//             symbol_cache[i].address = addr;
-//             symbol_cache[i].is_cached = 1;
-//             return;
-//         }
-//     }
-// }
-
 // Initialize dynamic symbol resolver
 static void add_library_handle(void *handle, const char *label) {
     if (!handle) return;
@@ -1360,132 +1319,6 @@ static void add_library_handle(void *handle, const char *label) {
     g_resolver.handles[g_resolver.handle_count++] = handle;
     tracef("registered host library handle %s -> %p", label ? label : "(unnamed)", handle);
 }
-
-// static void load_env_libraries(void) {
-//     const char *env = getenv("COSMORUN_HOST_LIBS");
-//     if (!env || !*env) return;
-//     char *copy = strdup(env);
-//     if (!copy) return;
-// #if defined(_WIN32) || defined(_WIN64)
-//     const char sep = ';';
-// #else
-//     const char sep = strchr(copy, ';') ? ';' : ':';
-// #endif
-//     char *iter = copy;
-//     while (iter && *iter) {
-//         char *token_end = strchr(iter, sep);
-//         if (token_end) *token_end = '\0';
-//         char *path = iter;
-//         while (*path == ' ' || *path == '\t') ++path;
-//         char *end = path + strlen(path);
-//         while (end > path && (end[-1] == ' ' || end[-1] == '\t')) --end;
-//         *end = '\0';
-//         if (*path) {
-// #if defined(_WIN32) || defined(_WIN64)
-//             HMODULE mod = LoadLibraryA(path);
-//             if (mod) {
-//                 add_library_handle(mod, path);
-//             } else {
-//                 tracef("LoadLibrary failed for '%s'", path);
-//             }
-// #else
-//             void *mod = dlopen(path, RTLD_LAZY | RTLD_GLOBAL);
-//             if (mod) {
-//                 add_library_handle(mod, path);
-//             } else {
-//                 const char *err = dlerror();
-//                 tracef("dlopen failed for '%s': %s", path, err ? err : "unknown");
-//             }
-// #endif
-//         }
-//         if (!token_end) break;
-//         iter = token_end + 1;
-//     }
-//     free(copy);
-// }
-
-// static void load_standard_libraries(void) {
-// #if defined(_WIN32) || defined(_WIN64)
-//     add_library_handle(GetModuleHandleW(NULL), "self");
-//     add_library_handle(GetModuleHandleA("ucrtbase.dll"), "ucrtbase");
-//     add_library_handle(GetModuleHandleA("msvcrt.dll"), "msvcrt");
-//     add_library_handle(GetModuleHandleA("kernel32.dll"), "kernel32");
-//     add_library_handle(GetModuleHandleA("user32.dll"), "user32");
-//     add_library_handle(GetModuleHandleA("advapi32.dll"), "advapi32");
-// #else
-//     add_library_handle(NULL, "RTLD_DEFAULT");
-//     void *self = dlopen(NULL, RTLD_LAZY | RTLD_GLOBAL);
-//     if (self) add_library_handle(self, "self");
-
-//     const char *libc_candidates[] = {
-//         "libc.so.6",
-//         "libc.so",
-//         NULL
-//     };
-//     const char *libm_candidates[] = {
-//         "libm.so.6",
-//         "libm.so",
-//         NULL
-//     };
-//     for (const char **p = libc_candidates; *p; ++p) {
-//         void *mod = dlopen(*p, RTLD_LAZY | RTLD_GLOBAL);
-//         if (mod) add_library_handle(mod, *p);
-//     }
-//     for (const char **p = libm_candidates; *p; ++p) {
-//         void *mod = dlopen(*p, RTLD_LAZY | RTLD_GLOBAL);
-//         if (mod) add_library_handle(mod, *p);
-//     }
-
-// #if defined(__APPLE__)
-//     void *system_lib = dlopen("/usr/lib/libSystem.B.dylib", RTLD_LAZY | RTLD_GLOBAL);
-//     if (system_lib) add_library_handle(system_lib, "libSystem.B.dylib");
-// #endif
-// #endif
-// }
-
-// static int init_symbol_resolver(void) {
-//     if (g_resolver.initialized) return 0;
-
-//     tracef("Initializing dynamic symbol resolver");
-
-//     // load_standard_libraries();
-//     // load_env_libraries();
-
-//     g_resolver.initialized = 1;
-//     tracef("Symbol resolver initialized with %d handles", g_resolver.handle_count);
-//     return 0;
-// }
-
-// Resolve symbol dynamically from system libraries
-// static void* resolve_symbol_dynamic(const char* name) {
-//     if (!g_resolver.initialized) {
-//         if (init_symbol_resolver() != 0) return NULL;
-//     }
-
-// #if defined(_WIN32) || defined(_WIN64)
-//     for (int i = 0; i < g_resolver.handle_count; ++i) {
-//         HMODULE mod = (HMODULE)g_resolver.handles[i];
-//         if (!mod) continue;
-//         FARPROC proc = GetProcAddress(mod, name);
-//         if (proc) {
-//             void *wrapped = wrap_windows_symbol(mod, (void*)proc);
-//             tracef("Resolved '%s' from handle %d (%p)", name, i, mod);
-//             return wrapped;
-//         }
-//     }
-//     return NULL;
-// #else
-//     for (int i = 0; i < g_resolver.handle_count; ++i) {
-//         void *handle = g_resolver.handles[i];
-//         void *addr = handle ? dlsym(handle, name) : dlsym(NULL, name);  // Use NULL instead of RTLD_DEFAULT
-//         if (addr) {
-//             tracef("Resolved '%s' from handle %d (%p)", name, i, handle);
-//             return addr;
-//         }
-//     }
-//     return NULL;
-// #endif
-// }
 
 static void *cosmorun_dlsym(void *handle, const char *symbol) {
     void *addr = cosmo_dlsym(handle, symbol);
@@ -1581,199 +1414,69 @@ static void register_default_library_paths(TCCState *s) {
     register_env_paths(s, "COSMORUN_LIBRARY_PATHS", 0);
 }
 
-// // Two-level symbol resolution: cache first, then dynamic
-// static void* resolve_symbol_internal(const char* name) {
-//     if (!name) return NULL;
-
-//     // Level 1: Check enhanced cache
-//     for (int i = 0; symbol_cache[i].name; i++) {
-//         if (strcmp(symbol_cache[i].name, name) == 0) {
-//             if (symbol_cache[i].is_cached && symbol_cache[i].address) {
-//                 return symbol_cache[i].address;
-//             } else if (!symbol_cache[i].is_cached) {
-//                 void* addr = resolve_symbol_dynamic(name);
-//                 if (addr) {
-//                     symbol_cache[i].address = addr;
-//                     symbol_cache[i].is_cached = 1;
-//                     tracef("Cached symbol '%s': %p", name, addr);
-//                 }
-//                 return addr;
-//             }
-//         }
-//     }
-
-//     // Level 2: Dynamic resolution for unknown symbols
-//     void* addr = resolve_symbol_dynamic(name);
-//     if (addr) {
-//         cache_symbol_result(name, addr);
-//         tracef("Dynamic symbol '%s': %p", name, addr);
-//         return addr;
-//     }
-
-//     tracef("Failed to resolve symbol '%s'", name);
-//     return NULL;
-// }
-
-// // Legacy function for backward compatibility
-// // LEVEL 1: Fast builtin symbol lookup
-// // Linear search through small cache table - very fast for common symbols
-// static void *resolve_from_builtins(const char* symbol_name) {
-//     for (const SymbolEntry* entry = builtin_symbol_table; entry->name; ++entry) {
-//         if (strcmp(entry->name, symbol_name) == 0) {
-//             return entry->address;
-//         }
-//     }
-//     return NULL;
-// }
-
-// LEVEL 2: Comprehensive system library symbol resolution
-// Searches platform-specific system libraries for symbols not in builtin cache.
-// This handles the full standard library ecosystem with proper platform abstraction.
-// static void *resolve_from_system(const char *symbol_name) {
-// #if defined(_WIN32) || defined(_WIN64)
-//     static HMODULE cached_modules[4];
-//     static int modules_initialized = 0;
-//     if (!modules_initialized) {
-//         cached_modules[0] = GetModuleHandleW(NULL);
-//         cached_modules[1] = GetModuleHandleA("ucrtbase.dll");
-//         if (!cached_modules[1]) cached_modules[1] = LoadLibraryA("ucrtbase.dll");
-//         cached_modules[2] = GetModuleHandleA("msvcrt.dll");
-//         if (!cached_modules[2]) cached_modules[2] = LoadLibraryA("msvcrt.dll");
-//         cached_modules[3] = GetModuleHandleA("kernel32.dll");
-//         modules_initialized = 1;
-//     }
-//     for (size_t i = 0; i < sizeof(cached_modules) / sizeof(cached_modules[0]); ++i) {
-//         if (!cached_modules[i]) continue;
-//         FARPROC proc = GetProcAddress(cached_modules[i], symbol_name);
-//         if (proc) return (void*)proc;
-//     }
-//     return NULL;
-// #else
-//     static void *handles[5];
-//     static int handles_initialized = 0;
-//     if (!handles_initialized) {
-//         // Use Cosmopolitan's dynamic loading API
-//         extern void *cosmo_dlopen(const char *, int);
-
-//         handles[0] = NULL;  // Use NULL instead of RTLD_DEFAULT
-//         handles[1] = cosmo_dlopen(NULL, RTLD_LAZY);
-//         handles[2] = cosmo_dlopen("libc.so.6", RTLD_LAZY);
-//         if (!handles[2]) handles[2] = cosmo_dlopen("libc.so", RTLD_LAZY);
-//         handles[3] = cosmo_dlopen("libm.so.6", RTLD_LAZY);
-//         if (!handles[3]) handles[3] = cosmo_dlopen("libm.so", RTLD_LAZY);
-//         handles[4] = cosmo_dlopen("libSystem.B.dylib", RTLD_LAZY);
-//         handles_initialized = 1;
-//     }
-//     for (size_t i = 0; i < sizeof(handles) / sizeof(handles[0]); ++i) {
-//         if (!handles[i]) continue;
-
-//         // Use cosmo_dlsym for handles from cosmo_dlopen, regular dlsym for RTLD_DEFAULT
-//         extern void *cosmo_dlsym(void *, const char *);
-//         void *addr;
-//         if (i == 0 && handles[i] == NULL) {
-//             addr = dlsym(handles[i], symbol_name);  // NULL handle for default symbols
-//         } else {
-//             addr = cosmo_dlsym(handles[i], symbol_name);  // Use cosmo_dlsym for cosmo_dlopen handles
-//         }
-
-//         if (addr) return addr;
-//     }
-//     return NULL;
-// #endif
-// }
 // //@hack tcc at tccelf.c: addr = cosmorun_resolve_symbol(name_ud);
 void* cosmorun_resolve_symbol(const char* symbol_name) {
     if (!symbol_name || !*symbol_name) {
         return NULL;
     }
-
-    // Fast path: check the builtin table first.
-    for (const SymbolEntry *entry = builtin_symbol_table; entry->name; ++entry) {
-        if (strcmp(entry->name, symbol_name) == 0) {
-            return entry->address;
-        }
-    }
-
-#if defined(_WIN32) || defined(_WIN64)
-    tracef("cosmorun_resolve_symbol fallback (win): %s", symbol_name);
-    // Prefer the module captured from the host process (set via cosmorun_set_host_module).
-    if (g_win_host_module) {
-        FARPROC proc = GetProcAddress((HMODULE)g_win_host_module, symbol_name);
-        if (proc) return (void*)proc;
-    }
-
-    // Fallback to the current process and a few common CRTs.
-    static const char *kCandidateDlls[] = {
-        NULL,              // GetModuleHandleA(NULL)
-        "ucrtbase.dll",
-        "msvcrt.dll",
-        "kernel32.dll",
-        NULL
-    };
-
-    for (size_t i = 0; kCandidateDlls[i] || i == 0; ++i) {
-        HMODULE mod;
-        if (kCandidateDlls[i]) {
-            mod = GetModuleHandleA(kCandidateDlls[i]);
-            if (!mod) mod = LoadLibraryA(kCandidateDlls[i]);
-        } else {
-            mod = GetModuleHandleA(NULL);
-        }
-        if (!mod) continue;
-
-        FARPROC proc = GetProcAddress(mod, symbol_name);
-        if (proc) return (void*)proc;
-    }
-
+    tracef("cosmorun_resolve_symbol: %s", symbol_name);
     return NULL;
-#else
-    tracef("cosmorun_resolve_symbol fallback (posix): %s", symbol_name);
-    // POSIX-style fallback: try Cosmopolitan's resolver first, then dlsym.
-    void *addr = cosmorun_dlsym(NULL, symbol_name);
-    if (addr) {
-        return addr;
-    }
 
-    addr = dlsym(RTLD_DEFAULT, symbol_name);
-    if (addr) {
-        return addr;
-    }
-
-    return NULL;
-#endif
-}
-// void* cosmorun_resolve_symbol(const char* symbol_name) {
-//     if (!symbol_name || !*symbol_name) {
-//         return NULL;
-//     }
-
-//     tracef("Resolving symbol: %s", symbol_name);
-
-//     // Use our enhanced two-level resolution system
-//     void* addr = resolve_symbol_internal(symbol_name);
-
-//     if (addr) {
-//         tracef("Symbol '%s' resolved to %p", symbol_name, addr);
-//     } else {
-//         // Fallback to legacy builtin table for compatibility
-//         addr = resolve_from_builtins(symbol_name);
-//         if (addr) {
-//             tracef("Symbol '%s' resolved from legacy builtins: %p", symbol_name, addr);
-//             cache_symbol_result(symbol_name, addr);
-//         } else {
-//             // Final fallback to system resolution
-//             addr = resolve_from_system(symbol_name);
-//             if (addr) {
-//                 tracef("Symbol '%s' resolved from system: %p", symbol_name, addr);
-//                 cache_symbol_result(symbol_name, addr);
-//             } else {
-//                 tracef("Symbol '%s' not found", symbol_name);
-//             }
+//     // Fast path: check the builtin table first.
+//     for (const SymbolEntry *entry = builtin_symbol_table; entry->name; ++entry) {
+//         if (strcmp(entry->name, symbol_name) == 0) {
+//             return entry->address;
 //         }
 //     }
 
-//     return addr;
-// }
+// #if defined(_WIN32) || defined(_WIN64)
+//     tracef("cosmorun_resolve_symbol fallback (win): %s", symbol_name);
+//     // Prefer the module captured from the host process (set via cosmorun_set_host_module).
+//     if (g_win_host_module) {
+//         FARPROC proc = GetProcAddress((HMODULE)g_win_host_module, symbol_name);
+//         if (proc) return (void*)proc;
+//     }
+
+//     // Fallback to the current process and a few common CRTs.
+//     static const char *kCandidateDlls[] = {
+//         NULL,              // GetModuleHandleA(NULL)
+//         "ucrtbase.dll",
+//         "msvcrt.dll",
+//         "kernel32.dll",
+//         NULL
+//     };
+
+//     for (size_t i = 0; kCandidateDlls[i] || i == 0; ++i) {
+//         HMODULE mod;
+//         if (kCandidateDlls[i]) {
+//             mod = GetModuleHandleA(kCandidateDlls[i]);
+//             if (!mod) mod = LoadLibraryA(kCandidateDlls[i]);
+//         } else {
+//             mod = GetModuleHandleA(NULL);
+//         }
+//         if (!mod) continue;
+
+//         FARPROC proc = GetProcAddress(mod, symbol_name);
+//         if (proc) return (void*)proc;
+//     }
+
+//     return NULL;
+// #else
+//     tracef("cosmorun_resolve_symbol fallback (posix): %s", symbol_name);
+//     // POSIX-style fallback: try Cosmopolitan's resolver first, then dlsym.
+//     void *addr = cosmorun_dlsym(NULL, symbol_name);
+//     if (addr) {
+//         return addr;
+//     }
+
+//     addr = dlsym(RTLD_DEFAULT, symbol_name);
+//     if (addr) {
+//         return addr;
+//     }
+
+//     return NULL;
+// #endif
+}
 
 static void tcc_error_func(void *opaque, const char *msg) {
     (void)opaque;
@@ -2248,6 +1951,13 @@ static int execute_direct_import(int argc, char **argv) {
 }
 
 int main(int argc, char **argv) {
+    printf("Platform detection:\n");
+    printf("  IsLinux: %d\n", IsLinux());
+    printf("  IsWindows: %d\n", IsWindows());
+    //NOTES: apple failed update static var for now.  [tinycc-bugs]
+    printf("  IsXnu: %d\n", IsXnu());
+    printf("  IsXnuSilicon: %d\n", IsXnuSilicon());
+    printf("  IsOpenbsd: %d\n", IsOpenbsd());
     // 初始化配置系统
     cosmorun_result_t config_result = init_config();
     if (config_result != COSMORUN_SUCCESS) {
@@ -2255,8 +1965,11 @@ int main(int argc, char **argv) {
         return 1;
     }
     // 初始化崩溃处理系统
-    init_crash_handler();
-    set_crash_context("main", "main", __LINE__);
+    // Skip on macOS due to data segment write protection issues
+    if (!IsXnu()) {
+        init_crash_handler();
+        set_crash_context("main", "main", __LINE__);
+    }
 
     // 初始化符号缓存哈希
     // init_symbol_cache_hashes();

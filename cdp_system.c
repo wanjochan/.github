@@ -8,6 +8,7 @@
  */
 
 #include "cdp_system.h"
+#include "cdp_internal.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -693,10 +694,10 @@ static int format_json_payload(char* buffer, size_t size, const char* message, c
     escaped_message[j] = '\0';
     
     snprintf(buffer, size, 
-        "{\"text\":\"%s\",\"level\":\"%s\",\"timestamp\":%ld}",
-        escaped_message,
-        cdp_notify_level_to_string(level),
-        time(NULL));
+             QUOTE({"text":"%s","level":"%s","timestamp":%ld}),
+             escaped_message,
+             cdp_notify_level_to_string(level),
+             time(NULL));
     
     return CDP_SYSTEM_SUCCESS;
 }

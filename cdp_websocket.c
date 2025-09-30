@@ -4,6 +4,8 @@
  */
 
 #include "cdp_internal.h"
+/* #include "cdp_log.h" - merged into cdp_internal.h */
+/* #include "cdp_bus.h" - merged into cdp_internal.h */
 #include <fcntl.h>
 #include <errno.h>
 #include <sys/select.h>
@@ -186,17 +188,11 @@ static int ws_receive_and_decode_frame(int sock, char *buffer, size_t max_len) {
 
 /* Connect to Chrome via WebSocket */
 int connect_chrome_websocket(const char *target_id) {
-    if (!target_id) {
-        fprintf(stderr, "No target ID provided\n");
-        return -1;
-    }
+    if (!target_id) { cdp_log(CDP_LOG_ERR, "WS", "No target ID provided"); return -1; }
     
     // Create TCP socket
     int sock = socket(AF_INET, SOCK_STREAM, 0);
-    if (sock < 0) {
-        perror("socket");
-        return -1;
-    }
+    if (sock < 0) { cdp_log(CDP_LOG_ERR, "WS", "socket() failed: %s", strerror(errno)); return -1; }
     
     // Connect to Chrome
     struct sockaddr_in addr;
@@ -204,11 +200,7 @@ int connect_chrome_websocket(const char *target_id) {
     addr.sin_port = htons(g_ctx.config.debug_port);
     addr.sin_addr.s_addr = inet_addr(g_ctx.config.chrome_host);
     
-    if (connect(sock, (struct sockaddr*)&addr, sizeof(addr)) < 0) {
-        perror("connect");
-        close(sock);
-        return -1;
-    }
+    if (connect(sock, (struct sockaddr*)&addr, sizeof(addr)) < 0) { cdp_log(CDP_LOG_ERR, "WS", "connect() failed: %s", strerror(errno)); close(sock); return -1; }
     
     // Build WebSocket handshake
     char key[25];
@@ -229,7 +221,7 @@ int connect_chrome_websocket(const char *target_id) {
     
     // Send handshake
     if (send(sock, request, strlen(request), 0) < 0) {
-        perror("send");
+        cdp_log(CDP_LOG_ERR, "WS", "Handshake send failed: %s", strerror(errno));
         close(sock);
         return -1;
     }
@@ -245,19 +237,14 @@ int connect_chrome_websocket(const char *target_id) {
     
     // Check for successful upgrade
     if (!strstr(response, "101")) {
-        fprintf(stderr, "WebSocket handshake failed: %s\n", response);
+        cdp_log(CDP_LOG_ERR, "WS", "Handshake failed: %.120s", response);
         close(sock);
         return -1;
     }
     
     // Enable Runtime if this is a page endpoint
     if (strstr(target_id, "page/")) {
-        char enable_cmd[128];
-        snprintf(enable_cmd, sizeof(enable_cmd), "{\"id\":%d,\"method\":\"Runtime.enable\"}", ws_cmd_id++);
-        
-        if (ws_send_text(sock, enable_cmd) > 0) {
-            char buf[4096];
-            ws_recv_text(sock, buf, sizeof(buf));
+        if (cdp_send_cmd("Runtime.enable", NULL) >= 0) {
             g_ctx.runtime.runtime_ready = 1;
         }
     }
@@ -280,9 +267,8 @@ int reconnect_websocket_with_backoff(void) {
               g_ctx.conn.max_reconnect_attempts);
     
     if (g_ctx.conn.reconnect_attempts >= g_ctx.conn.max_reconnect_attempts) {
-        fprintf(stderr, "\nMax reconnection attempts reached. Giving up.\n");
-        fprintf(stderr, "Hint: Check if Chrome is still running on port %d\n", 
-                g_ctx.config.debug_port);
+        cdp_log(CDP_LOG_ERR, "WS", "Max reconnection attempts reached. Giving up.");
+        cdp_log(CDP_LOG_ERR, "WS", "Check if Chrome is running on port %d", g_ctx.config.debug_port);
         return -1;
     }
     
@@ -297,10 +283,7 @@ int reconnect_websocket_with_backoff(void) {
         int delay_ms = g_ctx.conn.reconnect_delay_ms * (1 << (g_ctx.conn.reconnect_attempts - 1));
         if (delay_ms > 30000) delay_ms = 30000;  // Cap at 30 seconds
         
-        if (!verbose) {
-            fprintf(stderr, ".");
-            fflush(stderr);
-        }
+        if (!verbose) { fprintf(stderr, "."); fflush(stderr); }
         DEBUG_LOG("Waiting %dms before reconnection attempt", delay_ms);
         usleep(delay_ms * 1000);
     }
@@ -314,22 +297,14 @@ int reconnect_websocket_with_backoff(void) {
         g_ctx.conn.last_activity = time(NULL);
         g_ctx.conn.reconnect_attempts = 0;  // Reset on success
         
-        if (!verbose) {
-            fprintf(stderr, " Reconnected!\n");
-        } else {
-            printf("[RECONNECT] Successfully reconnected to WebSocket\n");
-        }
+        if (!verbose) { fprintf(stderr, " Reconnected!\n"); }
+        else { cdp_log(CDP_LOG_INFO, "WS", "Successfully reconnected to WebSocket"); }
         
         // Re-enable Runtime if we're on a page endpoint
         if (strstr(g_ctx.conn.target_id, "page/")) {
-            char enable_cmd[128];
-            extern int ws_cmd_id;
-            snprintf(enable_cmd, sizeof(enable_cmd), 
-                    "{\"id\":%d,\"method\":\"Runtime.enable\"}", ws_cmd_id++);
-            ws_send_text(ws_sock, enable_cmd);
-            char buf[4096];
-            ws_recv_text(ws_sock, buf, sizeof(buf));
-            g_ctx.runtime.runtime_ready = 1;
+            if (cdp_send_cmd("Runtime.enable", NULL) >= 0) {
+                g_ctx.runtime.runtime_ready = 1;
+            }
         }
         
         return ws_sock;

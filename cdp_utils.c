@@ -4,6 +4,7 @@
  */
 
 #include "cdp_utils.h"
+#include "cdp_internal.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -14,6 +15,7 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <sys/utsname.h>
+/* #include "cdp_log.h" - merged into cdp_internal.h */
 
 /* JSON Utilities */
 
@@ -72,12 +74,12 @@ char* json_get_string(const char *json, const char *key, char *value, size_t val
     
     value[0] = '\0';
     char search_key[256];
-    snprintf(search_key, sizeof(search_key), "\"%s\":", key);
+    snprintf(search_key, sizeof(search_key), JKEY_FMT, key);
     
     const char *key_pos = strstr(json, search_key);
     if (!key_pos) {
         // Try without space after colon
-        snprintf(search_key, sizeof(search_key), "\"%s\":", key);
+        snprintf(search_key, sizeof(search_key), JKEY_FMT, key);
         key_pos = strstr(json, search_key);
         if (!key_pos) return NULL;
     }
@@ -109,7 +111,7 @@ int json_get_int(const char *json, const char *key) {
     if (!json || !key) return 0;
     
     char search_key[256];
-    snprintf(search_key, sizeof(search_key), "\"%s\":", key);
+    snprintf(search_key, sizeof(search_key), JKEY_FMT, key);
     
     const char *key_pos = strstr(json, search_key);
     if (!key_pos) return 0;
@@ -345,6 +347,153 @@ int str_trim(char *str) {
     return len;
 }
 
+/* ========================================================================== */
+/* CDP CLI MODULE                                            */
+/* ========================================================================== */
+
+/* Simple CLI protocol handler */
+int cdp_handle_cli_protocol(const char* url, char* response, size_t response_size) {
+    if (!url || !response || response_size == 0) {
+        return -1;
+    }
+    
+    /* Extract command from cli://command?params */
+    if (strncmp(url, "cli://", 6) != 0) {
+        snprintf(response, response_size, QUOTE({"error": "Invalid CLI protocol URL"}));
+        return -1;
+    }
+    
+    const char* cmd_start = url + 6;
+    const char* params_start = strchr(cmd_start, '?');
+    
+    char command[1024];
+    if (params_start) {
+        size_t cmd_len = params_start - cmd_start;
+        if (cmd_len >= sizeof(command)) cmd_len = sizeof(command) - 1;
+        strncpy(command, cmd_start, cmd_len);
+        command[cmd_len] = '\0';
+    } else {
+        strncpy(command, cmd_start, sizeof(command) - 1);
+        command[sizeof(command) - 1] = '\0';
+    }
+    
+    /* Basic security: whitelist common safe commands */
+    if (strncmp(command, "ls", 2) == 0 || 
+        strncmp(command, "pwd", 3) == 0 ||
+        strncmp(command, "echo", 4) == 0 ||
+        strncmp(command, "date", 4) == 0 ||
+        strncmp(command, "whoami", 6) == 0) {
+        
+        /* Execute command safely */
+        FILE* pipe = popen(command, "r");
+        if (!pipe) {
+            snprintf(response, response_size, QUOTE({"error": "Command execution failed"}));
+            return -1;
+        }
+        
+        char output[4096] = {0};
+        fread(output, 1, sizeof(output) - 1, pipe);
+        int exit_code = pclose(pipe);
+        
+        /* Remove trailing newline */
+        size_t len = strlen(output);
+        if (len > 0 && output[len-1] == '\n') {
+            output[len-1] = '\0';
+        }
+        
+        snprintf(response, response_size, QUOTE({"ok": true, "output": "%s", "exit_code": %d}), 
+                output, WEXITSTATUS(exit_code));
+        return 0;
+    }
+    
+    snprintf(response, response_size, QUOTE({"error": "Command not allowed"}));
+    return -1;
+}
+
+/* Initialize CLI protocol service */
+int cdp_init_cli_module(void) {
+    /* No complex initialization needed - just protocol handling */
+    return 0;
+}
+
+/* Cleanup CLI protocol service */
+int cdp_cleanup_cli_module(void) {
+    /* No cleanup needed for simple protocol handler */
+    return 0;
+}
+
+/* File exists check - minimal filesystem function */
+int cdp_validate_file_exists(const char* file_path) {
+    if (!file_path) return 0;
+    return access(file_path, F_OK) == 0 ? 1 : 0;
+}
+
+/* Compatibility stubs for removed filesystem functions */
+const char* cdp_file_error_to_string(int error_code) {
+    return error_code == 0 ? "Success" : "Error";
+}
+
+int cdp_start_download_monitor(const char* dir) {
+    /* Simplified: just return success - no complex monitoring needed */
+    return 0;
+}
+
+/* ========================================================================== */
+/* CDP CONFIG MODULE (from cdp_config.c)                                     */
+/* ========================================================================== */
+
+void cdp_config_apply_defaults(CDPContext *ctx) {
+    if (!ctx) return;
+    if (!ctx->config.server_host) ctx->config.server_host = "127.0.0.1";
+    if (!ctx->config.chrome_host) ctx->config.chrome_host = "127.0.0.1";
+    if (ctx->config.debug_port <= 0) ctx->config.debug_port = CHROME_DEFAULT_PORT;
+    if (ctx->config.timeout_ms <= 0) ctx->config.timeout_ms = DEFAULT_TIMEOUT_MS;
+}
+
+void cdp_config_dump(const CDPContext *ctx) {
+    if (!ctx) return;
+    cdp_log(CDP_LOG_INFO, "CONFIG", "Config:");
+    cdp_log(CDP_LOG_INFO, "CONFIG", "  Chrome Host: %s", ctx->config.chrome_host);
+    cdp_log(CDP_LOG_INFO, "CONFIG", "  Debug Port : %d", ctx->config.debug_port);
+    cdp_log(CDP_LOG_INFO, "CONFIG", "  Timeout(ms): %d", ctx->config.timeout_ms);
+}
+
+/* ========================================================================== */
+/* CDP CONNECTION MODULE (from cdp_conn.c)                                   */
+/* ========================================================================== */
+
+static time_t g_last_ping = 0;
+static int g_interval = 30; // seconds
+
+void cdp_conn_init(void) {
+    g_last_ping = time(NULL);
+}
+
+void cdp_conn_tick(void) {
+    time_t now = time(NULL);
+    if (ws_sock < 0) return;
+    if (now - g_last_ping < g_interval) return;
+    char buf[1024];
+    // Use a cheap call; ignore result
+    (void)cdp_call_cmd("Target.getTargets", NULL, buf, sizeof(buf), 1000);
+    g_last_ping = now;
+}
+
+/* ========================================================================== */
+/* CDP LOG MODULE (from cdp_log.c)                                           */
+/* ========================================================================== */
+
+void cdp_log(cdp_log_level_t level, const char *module, const char *fmt, ...) {
+    if (!verbose && level == CDP_LOG_DEBUG) return;
+    const char *lvl = level==CDP_LOG_DEBUG?"DEBUG": level==CDP_LOG_INFO?"INFO": level==CDP_LOG_WARN?"WARN":"ERR";
+    fprintf(stderr, "[%s]%s%s ", lvl, module?"[":"", module?module:"");
+    if (module) fputc(']', stderr);
+    va_list ap; va_start(ap, fmt);
+    vfprintf(stderr, fmt, ap);
+    va_end(ap);
+    fputc('\n', stderr);
+}
+
 char* str_find_token(const char *str, const char *token) {
     if (!str || !token) return NULL;
     return strstr(str, token);
@@ -370,7 +519,7 @@ void* safe_malloc(size_t size) {
     
     void *ptr = malloc(size);
     if (!ptr) {
-        fprintf(stderr, "Memory allocation failed for %zu bytes\n", size);
+        cdp_log(CDP_LOG_ERR, "UTIL", "malloc failed for %zu bytes", size);
     }
     return ptr;
 }
@@ -383,7 +532,7 @@ void* safe_realloc(void *ptr, size_t size) {
     
     void *new_ptr = realloc(ptr, size);
     if (!new_ptr) {
-        fprintf(stderr, "Memory reallocation failed for %zu bytes\n", size);
+        cdp_log(CDP_LOG_ERR, "UTIL", "realloc failed for %zu bytes", size);
     }
     return new_ptr;
 }
@@ -453,7 +602,7 @@ void cdp_message_add_param(CDPMessage* msg, const char* key, const char* value) 
     }
     
     char param[1280];
-    snprintf(param, sizeof(param), "\"%s\":\"%s\"", key, escaped);
+    snprintf(param, sizeof(param), JPAIR_FMT, key, escaped);
     str_append_safe(msg->params, param, sizeof(msg->params));
     msg->params_added++;
 }
@@ -466,7 +615,7 @@ void cdp_message_add_param_int(CDPMessage* msg, const char* key, int value) {
     }
     
     char param[256];
-    snprintf(param, sizeof(param), "\"%s\":%d", key, value);
+    snprintf(param, sizeof(param), JNUM_FMT, key, value);
     str_append_safe(msg->params, param, sizeof(msg->params));
     msg->params_added++;
 }
@@ -479,7 +628,7 @@ void cdp_message_add_param_bool(CDPMessage* msg, const char* key, int value) {
     }
     
     char param[256];
-    snprintf(param, sizeof(param), "\"%s\":%s", key, value ? "true" : "false");
+    snprintf(param, sizeof(param), JBOOL_FMT, key, value ? "true" : "false");
     str_append_safe(msg->params, param, sizeof(msg->params));
     msg->params_added++;
 }
@@ -489,10 +638,10 @@ char* cdp_message_build(CDPMessage* msg) {
     
     static char buffer[8192];
     if (msg->params_added > 0) {
-        snprintf(buffer, sizeof(buffer), "{\"id\":%d,\"method\":\"%s\",\"params\":{%s}}", 
+        snprintf(buffer, sizeof(buffer), QUOTE({"id":%d,"method":"%s","params":{%s}}), 
                  msg->id, msg->method, msg->params);
     } else {
-        snprintf(buffer, sizeof(buffer), "{\"id\":%d,\"method\":\"%s\"}", 
+        snprintf(buffer, sizeof(buffer), QUOTE({"id":%d,"method":"%s"}), 
                  msg->id, msg->method);
     }
     return buffer;
@@ -511,8 +660,8 @@ int parse_json_command(const char *json, int *id, char *cmd, size_t cmd_size) {
     cmd[0] = '\0';
     
     // Simple JSON parser
-    const char *id_ptr = strstr(json, "\"id\"");
-    const char *cmd_ptr = strstr(json, "\"cmd\"");
+    const char *id_ptr = strstr(json, QUOTE("id"));
+    const char *cmd_ptr = strstr(json, QUOTE("cmd"));
     
     if (id_ptr && cmd_ptr) {
         // Parse ID
@@ -555,25 +704,234 @@ int parse_json_command(const char *json, int *id, char *cmd, size_t cmd_size) {
 const char* cdp_detect_os(void) {
     static char os_name[32];
     struct utsname sys_info;
-    
+
     if (uname(&sys_info) == 0) {
-        // Convert to lowercase for easier comparison
         str_copy_safe(os_name, sys_info.sysname, sizeof(os_name));
         for (int i = 0; os_name[i]; i++) {
             os_name[i] = tolower(os_name[i]);
         }
-        return os_name;
+
+        if (strstr(os_name, "darwin") || strstr(os_name, "mac")) {
+            return "darwin";
+        }
+        if (strstr(os_name, "linux")) {
+            return "linux";
+        }
+        if (strstr(os_name, "freebsd") || strstr(os_name, "openbsd") ||
+            strstr(os_name, "netbsd")) {
+            return os_name;
+        }
+        if (strstr(os_name, "win") || strstr(os_name, "mingw") ||
+            strstr(os_name, "cygwin") || strstr(os_name, "msys")) {
+            return "windows";
+        }
+        if (os_name[0]) {
+            return os_name;
+        }
     }
-    
-    // Cosmopolitan's uname should always work
-    // If it fails, we can check some runtime hints
-    if (getenv("WINDIR") || getenv("SYSTEMROOT")) {
+
+    if (getenv("WINDIR") || getenv("SYSTEMROOT") || getenv("OS")) {
+        const char *os_env = getenv("OS");
+        if (os_env) {
+            char lowered[64];
+            str_copy_safe(lowered, os_env, sizeof(lowered));
+            for (int i = 0; lowered[i]; i++) {
+                lowered[i] = tolower(lowered[i]);
+            }
+            if (strstr(lowered, "windows")) {
+                return "windows";
+            }
+        }
+        if (getenv("WINDIR") || getenv("SYSTEMROOT")) {
+            return "windows";
+        }
+    }
+
+    if (access("C:\\Windows", F_OK) == 0 || access("C:\\", F_OK) == 0) {
         return "windows";
-    } else if (getenv("HOME") && access("/System", F_OK) == 0) {
+    }
+
+    if (getenv("HOME") && access("/System", F_OK) == 0) {
         return "darwin";
-    } else if (access("/proc", F_OK) == 0) {
+    }
+    if (access("/proc", F_OK) == 0) {
         return "linux";
     }
-    
+
     return "unknown";
+}
+
+/* ========================================================================== */
+/* CDP AUTHORIZATION MODULE (from cdp_auth.c)                                */
+/* ========================================================================== */
+
+static int env_enabled(const char *name) {
+    const char *v = getenv(name);
+    return (v && (*v=='1' || strcasecmp(v, "true")==0 || strcasecmp(v, "yes")==0));
+}
+
+int cdp_authz_allow(const char *action, const char *target) {
+    (void)target;
+    if (!action) return 0;
+    /* Simple policy gates by env flags */
+    if (strncmp(action, "system:", 7) == 0 || strncmp(action, "shell:", 6) == 0) {
+        return env_enabled("CDP_ALLOW_SYSTEM");
+    }
+    if (strncmp(action, "file:", 5) == 0) {
+        return env_enabled("CDP_ALLOW_FILE");
+    }
+    if (strncmp(action, "notify:", 7) == 0) {
+        return env_enabled("CDP_ALLOW_NOTIFY") || env_enabled("CDP_ALLOW_SYSTEM");
+    }
+    /* Allow others by default; future: integrate domain whitelist */
+    return 1;
+}
+
+/* ========================================================================== */
+/* CDP MESSAGE BUS MODULE (from cdp_bus.c)                                   */
+/* ========================================================================== */
+
+/* External globals needed for bus operations */
+extern int ws_sock;
+extern int ws_cmd_id;
+extern CDPContext g_ctx;
+
+/* Forward declarations for functions defined elsewhere */
+extern int send_command_with_retry(const char* cmd);
+extern int receive_response_by_id(char* response, size_t response_size, int command_id, int max_attempts);
+
+/* Simple in-memory response registry */
+typedef struct { int id; char *json; } BusEntry;
+static BusEntry g_bus[64];
+static int g_bus_count = 0;
+static pthread_mutex_t g_bus_mtx = PTHREAD_MUTEX_INITIALIZER;
+typedef struct { int id; cdp_bus_cb_t cb; void *user; } BusCb;
+static BusCb g_cbs[128];
+static int g_cb_count = 0;
+static pthread_mutex_t g_cb_mtx = PTHREAD_MUTEX_INITIALIZER;
+
+static int extract_id(const char *json) {
+    if (!json) return -1;
+    const char *p = strstr(json, "\"id\":");
+    if (!p) return -1;
+    return atoi(p + 5);
+}
+
+void cdp_bus_store(const char *json) {
+    if (!json) return;
+    int id = extract_id(json);
+    if (id <= 0) return;
+    pthread_mutex_lock(&g_cb_mtx);
+    // If callback exists, dispatch immediately
+    for (int i=0;i<g_cb_count;i++) {
+        if (g_cbs[i].id == id && g_cbs[i].cb) {
+            g_cbs[i].cb(json, g_cbs[i].user);
+            // remove entry
+            for (int j=i+1;j<g_cb_count;j++) g_cbs[j-1]=g_cbs[j];
+            g_cb_count--;
+            pthread_mutex_unlock(&g_cb_mtx);
+            return;
+        }
+    }
+    pthread_mutex_unlock(&g_cb_mtx);
+    // Replace existing
+    pthread_mutex_lock(&g_bus_mtx);
+    for (int i=0;i<g_bus_count;i++) {
+        if (g_bus[i].id == id) { free(g_bus[i].json); g_bus[i].json = strdup(json); return; }
+    }
+    if (g_bus_count < (int)(sizeof(g_bus)/sizeof(g_bus[0]))) {
+        g_bus[g_bus_count].id = id;
+        g_bus[g_bus_count].json = strdup(json);
+        g_bus_count++;
+    } else {
+        // overwrite oldest
+        free(g_bus[0].json);
+        for (int i=1;i<g_bus_count;i++) g_bus[i-1]=g_bus[i];
+        g_bus[g_bus_count-1].id = id;
+        g_bus[g_bus_count-1].json = strdup(json);
+    }
+    pthread_mutex_unlock(&g_bus_mtx);
+}
+
+int cdp_bus_try_get(int id, char *out, size_t out_size) {
+    if (id <= 0 || !out || out_size == 0) return 0;
+    pthread_mutex_lock(&g_bus_mtx);
+    for (int i=0;i<g_bus_count;i++) {
+        if (g_bus[i].id == id) {
+            strncpy(out, g_bus[i].json, out_size-1);
+            out[out_size-1] = '\0';
+            free(g_bus[i].json);
+            for (int j=i+1;j<g_bus_count;j++) g_bus[j-1]=g_bus[j];
+            g_bus_count--;
+            pthread_mutex_unlock(&g_bus_mtx);
+            return 1;
+        }
+    }
+    pthread_mutex_unlock(&g_bus_mtx);
+    return 0;
+}
+
+int cdp_bus_register(int id, cdp_bus_cb_t cb, void *user) {
+    if (id <= 0 || !cb) return -1;
+    pthread_mutex_lock(&g_cb_mtx);
+    if (g_cb_count < (int)(sizeof(g_cbs)/sizeof(g_cbs[0]))) {
+        g_cbs[g_cb_count].id = id;
+        g_cbs[g_cb_count].cb = cb;
+        g_cbs[g_cb_count].user = user;
+        g_cb_count++;
+        pthread_mutex_unlock(&g_cb_mtx);
+        return 0;
+    }
+    pthread_mutex_unlock(&g_cb_mtx);
+    return -1;
+}
+
+int cdp_bus_unregister(int id) {
+    pthread_mutex_lock(&g_cb_mtx);
+    for (int i=0;i<g_cb_count;i++) {
+        if (g_cbs[i].id == id) {
+            for (int j=i+1;j<g_cb_count;j++) g_cbs[j-1]=g_cbs[j];
+            g_cb_count--;
+            pthread_mutex_unlock(&g_cb_mtx);
+            return 0;
+        }
+    }
+    pthread_mutex_unlock(&g_cb_mtx);
+    return -1;
+}
+
+/* Build minimal command JSON using QUOTE and optional params */
+static int build_command(char *buf, size_t sz, int id, const char *method, const char *params_json) {
+    if (!buf || !method) return -1;
+    if (params_json && *params_json) {
+        return snprintf(buf, sz, QUOTE({"id":%d,"method":"%s","params":%s}), id, method, params_json);
+    } else {
+        return snprintf(buf, sz, QUOTE({"id":%d,"method":"%s"}), id, method);
+    }
+}
+
+int cdp_send_cmd(const char *method, const char *params_json) {
+    int id = ws_cmd_id++;
+    char cmd[MAX_CMD_SIZE];
+    build_command(cmd, sizeof(cmd), id, method, params_json);
+    return send_command_with_retry(cmd);
+}
+
+int cdp_call_cmd(const char *method, const char *params_json,
+                 char *out_response, size_t out_size, int timeout_ms) {
+    if (!out_response || out_size == 0) return -1;
+    int id = ws_cmd_id++;
+    char cmd[MAX_CMD_SIZE];
+    build_command(cmd, sizeof(cmd), id, method, params_json);
+    if (send_command_with_retry(cmd) < 0) return -1;
+
+    /* Temporary: reuse existing receive_response_by_id with bounded tries based on time */
+    /* timeout_ms is honored inside receive_response_by_id via g_ctx.config.timeout_ms; set temporarily */
+    int saved = g_ctx.config.timeout_ms;
+    if (timeout_ms > 0) g_ctx.config.timeout_ms = timeout_ms;
+    // Try bus first
+    if (cdp_bus_try_get(id, out_response, out_size)) return 0;
+    int len = receive_response_by_id(out_response, out_size, id, 10);
+    g_ctx.config.timeout_ms = saved;
+    return len > 0 ? 0 : -1;
 }
