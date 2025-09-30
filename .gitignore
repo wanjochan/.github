@@ -1,3 +1,7 @@
 
 *.elf
 *.dbg
+*.tgz
+libduckdb.so
+libduckdb.dylib
+duckdb.dll

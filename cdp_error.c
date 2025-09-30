@@ -6,6 +6,7 @@
 #include "cdp_internal.h"
 #include <stdarg.h>
 #include <errno.h>
+/* #include "cdp_log.h" - merged into cdp_internal.h */
 
 /* Error stack for better debugging */
 #define ERROR_STACK_SIZE 10
@@ -80,10 +81,9 @@ int cdp_error_push_ex(CDPError code, const char *file, int line, const char *fmt
     // Log if in debug mode
     extern int debug_mode;
     if (debug_mode) {
-        fprintf(stderr, "[ERROR] %s:%d: %s - %s\n", 
-                file, line, error_strings[code], entry->message);
+        cdp_log(CDP_LOG_ERR, "ERR", "%s:%d: %s - %s", file, line, error_strings[code], entry->message);
         if (entry->context[0]) {
-            fprintf(stderr, "        Context: %s\n", entry->context);
+            cdp_log(CDP_LOG_DEBUG, "ERR", "Context: %s", entry->context);
         }
     }
     

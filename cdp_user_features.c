@@ -4,35 +4,13 @@
  */
 
 #include "cdp_internal.h"
+#include "cdp_commands.h"
 #include <ctype.h>
 #include <sys/stat.h>
 
-/* Shortcut command structure */
-typedef struct {
-    const char *alias;
-    const char *javascript;
-    const char *description;
-} ShortcutCommand;
-
-/* Built-in shortcuts */
-static ShortcutCommand shortcuts[] = {
-    {".clear", "console.clear()", "Clear console"},
-    {".url", "location.href", "Show current URL"},
-    {".title", "document.title", "Show page title"},
-    {".cookies", "document.cookie", "Show cookies"},
-    {".reload", "location.reload()", "Reload page"},
-    {".back", "history.back()", "Go back"},
-    {".forward", "history.forward()", "Go forward"},
-    {".ls", "Object.keys(window).slice(0,20).join(', ')", "List global objects (first 20)"},
-    {".time", "new Date().toLocaleString()", "Current time"},
-    {".timestamp", "Date.now()", "Unix timestamp"},
-    {".random", "Math.random()", "Random number"},
-    {".ua", "navigator.userAgent", "User agent"},
-    {".screen", "JSON.stringify({width:screen.width,height:screen.height})", "Screen size"},
-    {".viewport", "JSON.stringify({width:innerWidth,height:innerHeight})", "Viewport size"},
-    {".scroll", "JSON.stringify({x:scrollX,y:scrollY})", "Scroll position"},
-    {NULL, NULL, NULL}
-};
+// SIMPLIFIED: Removed ShortcutCommand struct and C-side shortcuts array
+// All shortcut management now handled by JS Enhanced API in cdp_enhanced.js
+// This reduces C-side maintenance and eliminates duplicate command definitions
 
 /* Performance statistics */
 typedef struct {
@@ -66,7 +44,7 @@ int cdp_execute_script_file(const char *filename) {
     }
     
     if (verbose) {
-        printf("Executing script: %s (%ld bytes)\n", filename, st.st_size);
+        cdp_log(CDP_LOG_INFO, "SCRIPT", "Executing script: %s (%ld bytes)", filename, st.st_size);
     }
     
     // Read entire file for multi-line support
@@ -86,7 +64,7 @@ int cdp_execute_script_file(const char *filename) {
     if (result) {
         // Beautify output if it's an object
         char *beautified = cdp_beautify_output(result);
-        printf("%s\n", beautified ? beautified : result);
+        cdp_log(CDP_LOG_INFO, "SCRIPT", "%s", beautified ? beautified : result);
         if (beautified != result) {
             free(beautified);
         }
@@ -106,32 +84,43 @@ char* cdp_beautify_output(const char *result) {
     return strdup(result);
 }
 
-/* Check if command is a shortcut */
-const char* cdp_get_shortcut(const char *command) {
-    if (!command || command[0] != '.') {
-        return NULL;
-    }
+/* SIMPLIFIED: Use JS Enhanced API for command processing */
+int cdp_execute_enhanced_command(const char *command, char *output, size_t output_size) {
+    if (!command) return -1;
     
-    for (int i = 0; shortcuts[i].alias; i++) {
-        if (strcmp(command, shortcuts[i].alias) == 0) {
-            return shortcuts[i].javascript;
-        }
-    }
+    // BEFORE: Complex templates with manual escaping
+    // AFTER: Single clean template using QUOTE macro - eliminates escaping complexity
+    char escaped_cmd[1024];
+    json_escape_safe(escaped_cmd, command, sizeof(escaped_cmd));
     
-    return NULL;
+    char js_call[2048];
+    snprintf(js_call, sizeof(js_call), 
+        QUOTE(window.CDP_Enhanced ? CDP_Enhanced.exec("%s") : 
+              {"ok":false,"data":null,"err":"CDP_Enhanced not loaded"}), 
+        escaped_cmd);
+    
+    return cdp_runtime_eval(js_call, 1, 0, output, output_size, 5000);
 }
 
-/* Show available shortcuts */
+/* SIMPLIFIED: Get shortcuts from JS Enhanced API */
 void cdp_show_shortcuts(void) {
-    printf("\n=== Available Shortcuts ===\n");
-    printf("%-15s %s\n", "Command", "Description");
-    printf("%-15s %s\n", "-------", "-----------");
+    char help_output[4096];
     
-    for (int i = 0; shortcuts[i].alias; i++) {
-        printf("%-15s %s\n", shortcuts[i].alias, shortcuts[i].description);
+    // Use JS Enhanced API to get help information
+    int result = cdp_execute_enhanced_command("dispatcher.help()", help_output, sizeof(help_output));
+    
+    if (result >= 0) {
+        cdp_log(CDP_LOG_INFO, "HELP", "\n=== Available Shortcuts (from Enhanced API) ===");
+        cdp_log(CDP_LOG_INFO, "HELP", "%s", help_output);
+    } else {
+        // Fallback for basic help
+        cdp_log(CDP_LOG_INFO, "HELP", "\n=== Enhanced API Help ===");
+        cdp_log(CDP_LOG_INFO, "HELP", "DOM: .click, .set, .text, .html, .exists, .count, .visible");
+        cdp_log(CDP_LOG_INFO, "HELP", "Batch: .texts, .attrs"); 
+        cdp_log(CDP_LOG_INFO, "HELP", "Page: .url, .title, .time, .ua, .screen, .viewport");
+        cdp_log(CDP_LOG_INFO, "HELP", "Action: .clear, .reload, .back, .forward");
+        cdp_log(CDP_LOG_INFO, "HELP", "Use: CDP_Enhanced.exec('command') or direct JavaScript");
     }
-    
-    printf("\nUse .help for general help\n");
 }
 
 /* Initialize performance tracking */
@@ -159,23 +148,23 @@ void cdp_perf_track(double time_ms) {
 /* Show performance statistics */
 void cdp_show_stats(void) {
     if (perf_stats.total_commands == 0) {
-        printf("No commands executed yet.\n");
+        cdp_log(CDP_LOG_INFO, "STATS", "No commands executed yet.");
         return;
     }
     
     time_t session_time = time(NULL) - perf_stats.session_start;
     double avg_time = perf_stats.total_time_ms / perf_stats.total_commands;
     
-    printf("\n=== Session Statistics ===\n");
-    printf("Session duration:  %ld seconds\n", session_time);
-    printf("Commands executed: %d\n", perf_stats.total_commands);
-    printf("Average time:      %.2f ms\n", avg_time);
-    printf("Min time:          %.2f ms\n", perf_stats.min_time_ms);
-    printf("Max time:          %.2f ms\n", perf_stats.max_time_ms);
-    printf("Total time:        %.2f ms\n", perf_stats.total_time_ms);
+    cdp_log(CDP_LOG_INFO, "STATS", "\n=== Session Statistics ===");
+    cdp_log(CDP_LOG_INFO, "STATS", "Session duration:  %ld seconds", session_time);
+    cdp_log(CDP_LOG_INFO, "STATS", "Commands executed: %d", perf_stats.total_commands);
+    cdp_log(CDP_LOG_INFO, "STATS", "Average time:      %.2f ms", avg_time);
+    cdp_log(CDP_LOG_INFO, "STATS", "Min time:          %.2f ms", perf_stats.min_time_ms);
+    cdp_log(CDP_LOG_INFO, "STATS", "Max time:          %.2f ms", perf_stats.max_time_ms);
+    cdp_log(CDP_LOG_INFO, "STATS", "Total time:        %.2f ms", perf_stats.total_time_ms);
     
     if (session_time > 0) {
-        printf("Commands/second:   %.2f\n", 
+        cdp_log(CDP_LOG_INFO, "STATS", "Commands/second:   %.2f", 
                (double)perf_stats.total_commands / session_time);
     }
 }
@@ -189,13 +178,17 @@ char* cdp_process_user_command(const char *input) {
         return NULL;
     }
     
-    // Check for shortcuts
-    const char *shortcut = cdp_get_shortcut(input);
-    if (shortcut) {
-        if (verbose) {
-            printf("Expanding shortcut: %s -> %s\n", input, shortcut);
+    // Try JS Enhanced API first (faster and more feature-rich)
+    if (input[0] == '.') {
+        char js_result[8192];
+        int js_rc = cdp_execute_enhanced_command(input, js_result, sizeof(js_result));
+        if (js_rc >= 0) {
+            // Successfully handled by JS Enhanced API
+            strncpy(last_result, js_result, sizeof(last_result)-1);
+            last_result[sizeof(last_result)-1] = '\0';
+            return last_result;
         }
-        input = shortcut;
+        // Fall back to C implementation if JS fails
     }
     
     // Special commands
@@ -208,32 +201,71 @@ char* cdp_process_user_command(const char *input) {
         return NULL;
     }
     
-    // Track execution time
-    clock_t start = clock();
+    // Enhanced performance tracking with timestamps
+    struct timespec start_time, js_start, js_end, beautify_start, beautify_end;
+    clock_gettime(CLOCK_MONOTONIC, &start_time);
     
-    // Execute JavaScript
-    char *result = execute_javascript(input);
-    
-    // Calculate execution time
-    clock_t end = clock();
-    double time_ms = ((double)(end - start)) / CLOCKS_PER_SEC * 1000;
-    cdp_perf_track(time_ms);
-    
-    // Show execution time in verbose mode
-    if (verbose && result) {
-        printf("[Executed in %.2f ms]\n", time_ms);
+    if (verbose) {
+        cdp_log(CDP_LOG_DEBUG, "PERF", "Command start: %s", input);
     }
     
-    // Beautify output
+    // Execute JavaScript with detailed timing
+    clock_gettime(CLOCK_MONOTONIC, &js_start);
+    char *result = execute_javascript(input);
+    clock_gettime(CLOCK_MONOTONIC, &js_end);
+    
+    double js_time_ms = (js_end.tv_sec - js_start.tv_sec) * 1000.0 + 
+                       (js_end.tv_nsec - js_start.tv_nsec) / 1000000.0;
+    
+    if (verbose) {
+        cdp_log(CDP_LOG_DEBUG, "PERF", "JS execution: %.3f ms", js_time_ms);
+    }
+    
+    // Track beautification time
+    clock_gettime(CLOCK_MONOTONIC, &beautify_start);
+    
+    // Beautify output with timing
     if (result && *result) {
         char *beautified = cdp_beautify_output(result);
+        clock_gettime(CLOCK_MONOTONIC, &beautify_end);
+        
+        double beautify_time_ms = (beautify_end.tv_sec - beautify_start.tv_sec) * 1000.0 + 
+                                 (beautify_end.tv_nsec - beautify_start.tv_nsec) / 1000000.0;
+        
         if (beautified) {
             str_copy_safe(last_result, beautified, sizeof(last_result));
             if (beautified != result && beautified != last_result) {
                 free(beautified);
             }
+            
+            // Total execution time
+            struct timespec end_time;
+            clock_gettime(CLOCK_MONOTONIC, &end_time);
+            double total_time_ms = (end_time.tv_sec - start_time.tv_sec) * 1000.0 + 
+                                  (end_time.tv_nsec - start_time.tv_nsec) / 1000000.0;
+            
+            // Track legacy performance
+            cdp_perf_track(total_time_ms);
+            
+            if (verbose) {
+                cdp_log(CDP_LOG_DEBUG, "PERF", "Beautification: %.3f ms", beautify_time_ms);
+                cdp_log(CDP_LOG_DEBUG, "PERF", "Total execution: %.3f ms", total_time_ms);
+            }
+            
             return last_result;
         }
+    }
+    
+    // Final timing for non-beautified results
+    struct timespec end_time;
+    clock_gettime(CLOCK_MONOTONIC, &end_time);
+    double total_time_ms = (end_time.tv_sec - start_time.tv_sec) * 1000.0 + 
+                          (end_time.tv_nsec - start_time.tv_nsec) / 1000000.0;
+    
+    cdp_perf_track(total_time_ms);
+    
+    if (verbose) {
+        cdp_log(CDP_LOG_DEBUG, "PERF", "Total execution: %.3f ms (no beautification)", total_time_ms);
     }
     
     return result;

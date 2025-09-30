@@ -26,6 +26,7 @@
 #include <pthread.h>
 #include <fcntl.h>
 #include <signal.h>
+#include "cdp_internal.h"
 
 /* Constants */
 #define MAX_MESSAGE_SIZE 65536
@@ -126,17 +127,17 @@ static int send_native_response(const cdp_response_t* response) {
     
     // Build JSON response
     snprintf(json_response, sizeof(json_response),
-        "{"
-        "\"id\":\"%s\","
-        "\"success\":%s,"
-        "\"result\":%s,"
-        "\"error\":\"%s\","
-        "\"sessionId\":\"%s\","
-        "\"executionTime\":%.2f,"
-        "\"exitCode\":%d,"
-        "\"stdout\":\"%s\","
-        "\"stderr\":\"%s\""
-        "}",
+        QUOTE({
+            "id":"%s",
+            "success":%s,
+            "result":%s,
+            "error":"%s",
+            "sessionId":"%s",
+            "executionTime":%.2f,
+            "exitCode":%d,
+            "stdout":"%s",
+            "stderr":"%s"
+        }),
         response->id,
         response->success ? "true" : "false",
         response->success ? response->result : "null",
@@ -172,7 +173,7 @@ static int parse_request(const char* json, cdp_request_t* request) {
     strcpy(request->working_dir, ".");  // Default current directory
     
     // Simple JSON parsing (can be enhanced with a proper JSON library)
-    const char* id_start = strstr(json, "\"id\":\"");
+    const char* id_start = strstr(json, JKEYQ("id"));
     if (id_start) {
         id_start += 6;
         const char* id_end = strchr(id_start, '"');
@@ -181,7 +182,7 @@ static int parse_request(const char* json, cdp_request_t* request) {
         }
     }
     
-    const char* type_start = strstr(json, "\"type\":\"");
+    const char* type_start = strstr(json, JKEYQ("type"));
     if (type_start) {
         type_start += 8;
         const char* type_end = strchr(type_start, '"');
@@ -190,7 +191,7 @@ static int parse_request(const char* json, cdp_request_t* request) {
         }
     }
     
-    const char* code_start = strstr(json, "\"code\":\"");
+    const char* code_start = strstr(json, JKEYQ("code"));
     if (code_start) {
         code_start += 8;
         const char* code_end = strchr(code_start, '"');
@@ -199,7 +200,7 @@ static int parse_request(const char* json, cdp_request_t* request) {
         }
     }
     
-    const char* session_start = strstr(json, "\"sessionId\":\"");
+    const char* session_start = strstr(json, JKEYQ("sessionId"));
     if (session_start) {
         session_start += 13;
         const char* session_end = strchr(session_start, '"');
@@ -208,7 +209,7 @@ static int parse_request(const char* json, cdp_request_t* request) {
         }
     }
     
-    const char* timeout_start = strstr(json, "\"timeout\":");
+    const char* timeout_start = strstr(json, JKEY("timeout"));
     if (timeout_start) {
         request->timeout_ms = atoi(timeout_start + 10);
     }
@@ -353,7 +354,7 @@ static int execute_system_command(const cdp_request_t* request, cdp_response_t* 
     response->exit_code = exit_code;
     
     if (exit_code == 0) {
-        strcpy(response->result, "\"success\"");
+        strcpy(response->result, QUOTE("success"));
         strcpy(response->stdout_data, stdout_buffer);
         response->success = 1;
     } else {
@@ -370,7 +371,7 @@ static int execute_file_operation(const cdp_request_t* request, cdp_response_t* 
     strcpy(response->session_id, request->session_id);
     
     // Parse file operation from options
-    const char* operation = strstr(request->options, "\"operation\":\"");
+    const char* operation = strstr(request->options, JKEYQ("operation"));
     if (!operation) {
         strcpy(response->error, "Missing operation parameter");
         return -1;
@@ -409,7 +410,7 @@ static int execute_file_operation(const cdp_request_t* request, cdp_response_t* 
         
         int result = system(monitor_cmd);
         if (result == 0) {
-            strcpy(response->result, "\"monitoring_started\"");
+            strcpy(response->result, QUOTE("monitoring_started"));
             response->success = 1;
         } else {
             strcpy(response->error, "Failed to start monitoring");
@@ -438,7 +439,7 @@ static int execute_batch_operation(const cdp_request_t* request, cdp_response_t*
     clock_t start_time = clock();
     
     // Simple batch processing (can be enhanced for true parallelism)
-    const char* commands_start = strstr(request->options, "\"commands\":[");
+    const char* commands_start = strstr(request->options, JKEY("commands") "[");
     if (!commands_start) {
         strcpy(response->error, "Missing commands array");
         return -1;

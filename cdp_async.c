@@ -7,6 +7,7 @@
 #include <sys/select.h>
 #include <pthread.h>
 #include <errno.h>
+/* #include "cdp_log.h" - merged into cdp_internal.h */
 
 /* Command queue structures */
 #define MAX_PENDING_COMMANDS 100
@@ -196,14 +197,15 @@ static int process_pending_commands(void) {
         AsyncCommand *cmd = &g_cmd_queue.commands[idx];
         
         if (cmd->state == CMD_STATE_PENDING) {
-            // Send command
-            if (ws_send_text(ws_sock, cmd->command) > 0) {
+            // Send command (with retry)
+            if (send_command_with_retry(cmd->command) > 0) {
                 cmd->state = CMD_STATE_SENT;
                 cmd->timestamp = time(NULL);
                 processed++;
             } else {
                 cmd->state = CMD_STATE_FAILED;
                 str_copy_safe(cmd->response, "Failed to send command", sizeof(cmd->response));
+                cdp_log(CDP_LOG_ERR, "ASYNC", "Send failed for id=%d", cmd->id);
             }
         }
     }
@@ -227,46 +229,33 @@ static int process_pending_commands(void) {
     int ret = select(max_fd + 1, &read_fds, NULL, &error_fds, &tv);
     
     if (ret > 0 && FD_ISSET(ws_sock, &read_fds)) {
-        // Read available responses
+        // Read available responses and stash on the bus
         char buffer[RESPONSE_BUFFER_SIZE];
         int len = ws_recv_text(ws_sock, buffer, sizeof(buffer));
-        
         if (len > 0) {
-            // Match response to command by ID
-            pthread_mutex_lock(&g_cmd_queue.mutex);
-            
-            for (int i = 0; i < MAX_PENDING_COMMANDS; i++) {
-                int idx = (g_cmd_queue.head + i) % MAX_PENDING_COMMANDS;
-                AsyncCommand *cmd = &g_cmd_queue.commands[idx];
-                
-                if (cmd->state == CMD_STATE_SENT) {
-                    char id_pattern[32];
-                    snprintf(id_pattern, sizeof(id_pattern), "\"id\":%d", cmd->id);
-                    
-                    if (strstr(buffer, id_pattern)) {
-                        // Found matching response
-                        str_copy_safe(cmd->response, buffer, sizeof(cmd->response));
-                        cmd->state = CMD_STATE_COMPLETED;
-                        
-                        // Call callback if provided
-                        if (cmd->callback) {
-                            cmd->callback(cmd->id, cmd->response, cmd->user_data);
-                        }
-                        
-                        // Remove from queue
-                        if (idx == g_cmd_queue.head) {
-                            g_cmd_queue.head = (g_cmd_queue.head + 1) % MAX_PENDING_COMMANDS;
-                            g_cmd_queue.count--;
-                        }
-                        
-                        break;
-                    }
-                }
-            }
-            
-            pthread_mutex_unlock(&g_cmd_queue.mutex);
+            extern void cdp_bus_store(const char*);
+            cdp_bus_store(buffer);
         }
     }
+
+    // Try to fulfill any SENT commands from the bus
+    pthread_mutex_lock(&g_cmd_queue.mutex);
+    for (int i = 0; i < MAX_PENDING_COMMANDS; i++) {
+        int idx = (g_cmd_queue.head + i) % MAX_PENDING_COMMANDS;
+        AsyncCommand *cmd = &g_cmd_queue.commands[idx];
+        if (cmd->state == CMD_STATE_SENT) {
+            extern int cdp_bus_try_get(int, char*, size_t);
+            if (cdp_bus_try_get(cmd->id, cmd->response, sizeof(cmd->response))) {
+                cmd->state = CMD_STATE_COMPLETED;
+                if (cmd->callback) cmd->callback(cmd->id, cmd->response, cmd->user_data);
+                if (idx == g_cmd_queue.head) {
+                    g_cmd_queue.head = (g_cmd_queue.head + 1) % MAX_PENDING_COMMANDS;
+                    g_cmd_queue.count--;
+                }
+            }
+        }
+    }
+    pthread_mutex_unlock(&g_cmd_queue.mutex);
     
     // Check for timeouts
     time_t now = time(NULL);
@@ -280,6 +269,7 @@ static int process_pending_commands(void) {
             if ((now - cmd->timestamp) * 1000 > cmd->timeout_ms) {
                 cmd->state = CMD_STATE_TIMEOUT;
                 str_copy_safe(cmd->response, "Command timed out", sizeof(cmd->response));
+                cdp_log(CDP_LOG_WARN, "ASYNC", "Command timeout id=%d after %dms", cmd->id, cmd->timeout_ms);
                 
                 if (cmd->callback) {
                     cmd->callback(cmd->id, cmd->response, cmd->user_data);
@@ -313,7 +303,7 @@ int cdp_async_batch_execute(const char **expressions, int count,
         
         json_escape_safe(escaped, expressions[i], sizeof(escaped));
         snprintf(command, sizeof(command),
-                "{\"id\":%d,\"method\":\"Runtime.evaluate\",\"params\":{\"expression\":\"%s\",\"returnByValue\":true}}",
+                QUOTE({"id":%d,"method":"Runtime.evaluate","params":{"expression":"%s","returnByValue":true}}),
                 ws_cmd_id, escaped);
         
         cmd_ids[i] = cdp_async_execute(command, NULL, NULL, DEFAULT_TIMEOUT_MS);
