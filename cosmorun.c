@@ -1,7 +1,21 @@
 // @cosmorun.md @cosmorun_build.sh
+
 #ifndef _COSMO_SOURCE
+//@see third_party/cosmopolitan/, very important for our cosmorun.c with IsXnu/IsXnuSilicon/IsLinux/IsWindows/IsOpenbsd
 #define _COSMO_SOURCE
 #endif
+
+/*
+  | 宏           | 含义             | 适用范围                       |
+  |-------------|----------------|----------------------------|
+  | __x86_64__  | CPU 架构         | Windows/Linux/macOS x86_64 |
+  | __aarch64__ | CPU 架构         | Windows/Linux/macOS ARM64  |
+  | _WIN32      | Windows 32/64位 | 仅 Windows                  |
+  | _WIN64      | Windows 64位    | 仅 Windows x64              |
+  | __linux__   | Linux 系统       | 仅 Linux                    |
+  | __APPLE__   | Apple 系统       | 仅 macOS/iOS                |
+*/
+
 #include <ctype.h>
 #include <errno.h>
 #include <math.h>
@@ -45,9 +59,9 @@
 #include "libc/nt/enum/pageflags.h"
 
 /* macOS ARM64 JIT support - export pthread_jit_write_protect_np for TCC weak reference */
-#ifdef __APPLE__
-extern void pthread_jit_write_protect_np(int enabled);
-#endif
+//#ifdef __APPLE__
+//extern void pthread_jit_write_protect_np(int enabled);
+//#endif
 
 // #if defined(_WIN32) || defined(_WIN64)
 // #define cosmorun_unlink _unlink
@@ -60,6 +74,125 @@ extern void pthread_jit_write_protect_np(int enabled);
 #undef realloc
 #undef free
 #undef strdup
+
+/* ============================================================================
+ * TCC Runtime Library - Minimal inline implementation
+ * Provides essential runtime helpers for TCC compilation
+ * ============================================================================ */
+
+#if defined(__aarch64__) || defined(__arm64__)
+// ARM64: Long double (128-bit) runtime helpers
+static const char* tcc_runtime_lib =
+"typedef unsigned long long uint64_t;\n"
+"typedef struct { uint64_t x0, x1; } u128_t;\n"
+"static void *__runtime_memcpy(void *d, const void *s, unsigned long n) {\n"
+"    char *dest = d; const char *src = s;\n"
+"    while (n--) *dest++ = *src++;\n"
+"    return d;\n"
+"}\n"
+"#define memcpy __runtime_memcpy\n"
+// __extenddftf2: double -> long double
+"long double __extenddftf2(double f) {\n"
+"    long double fx; u128_t x; uint64_t a;\n"
+"    memcpy(&a, &f, 8);\n"
+"    x.x0 = a << 60;\n"
+"    if (!(a << 1))\n"
+"        x.x1 = a;\n"
+"    else if (a << 1 >> 53 == 2047)\n"
+"        x.x1 = (0x7fff000000000000ULL | a >> 63 << 63 | a << 12 >> 16 | (uint64_t)!!(a << 12) << 47);\n"
+"    else if (a << 1 >> 53 == 0) {\n"
+"        uint64_t adj = 0;\n"
+"        while (!(a << 1 >> 1 >> (52 - adj))) adj++;\n"
+"        x.x0 <<= adj;\n"
+"        x.x1 = a >> 63 << 63 | (15360 - adj + 1) << 48 | a << adj << 12 >> 16;\n"
+"    } else\n"
+"        x.x1 = a >> 63 << 63 | ((a >> 52 & 2047) + 15360) << 48 | a << 12 >> 16;\n"
+"    memcpy(&fx, &x, 16);\n"
+"    return fx;\n"
+"}\n"
+// __trunctfdf2: long double -> double
+"double __trunctfdf2(long double f) {\n"
+"    u128_t x; memcpy(&x, &f, 16);\n"
+"    int exp = x.x1 >> 48 & 32767, sgn = x.x1 >> 63;\n"
+"    uint64_t r;\n"
+"    if (exp == 32767 && (x.x0 | x.x1 << 16))\n"
+"        r = 0x7ff8000000000000ULL | (uint64_t)sgn << 63 | x.x1 << 16 >> 12 | x.x0 >> 60;\n"
+"    else if (exp > 17406) r = 0x7ff0000000000000ULL | (uint64_t)sgn << 63;\n"
+"    else if (exp < 15308) r = (uint64_t)sgn << 63;\n"
+"    else {\n"
+"        exp -= 15361;\n"
+"        r = x.x1 << 6 | x.x0 >> 58 | !!(x.x0 << 6);\n"
+"        if (exp < 0) { r = r >> -exp | !!(r << (64 + exp)); exp = 0; }\n"
+"        if ((r & 3) == 3 || (r & 7) == 6) r += 4;\n"
+"        r = ((r >> 2) + ((uint64_t)exp << 52)) | (uint64_t)sgn << 63;\n"
+"    }\n"
+"    double d; memcpy(&d, &r, 8); return d;\n"
+"}\n"
+// __lttf2: long double comparison (<)
+"int __lttf2(long double a, long double b) {\n"
+"    u128_t ua, ub; memcpy(&ua, &a, 16); memcpy(&ub, &b, 16);\n"
+"    return (!(ua.x0 | ua.x1 << 1 | ub.x0 | ub.x1 << 1) ? 0 :\n"
+"            ((ua.x1 << 1 >> 49 == 0x7fff && (ua.x0 | ua.x1 << 16)) ||\n"
+"             (ub.x1 << 1 >> 49 == 0x7fff && (ub.x0 | ub.x1 << 16))) ? 2 :\n"
+"            ua.x1 >> 63 != ub.x1 >> 63 ? (int)(ub.x1 >> 63) - (int)(ua.x1 >> 63) :\n"
+"            ua.x1 < ub.x1 ? (int)(ua.x1 >> 63 << 1) - 1 :\n"
+"            ua.x1 > ub.x1 ? 1 - (int)(ua.x1 >> 63 << 1) :\n"
+"            ua.x0 < ub.x0 ? (int)(ua.x1 >> 63 << 1) - 1 :\n"
+"            ub.x0 < ua.x0 ? 1 - (int)(ua.x1 >> 63 << 1) : 0);\n"
+"}\n"
+// __gttf2: long double comparison (>)
+"int __gttf2(long double a, long double b) {\n"
+"    return -__lttf2(b, a);\n"
+"}\n"
+// __letf2: long double comparison (<=)
+"int __letf2(long double a, long double b) {\n"
+"    return __lttf2(a, b);\n"
+"}\n"
+// __getf2: long double comparison (>=)
+"int __getf2(long double a, long double b) {\n"
+"    return -__lttf2(b, a);\n"
+"}\n";
+
+#elif defined(__x86_64__) || defined(__amd64__)
+// x86_64: 64-bit integer division/modulo runtime helpers
+static const char* tcc_runtime_lib =
+"typedef long long int64_t;\n"
+"typedef unsigned long long uint64_t;\n"
+// Simplified 64-bit division (note: full implementation needs more complexity)
+"int64_t __divdi3(int64_t a, int64_t b) {\n"
+"    int neg = 0;\n"
+"    if (a < 0) { a = -a; neg = !neg; }\n"
+"    if (b < 0) { b = -b; neg = !neg; }\n"
+"    uint64_t q = (uint64_t)a / (uint64_t)b;\n"
+"    return neg ? -(int64_t)q : (int64_t)q;\n"
+"}\n"
+"int64_t __moddi3(int64_t a, int64_t b) {\n"
+"    int neg = (a < 0);\n"
+"    if (a < 0) a = -a;\n"
+"    if (b < 0) b = -b;\n"
+"    uint64_t r = (uint64_t)a % (uint64_t)b;\n"
+"    return neg ? -(int64_t)r : (int64_t)r;\n"
+"}\n"
+"int64_t __ashrdi3(int64_t a, int b) {\n"
+"    return a >> b;\n"
+"}\n"
+"int64_t __ashldi3(int64_t a, int b) {\n"
+"    return a << b;\n"
+"}\n";
+
+#else
+// Other architectures: empty runtime (may need platform-specific implementations)
+static const char* tcc_runtime_lib = "";
+#endif
+
+// Link runtime library into TCC state
+static void link_tcc_runtime(TCCState *s) {
+    if (tcc_runtime_lib && tcc_runtime_lib[0] != '\0') {
+        if (tcc_compile_string(s, tcc_runtime_lib) < 0) {
+            fprintf(stderr, "[cosmorun] Warning: Failed to compile runtime library\n");
+        }
+    }
+}
 
 // 增强的符号缓存条目（支持哈希优化）
 typedef struct {
@@ -166,7 +299,10 @@ static platform_ops_t g_platform_ops = {
  * ============================================================================
  */
 
-#if defined(__x86_64__)
+// Windows calling-convention bridge for x86_64
+// NOTE: Can't use _WIN32 at compile-time with cosmopolitan fat binaries
+// The runtime check IsWindows() in cosmorun_windows_symbol() handles platform detection
+#if defined(__x86_64__) 
 extern void __sysv2nt14(void);
 
 typedef struct {
@@ -239,7 +375,7 @@ static inline void cosmorun_set_host_module(void *module) {
     g_win_host_module = module;
 }
 
-static void *wrap_windows_symbol(void *module, void *addr) {
+static void *cosmorun_windows_symbol(void *module, void *addr) {
     if (!addr) return NULL;
     if (!IsWindows()) return addr;
     if (!module || module == g_win_host_module) return addr;
@@ -264,12 +400,13 @@ static void *wrap_windows_symbol(void *module, void *addr) {
     return stub ? stub : addr;
 }
 
-#else
+#else //*nix
+
 static inline void cosmorun_set_host_module(void *module) {
     (void)module;
 }
 
-static inline void *wrap_windows_symbol(void *module, void *addr) {
+static inline void *cosmorun_windows_symbol(void *module, void *addr) {
     (void)module;
     return addr;
 }
@@ -361,30 +498,30 @@ static cosmorun_result_t init_config(void) {
  */
 
 // 优化的字符串哈希函数（DJB2算法）
-static inline uint32_t hash_string(const char* str) {
-    if (!str) return 0;
-
-    uint32_t hash = COSMORUN_HASH_SEED;
-    int c;
-    while ((c = *str++)) {
-        hash = ((hash << 5) + hash) + c; // hash * 33 + c
-    }
-    return hash;
-}
+//static inline uint32_t hash_string(const char* str) {
+//    if (!str) return 0;
+//
+//    uint32_t hash = COSMORUN_HASH_SEED;
+//    int c;
+//    while ((c = *str++)) {
+//        hash = ((hash << 5) + hash) + c; // hash * 33 + c
+//    }
+//    return hash;
+//}
 
 // 带长度限制的哈希函数，避免过长字符串的性能问题
-static inline uint32_t hash_string_bounded(const char* str, size_t max_len) {
-    if (!str) return 0;
-
-    uint32_t hash = COSMORUN_HASH_SEED;
-    size_t len = 0;
-    int c;
-    while ((c = *str++) && len < max_len) {
-        hash = ((hash << 5) + hash) + c;
-        len++;
-    }
-    return hash;
-}
+//static inline uint32_t hash_string_bounded(const char* str, size_t max_len) {
+//    if (!str) return 0;
+//
+//    uint32_t hash = COSMORUN_HASH_SEED;
+//    size_t len = 0;
+//    int c;
+//    while ((c = *str++) && len < max_len) {
+//        hash = ((hash << 5) + hash) + c;
+//        len++;
+//    }
+//    return hash;
+//}
 
 // // 初始化符号缓存的哈希值
 // static void init_symbol_cache_hashes(void) {
@@ -719,6 +856,7 @@ static TCCState* create_tcc_state_with_config(int output_type, const char* optio
     // }
 
     register_builtin_symbols(s);
+    link_tcc_runtime(s);  // Link runtime library for TCC compilation
 
     return s;
 }
@@ -1095,22 +1233,22 @@ static const SymbolEntry builtin_symbol_table[] = {
     {"__sym", (void*)cosmo_import_sym},
     {"__import_free", (void*)cosmo_import_free},
 
-    // TCC functions (for nested TCC usage)
-    {"tcc_new", (void*)tcc_new},
-    {"tcc_delete", (void*)tcc_delete},
-    {"tcc_set_error_func", (void*)tcc_set_error_func},
-    {"tcc_set_output_type", (void*)tcc_set_output_type},
-    {"tcc_add_include_path", (void*)tcc_add_include_path},
-    {"tcc_add_sysinclude_path", (void*)tcc_add_sysinclude_path},
-    {"tcc_add_library_path", (void*)tcc_add_library_path},
-    {"tcc_add_library", (void*)tcc_add_library},
-    {"tcc_add_symbol", (void*)tcc_add_symbol},
-    {"tcc_compile_string", (void*)tcc_compile_string},
-    {"tcc_add_file", (void*)tcc_add_file},
-    {"tcc_relocate", (void*)tcc_relocate},
-    {"tcc_get_symbol", (void*)tcc_get_symbol},
-    {"tcc_set_options", (void*)tcc_set_options},
-    {"tcc_output_file", (void*)tcc_output_file},
+    // TCC functions (testing nested TCC usage)
+    //{"tcc_new", (void*)tcc_new},
+    //{"tcc_delete", (void*)tcc_delete},
+    //{"tcc_set_error_func", (void*)tcc_set_error_func},
+    //{"tcc_set_output_type", (void*)tcc_set_output_type},
+    //{"tcc_add_include_path", (void*)tcc_add_include_path},
+    //{"tcc_add_sysinclude_path", (void*)tcc_add_sysinclude_path},
+    //{"tcc_add_library_path", (void*)tcc_add_library_path},
+    //{"tcc_add_library", (void*)tcc_add_library},
+    //{"tcc_add_symbol", (void*)tcc_add_symbol},
+    //{"tcc_compile_string", (void*)tcc_compile_string},
+    //{"tcc_add_file", (void*)tcc_add_file},
+    //{"tcc_relocate", (void*)tcc_relocate},
+    //{"tcc_get_symbol", (void*)tcc_get_symbol},
+    //{"tcc_set_options", (void*)tcc_set_options},
+    //{"tcc_output_file", (void*)tcc_output_file},
 
     {NULL, NULL}  // Sentinel - must be last
 };
@@ -1300,29 +1438,29 @@ static const char *host_api_getenv_default(const char *name) {
 }
 
 // Initialize dynamic symbol resolver
-static void add_library_handle(void *handle, const char *label) {
-    if (!handle) return;
-#if defined(__x86_64__)
-    if (!g_win_host_module && label && strcmp(label, "self") == 0) {
-        cosmorun_set_host_module(handle);
-    }
-#endif
-    for (int i = 0; i < g_resolver.handle_count; ++i) {
-        if (g_resolver.handles[i] == handle) {
-            return;
-        }
-    }
-    if (g_resolver.handle_count >= MAX_LIBRARY_HANDLES) {
-        tracef("symbol resolver handle limit reached, skipping %s", label ? label : "(unknown)");
-        return;
-    }
-    g_resolver.handles[g_resolver.handle_count++] = handle;
-    tracef("registered host library handle %s -> %p", label ? label : "(unnamed)", handle);
-}
+//static void add_library_handle(void *handle, const char *label) {
+//    if (!handle) return;
+//#if (defined(_WIN32) || defined(_WIN64)) && defined(__x86_64__)
+//    if (!g_win_host_module && label && strcmp(label, "self") == 0) {
+//        cosmorun_set_host_module(handle);
+//    }
+//#endif
+//    for (int i = 0; i < g_resolver.handle_count; ++i) {
+//        if (g_resolver.handles[i] == handle) {
+//            return;
+//        }
+//    }
+//    if (g_resolver.handle_count >= MAX_LIBRARY_HANDLES) {
+//        tracef("symbol resolver handle limit reached, skipping %s", label ? label : "(unknown)");
+//        return;
+//    }
+//    g_resolver.handles[g_resolver.handle_count++] = handle;
+//    tracef("registered host library handle %s -> %p", label ? label : "(unnamed)", handle);
+//}
 
 static void *cosmorun_dlsym(void *handle, const char *symbol) {
     void *addr = cosmo_dlsym(handle, symbol);
-    return wrap_windows_symbol(handle, addr);
+    return cosmorun_windows_symbol(handle, addr);
 }
 
 static void tcc_add_path_if_exists(TCCState *s, const char *path, int include_mode) {
@@ -1381,7 +1519,10 @@ static void register_default_include_paths(TCCState *s, const struct utsname *ut
 
     // 标准系统包含路径（移除 Cosmopolitan 特定路径）
     const char *posix_candidates[] = {
+        "/usr/lib/gcc/x86_64-linux-gnu/11/include",  // GCC builtin headers
+        "/usr/lib/gcc/x86_64-linux-gnu/12/include",
         "/usr/local/include",
+        "/usr/include/x86_64-linux-gnu",
         "/usr/include",
         "/opt/local/include",
         NULL
@@ -1553,8 +1694,8 @@ static void* load_o_file(const char* path) {
 
     register_default_include_paths(s, &uts);
     register_default_library_paths(s);
-    // init_symbol_resolver();
-    register_builtin_symbols(s);
+    // NOTE: Do NOT register builtin symbols or runtime library for .o files
+    // They are already embedded in the .o file and re-registering causes "defined twice" errors
 
     if (tcc_add_file(s, path) == -1) {
         tracef("failed to load .o '%s'", path);
@@ -1615,16 +1756,53 @@ void* cosmo_import(const char* path) {
         return load_o_file(path);
     }
 
-    // 临时禁用 .o 缓存，避免宿主符号污染
+    // Get architecture for cache naming
+    struct utsname uts;
+    memset(&uts, 0, sizeof(uts));
+    uname(&uts);
 
-
-    // 检查源文件是否存在
-    struct stat src_st;
-    if (stat(path, &src_st) != 0) {
-        tracef("Source file '%s' not found", path);
-        return NULL;
+    // Generate arch-specific .o cache path
+    char cache_path[PATH_MAX];
+    int is_c_file = ends_with(path, ".c");
+    if (is_c_file) {
+        size_t len = strlen(path);
+        snprintf(cache_path, sizeof(cache_path), "%.*s.%s.o", (int)(len - 2), path, uts.machine);
+    } else {
+        cache_path[0] = '\0';
     }
 
+    // Check source and cache existence
+    struct stat src_st, cache_st;
+    int src_exists = (stat(path, &src_st) == 0);
+    int cache_exists = is_c_file && (stat(cache_path, &cache_st) == 0);
+
+    // Decision tree
+    if (src_exists) {
+        if (cache_exists) {
+            // Compare modification times
+            if (src_st.st_mtime == cache_st.st_mtime) {
+                tracef("using cached '%s' (mtime match)", cache_path);
+                return load_o_file(cache_path);
+            } else {
+                tracef("cache outdated, recompiling '%s'", path);
+                // Fall through to compile from source
+            }
+        } else {
+            tracef("no cache found, compiling '%s'", path);
+            // Fall through to compile from source
+        }
+    } else {
+        // Source doesn't exist
+        if (cache_exists) {
+            tracef("source not found, using cached '%s'", cache_path);
+            return load_o_file(cache_path);
+        } else {
+            tracef("neither source '%s' nor cache '%s' found", path, cache_path);
+            return NULL;
+        }
+    }
+
+    // Compile from source
     tracef("compiling '%s'", path);
 
     TCCState* s = tcc_new();
@@ -1637,11 +1815,6 @@ void* cosmo_import(const char* path) {
     tcc_set_error_func(s, NULL, tcc_error_func);
     tcc_set_output_type(s, TCC_OUTPUT_MEMORY);
 
-    // Configure environment
-    struct utsname uts;
-    memset(&uts, 0, sizeof(uts));
-    uname(&uts);
-
     char tcc_options[COSMORUN_MAX_OPTIONS_SIZE] = {0};
     build_default_tcc_options(tcc_options, sizeof(tcc_options), &uts);
     if (tcc_options[0]) {
@@ -1650,20 +1823,27 @@ void* cosmo_import(const char* path) {
 
     register_default_include_paths(s, &uts);
     register_default_library_paths(s);
-    // init_symbol_resolver();
     register_builtin_symbols(s);
+    link_tcc_runtime(s);
     tracef("cosmo_import: registered builtin symbols");
 
-    // Compile source file (standard way, requires manual extern declarations)
+    // Compile source file
     if (tcc_add_file(s, path) == -1) {
         tracef("tcc_add_file failed for '%s'", path);
         tcc_delete(s);
         return NULL;
     }
 
-    // Try to save .o cache before relocating
-    if (ends_with(path, ".c")) {
+    // Save .o cache before relocating
+    if (is_c_file) {
         save_o_cache(path, s);
+
+        // Sync cache file mtime with source
+        struct timespec times[2];
+        times[0] = src_st.st_atim;  // access time
+        times[1] = src_st.st_mtim;  // modification time
+        utimensat(AT_FDCWD, cache_path, times, 0);
+        tracef("synced cache mtime with source");
     }
 
     // Relocate
@@ -1792,6 +1972,7 @@ static int repl_mode(void) {
                 register_default_library_paths(s);
                 // init_symbol_resolver();
                 register_builtin_symbols(s);
+                link_tcc_runtime(s);  // Link runtime library
 
                 if (exec_state) {
                     tcc_delete(exec_state);
@@ -1951,13 +2132,15 @@ static int execute_direct_import(int argc, char **argv) {
 }
 
 int main(int argc, char **argv) {
-    printf("Platform detection:\n");
-    printf("  IsLinux: %d\n", IsLinux());
-    printf("  IsWindows: %d\n", IsWindows());
-    //NOTES: apple failed update static var for now.  [tinycc-bugs]
-    printf("  IsXnu: %d\n", IsXnu());
-    printf("  IsXnuSilicon: %d\n", IsXnuSilicon());
-    printf("  IsOpenbsd: %d\n", IsOpenbsd());
+
+//    printf("Platform detection:\n");
+//    printf("  IsLinux: %d\n", IsLinux());
+//    printf("  IsWindows: %d\n", IsWindows());
+//    //NOTES: apple failed update static var for now.  [tinycc-bugs]
+//    printf("  IsXnu: %d\n", IsXnu());
+//    printf("  IsXnuSilicon: %d\n", IsXnuSilicon());
+//    printf("  IsOpenbsd: %d\n", IsOpenbsd());
+
     // 初始化配置系统
     cosmorun_result_t config_result = init_config();
     if (config_result != COSMORUN_SUCCESS) {
@@ -2061,6 +2244,7 @@ static TCCState* init_tcc_state(void) {
 
     // init_symbol_resolver();
     register_builtin_symbols(s);
+    link_tcc_runtime(s);  // Link runtime library for --eval mode
     return s;
 }
 
