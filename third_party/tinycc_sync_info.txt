@@ -1,0 +1,32 @@
+TCC源码同步信息
+==============
+
+同步时间: Sat Sep 27 10:55:51 AM CST 2025
+源仓库: https://repo.or.cz/tinycc.git
+最新提交: ba0899d9094afe64e9271c226752857e71dab80e
+提交时间: 2025-09-21 14:06:59 +0200
+提交信息: tccasm.c: Make .init and .fini sections executable
+
+diff文件: tcc.diff (本地TCC vs 原始TCC的差异)
+
+目录结构:
+./Makefile
+./README
+./arm-asm.c
+./arm-gen.c
+./arm-link.c
+./arm-tok.h
+./arm64-asm.c
+./arm64-gen.c
+./arm64-link.c
+./c67-gen.c
+./c67-link.c
+./coff.h
+./conftest.c
+./dwarf.h
+./elf.h
+./examples/ex1.c
+./examples/ex2.c
+./examples/ex3.c
+./examples/ex4.c
+./examples/ex5.c

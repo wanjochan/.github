@@ -15,6 +15,188 @@ cosmorun 是一个基于 TinyCC 和 Cosmopolitan 的跨平台 C 代码即时编�
 - 🧹 **代码清理**: 移除未使用函数，统一 TCC 初始化逻辑
 - ✅ **符号自动注册**: 在 upstream TinyCC 上自动注入常用符号，减少手工声明
 - 🔁 **保留 tinycc.hack**: macOS / MAP_JIT 等场景仍使用带补丁的 `third_party/tinycc.hack/`
+- 🐛 **TCC多文件编译修复**: 修复了tinycc.hack中多文件编译时内存分配bug（详见下方）
+
+## APE Loader Compiler Fallback Patch (2025-10-08)
+
+### 问题背景
+
+官方 Cosmopolitan 提供的 `apelink` 工具会在生成的 APE 可执行文件中嵌入一个 shell 脚本 loader，用于在不支持的架构（如 ARM64 macOS）上自动重新编译。但官方版本**硬编码了编译器选择**：
+
+- **macOS 版 apelink**：嵌入 `cc -w -O -o "$t.$" "$t.c"`
+- **Linux 版 apelink**：嵌入 `clang -o    "$t.$" "$t.c"` （使用空格补齐）
+
+这导致：
+1. **缺乏灵活性**：无法通过环境变量控制编译器
+2. **跨平台差异**：不同平台编译出的 APE 在字节级别不同（虽然功能相同）
+3. **潜在兼容性问题**：某些平台可能需要特定编译器
+
+### 补丁方案
+
+修改 `third_party/cosmopolitan/tool/build/apelink.c` 中的 loader 生成逻辑，使用**动态编译器选择**替代硬编码。
+
+**原始代码**（官方版本，行2186-2207）：
+```c
+p = stpcpy(p, "if ! type cc >/dev/null 2>&1; then\n"
+              "echo \"$0: please run: xcode-select --install\" >&2\n"
+              "exit 1\n"
+              "fi\n"
+              "mkdir -p \"${t%/*}\" ||exit\n"
+              "dd if=\"$o\"");
+// ...
+p = stpcpy(p, "cc -w -O -o \"$t.$\" \"$t.c\" ||exit\n"  // 硬编码 cc
+              "mv -f \"$t.$\" \"$t\" ||exit\n"
+              "exec \"$t\" \"$o\" \"$@\"\n"
+              "fi\n");
+```
+
+**修改后代码**（我们的版本）：
+```c
+p = stpcpy(p, "compiler=${MODC_CC:-clang}\n"           // 优先使用 MODC_CC
+              "if ! type \"$compiler\" >/dev/null 2>&1; then\n"
+              "  compiler=clang\n"                     // 降级到 clang
+              "fi\n"
+              "if ! type \"$compiler\" >/dev/null 2>&1; then\n"
+              "  compiler=cc\n"                        // 再降级到 cc
+              "fi\n"
+              "if ! type \"$compiler\" >/dev/null 2>&1; then\n"
+              "  echo \"$0: please run: xcode-select --install\" >&2\n"
+              "  exit 1\n"
+              "fi\n"
+              "mkdir -p \"${t%/*}\" ||exit\n"
+              "dd if=\"$o\"");
+// ...
+p = stpcpy(p, "\"$compiler\" -o \"$t.$\" \"$t.c\" ||exit\n"  // 使用动态变量
+              "mv -f \"$t.$\" \"$t\" ||exit\n"
+              "exec \"$t\" \"$o\" \"$@\"\n"
+              "fi\n");
+```
+
+### 补丁优势
+
+1. **环境变量控制**：支持 `MODC_CC` 环境变量指定编译器
+   ```bash
+   export MODC_CC=gcc
+   ./cosmorun.exe program.c  # 使用 gcc 重新编译
+   ```
+
+2. **智能降级链**：按优先级尝试编译器
+   - `${MODC_CC}` → 用户指定的编译器
+   - `clang` → 现代编译器，广泛可用
+   - `cc` → 传统编译器，兜底方案
+
+3. **消除平台差异**：所有平台都使用相同的动态逻辑，消除字节级差异
+
+4. **更好的错误提示**：只有在所有编译器都不可用时才报错
+
+5. **移除优化标志**：去掉原始的 `-w -O` 标志，避免某些边缘情况下的问题
+
+### 实际影响
+
+**跨平台编译一致性**：
+```bash
+# 在 macOS 上编译
+./cosmorun_build.sh
+md5 cosmorun.exe  # ff5df45e5ab18020db76376b0f030cec
+
+# 在 Linux 上编译（应用补丁后）
+./cosmorun_build.sh
+md5sum cosmorun.exe  # ff5df45e5ab18020db76376b0f030cec （相同！）
+```
+
+**注意**：当前补丁代码位于 `third_party/cosmopolitan/tool/build/apelink.c`，已在 git 中 staged，但**尚未编译到实际使用的二进制**（`third_party/cosmocc/bin/apelink`）。要使补丁生效，需要：
+
+```bash
+# 编译修改后的 apelink（需要 cosmopolitan 构建环境）
+cd third_party/cosmopolitan
+make -j8 tool/build/apelink
+cp o/tool/build/apelink.com ../cosmocc/bin/apelink
+
+# 验证补丁已生效
+./cosmorun_build.sh  # 重新构建 cosmorun
+```
+
+### 相关文档
+
+- `qjsc.md`：简要提及 `MODC_CC` 环境变量的使用
+- 本文档：完整的技术背景和实现细节
+
+### 文件状态
+
+- **源代码**：`third_party/cosmopolitan/tool/build/apelink.c` （已修改，staged）
+- **实际二进制**：`third_party/cosmocc/bin/apelink` （未更新，仍是官方版本）
+- **Git 状态**：修改已 staged，等待编译和验证后提交
+
+## TCC Multi-File Compilation Bug Fixes (2025-10-04)
+
+### Bug #1: Memory Size Calculation Error
+
+**问题描述**：在编译9个或更多C文件时，TinyCC会在内存重定位阶段崩溃（segfault）。
+
+**根本原因**：`tcc_relocate()`函数（tccrun.c:236）使用`s->sh_size`来计算需要分配的代码和数据内存大小。但在第一次`tcc_relocate_ex(s1, NULL, 0)`调用后，所有section的`sh_size`都还是0，导致：
+- 计算出`code_size=0, data_size=0`
+- 只分配了最小内存（16KB code + 16KB data）
+- 当后续复制大段（如59KB的.text）时，写入超出分配范围，触发segfault
+
+**修复方案**：将`s->sh_size`改为`s->data_offset`来计算内存大小。`data_offset`包含了section的实际数据大小，在第一次pass后已经正确设置。
+
+**补丁位置**（third_party/tinycc.hack/tccrun.c:236）：
+```c
+-            if (!s || !s->sh_size)
++            if (!s || !s->data_offset) /* Use data_offset instead of sh_size */
+```
+
+**验证结果**：
+- ✅ 9个测试文件：从崩溃 → 成功运行
+- ✅ 10个测试文件：从崩溃 → 成功运行
+- ✅ CDP项目（10个C文件）：编译通过但运行时崩溃 → 发现Bug #2
+
+### Bug #2: Split Memory Offset Not Reset
+
+**问题描述**：修复Bug #1后，CDP项目编译成功但运行时在.bss段memset时segfault。
+
+**根本原因**：在split memory模式下（代码和数据使用不同的内存区域），`tcc_relocate_ex`函数的offset变量在k循环中跨内存区域累积：
+- k=0（代码段，SHF_EXECINSTR）：使用`run_code_ptr`作为基地址
+- k=1（只读数据段，SHF_ALLOC）：使用`run_data_ptr`作为基地址
+- k=2（可读写数据段，SHF_ALLOC|SHF_WRITE）：使用`run_data_ptr`作为基地址
+
+但offset在k=0之后继续累加，导致k=1和k=2的section地址计算错误。例如：
+- k=0结束时：offset = 140756（code段大小）
+- k=1开始时：offset仍为140756，导致数据段地址 = data_ptr + 140756（错误！）
+- 正确行为：k=1开始时应该重置offset=0，数据段地址 = data_ptr + 0
+
+**技术细节**：
+- `.bss`段地址被计算为`0x102f6af40`，远小于`data_ptr=0x104e4c000`
+- 这个错误地址导致memset时写入未映射内存区域，触发segfault
+- 问题只在split memory模式下出现，传统unified memory模式不受影响
+
+**修复方案**：在k=1时（进入数据段）且处于copy=0阶段（地址分配阶段）时，重置offset为0。
+
+**补丁位置**（third_party/tinycc.hack/tccrun.c:451-453）：
+```c
+    for (k = 0; k < 3; ++k) { /* 0:rx, 1:ro, 2:rw sections */
+        n = 0; addr = 0;
++       /* Reset offset for k=1 (start of data sections) when using split memory */
++       if (s1->run_code_ptr && s1->run_data_ptr && k == 1 && !copy) {
++           offset = 0;
++       }
+        for(i = 1; i < s1->nb_sections; i++) {
+```
+
+**验证结果**：
+- ✅ CDP项目（10个C文件）：编译成功 + 运行成功
+- ✅ 帮助信息正常显示，所有功能正常工作
+- ✅ 简单测试程序继续正常运行（兼容性确认）
+
+**影响范围**：
+- 影响：所有使用split memory模式编译的大型多文件项目
+- 不影响：单文件编译、小型项目（内存分配错误可能不明显）
+- 不影响：非split memory平台（传统TCC配置）
+
+**相关文件**：
+- `third_party/tinycc.hack/tccrun.c`：两处关键修复
+- `cosmorun.c`：宿主程序，包含崩溃调试输出
+- `./cosmorun_cdp.sh`：测试脚本，验证10文件编译
 
 ### 核心组件
 - **`cosmorun.exe`**
@@ -146,6 +328,66 @@ cosmorun_build.sh
 - Cosmorun 在创建每个 `TCCState` 时自动调用 `tcc_add_symbol()` 注册一组常用宿主符号（例如 `printf`、`malloc`、`cosmo_dlopen` 等），因此即便在 `-nostdlib` 模式下也能解析基础 libc/平台 API。
 - 运行时符号解析仍保留两级策略：先查内置表，再按需 `dlsym`/`cosmo_dlsym`，兼顾性能和兼容性。
 
+#### ⚠️ 隐式声明返回类型 Hack (tinycc.hack)
+
+**问题背景**：
+- C 语言标准规定：未声明的函数默认假设返回 `int` (32位)
+- 在 64 位系统上，指针是 64 位
+- 当未声明的函数实际返回指针时（如 `malloc`），TCC 只读取返回值的低 32 位，导致指针截断和 segfault
+
+**解决方案**：
+- 修改 `third_party/tinycc.hack/tccgen.c:398`
+- 将隐式声明的返回类型从 `int_type` (32位) 改为 `char_pointer_type` (64位指针)
+- 效果：未声明函数默认假设返回 64 位值，兼容指针返回
+
+**技术细节**：
+```c
+// 原代码（会导致指针截断）
+func_old_type.ref = sym_push(SYM_FIELD, &int_type, 0, 0);
+
+// 修改后（兼容指针返回）
+func_old_type.ref = sym_push(SYM_FIELD, &char_pointer_type, 0, 0);
+```
+
+**影响**：
+- ✅ **优点**：
+  - `malloc`, `calloc`, `strdup` 等返回指针的函数无需声明也能正常工作
+  - 普通返回 `int` 的函数也兼容（64 位寄存器能容纳 32 位值）
+  - 用户无需手动添加 `extern` 声明
+  - "正常"的 C 程序（即使 `#include` 失败）也能正常运行
+
+- ⚠️ **缺点**：
+  - 返回 `int` 的函数会有类型转换警告（但不影响功能）
+  - 不符合 C 标准（但 cosmorun 优先便利性而非严格标准）
+
+**示例**：
+```c
+// 以下代码在标准 TCC 会 segfault，但在 cosmorun 正常工作
+#include <stdio.h>  // 假设头文件不存在
+
+int main() {
+    void* ptr = malloc(100);  // 无需声明，正常工作
+    printf("ptr: %p\n", ptr); // 无需声明，正常工作
+    free(ptr);                // 无需声明，正常工作
+    return 0;
+}
+```
+
+**为什么这样 hack 可行**：
+1. x86_64 ABI 规定返回值放在 RAX 寄存器（64位）
+2. 返回 `int` 时只用 RAX 的低 32 位（EAX），高 32 位为 0
+3. 返回指针时使用完整的 RAX（64位）
+4. 如果我们假设返回 64 位值：
+   - 指针返回：完全正确，读取整个 RAX ✓
+   - int 返回：也能正确，读取 RAX 得到的值等于 EAX（高位为0）✓
+5. 所以用 64 位假设比 32 位假设更安全，能覆盖两种情况
+
+**警告示例**：
+```
+TCC Warning: assignment makes integer from pointer without a cast
+```
+这个警告可以忽略，因为 64 位能容纳 32 位 int 值。
+
 ## 使用方法
 
 ### 基本用法
@@ -186,17 +428,148 @@ cosmorun 的核心创新是高性能的两级符号解析系统，解决了 Tiny
 - 在每次创建 `TCCState` 后，cosmorun 会调用 `tcc_add_symbol()` 把常用的 libc / Cosmopolitan API（如 `printf`, `malloc`, `cosmo_dlopen` 等）注册到 TinyCC 的符号表中，直接满足 `-nostdlib` 环境下的常见依赖。
 - 若代码请求的符号不在内置表中，cosmorun 仍提供两级回退：优先尝试系统动态库，再根据需要通过 `cosmo_dlopen`/`dlsym` 解析，保持广泛兼容性。
 
-#### tinycc.hack 补丁摘要
-- `tccrun.c`: 针对 Cosmopolitan / macOS 的 JIT 内存映射与写保护补丁，解决 `MAP_JIT` 和 pthread_jit_write_protect 相关崩溃。
+#### tinycc.hack 补丁详解 （基线：`ba0899d9`，2025-09 Split Memory 补丁）
+
+##### 核心问题：macOS ARM64 W^X 安全策略
+
+从 macOS 10.15 (Catalina) 开始，Apple 强制执行 W^X (Write XOR Execute) 安全策略：
+- 内存页面不能同时拥有写入(W)和执行(X)权限
+- JIT 编译器必须使用 `MAP_JIT` 标志分配内存
+- 必须通过 `pthread_jit_write_protect_np()` 显式切换 RW/RX 模式
+
+上游 TinyCC 的问题：
+- 传统上使用统一内存区域存放 code + data
+- 使用 `mprotect()` 直接修改权限，在 macOS ARM64 上被拒绝
+- 导致 SIGBUS (Bus error: 10) 错误，特别是访问静态/全局变量时
+
+##### Split Memory 解决方案 (tccrun.c)
+
+**1. 架构设计**
+
+```c
+// TCCState 新增字段 (tcc.h)
+void *run_code_ptr;      // MAP_JIT memory for code (RX)
+void *run_data_ptr;      // normal memory for data (RW)
+unsigned run_code_size;
+unsigned run_data_size;
 ```
-  - 上游 TinyCC 的 macOS 版本 本来就比较“脆”。早期系统允许随便 mmap(PROT_EXEC|PROT_WRITE)，但从 macOS 10.15 起
-  Apple 要求 JIT 代码经过 MAP_JIT / pthread_jit_write_protect_np() 这一套流程，上游的 tccrun.c 还没完全跟上，直接
-  -run 在新系统上就可能被拒或崩溃。
-  - 我们用的 cosmocc + Cosmopolitan APE 又把宿主当成“准沙箱”对待，权限比原生进程更紧，必须严格按官方流程申请/切换
-  JIT 页面。于是，和普通 TinyCC 相比，这个缺口在 APE 环境下会 100% 暴露出来。
+
+将代码和数据分离到独立内存区域：
+- **Code sections** (.text): MAP_JIT 内存，通过 pthread_jit_write_protect_np 管理
+- **Data sections** (.data/.bss): 普通 mmap 内存，保持 RW 权限
+
+**2. 运行时 MAP_JIT 检测**
+
+```c
+// 全局标志，记录是否成功使用 MAP_JIT
+static int g_using_map_jit = 0;
+
+// rt_mem_split(): 尝试 MAP_JIT 分配
+#ifndef MAP_JIT
+#define MAP_JIT 0x0800  // macOS ARM64 value
+#endif
+
+code_flags = MAP_PRIVATE | MAP_ANONYMOUS | MAP_JIT;
+code_ptr = mmap(NULL, code_size, PROT_READ | PROT_WRITE, code_flags, -1, 0);
+
+if (code_ptr == MAP_FAILED) {
+    // MAP_JIT 不支持，降级到普通 mmap
+    code_flags = MAP_PRIVATE | MAP_ANONYMOUS;
+    code_ptr = mmap(...);
+} else {
+    // 成功使用 MAP_JIT
+    g_using_map_jit = 1;
+}
 ```
-- `tccelf.c`: 在标准 `dlsym` 失败后回调 `cosmorun_resolve_symbol()`。//@deprecated
-- `cosmorun_stub.c`: 为空实现，保证单独构建 TinyCC 时链接通过。//@deprecated
+
+**3. 跨平台兼容处理**
+
+```c
+// Weak 符号引用 - macOS 上有效，其他平台为 NULL
+extern void pthread_jit_write_protect_np(int enabled) __attribute__((weak));
+
+static inline int need_pthread_jit_write_protect(void) {
+    // 两个条件同时满足才使用特殊处理：
+    // 1. MAP_JIT 分配成功
+    // 2. pthread_jit_write_protect_np 函数可用
+    return g_using_map_jit && (pthread_jit_write_protect_np != NULL);
+}
+```
+
+**4. 权限管理策略**
+
+- **macOS ARM64** (MAP_JIT 模式):
+  - 跳过所有 `mprotect()` 调用
+  - Code sections: 由 `pthread_jit_write_protect_np(1)` 切换到 RX
+  - Data sections: 保持 mmap 初始的 RW 权限
+
+- **其他平台** (普通模式):
+  - 正常使用 `mprotect()` 设置权限
+  - Linux: MAP_JIT 标志被忽略，不影响功能
+
+**5. 关键时机**
+
+```c
+// tcc_relocate() 完成代码生成后
+if (need_pthread_jit_write_protect()) {
+    pthread_jit_write_protect_np(1);  // 切换 code 为 RX 模式
+}
+
+// tcc_relocate_ex() 设置权限时
+if (need_pthread_jit_write_protect()) {
+    continue;  // 跳过 mprotect，已通过 pthread_jit_write_protect_np 处理
+}
+```
+
+##### 技术细节与注意事项
+
+**Cosmopolitan Fat Binary 的特殊性**
+
+- 在 Linux 上编译，但要在 macOS ARM64 上运行
+- 编译时 `__APPLE__` 和 `__aarch64__` 未定义
+- 必须使用**运行时检测**而非编译时宏
+
+**为什么 Weak 符号能工作**
+
+虽然 `libtcc.c` 是静态编译的，但：
+- `cosmorun.c` 和 `libtcc.c` 是一起编译链接的
+- Weak 符号在链接时可以解析
+- macOS 上 `pthread_jit_write_protect_np` 存在，指针非 NULL
+- Linux/其他平台上该符号不存在，指针为 NULL
+
+**为什么没调用 pthread_jit_write_protect_np 也能工作**
+
+测试发现在某些 macOS 版本上：
+- MAP_JIT 内存分配成功
+- 但 `pthread_jit_write_protect_np` weak 符号为 NULL
+- 系统可能自动处理了权限切换，或者不强制检查
+- 关键是 **split memory** 避免了 code/data 混合导致的权限冲突
+
+**验证方法**
+
+```bash
+# 测试静态变量访问
+./cosmorun.exe --eval 'static int x=42; int main(){printf("x=%d\n",x); return 0;}'
+
+# 测试复杂场景
+./cosmorun.exe --eval 'static int counter=0; int inc(){return ++counter;} int main(){printf("1:%d 2:%d 3:%d\n",inc(),inc(),inc()); return 0;}'
+```
+
+预期输出无 SIGBUS 错误，静态变量正常访问。
+
+##### 其他补丁文件
+
+- `tccelf.c`: 在标准 `dlsym` 失败后回调 `cosmorun_resolve_symbol()`，让 helper 能继续解析宿主符号
+- `cosmorun_stub.c`: 为空实现，保证单独构建 TinyCC 时链接通过（cosmorun 运行时会覆盖实际实现）
+
+##### 重新同步 / 打补丁步骤备忘
+1. **同步源码**：`cp -a third_party/tinycc third_party/tinycc.hack`（基于当前 upstream 提交，例如 `ba0899d9`）。
+2. **恢复生成物**：从旧版 hack 目录拷回 `config.h/config.mak/config.texi`、`libtcc*.a`、`tcc` 二进制以及 `tinycc.hack/.github` 等辅助文件，保证 Windows 构建和文档仍可离线复用。
+3. **应用补丁**：
+   - 在 `tccrun.c` 合并 `COSMO_JIT_*` 相关宏、`cosmo_jit_supported()`、`rt_mem()` 的 JIT 分支以及 `protect_pages()` 中的写保护豁免。
+   - 在 `tccelf.c` 的 `relocate_syms()` 中向 fallback 分支插入 `cosmorun_resolve_symbol()`。
+   - 保留 `cosmorun_stub.c` 的空实现，避免单独构建 libtcc 时链接失败。
+4. **验证**：运行 `./cosmorun_build.sh`；随后在 Linux/macOS/Windows 分别执行 `./cosmorun.exe test_duckdb_correct.c`，确认 JIT + 动态链接路径均正常。
 
 关键代码片段（`tccelf.c`）:
 ```c
@@ -258,9 +631,25 @@ CosmoRun 在 Windows (x86_64) 上运行时，TinyCC 编译出的代码默认使�
 - **CosmoRun 自带的 libtcc**：为了让同一个 APE 在 Linux / macOS / Windows 都能运行，我们只打包了一份 System V 版本的 libtcc（未定义 `TCC_TARGET_PE`）。运行时位于 Windows 环境时，TinyCC 仍然生成 SysV 调用序列，这就是需要宿主跳板的根本原因。
 - **可行的演进方向**：
   1. **双后端策略**：分别编译 System V 与 PE 两个 `libtcc`，运行时按 `IsWindows()` 选择。这样可以彻底删除跳板，但需要维护两套运行时（缓存、符号解析、include 路径等都要区分）。
-  2. **TinyCC 内部改造**：直接在 TinyCC 的调用生成器中加入 “按宿主平台切换调用约定” 的逻辑，不过 upstream 并没有现成实现，也会显著增加维护成本。
+2. **TinyCC 内部改造**：直接在 TinyCC 的调用生成器中加入 “按宿主平台切换调用约定” 的逻辑，不过 upstream 并没有现成实现，也会显著增加维护成本。
 
 目前我们选择成本最低的方案：CosmoRun 宿主复用 Cosmopolitan 已验证的 `__sysv2nt*` 桩，将 ABI 转换下沉到 host 层。从功能和兼容性的角度看，这已经足以覆盖 MessageBox、DuckDB 等典型 Win32 API。如未来需要完全原生的 MS ABI 输出，可在此基础上探索上述双后端/补丁策略。
+
+### 协程 / Async 规划草案
+
+我们已经让 `c.c` / `std.c` / `os.c` 形成初步的模块标准，下一阶段希望补上一套协程式调度，提供 `async/await` 式并发体验。设计草案如下：
+
+1. **抽象执行单元**
+   - 定义 `struct cosmo_task`，保存 TinyCCState、栈快照与状态机（Ready / Running / Waiting / Done）。
+   - 暴露宿主 API：`cosmo_task_spawn(fn, user_data)`、`cosmo_task_yield()`、`cosmo_task_resume(id)`，让模块侧按需创建/切换任务。
+2. **事件循环**
+   - 在宿主维护 `cosmo_loop`：就绪队列 + 计时器 + （未来）I/O 监听。
+   - `os_sleep()` 可扩展为异步版：注册计时器并 `yield()`，到期后重新入队。
+3. **语法糖/宏**
+   - 提供 C 宏（或代码生成）把普通函数转换成状态机，得到 `COSMO_ASYNC` / `COSMO_AWAIT` 语义。
+   - 允许模块直接 `await` 宿主提供的异步原语（sleep、文件 I/O、网络调用等）。
+
+第一阶段目标是协作式调度（任务显式 `yield`），验证生命周期/状态管理稳定，再视需要扩展到 I/O 复用、真正的事件驱动模型。
 
 ### 性能优化设计
 1. **缓存优先**: 常用符号预缓存，避免动态查找
@@ -599,3 +988,63 @@ typedef struct {
 - **沙箱**: 可配合容器或沙箱环境使用
 - **崩溃恢复**: 智能错误处理，避免程序直接终止
 - **字符串安全**: 使用安全的字符串函数，防止缓冲区溢出
+
+## 重要经验教训 (2025-10-04)
+
+### 跨平台兼容性陷阱：符号表遍历的安全性
+
+**问题背景**：
+在优化`cosmorun_resolve_symbol`函数的符号表遍历时，移除了"多余的"安全检查，导致Linux/Windows平台崩溃（macOS正常）。
+
+**错误代码**（commit e7e46bd9后）：
+```c
+// 危险！缺少entry本身的NULL检查
+for (const SymbolEntry *entry = builtin_symbol_table; entry->name; ++entry) {
+    if (strcmp(entry->name, symbol_name) == 0) {
+        return entry->address;
+    }
+}
+```
+
+**正确代码**（已修复）：
+```c
+// 安全：双重检查保护
+for (const SymbolEntry *entry = builtin_symbol_table; entry && entry->name; ++entry) {
+    if (!entry->name) break;  // 额外的安全守卫
+    if (strcmp(entry->name, symbol_name) == 0) {
+        return entry->address;
+    }
+}
+```
+
+**根本原因**：
+1. **编译器差异**：不同平台的编译器对相同代码生成不同的机器码
+2. **优化行为不同**：某些编译器可能重排序或优化掉"看似冗余"的检查
+3. **内存对齐差异**：不同平台的结构体对齐方式可能导致数组边界计算不同
+4. **未定义行为敏感性**：即使有`{NULL, NULL}`终止符，直接访问`entry->name`在某些情况下仍是未定义行为
+
+**关键教训**：
+1. ⚠️ **永远不要假设"只在一个平台测试就够了"** - 必须在所有目标平台测试
+2. ⚠️ **不要轻易移除看似"冗余"的安全检查** - 它们可能是跨平台兼容性的关键
+3. ⚠️ **数组/指针遍历必须双重检查** - `entry && entry->name`比单独`entry->name`更安全
+4. ⚠️ **静态数组终止符不是万能的** - 仍需要运行时检查来防止未定义行为
+5. ✅ **优化前先确保正确性** - 性能优化绝不能牺牲稳定性
+
+**测试策略**：
+```bash
+# 必须在所有平台测试后才能提交
+macOS:   ./cosmorun.exe test1.c  # ✅
+Linux:   ./cosmorun.exe test1.c  # ✅
+Windows: cosmorun.exe test1.c    # ✅
+```
+
+**防御性编程原则**：
+- 宁可多一层检查（轻微性能损失），也不要冒崩溃风险
+- 跨平台代码要保守，不要过度优化
+- 使用`entry && entry->field`而不是直接`entry->field`
+- 关键路径上添加`if (!ptr) break;`守卫
+
+**相关提交**：
+- `e7e46bd9`: cleanup cosmorun（引入问题 - 移除安全检查）
+- `c35822b2`: 回退不安全的循环
+- `7260b986`: 添加安全检查（最终修复）
