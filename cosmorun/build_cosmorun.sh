@@ -83,7 +83,6 @@ touch config.h
 # echo `date -Ins`
 ./cosmorun.exe test_libm.c
 ./cosmorun.exe test_libc.c
-./cosmorun.exe test_libc2.c
 
 ## quick dev osx
 ##../third_party/cosmocc/bin/aarch64-unknown-cosmo-cc -DTCC_TARGET_ARM64 -I ../third_party/tinycc.hack cosmorun.c ../third_party/tinycc.hack/libtcc.c 

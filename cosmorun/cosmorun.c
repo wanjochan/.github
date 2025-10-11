@@ -10,42 +10,12 @@
 */
 
 #include "cosmo_libc.h"
-//#include "cosmo_trampoline.h"
 #include "cosmo_tcc.h"
 #include "cosmo_utils.h"
 
-/**
- * ============================================================================
- * 统一错误处理系统
- * ============================================================================
- */
+#define COSMORUN_VERSION "0.6.8"
 
-// Error handling is now in cosmo_utils.h
-
-// 参数解析结果结构体
-typedef struct {
-    int inline_mode;
-    const char *inline_code;
-    int inline_code_index;
-    int dashdash_index;
-    int source_index;  // First source file index (for compatibility)
-    int *source_indices;  // Array of all source file indices
-    int source_count;  // Number of source files
-    const char *output_file;  // -o output file
-    int compile_only;         // -c flag (object file only)
-    int verbose;              // -v/-vv flag (show paths and config)
-    int preprocess_only;      // -E flag (preprocessor only)
-} parse_result_t;
-
-/**
- * ============================================================================
- * 常量定义 - 消除魔法数字和字符串
- * ============================================================================
- */
-
-// 缓冲区大小常量
-// COSMORUN_MAX_CODE_SIZE and COSMORUN_MAX_PATH_SIZE defined in cosmo_utils.h
-#define COSMORUN_MAX_OPTIONS_SIZE   512     // TCC options buffer
+// Additional constants
 #define COSMORUN_MAX_EXEC_ARGS      256     // Maximum execution arguments
 #define COSMORUN_REPL_GLOBAL_SIZE   65536   // 64KB for REPL global code
 #define COSMORUN_REPL_STMT_SIZE     32768   // 32KB for REPL statement body
@@ -60,23 +30,6 @@ typedef struct {
 #define COSMORUN_SYMBOL_CACHE_SIZE  64      // 内置符号缓存大小
 #define COSMORUN_HASH_SEED          5381    // DJB2 哈希种子
 
-/**
- * ============================================================================
- * 全局配置系统
- * ============================================================================
- */
-
-// 全局配置结构
-typedef struct {
-    char tcc_options[COSMORUN_MAX_OPTIONS_SIZE];
-    struct utsname uts;
-    int trace_enabled;
-    char include_paths[COSMORUN_MAX_PATH_SIZE];
-    char library_paths[COSMORUN_MAX_PATH_SIZE];
-    char host_libs[COSMORUN_MAX_PATH_SIZE];
-    int initialized;
-} cosmorun_config_t;
-
 cosmorun_config_t g_config = {0};
 
 // 初始化配置系统
@@ -88,28 +41,8 @@ cosmorun_result_t init_config(void) {
         return COSMORUN_ERROR_PLATFORM;
     }
 
-    // 读取环境变量
-    const char *trace_env = getenv("COSMORUN_TRACE");
-    if (!trace_env || trace_env[0] == '\0' || trace_env[0] != '0') {
-        g_config.trace_enabled = 1;  // default on
-    } else {
-        g_config.trace_enabled = 0;
-    }
-
-    const char* include_paths = getenv("COSMORUN_INCLUDE_PATHS");
-    if (include_paths) {
-        strncpy(g_config.include_paths, include_paths, sizeof(g_config.include_paths) - 1);
-    }
-
-    const char* library_paths = getenv("COSMORUN_LIBRARY_PATHS");
-    if (library_paths) {
-        strncpy(g_config.library_paths, library_paths, sizeof(g_config.library_paths) - 1);
-    }
-
-    const char* host_libs = getenv("COSMORUN_HOST_LIBS");
-    if (host_libs) {
-        strncpy(g_config.host_libs, host_libs, sizeof(g_config.host_libs) - 1);
-    }
+    // trace_enabled: 0=off, 1=normal, 2=verbose (controlled by -v/-vv flags)
+    g_config.trace_enabled = 0;  // default off
 
     g_config.initialized = 1;
     return COSMORUN_SUCCESS;
@@ -139,15 +72,7 @@ static const tcc_config_t TCC_CONFIG_OBJECT = {
 // 前向声明
 static void tcc_error_func(void *opaque, const char *msg);
 
-typedef void (*resource_cleanup_fn)(void* resource);
-
-typedef struct {
-    void* resource;
-    resource_cleanup_fn cleanup_fn;
-    const char* name;  // 用于调试
-} resource_manager_t;
-
-// TCC 状态清理函数
+// TCC 状态清理函数（使用GCC cleanup attribute）
 static void tcc_state_cleanup(void* resource) {
     if (!resource) return;
 
@@ -158,50 +83,13 @@ static void tcc_state_cleanup(void* resource) {
     }
 }
 
-// 内存清理函数
-static void memory_cleanup(void* resource) {
-    if (!resource) return;
-
-    void **ptr = (void**)resource;
-    if (ptr && *ptr) {
-        free(*ptr);
-        *ptr = NULL;
-    }
-}
-
-// 创建资源管理器
-static inline resource_manager_t create_resource_manager(void* resource,
-                                                        resource_cleanup_fn cleanup_fn,
-                                                        const char* name) {
-    resource_manager_t manager = {
-        .resource = resource,
-        .cleanup_fn = cleanup_fn,
-        .name = name ? name : "unnamed"
-    };
-    return manager;
-}
-
-// 清理资源管理器
-static inline void cleanup_resource_manager(resource_manager_t* manager) {
-    if (manager && manager->resource && manager->cleanup_fn) {
-        if (g_config.trace_enabled) {
-            fprintf(stderr, "[cosmorun] Cleaning up resource: %s\n", manager->name);
-        }
-        manager->cleanup_fn(manager->resource);
-        manager->resource = NULL;
-        manager->cleanup_fn = NULL;
-    }
-}
-
 // RAII 风格的自动清理宏（GCC/Clang）
 #if defined(__GNUC__) || defined(__clang__)
 #define AUTO_CLEANUP(cleanup_fn) __attribute__((cleanup(cleanup_fn)))
 #define AUTO_TCC_STATE TCCState* AUTO_CLEANUP(tcc_state_cleanup)
-#define AUTO_MEMORY char* AUTO_CLEANUP(memory_cleanup)
 #else
 #define AUTO_CLEANUP(cleanup_fn)
 #define AUTO_TCC_STATE TCCState*
-#define AUTO_MEMORY char*
 #endif
 
 typedef struct {
@@ -287,7 +175,7 @@ static void crash_signal_handler(int sig) {
 
     fprintf(stderr, "\n🔧 RECOVERY OPTIONS:\n");
     fprintf(stderr, "- Add debug prints around the crash location\n");
-    fprintf(stderr, "- Use COSMORUN_TRACE=1 for detailed execution trace\n");
+    fprintf(stderr, "- Use -vv flag for detailed execution trace\n");
     fprintf(stderr, "- Try running with smaller input data\n");
     fprintf(stderr, "- Check memory usage patterns\n");
 
@@ -303,23 +191,8 @@ static void crash_signal_handler(int sig) {
     exit(128 + sig);
 }
 
-// 初始化崩溃处理系统
-static void init_crash_handler(void) {
-    signal(SIGSEGV, crash_signal_handler);
-    signal(SIGFPE, crash_signal_handler);
-    signal(SIGILL, crash_signal_handler);
-    signal(SIGABRT, crash_signal_handler);
-#ifdef SIGBUS
-    signal(SIGBUS, crash_signal_handler);
-#endif
-}
-
-// 设置当前执行上下文（用于更好的错误报告）
-static void set_crash_context(const char *source_file, const char *function, int line) {
-    g_crash_context.current_source_file = source_file;
-    g_crash_context.current_function = function;
-    g_crash_context.current_line = line;
-}
+// Note: Crash handler functions moved to cosmo_utils.c
+// Use cosmo_crash_init() and cosmo_crash_set_context() instead
 
 // RAII 风格的资源管理结构体
 typedef struct {
@@ -376,176 +249,9 @@ static inline void char_array_cleanup(char ***argv) {
 #define AUTO_CHAR_ARRAY(name) \
     char **__attribute__((cleanup(char_array_cleanup))) name = NULL
 
-typedef struct {
-    const char* name;
-    void* address;
-    int is_cached;
-} SymbolCacheEntry;
-
-typedef struct {
-    const char* alias;
-    const char* target;
-} SymbolAlias;
-
-#define MAX_LIBRARY_HANDLES 16
-typedef struct {
-    void* handles[MAX_LIBRARY_HANDLES];
-    int handle_count;
-    int initialized;
-} SymbolResolver;
-
-static SymbolResolver g_resolver = {{0}, 0, 0};
-
-static void tcc_error_func(void *opaque, const char *msg);
-
-void* cosmo_import(const char* path);
-void* cosmo_import_sym(void* module, const char* symbol);
-void cosmo_import_free(void* module);
-
-static void tcc_add_path_if_exists(TCCState *s, const char *path, int include_mode) {
-    if (!dir_exists(path)) return;
-    if (include_mode) {
-        tracef("adding include path: %s", path);
-        tcc_add_include_path(s, path);
-        tcc_add_sysinclude_path(s, path);
-    } else {
-        tracef("adding library path: %s", path);
-        tcc_add_library_path(s, path);
-    }
-}
-
-static void register_env_paths(TCCState *s, const char *env_name, int include_mode) {
-    const char *value = getenv(env_name);
-    if (!value || !*value) return;
-
-    size_t len = strlen(value);
-    char *buffer = malloc(len + 1);
-    if (!buffer) return;
-    memcpy(buffer, value, len + 1);
-
-#if defined(_WIN32) || defined(_WIN64)
-    const char delimiter = ';';
-#else
-    const char delimiter = strchr(buffer, ';') ? ';' : ':';
-#endif
-
-    char *iter = buffer;
-    while (iter && *iter) {
-        char *token_end = strchr(iter, delimiter);
-        if (token_end) *token_end = '\0';
-
-        char *path = iter;
-        while (*path == ' ' || *path == '\t') path++;
-        char *end = path + strlen(path);
-        while (end > path && (end[-1] == ' ' || end[-1] == '\t')) {
-            --end;
-        }
-        *end = '\0';
-
-        if (*path) {
-            tcc_add_path_if_exists(s, path, include_mode);
-        }
-
-        if (!token_end) break;
-        iter = token_end + 1;
-    }
-
-    free(buffer);
-}
-
-
-// Initialize dynamic symbol resolver (lazy initialization)
-static void init_symbol_resolver(void) {
-    if (g_resolver.initialized) return;
-
-    tracef("Initializing dynamic symbol resolver");
-
-    // Runtime platform-specific library names for dynamic symbol resolution
-    // Note: Cosmopolitan doesn't define _WIN32 at compile time, must use runtime checks
-    // Static storage to avoid stack lifetime issues
-    static const char* win_libs[] = {
-        "msvcrt.dll",              // Windows C runtime
-        "ucrtbase.dll",            // Universal CRT base
-        "kernel32.dll",            // Windows kernel32
-        NULL
-    };
-    static const char* mac_libs[] = {
-        "libm.dylib",              // macOS math library
-        "libSystem.B.dylib",       // macOS system library (includes libc)
-        NULL
-    };
-    static const char* linux_libs[] = {
-        "libm.so.6",               // Linux math library
-        "libc.so.6",               // Linux glibc
-        "libm.so",                 // Generic math library
-        "libc.so",                 // Generic libc
-        NULL
-    };
-
-    const char** lib_names_ptr;
-
-    // Select library list based on runtime platform detection
-    if (IsWindows()) {
-        lib_names_ptr = win_libs;
-        tracef("Platform: Windows");
-    } else if (IsXnu()) {
-        lib_names_ptr = mac_libs;
-        tracef("Platform: macOS");
-    } else {
-        lib_names_ptr = linux_libs;
-        tracef("Platform: Linux");
-    }
-
-    for (int i = 0; lib_names_ptr[i] && g_resolver.handle_count < MAX_LIBRARY_HANDLES; i++) {
-        // Windows doesn't support RTLD_GLOBAL, use RTLD_LAZY only on Windows
-        int flags = IsWindows() ? RTLD_LAZY : (RTLD_LAZY | RTLD_GLOBAL);
-        void* handle = cosmo_dlopen(lib_names_ptr[i], flags);
-        if (handle) {
-            g_resolver.handles[g_resolver.handle_count++] = handle;
-            tracef("Loaded library: %s (handle=%p)", lib_names_ptr[i], handle);
-        } else {
-            const char* err = cosmo_dlerror();
-            tracef("Failed to load %s: %s", lib_names_ptr[i], err ? err : "unknown error");
-        }
-    }
-
-    g_resolver.initialized = 1;
-    tracef("Symbol resolver initialized with %d libraries", g_resolver.handle_count);
-}
-
-// //@hack tcc at tccelf.c: addr = cosmorun_resolve_symbol(name_ud);
+//@hack tcc at tccelf.c: addr = cosmorun_resolve_symbol(name_ud);
 void* cosmorun_resolve_symbol(const char* symbol_name) {
-    if (!symbol_name || !*symbol_name) {
-        return NULL;
-    }
-    tracef("cosmorun_resolve_symbol: %s", symbol_name);
-
-    // Fast path: check the builtin table first (with safe double-check pattern)
-    for (const cosmo_symbol_entry_t *entry = cosmo_tcc_get_builtin_symbols(); entry && entry->name; ++entry) {
-        // Safety: verify entry is valid before accessing (cross-platform compatibility)
-        if (!entry->name) break;
-
-        if (strcmp(entry->name, symbol_name) == 0) {
-            if (entry->address) {
-                tracef("Found in builtin table: %s", symbol_name);
-                return entry->address;
-            }
-        }
-    }
-
-    void* addr = NULL;
-    for (int i = 0; i < g_resolver.handle_count; i++) {
-        if (!g_resolver.handles[i]) continue;
-        addr = cosmo_dlsym(g_resolver.handles[i], symbol_name);
-        if (addr) {
-            tracef("Resolved from library %d: %s -> %p", i, symbol_name, addr);
-            return addr;
-        }
-    }
-
-    // Symbol not found anywhere
-    tracef("Symbol not found: %s", symbol_name);
-    return NULL;
+    return cosmorun_dlsym_libc(symbol_name);
 }
 
 static void tcc_error_func(void *opaque, const char *msg) {
@@ -574,181 +280,7 @@ static void tcc_error_func(void *opaque, const char *msg) {
 }
 
 // Cache management moved to cosmo_cache.{c,h}
-
-void* cosmo_import(const char* path) {
-    if (!path || !*path) {
-        tracef("cosmo_import: null or empty path");
-        return NULL;
-    }
-    tracef("cosmo_import: path=%s", path);
-
-    // Check if it's already a .o file
-    if (ends_with(path, ".o")) {
-        return load_o_file(path);
-    }
-
-    // Get architecture for cache naming
-    struct utsname uts;
-    memset(&uts, 0, sizeof(uts));
-    uname(&uts);
-
-    // Generate arch-specific .o cache path
-    char cache_path[PATH_MAX];
-    int is_c_file = ends_with(path, ".c");
-    if (is_c_file) {
-        size_t len = strlen(path);
-        snprintf(cache_path, sizeof(cache_path), "%.*s.%s.o", (int)(len - 2), path, uts.machine);
-    } else {
-        cache_path[0] = '\0';
-    }
-
-    // Check source and cache existence
-    struct stat src_st, cache_st;
-    int src_exists = (stat(path, &src_st) == 0);
-    int cache_exists = is_c_file && (stat(cache_path, &cache_st) == 0);
-
-    // Decision tree
-    if (src_exists) {
-        if (cache_exists) {
-            // Compare modification times
-            if (src_st.st_mtime == cache_st.st_mtime) {
-                // Additional check: any .h file in current dir newer than cache?
-                // This catches header file changes without full dependency tracking
-                int headers_modified = 0;
-                DIR *dir = opendir(".");
-                if (dir) {
-                    struct dirent *entry;
-                    while ((entry = readdir(dir)) != NULL) {
-                        size_t len = strlen(entry->d_name);
-                        if (len > 2 && strcmp(entry->d_name + len - 2, ".h") == 0) {
-                            struct stat h_st;
-                            if (stat(entry->d_name, &h_st) == 0 && h_st.st_mtime > cache_st.st_mtime) {
-                                tracef("header '%s' newer than cache, invalidating", entry->d_name);
-                                headers_modified = 1;
-                                break;
-                            }
-                        }
-                    }
-                    closedir(dir);
-                }
-
-                if (!headers_modified) {
-                    tracef("using cached '%s' (mtime match)", cache_path);
-                    return load_o_file(cache_path);
-                } else {
-                    tracef("cache outdated due to header changes, recompiling '%s'", path);
-                    // Fall through to compile from source
-                }
-            } else {
-                tracef("cache outdated, recompiling '%s'", path);
-                // Fall through to compile from source
-            }
-        } else {
-            tracef("no cache found, compiling '%s'", path);
-            // Fall through to compile from source
-        }
-    } else {
-        // Source doesn't exist
-        if (cache_exists) {
-            tracef("source not found, using cached '%s'", cache_path);
-            return load_o_file(cache_path);
-        } else {
-            tracef("neither source '%s' nor cache '%s' found", path, cache_path);
-            return NULL;
-        }
-    }
-
-    // Compile from source
-    tracef("compiling '%s'", path);
-
-    TCCState* s = tcc_new();
-    if (!s) {
-        tracef("cosmo_import: tcc_new failed");
-        return NULL;
-    }
-
-    tracef("cosmo_import: tcc_state=%p", s);
-    tcc_set_error_func(s, NULL, tcc_error_func);
-    tracef("cosmo_import: set error func");
-
-    tcc_set_output_type(s, TCC_OUTPUT_MEMORY);
-    tracef("cosmo_import: set output type");
-
-    char tcc_options[COSMORUN_MAX_OPTIONS_SIZE] = {0};
-    cosmo_tcc_build_default_options(tcc_options, sizeof(tcc_options), &uts);
-    tracef("cosmo_import: built tcc options");
-
-    if (tcc_options[0]) {
-        tcc_set_options(s, tcc_options);
-        tracef("cosmo_import: set tcc options");
-    }
-
-    cosmo_tcc_register_include_paths(s, &uts);
-    tracef("cosmo_import: registered include paths");
-
-    cosmo_tcc_register_library_paths(s);
-    tracef("cosmo_import: registered library paths");
-
-    cosmo_tcc_register_builtin_symbols(s);
-    tracef("cosmo_import: registered builtin symbols");
-
-    cosmo_tcc_link_runtime(s);
-    tracef("cosmo_import: linked tcc runtime");
-
-    // Compile source file
-    if (tcc_add_file(s, path) == -1) {
-        tracef("tcc_add_file failed for '%s'", path);
-        tcc_delete(s);
-        return NULL;
-    }
-
-    // Save .o cache before relocating
-    if (is_c_file) {
-        save_o_cache(path, s);
-
-        // Sync cache file mtime with source
-        struct timespec times[2];
-        times[0] = src_st.st_atim;  // access time
-        times[1] = src_st.st_mtim;  // modification time
-        utimensat(AT_FDCWD, cache_path, times, 0);
-        tracef("synced cache mtime with source");
-    }
-
-    // Relocate
-    if (tcc_relocate(s) < 0) {
-        tracef("tcc_relocate failed for '%s'", path);
-        tcc_delete(s);
-        return NULL;
-    }
-
-    tracef("successfully loaded '%s' -> %p", path, s);
-    return (void*)s;
-}
-
-void* cosmo_import_sym(void* module, const char* symbol) {
-    if (!module || !symbol) {
-        tracef("cosmo_import_sym: null module or symbol");
-        return NULL;
-    }
-
-    TCCState* s = (TCCState*)module;
-    void* addr = tcc_get_symbol(s, symbol);
-
-    if (addr) {
-        tracef("cosmo_import_sym: found '%s' -> %p", symbol, addr);
-    } else {
-        tracef("cosmo_import_sym: symbol '%s' not found", symbol);
-    }
-
-    return addr;
-}
-
-void cosmo_import_free(void* module) {
-    if (!module) return;
-
-    tracef("cosmo_import_free: freeing module %p", module);
-    tcc_delete((TCCState*)module);
-}
+// Module import functions moved to cosmo_tcc.c
 
 // REPL mode implementation
 static int repl_mode(void) {
@@ -955,6 +487,7 @@ typedef enum {
 static execution_mode_t parse_execution_mode(int argc, char **argv) {
     if (argc == 1) return MODE_REPL;
     if (argc == 2 && strcmp(argv[1], "--repl") == 0) return MODE_REPL;
+    if (argc == 2 && (strcmp(argv[1], "--help") == 0 || strcmp(argv[1], "-h") == 0)) return MODE_HELP;
     if (argc < 2) return MODE_HELP;
     if (argc >= 3 && strcmp(argv[1], "--eval") == 0) return MODE_INLINE_CODE;
 
@@ -990,10 +523,72 @@ static execution_mode_t parse_execution_mode(int argc, char **argv) {
  * 显示帮助信息
  */
 static void show_help(const char *program_name) {
-    printf("cosmorun - dynamic C module loader\n");
-    printf("Usage: %s <program.c> [args...]\n", program_name);
-    printf("       %s --eval 'C code'\n", program_name);
-    printf("       %s --repl (interactive REPL)\n", program_name);
+    printf("cosmorun - Cross-platform C JIT Compiler and Dynamic Module Loader\n");
+    printf("Version: "
+        COSMORUN_VERSION
+        " (Built with TinyCC and Cosmopolitan)\n\n");
+
+    printf("USAGE:\n");
+    printf("  %s [options] <sources> [args...]   Compile and run C source files\n", program_name);
+    printf("  %s <program.c> [args...]           Direct execution (single file)\n\n", program_name);
+
+    printf("STANDARD OPTIONS (TCC-compatible):\n");
+    printf("  -o <file>         Output file (executable or object)\n");
+    printf("  -c                Compile to object file only (.o)\n");
+    printf("  -E                Preprocess only (output to stdout or -o file)\n");
+    printf("  -v                Verbose mode (show paths and configuration)\n");
+    printf("  -vv               Extra verbose mode (include builtin symbols)\n");
+    printf("  -I <path>         Add include path\n");
+    printf("  -L <path>         Add library path\n");
+    printf("  -D<macro>[=val]   Define preprocessor macro\n");
+    printf("  -U<macro>         Undefine preprocessor macro\n\n");
+
+    printf("COSMORUN EXTENSIONS:\n");
+    printf("  --eval 'code'     Execute inline C code\n");
+    printf("  --repl            Interactive C shell (REPL mode)\n");
+    printf("  --help, -h        Show this help message\n\n");
+
+    printf("EXECUTION MODES:\n");
+    printf("  File Output       Use -o to generate executable or object file\n");
+    printf("  Memory Exec       Default: compile and run directly in memory (JIT)\n");
+    printf("  Direct Import     Single file uses fast module import API\n");
+    printf("  REPL              Interactive mode (no args or --repl)\n\n");
+
+    printf("EXAMPLES (TCC-compatible):\n");
+    printf("  %s hello.c                          # Run hello.c in memory\n", program_name);
+    printf("  %s -o hello hello.c                 # Compile to executable\n", program_name);
+    printf("  %s -c module.c                      # Compile to object file\n", program_name);
+    printf("  %s -E source.c -o output.i          # Preprocess only\n", program_name);
+    printf("  %s -v hello.c                       # Verbose compilation\n", program_name);
+    printf("  %s hello.c arg1 arg2                # Pass arguments to program\n\n", program_name);
+
+    printf("EXAMPLES (cosmorun extensions):\n");
+    printf("  %s --eval 'int main(){return 42;}'  # Quick inline code\n", program_name);
+    printf("  %s --repl                           # Start interactive shell\n\n", program_name);
+
+    printf("COSMORUN-SPECIFIC FEATURES:\n\n");
+
+    printf("Module Import API (for C code):\n");
+    printf("  void* __import(const char* path);\n");
+    printf("  void* __import_sym(void* module, const char* symbol);\n");
+    printf("  void __import_free(void* module);\n\n");
+
+    printf("Caching System:\n");
+    printf("  - Modules cached as .{arch}.o files (e.g., module.x86_64.o)\n");
+    printf("  - Auto-invalidated when source file modified\n");
+    printf("  - 10-100x speedup on repeated execution\n\n");
+
+    printf("Cross-platform Features:\n");
+    printf("  - Dynamic loading: __dlopen, __dlsym, __dlclose\n");
+    printf("  - Platform detection: IsWindows(), IsLinux(), IsXnu()\n");
+    printf("  - Automatic symbol resolution from system libraries\n");
+    printf("  - ~30 high-frequency libc functions cached\n");
+    printf("  - Smart crash handler with recovery\n\n");
+
+    printf("PLATFORM SUPPORT:\n");
+    printf("  Linux x86-64, ARM64  |  Windows x86-64, ARM64  |  macOS x86-64, Apple Silicon\n\n");
+
+    printf("For more information, see: cosmorun.md\n");
 }
 
 /**
@@ -1002,38 +597,26 @@ static void show_help(const char *program_name) {
 static int execute_direct_import(int argc, char **argv) {
     extern char** environ;
 
-    void* module = cosmo_import(argv[1]);
+    void* module = __import(argv[1]);
     if (!module) {
         fprintf(stderr, "Failed to import: %s\n", argv[1]);
         return 1;
     }
 
     typedef int (*main_fn_t)(int, char**, char**);
-    main_fn_t main_fn = (main_fn_t)cosmo_import_sym(module, "main");
+    main_fn_t main_fn = (main_fn_t)__import_sym(module, "main");
     if (!main_fn) {
         fprintf(stderr, "Symbol 'main' not found in %s\n", argv[1]);
-        cosmo_import_free(module);
+        __import_free(module);
         return 1;
     }
 
     int ret = main_fn(argc, argv, environ);
-    cosmo_import_free(module);
+    __import_free(module);
     return ret;
 }
 
 int main(int argc, char **argv) {
-    // Dynamic resolution from system libraries (all platforms now supported)
-    if (!g_resolver.initialized) {
-        init_symbol_resolver();
-    }
-
-//    printf("Platform detection:\n");
-//    printf("  IsLinux: %d\n", IsLinux());
-//    printf("  IsWindows: %d\n", IsWindows());
-//    //NOTES: apple failed update static var for now.  [tinycc-bugs]
-//    printf("  IsXnu: %d\n", IsXnu());
-//    printf("  IsXnuSilicon: %d\n", IsXnuSilicon());
-//    printf("  IsOpenbsd: %d\n", IsOpenbsd());
 
     // 初始化配置系统
     cosmorun_result_t config_result = init_config();
@@ -1041,16 +624,10 @@ int main(int argc, char **argv) {
         cosmorun_perror(config_result, "configuration initialization");
         return 1;
     }
-    // 初始化崩溃处理系统
-    // Skip on macOS due to data segment write protection issues
-    if (!IsXnu()) {
-        init_crash_handler();
-        set_crash_context("main", "main", __LINE__);
-    }
-
-    // 初始化符号缓存哈希
-    // init_symbol_cache_hashes();
-
+    // if (!IsXnu()) {
+        cosmo_crash_init();
+        cosmo_crash_set_context(__FILE__, "main", __LINE__);
+    // }
     execution_mode_t mode = parse_execution_mode(argc, argv);
 
     switch (mode) {
@@ -1072,10 +649,6 @@ int main(int argc, char **argv) {
     return execute_tcc_compilation_auto(argc, argv);  // 使用自动清理版本
 }
 
-
-/**
- * 显示路径和配置信息（-v/-vv 模式）
- */
 static void show_verbose_info(int verbose_level, TCCState *s) {
     if (verbose_level == 0) return;
 
@@ -1092,19 +665,6 @@ static void show_verbose_info(int verbose_level, TCCState *s) {
         if (path) {
             printf("  [%d] %s\n", i+1, path);
         }
-    }
-
-    // Show environment paths if set
-    const char *extra_includes = getenv("COSMORUN_INCLUDE_PATHS");
-    if (extra_includes && *extra_includes) {
-        printf("\nExtra Include Paths (COSMORUN_INCLUDE_PATHS):\n");
-        printf("  %s\n", extra_includes);
-    }
-
-    const char *lib_paths = getenv("COSMORUN_LIBRARY_PATHS");
-    if (lib_paths && *lib_paths) {
-        printf("\nLibrary Paths (COSMORUN_LIBRARY_PATHS):\n");
-        printf("  %s\n", lib_paths);
     }
 
     if (verbose_level >= 2) {
@@ -1399,7 +959,7 @@ static const char* get_program_name(TCCState *s, const parse_result_t *parsed, i
 }
 
 /**
- * 构建执行参数数组
+ * 构建执行参数数组（使用 cosmo_utils 中的通用实现）
  */
 static char** build_exec_argv(int argc, char **argv, const parse_result_t *parsed, const char *program_name, int *out_argc) {
     // 确定运行时参数的起始位置
@@ -1414,28 +974,8 @@ static char** build_exec_argv(int argc, char **argv, const parse_result_t *parse
 
     if (runtime_start > argc) runtime_start = argc;
 
-    // 跳过多余的 "--" 分隔符
-    while (runtime_start < argc && strcmp(argv[runtime_start], "--") == 0) {
-        ++runtime_start;
-    }
-
-    int user_argc = (runtime_start < argc) ? argc - runtime_start : 0;
-    char **exec_argv = malloc(sizeof(char*) * (size_t)(user_argc + 2));
-    if (!exec_argv) {
-        perror("malloc");
-        return NULL;
-    }
-
-    exec_argv[0] = (char*)program_name;
-    int out = 1;
-    for (int i = runtime_start; i < argc; ++i) {
-        if (strcmp(argv[i], "--") == 0) continue;
-        exec_argv[out++] = argv[i];
-    }
-    exec_argv[out] = NULL;
-
-    *out_argc = out;
-    return exec_argv;
+    // 使用 cosmo_utils 中的通用函数构建执行参数数组
+    return cosmo_args_build_exec_argv(argc, argv, runtime_start, program_name, out_argc);
 }
 
 /**
@@ -1467,7 +1007,7 @@ static int execute_compiled_program(TCCState *s, int argc, char **argv, const pa
     }
 
     // 执行程序（带崩溃保护）
-    set_crash_context(program_name, "user_main", 0);
+    cosmo_crash_set_context(program_name, "user_main", 0);
     g_crash_context.current_tcc_state = s;
 
     int ret;
@@ -1503,6 +1043,10 @@ static int execute_tcc_compilation_auto(int argc, char **argv) {
         }
         if (strcmp(argv[i], "-v") == 0 || strcmp(argv[i], "-vv") == 0) {
             parsed.verbose = (strcmp(argv[i], "-vv") == 0) ? 2 : 1;
+            // Update trace_enabled based on verbose level (-vv sets trace to level 2)
+            if (parsed.verbose == 2) {
+                g_config.trace_enabled = 2;
+            }
         }
         if (strcmp(argv[i], "-E") == 0) {
             parsed.preprocess_only = 1;

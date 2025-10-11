@@ -6,19 +6,19 @@
 /* When using TCC with cosmorun, use auto-generated libc headers */
 #ifdef __COSMORUN__
 
-/* va_list must be defined before including cosmorun_libc.h */
+/* va_list definition using TCC builtins */
 typedef __builtin_va_list va_list;
 #define va_start(ap, last) __builtin_va_start(ap, last)
 #define va_arg(ap, type) __builtin_va_arg(ap, type)
 #define va_end(ap) __builtin_va_end(ap)
 #define va_copy(dest, src) __builtin_va_copy(dest, src)
 
-/* Define NULL before cosmorun_libc.h to prevent redefinition */
+/* Define NULL pointer */
 #ifndef NULL
 #define NULL ((void*)0)
 #endif
 
-/* Standard bool type (C99) - must be defined before cosmorun_libc.h */
+/* Standard bool type (C99) */
 #ifndef __cplusplus
 #ifndef _Bool
 #define _Bool int
@@ -28,9 +28,7 @@ typedef _Bool bool;
 #define false 0
 #endif
 
-// #include "cosmorun_libc.h" - merged below
-
-/* Basic type definitions for TCC (from cosmorun_libc.h) */
+/* Basic type definitions for TCC */
 typedef unsigned long size_t;
 typedef long ssize_t;
 typedef long ptrdiff_t;
@@ -735,7 +733,7 @@ extern int errno;
 #define F_GETFL     3
 #define F_SETFL     4
 
-/* lseek whence values (already in cosmorun_libc.h) */
+/* lseek whence values  */
 
 /* Signal constants */
 #define SIGINT      2
@@ -969,7 +967,7 @@ struct rlimit {
 #define CLOCK_REALTIME 0
 #define CLOCK_MONOTONIC 1
 
-/* jmp_buf for setjmp/longjmp (from cosmorun_libc.h) */
+/* jmp_buf for setjmp/longjmp  */
 typedef int sig_atomic_t;
 
 /* getopt structures */
@@ -1153,12 +1151,12 @@ typedef struct { long fds_bits[16]; } fd_set;
 #define FD_ISSET(fd, set) \
     (((fd_set*)(set))->fds_bits[(fd)/64] & (1UL << ((fd) % 64)))
 
-/* String/memory functions - declarations from cosmorun_libc.h */
+/* String/memory functions */
 extern size_t strspn(const char *s, const char *accept);
 extern size_t strcspn(const char *s, const char *reject);
 extern char *strdup(const char *s);
 
-/* Math functions - declarations from cosmorun_libc.h */
+/* Math functions */
 extern double pow(double x, double y);
 extern double sqrt(double x);
 extern double floor(double x);

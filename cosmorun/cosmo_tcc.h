@@ -61,6 +61,9 @@ void cosmo_tcc_link_runtime(TCCState *s);
 const cosmo_symbol_entry_t* cosmo_tcc_get_builtin_symbols(void);
 void cosmo_tcc_register_builtin_symbols(TCCState *s);
 
+// Symbol resolution (dynamic loading from system libraries)
+void* cosmorun_dlsym_libc(const char* symbol_name);
+
 // State management
 TCCState* cosmo_tcc_create_state(int output_type, const char* options,
                                   int enable_paths, int enable_resolver);
@@ -76,6 +79,11 @@ bool cosmo_tcc_dir_exists(const char *path);
 int cosmo_tcc_get_cached_path_count(void);
 const char* cosmo_tcc_get_cached_path(int index);
 
+// Our Module API
+void* __import(const char* path);
+void* __import_sym(void* module, const char* symbol);
+void __import_free(void* module);
+
 // Options
 void cosmo_tcc_build_default_options(char *buffer, size_t size, const struct utsname *uts);
 void cosmo_tcc_append_option(char *buffer, size_t size, const char *opt);
@@ -83,27 +91,6 @@ void cosmo_tcc_append_option(char *buffer, size_t size, const char *opt);
 // Error handling
 void cosmo_tcc_error_func(void *opaque, const char *msg);
 void cosmo_tcc_set_error_handler(TCCState *s);
-
-// String wrappers (for ABI compatibility)
-size_t cosmorun_strlen(const char *s);
-int cosmorun_strcmp(const char *s1, const char *s2);
-char *cosmorun_strcpy(char *dest, const char *src);
-char *cosmorun_strcat(char *dest, const char *src);
-int cosmorun_strncmp(const char *s1, const char *s2, size_t n);
-int cosmorun_strcasecmp(const char *s1, const char *s2);
-char *cosmorun_strrchr(const char *s, int c);
-char *cosmorun_strchr(const char *s, int c);
-char *cosmorun_strncpy(char *dest, const char *src, size_t n);
-char *cosmorun_strstr(const char *haystack, const char *needle);
-char *cosmorun_strtok(char *str, const char *delim);
-long cosmorun_strtol(const char *nptr, char **endptr, int base);
-char *cosmorun_strerror(int errnum);
-size_t cosmorun_strftime(char *s, size_t max, const char *format, const struct tm *tm);
-void *cosmorun_memcpy(void *dest, const void *src, size_t n);
-void *cosmorun_memset(void *s, int c, size_t n);
-void *cosmorun_memmove(void *dest, const void *src, size_t n);
-int cosmorun_uname(struct utsname *buf);
-int cosmorun_sigaction(int signum, const struct sigaction *act, struct sigaction *oldact);
 
 #ifdef __cplusplus
 }

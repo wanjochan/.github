@@ -4,7 +4,7 @@
 //extern int printf(const char *format, ...);
 
 extern void *__import(const char *path);
-extern void *__sym(void *module, const char *symbol);
+extern void *__import_sym(void *module, const char *symbol);
 
 // Forward declarations for DuckDB types
 typedef void* duckdb_database;
@@ -52,27 +52,27 @@ int main(void) {
 
     // Get API functions
     duckdb_context_t* (*duckdb_init)(const char*) =
-        (duckdb_context_t*(*)(const char*))__sym(duckdb_module, "duckdb_init");
+        (duckdb_context_t*(*)(const char*))__import_sym(duckdb_module, "duckdb_init");
     int (*duckdb_open_db)(duckdb_context_t*, const char*) =
-        (int(*)(duckdb_context_t*, const char*))__sym(duckdb_module, "duckdb_open_db");
+        (int(*)(duckdb_context_t*, const char*))__import_sym(duckdb_module, "duckdb_open_db");
     int (*duckdb_exec)(duckdb_context_t*, const char*, duckdb_result*) =
-        (int(*)(duckdb_context_t*, const char*, duckdb_result*))__sym(duckdb_module, "duckdb_exec");
+        (int(*)(duckdb_context_t*, const char*, duckdb_result*))__import_sym(duckdb_module, "duckdb_exec");
     long (*duckdb_get_row_count)(duckdb_context_t*, duckdb_result*) =
-        (long(*)(duckdb_context_t*, duckdb_result*))__sym(duckdb_module, "duckdb_get_row_count");
+        (long(*)(duckdb_context_t*, duckdb_result*))__import_sym(duckdb_module, "duckdb_get_row_count");
     long (*duckdb_get_column_count)(duckdb_context_t*, duckdb_result*) =
-        (long(*)(duckdb_context_t*, duckdb_result*))__sym(duckdb_module, "duckdb_get_column_count");
+        (long(*)(duckdb_context_t*, duckdb_result*))__import_sym(duckdb_module, "duckdb_get_column_count");
     const char* (*duckdb_get_column_name)(duckdb_context_t*, duckdb_result*, long) =
-        (const char*(*)(duckdb_context_t*, duckdb_result*, long))__sym(duckdb_module, "duckdb_get_column_name");
+        (const char*(*)(duckdb_context_t*, duckdb_result*, long))__import_sym(duckdb_module, "duckdb_get_column_name");
     char* (*duckdb_ctx_varchar)(duckdb_context_t*, duckdb_result*, long, long) =
-        (char*(*)(duckdb_context_t*, duckdb_result*, long, long))__sym(duckdb_module, "duckdb_ctx_varchar");
+        (char*(*)(duckdb_context_t*, duckdb_result*, long, long))__import_sym(duckdb_module, "duckdb_ctx_varchar");
     void (*duckdb_free_value)(duckdb_context_t*, void*) =
-        (void(*)(duckdb_context_t*, void*))__sym(duckdb_module, "duckdb_free_value");
+        (void(*)(duckdb_context_t*, void*))__import_sym(duckdb_module, "duckdb_free_value");
     void (*duckdb_free_result)(duckdb_context_t*, duckdb_result*) =
-        (void(*)(duckdb_context_t*, duckdb_result*))__sym(duckdb_module, "duckdb_free_result");
+        (void(*)(duckdb_context_t*, duckdb_result*))__import_sym(duckdb_module, "duckdb_free_result");
     void (*duckdb_close_db)(duckdb_context_t*) =
-        (void(*)(duckdb_context_t*))__sym(duckdb_module, "duckdb_close_db");
+        (void(*)(duckdb_context_t*))__import_sym(duckdb_module, "duckdb_close_db");
     void (*duckdb_cleanup)(duckdb_context_t*) =
-        (void(*)(duckdb_context_t*))__sym(duckdb_module, "duckdb_cleanup");
+        (void(*)(duckdb_context_t*))__import_sym(duckdb_module, "duckdb_cleanup");
 
     if (!duckdb_init || !duckdb_open_db || !duckdb_exec) {
         printf("✗ Failed to resolve DuckDB API functions\n");

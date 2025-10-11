@@ -3,22 +3,12 @@
  */
 
 #include "cosmo_utils.h"
+
 //#include <limits.h>
 //#include <sys/utsname.h>
 //#ifndef _WIN32
 //#include <dlfcn.h>
 //#endif
-
-// Forward declare config structure
-typedef struct {
-    char tcc_options[512];
-    struct utsname uts;
-    int trace_enabled;
-    char include_paths[4096];
-    char library_paths[4096];
-    char host_libs[4096];
-    int initialized;
-} cosmorun_config_t;
 
 // External references
 extern cosmorun_config_t g_config;
@@ -478,4 +468,294 @@ const char* get_platform_name(void) {
 #else
     return "Unknown";
 #endif
+}
+
+// ============================================================================
+// Resource Management (RAII Pattern) Implementation
+// ============================================================================
+
+cosmo_resource_t cosmo_resource_create(void* resource, cosmo_cleanup_fn cleanup_fn, const char* name) {
+    cosmo_resource_t manager = {
+        .resource = resource,
+        .cleanup_fn = cleanup_fn,
+        .name = name ? name : "unnamed"
+    };
+    return manager;
+}
+
+void cosmo_resource_cleanup(cosmo_resource_t* manager) {
+    if (!manager || !manager->resource || !manager->cleanup_fn) return;
+
+    if (g_config.trace_enabled) {
+        fprintf(stderr, "[cosmorun] Cleaning up resource: %s\n", manager->name);
+    }
+
+    manager->cleanup_fn(manager->resource);
+    manager->resource = NULL;
+    manager->cleanup_fn = NULL;
+}
+
+// Common cleanup functions
+void cosmo_cleanup_memory(void* resource) {
+    if (!resource) return;
+    void** ptr = (void**)resource;
+    if (ptr && *ptr) {
+        free(*ptr);
+        *ptr = NULL;
+    }
+}
+
+void cosmo_cleanup_char_array(char*** argv) {
+    if (!argv || !*argv) return;
+    free(*argv);
+    *argv = NULL;
+}
+
+// ============================================================================
+// Crash Handler (Signal Management) Implementation
+// ============================================================================
+
+static cosmo_crash_context_t g_crash_context = {0};
+
+static void cosmo_crash_signal_handler(int sig) {
+    const char *sig_name = "UNKNOWN";
+    const char *sig_desc = "Unknown signal";
+
+    switch (sig) {
+        case SIGSEGV:
+            sig_name = "SIGSEGV";
+            sig_desc = "Segmentation fault (invalid memory access)";
+            break;
+        case SIGFPE:
+            sig_name = "SIGFPE";
+            sig_desc = "Floating point exception (division by zero, etc.)";
+            break;
+        case SIGILL:
+            sig_name = "SIGILL";
+            sig_desc = "Illegal instruction";
+            break;
+        case SIGABRT:
+            sig_name = "SIGABRT";
+            sig_desc = "Program aborted";
+            break;
+#ifdef SIGBUS
+        case SIGBUS:
+            sig_name = "SIGBUS";
+            sig_desc = "Bus error (alignment or memory access issue)";
+            break;
+#endif
+        default:
+            break;
+    }
+
+    fprintf(stderr, "\n================================================================================\n");
+    fprintf(stderr, "🚨 CRASH DETECTED\n");
+    fprintf(stderr, "================================================================================\n");
+    fprintf(stderr, "Signal: %s (%d)\n", sig_name, sig);
+    fprintf(stderr, "Description: %s\n", sig_desc);
+
+    // Show backtrace if available (Cosmopolitan)
+#ifdef ShowBacktrace
+    ShowBacktrace(2, (const struct StackFrame *)__builtin_frame_address(0));
+#endif
+
+    if (g_crash_context.source_file) {
+        fprintf(stderr, "Source File: %s\n", g_crash_context.source_file);
+    }
+
+    if (g_crash_context.function) {
+        fprintf(stderr, "Function: %s\n", g_crash_context.function);
+    }
+
+    if (g_crash_context.line > 0) {
+        fprintf(stderr, "Line: %d\n", g_crash_context.line);
+    }
+
+    fprintf(stderr, "\n💡 DEBUGGING SUGGESTIONS:\n");
+
+    switch (sig) {
+        case SIGSEGV:
+            fprintf(stderr, "- Check for null pointer dereferences\n");
+            fprintf(stderr, "- Verify array bounds access\n");
+            fprintf(stderr, "- Check for use-after-free errors\n");
+            fprintf(stderr, "- Ensure proper pointer initialization\n");
+            break;
+        case SIGFPE:
+            fprintf(stderr, "- Check for division by zero\n");
+            fprintf(stderr, "- Verify floating point operations\n");
+            fprintf(stderr, "- Check for integer overflow\n");
+            break;
+        case SIGILL:
+            fprintf(stderr, "- Code may be corrupted or invalid\n");
+            fprintf(stderr, "- Check for buffer overflows\n");
+            fprintf(stderr, "- Verify function pointers\n");
+            break;
+        default:
+            fprintf(stderr, "- Review recent code changes\n");
+            fprintf(stderr, "- Check system logs for additional information\n");
+            break;
+    }
+
+    fprintf(stderr, "\n🔧 RECOVERY OPTIONS:\n");
+    fprintf(stderr, "- Add debug prints around the crash location\n");
+    fprintf(stderr, "- Use COSMORUN_TRACE=1 for detailed execution trace\n");
+    fprintf(stderr, "- Try running with smaller input data\n");
+    fprintf(stderr, "- Check memory usage patterns\n");
+
+    fprintf(stderr, "================================================================================\n");
+
+    // Attempt graceful recovery if recovery point is set
+    if (g_crash_context.recovery_active) {
+        fprintf(stderr, "Attempting graceful recovery...\n");
+        longjmp(g_crash_context.recovery, sig);
+    }
+
+    // Otherwise exit
+    exit(128 + sig);
+}
+
+void cosmo_crash_init(void) {
+    signal(SIGSEGV, cosmo_crash_signal_handler);
+    signal(SIGFPE, cosmo_crash_signal_handler);
+    signal(SIGILL, cosmo_crash_signal_handler);
+    signal(SIGABRT, cosmo_crash_signal_handler);
+#ifdef SIGBUS
+    signal(SIGBUS, cosmo_crash_signal_handler);
+#endif
+}
+
+void cosmo_crash_set_context(const char* file, const char* func, int line) {
+    g_crash_context.source_file = file;
+    g_crash_context.function = func;
+    g_crash_context.line = line;
+}
+
+void cosmo_crash_set_user_context(void* ctx) {
+    g_crash_context.user_context = ctx;
+}
+
+int cosmo_crash_try_recover(int signal) {
+    if (!g_crash_context.recovery_active) return 0;
+    longjmp(g_crash_context.recovery, signal);
+    return 1;  // Never reached
+}
+
+cosmo_crash_context_t* cosmo_crash_get_context(void) {
+    return &g_crash_context;
+}
+
+// ============================================================================
+// Command-Line Argument Processing Implementation
+// ============================================================================
+
+int cosmo_args_find_separator(int argc, char** argv) {
+    if (!argv) return -1;
+
+    for (int i = 1; i < argc; i++) {
+        if (argv[i] && strcmp(argv[i], "--") == 0) {
+            return i;
+        }
+    }
+
+    return -1;
+}
+
+char** cosmo_args_build_exec_argv(int argc, char** argv,
+                                   int start_index,
+                                   const char* program_name,
+                                   int* out_argc) {
+    if (!argv || !out_argc) return NULL;
+    if (start_index < 0) start_index = 0;
+    if (start_index > argc) start_index = argc;
+
+    // Skip any leading "--" separators at start_index
+    while (start_index < argc && argv[start_index] &&
+           strcmp(argv[start_index], "--") == 0) {
+        start_index++;
+    }
+
+    // Count valid arguments (skip any embedded "--")
+    int count = 0;
+    for (int i = start_index; i < argc; i++) {
+        if (argv[i] && strcmp(argv[i], "--") != 0) {
+            count++;
+        }
+    }
+
+    // Allocate argv array: program_name + arguments + NULL terminator
+    char** exec_argv = calloc((size_t)(count + 2), sizeof(char*));
+    if (!exec_argv) {
+        cosmorun_perror(COSMORUN_ERROR_MEMORY, "cosmo_args_build_exec_argv");
+        *out_argc = 0;
+        return NULL;
+    }
+
+    // Build result array
+    exec_argv[0] = (char*)program_name;
+    int out_idx = 1;
+
+    for (int i = start_index; i < argc; i++) {
+        if (argv[i] && strcmp(argv[i], "--") != 0) {
+            exec_argv[out_idx++] = argv[i];
+        }
+    }
+
+    exec_argv[out_idx] = NULL;
+    *out_argc = out_idx;
+
+    return exec_argv;
+}
+
+char** cosmo_args_build_filtered_argv(int argc, char** argv,
+                                       const cosmo_skip_option_t* skip_list,
+                                       int skip_count) {
+    if (!argv) return NULL;
+    if (argc <= 0) argc = 0;
+
+    // Allocate maximum possible size (all arguments + NULL terminator)
+    char** filtered_argv = calloc((size_t)(argc + 1), sizeof(char*));
+    if (!filtered_argv) {
+        cosmorun_perror(COSMORUN_ERROR_MEMORY, "cosmo_args_build_filtered_argv");
+        return NULL;
+    }
+
+    int out_idx = 0;
+    int skip_next = 0;  // Flag to skip next argument (value of option)
+
+    for (int i = 0; i < argc; i++) {
+        if (!argv[i]) continue;
+
+        // If previous option takes a value, skip this argument
+        if (skip_next) {
+            skip_next = 0;
+            continue;
+        }
+
+        // Check if current argument should be skipped
+        int should_skip = 0;
+
+        if (skip_list && skip_count > 0) {
+            for (int j = 0; j < skip_count; j++) {
+                if (!skip_list[j].option) continue;
+
+                if (strcmp(argv[i], skip_list[j].option) == 0) {
+                    should_skip = 1;
+                    skip_next = skip_list[j].takes_value;
+                    break;
+                }
+            }
+        }
+
+        if (!should_skip) {
+            filtered_argv[out_idx++] = argv[i];
+        }
+    }
+
+    filtered_argv[out_idx] = NULL;
+    return filtered_argv;
+}
+
+void cosmo_args_free(char** argv) {
+    if (!argv) return;
+    free(argv);
 }
