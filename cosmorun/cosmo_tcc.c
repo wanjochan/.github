@@ -1,6 +1,4 @@
 /* cosmo_tcc.c - TinyCC Integration Module
- * Extracted from cosmorun.c
- *
  * This module provides comprehensive TCC functionality including:
  * - Runtime library support
  * - Symbol table management
@@ -11,6 +9,7 @@
 
 #include "cosmo_tcc.h"
 #include "cosmo_utils.h"
+#include "xdl.h"
 
 // Forward declarations for wrapper functions
 size_t cosmorun_strlen(const char *s);
@@ -33,11 +32,6 @@ void *cosmorun_memmove(void *dest, const void *src, size_t n);
 int cosmorun_uname(struct utsname *buf);
 int cosmorun_sigaction(int signum, const struct sigaction *act, struct sigaction *oldact);
 
-// External references from cosmorun.c
-extern void *cosmo_dlopen(const char *filename, int flags);
-extern void *cosmo_dlsym(void *handle, const char *symbol);
-extern int cosmo_dlclose(void *handle);
-extern char *cosmo_dlerror(void);
 extern cosmorun_config_t g_config;
 extern cosmorun_result_t init_config(void);
 
@@ -259,8 +253,6 @@ int cosmorun_uname(struct utsname* uts) {
 int cosmorun_sigaction(int sig, const struct sigaction* act, struct sigaction* oldact) {
     return sigaction(sig, act, oldact);
 }
-/* Part B: Symbol Table and Registration */
-/* Extracted from cosmorun.c lines 1091-1324 */
 
 #include "cosmo_libc.h"
 #include "libtcc.h"
@@ -307,12 +299,6 @@ extern void *cosmorun_memcpy(void *dest, const void *src, size_t n);
 extern void *cosmorun_memset(void *s, int c, size_t n);
 extern void *cosmorun_memmove(void *dest, const void *src, size_t n);
 
-// Cosmopolitan dynamic loading helpers
-extern void *cosmorun_dlsym(void *handle, const char *symbol);
-extern int cosmo_dlclose(void *handle);
-extern char *cosmo_dlerror(void);
-extern void *cosmo_dlopen(const char *filename, int flags);
-
 // Cosmopolitan dynamic module loading API
 extern void *__import(const char *module);
 extern void *__import_sym(void *handle, const char *symbol);
@@ -322,32 +308,24 @@ extern void __import_free(void *handle);
 extern int cosmorun_uname(struct utsname *buf);
 extern int cosmorun_sigaction(int signum, const struct sigaction *act, struct sigaction *oldact);
 
-// Debug trace function
-extern void tracef(const char *fmt, ...);
+// Coroutine context switch from libco (coctx_swap.o)
+// Supports ARM64, x86-64, and ARM32
+#if defined(__aarch64__) || defined(__arm64__) || defined(__x86_64__) || defined(__amd64__)
+// Temporarily stub out for build
+// extern void _coctx_swap(void *from, void *to);
+static void _coctx_swap(void *from, void *to) {
+    (void)from; (void)to;
+    // Stub implementation for build
+}
+#define coctx_swap _coctx_swap
+#endif
 
-/**
- * __dlopen - Smart dlopen with auto-optimization
- *
- * Enhanced dlopen that auto-optimizes flags and filename:
- * - flags=0: Automatically selects RTLD_LAZY|RTLD_GLOBAL (Unix) or RTLD_LAZY (Windows)
- * - Auto-adds platform extensions (.so/.dll/.dylib)
- * - Auto-adds "lib" prefix when needed
- *
- * This is the internal builtin symbol that standard dlopen maps to.
- */
-//TODO wrap own __dlopen ifndef __COSMOPOLITAN__
-////#ifdef __COSMORUN__
-//void *__dlopen(const char *filename, int flags){
-//	if(IsWindows()){
-//	LoadLibrary and trampoline
-//	}else{
-//	}
-//}
-//#else
-//#endif
-void *__dlopen(const char *filename, int flags){
+// Debug trace function
+//extern void tracef(const char *fmt, ...);
+
+void *cosmorun_dlopen(const char *filename, int flags){
     if (!filename || !*filename) {
-        return cosmo_dlopen(filename, flags);
+        return xdl_open(filename, flags);
     }
 
     // Auto-optimize flags if not specified (0 means use smart defaults)
@@ -355,11 +333,11 @@ void *__dlopen(const char *filename, int flags){
         // Windows doesn't support RTLD_GLOBAL, use RTLD_LAZY only
         // Other platforms use RTLD_LAZY | RTLD_GLOBAL for better symbol visibility
         flags = IsWindows() ? RTLD_LAZY : (RTLD_LAZY | RTLD_GLOBAL);
-        tracef("__dlopen: auto-optimized flags=%d for %s", flags,
+        tracef("cosmorun_dlopen: auto-optimized flags=%d for %s", flags,
                IsWindows() ? "Windows" : "Unix");
     }
 
-    void *handle = cosmo_dlopen(filename, flags);
+    void *handle = xdl_open(filename, flags);
     if (handle) {
         return handle;
     }
@@ -455,8 +433,8 @@ void *__dlopen(const char *filename, int flags){
                 continue;
             }
 
-            tracef("__dlopen: retry '%s'", candidate);
-            handle = cosmo_dlopen(candidate, flags);
+            tracef("cosmorun_dlopen: retry '%s'", candidate);
+            handle = xdl_open(candidate, flags);
             if (handle) {
                 return handle;
             }
@@ -616,24 +594,19 @@ const SymbolEntry builtin_symbol_table[] = {
   {"cos", cos},
   {"sqrt", sqrt},
 
-  // Cosmopolitan dynamic loading helpers (allow modules to call cosmo_* directly)
-  {"dlopen", __dlopen},        // Our smart dlopen with auto-optimization
-  {"__dlopen", __dlopen},      // Also available as __dlopen
+  // CosmoRun dynamic loading (platform abstraction)
+  {"__dlopen", cosmorun_dlopen},
+  {"__dlsym", cosmorun_dlsym},
+  {"dlopen", cosmorun_dlopen},
   {"dlsym", cosmorun_dlsym},
-  {"dlclose", cosmo_dlclose},
-  {"dlerror", cosmo_dlerror},
-  //for cosmo dev/test
-  {"cosmo_dlopen", cosmo_dlopen},  // Raw dlopen without optimization
-  {"cosmo_dlsym", cosmorun_dlsym},
-  {"cosmo_dlclose", cosmo_dlclose},
-  {"cosmo_dlerror", cosmo_dlerror},
+  {"dlclose", xdl_close},
+  {"dlerror", xdl_error},
 
-  // POSIX-style dynamic loading functions (mostly stubs under Cosmopolitan)
-  // {"dlopen", dlopen},
-  // {"dlsym", dlsym},
-  // {"dlclose", dlclose},
-  // {"dlerror", dlerror},
-  // Note: cosmo_* functions are declared externally when available
+  //from xdl
+  //{"xdl_open", xdl_open},
+  //{"xdl_sym", xdl_sym},
+  //{"xdl_close", xdl_close},
+  //{"xdl_error", xdl_error},
 
   // File I/O functions (essential for cross-platform compatibility)
   {"fopen", fopen},
@@ -792,6 +765,13 @@ const SymbolEntry builtin_symbol_table[] = {
   //{"tcc_set_options", tcc_set_options},
   //{"tcc_output_file", tcc_output_file},
 
+  // Coroutine support from libco (ARM64, x86-64, ARM32)
+  // TODO: Link libco properly
+//#if defined(__aarch64__) || defined(__arm64__) || defined(__x86_64__) || defined(__amd64__)
+//  {"coctx_swap", _coctx_swap},
+//  {"_coctx_swap", _coctx_swap},  // Also register with underscore for macOS
+//#endif
+
   {NULL, NULL}  // Sentinel - must be last
 };
 
@@ -825,9 +805,8 @@ void register_builtin_symbols(TCCState *s) {
             if (strcmp(entry->name, "fork") == 0 ||
                 strcmp(entry->name, "waitpid") == 0 ||
                 strcmp(entry->name, "execve") == 0) {
-                //tracef("skipping POSIX symbol on Windows: %s", entry->name);
-                //continue;
-                printf("DEBUG POSIX symbol on Windows: %s %d\n", entry->name,entry->address);
+                tracef("skipping POSIX symbol on Windows: %s", entry->name);
+                continue;
             }
         }
 
@@ -875,10 +854,16 @@ static void init_symbol_resolver(void) {
         NULL
     };
     static const char* linux_libs[] = {
-        "libm.so.6",               // Linux math library
-        "libc.so.6",               // Linux glibc
-        "libm.so",                 // Generic math library
-        "libc.so",                 // Generic libc
+        "libm.so.6",                                    // Linux math library (standard)
+        "libc.so.6",                                    // Linux glibc (standard)
+        "/usr/lib/x86_64-linux-gnu/libm.so.6",        // Ubuntu/Debian x86_64 math
+        "/usr/lib/x86_64-linux-gnu/libc.so.6",        // Ubuntu/Debian x86_64 libc
+        "/usr/lib/aarch64-linux-gnu/libm.so.6",       // Ubuntu/Debian ARM64 math
+        "/usr/lib/aarch64-linux-gnu/libc.so.6",       // Ubuntu/Debian ARM64 libc
+        "/lib/x86_64-linux-gnu/libm.so.6",            // Alternative x86_64 location
+        "/lib/x86_64-linux-gnu/libc.so.6",            // Alternative x86_64 location
+        "libm.so",                                      // Generic math library
+        "libc.so",                                      // Generic libc
         NULL
     };
 
@@ -899,12 +884,12 @@ static void init_symbol_resolver(void) {
     for (int i = 0; lib_names_ptr[i] && g_resolver.handle_count < MAX_LIBRARY_HANDLES; i++) {
         // Windows doesn't support RTLD_GLOBAL, use RTLD_LAZY only on Windows
         int flags = IsWindows() ? RTLD_LAZY : (RTLD_LAZY | RTLD_GLOBAL);
-        void* handle = cosmo_dlopen(lib_names_ptr[i], flags);
+        void* handle = xdl_open(lib_names_ptr[i], flags);
         if (handle) {
             g_resolver.handles[g_resolver.handle_count++] = handle;
             tracef("Loaded library: %s (handle=%p)", lib_names_ptr[i], handle);
         } else {
-            const char* err = cosmo_dlerror();
+            const char* err = xdl_error();
             tracef("Failed to load %s: %s", lib_names_ptr[i], err ? err : "unknown error");
         }
     }
@@ -938,7 +923,7 @@ void* cosmorun_dlsym_libc(const char* symbol_name) {
     void* addr = NULL;
     for (int i = 0; i < g_resolver.handle_count; i++) {
         if (!g_resolver.handles[i]) continue;
-        addr = cosmo_dlsym(g_resolver.handles[i], symbol_name);
+        addr = xdl_sym(g_resolver.handles[i], symbol_name);
         if (addr) {
             tracef("Resolved from library %d: %s -> %p", i, symbol_name, addr);
             return addr;
@@ -961,14 +946,14 @@ void* cosmorun_dlsym_libc(const char* symbol_name) {
 
 const cosmo_tcc_config_t COSMO_TCC_CONFIG_MEMORY = {
     .output_type = TCC_OUTPUT_MEMORY,
-    .output_file = NULL,  // 使用全局配置
+    .output_file = NULL,
     .relocate = 1,
     .run_entry = 1
 };
 
 const cosmo_tcc_config_t COSMO_TCC_CONFIG_OBJECT = {
     .output_type = TCC_OUTPUT_OBJ,
-    .output_file = NULL,  // 使用全局配置
+    .output_file = NULL,
     .relocate = 0,
     .run_entry = 1
 };
@@ -986,30 +971,20 @@ TCCState* create_tcc_state_with_config(int output_type, const char* options, int
         return NULL;
     }
 
-    // 设置错误处理
     tcc_set_error_func(s, NULL, tcc_error_func);
-
-    // 设置输出类型
     tcc_set_output_type(s, output_type);
 
-    // 应用选项
     if (options && options[0]) {
         tcc_set_options(s, options);
     }
 
-    // 注册路径
     if (enable_paths) {
         register_default_include_paths(s, &g_config.uts);
         register_default_library_paths(s);
     }
 
-    // // 初始化符号解析器
-    // if (enable_resolver) {
-    //     init_symbol_resolver();
-    // }
-
     register_builtin_symbols(s);
-    link_tcc_runtime(s);  // Link runtime library for TCC compilation
+    link_tcc_runtime(s);
 
     return s;
 }
@@ -1020,17 +995,17 @@ TCCState* create_tcc_state_with_config(int output_type, const char* options, int
  * ============================================================================
  */
 
-// 通用资源清理函数类型
+/* Generic resource cleanup function type */
 typedef void (*resource_cleanup_fn)(void* resource);
 
-// 资源管理器
+/* Resource manager */
 typedef struct {
     void* resource;
     resource_cleanup_fn cleanup_fn;
-    const char* name;  // 用于调试
+    const char* name;
 } resource_manager_t;
 
-// TCC 状态清理函数
+/* TCC state cleanup function */
 void tcc_state_cleanup(void* resource) {
     if (!resource) return;
 
@@ -1041,7 +1016,7 @@ void tcc_state_cleanup(void* resource) {
     }
 }
 
-// 内存清理函数
+/* Memory cleanup function */
 void memory_cleanup(void* resource) {
     if (!resource) return;
 
@@ -1052,7 +1027,7 @@ void memory_cleanup(void* resource) {
     }
 }
 
-// 创建资源管理器
+/* Create resource manager */
 inline resource_manager_t create_resource_manager(void* resource,
                                                         resource_cleanup_fn cleanup_fn,
                                                         const char* name) {
@@ -1064,7 +1039,7 @@ inline resource_manager_t create_resource_manager(void* resource,
     return manager;
 }
 
-// 清理资源管理器
+/* Cleanup resource manager */
 inline void cleanup_resource_manager(resource_manager_t* manager) {
     if (manager && manager->resource && manager->cleanup_fn) {
         if (g_config.trace_enabled) {
@@ -1076,7 +1051,7 @@ inline void cleanup_resource_manager(resource_manager_t* manager) {
     }
 }
 
-// RAII 风格的自动清理宏（GCC/Clang）
+/* RAII-style automatic cleanup macro (GCC/Clang) */
 #if defined(__GNUC__) || defined(__clang__)
 #define AUTO_CLEANUP(cleanup_fn) __attribute__((cleanup(cleanup_fn)))
 #define AUTO_TCC_STATE TCCState* AUTO_CLEANUP(tcc_state_cleanup)
@@ -1166,8 +1141,9 @@ void build_default_tcc_options(char *buffer, size_t size, const struct utsname *
 
 // Utility functions moved to cosmo_utils.{c,h}
 
+// Wrapper for dlsym with trampoline
 void *cosmorun_dlsym(void *handle, const char *symbol) {
-    void *addr = cosmo_dlsym(handle, symbol);
+    void *addr = xdl_sym(handle, symbol);
     return cosmo_trampoline_wrap(handle, addr);
 }
 
@@ -1189,44 +1165,6 @@ void tcc_add_path_if_exists(TCCState *s, const char *path, int include_mode) {
     }
 }
 
-void register_env_paths(TCCState *s, const char *env_name, int include_mode) {
-    const char *value = getenv(env_name);
-    if (!value || !*value) return;
-
-    size_t len = strlen(value);
-    char *buffer = malloc(len + 1);
-    if (!buffer) return;
-    memcpy(buffer, value, len + 1);
-
-#if defined(_WIN32) || defined(_WIN64)
-    const char delimiter = ';';
-#else
-    const char delimiter = strchr(buffer, ';') ? ';' : ':';
-#endif
-
-    char *iter = buffer;
-    while (iter && *iter) {
-        char *token_end = strchr(iter, delimiter);
-        if (token_end) *token_end = '\0';
-
-        char *path = iter;
-        while (*path == ' ' || *path == '\t') path++;
-        char *end = path + strlen(path);
-        while (end > path && (end[-1] == ' ' || end[-1] == '\t')) {
-            --end;
-        }
-        *end = '\0';
-
-        if (*path) {
-            tcc_add_path_if_exists(s, path, include_mode);
-        }
-
-        if (!token_end) break;
-        iter = token_end + 1;
-    }
-
-    free(buffer);
-}
 
 // Path cache - global static storage for optimization
 #define MAX_CACHED_PATHS 16
@@ -1385,10 +1323,9 @@ TCCState* init_tcc_state(void) {
 
     tcc_set_error_func(s, NULL, tcc_error_func);
 
-    // 预设置输出类型，确保符号表等内部结构就绪
+    /* Pre-set output type to ensure symbol table is ready */
     tcc_set_output_type(s, TCC_OUTPUT_MEMORY);
 
-    // 构建 TCC 选项
     build_default_tcc_options(g_config.tcc_options, sizeof(g_config.tcc_options), &g_config.uts);
     if (g_config.tcc_options[0]) {
         if (g_config.trace_enabled) {
@@ -1397,7 +1334,6 @@ TCCState* init_tcc_state(void) {
         tcc_set_options(s, g_config.tcc_options);
     }
 
-    // 注册路径
     register_default_include_paths(s, &g_config.uts);
     register_default_library_paths(s);
 
@@ -1447,9 +1383,6 @@ void cosmo_tcc_add_path_if_exists(TCCState *s, const char *path, int include_mod
     tcc_add_path_if_exists(s, path, include_mode);
 }
 
-void cosmo_tcc_register_env_paths(TCCState *s, const char *env_name, int include_mode) {
-    register_env_paths(s, env_name, include_mode);
-}
 
 bool cosmo_tcc_dir_exists(const char *path) {
     return dir_exists(path);
@@ -1486,10 +1419,6 @@ const char* cosmo_tcc_get_cached_path(int index) {
     }
     return g_cached_include_paths[index];
 }
-
-// ============================================================================
-// Module Import API (from cosmorun.c)
-// ============================================================================
 
 void* __import(const char* path) {
     if (!path || !*path) {
@@ -1665,3 +1594,365 @@ void __import_free(void* module) {
     tracef("__import_free: freeing module %p", module);
     tcc_delete((TCCState*)module);
 }
+
+// ============================================================================
+// Trampoline System Implementation (from cosmo_trampoline.c)
+// ============================================================================
+
+// ============================================================================
+#ifdef __x86_64__
+
+extern void __sysv2nt14(void);
+
+typedef struct {
+    void *orig;
+    void *stub;
+} WinThunkEntry;
+
+#define COSMORUN_MAX_WIN_THUNKS 256
+
+static WinThunkEntry g_win_thunks[COSMORUN_MAX_WIN_THUNKS];
+static size_t g_win_thunk_count = 0;
+static void *g_win_host_module = NULL;
+static int g_win_initialized = 0;
+
+static bool windows_address_is_executable(const void *addr) {
+    struct NtMemoryBasicInformation info;
+    if (!addr) return false;
+    if (!VirtualQuery(addr, &info, sizeof(info))) {
+        return false;
+    }
+    unsigned prot = info.Protect & 0xffu;
+    switch (prot) {
+        case kNtPageExecute:
+        case kNtPageExecuteRead:
+        case kNtPageExecuteReadwrite:
+        case kNtPageExecuteWritecopy:
+            return true;
+        default:
+            return false;
+    }
+}
+
+static void *windows_make_trampoline(void *func) {
+    static const unsigned char kTemplate[] = {
+        0x55,                               /* push %rbp */
+        0x48, 0x89, 0xE5,                   /* mov %rsp,%rbp */
+        0x48, 0xB8,                         /* movabs $func,%rax */
+        0, 0, 0, 0, 0, 0, 0, 0,             /* placeholder */
+        0x49, 0xBA,                         /* movabs $__sysv2nt14,%r10 */
+        0, 0, 0, 0, 0, 0, 0, 0,             /* placeholder */
+        0x41, 0xFF, 0xE2                    /* jmp *%r10 */
+    };
+
+    void *mem = mmap(NULL, sizeof(kTemplate),
+                     PROT_READ | PROT_WRITE | PROT_EXEC,
+                     MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
+    if (mem == MAP_FAILED) {
+        return NULL;
+    }
+
+    memcpy(mem, kTemplate, sizeof(kTemplate));
+    memcpy((unsigned char *)mem + 6, &func, sizeof(void *));
+    void *bridge = (void *)__sysv2nt14;
+    memcpy((unsigned char *)mem + 16, &bridge, sizeof(void *));
+    __builtin___clear_cache((char *)mem, (char *)mem + sizeof(kTemplate));
+    return mem;
+}
+
+void cosmo_trampoline_win_init(void *host_module) {
+    g_win_host_module = host_module;
+    g_win_thunk_count = 0;
+    g_win_initialized = 1;
+}
+
+static inline void ensure_win_initialized(void) {
+    if (!g_win_initialized) {
+        cosmo_trampoline_win_init(NULL);
+    }
+}
+
+void *cosmo_trampoline_win_wrap(void *module, void *addr) {
+    if (!addr) return NULL;
+    if (!IsWindows()) return addr;
+
+    ensure_win_initialized();
+
+    if (!module || module == g_win_host_module) return addr;
+    if (!windows_address_is_executable(addr)) return addr;
+
+    // Check if we already have a trampoline for this address
+    for (size_t i = 0; i < g_win_thunk_count; ++i) {
+        if (g_win_thunks[i].orig == addr) {
+            void *stub = g_win_thunks[i].stub;
+            return stub ? stub : addr;
+        }
+    }
+
+    // Create new trampoline
+    void *stub = windows_make_trampoline(addr);
+    if (stub) {
+        if (g_win_thunk_count < COSMORUN_MAX_WIN_THUNKS) {
+            g_win_thunks[g_win_thunk_count].orig = addr;
+            g_win_thunks[g_win_thunk_count].stub = stub;
+            ++g_win_thunk_count;
+        }
+    }
+    return stub ? stub : addr;
+}
+
+size_t cosmo_trampoline_win_count(void) {
+    return g_win_thunk_count;
+}
+
+#endif // __x86_64__
+
+// ============================================================================
+// ARM64 Variadic Function Trampolines
+// ============================================================================
+#ifdef __aarch64__
+
+// macOS MAP_JIT flag for JIT code generation
+#ifndef MAP_JIT
+  #ifdef __APPLE__
+    #define MAP_JIT 0x0800
+  #else
+    #define MAP_JIT 0
+  #endif
+#endif
+
+#define ARM64_MAX_VARARGS_TRAMPOLINES 64
+
+typedef struct {
+    void *orig;          // Original variadic function
+    void *stub;          // Our generated trampoline
+    const char *name;    // For debugging
+} ARM64VarargEntry;
+
+static ARM64VarargEntry g_arm64_vararg_trampolines[ARM64_MAX_VARARGS_TRAMPOLINES];
+static size_t g_arm64_vararg_count = 0;
+
+// ============================================================================
+// Universal Trampoline Template - Pre-compiled machine code
+// ============================================================================
+static const uint32_t g_trampoline_template[] = {
+    0xa9bf7bfd,  // [0]  stp x29, x30, [sp, #-16]!
+    0x910003fd,  // [1]  mov x29, sp
+    0xd10103ff,  // [2]  sub sp, sp, #64
+    0xf90003e1,  // [3]  str x1, [sp, #0]   - Will patch to nop if not needed
+    0xf90007e2,  // [4]  str x2, [sp, #8]   - Will patch to nop if not needed
+    0xf9000be3,  // [5]  str x3, [sp, #16]  - Will patch to nop if not needed
+    0xf9000fe4,  // [6]  str x4, [sp, #24]
+    0xf90013e5,  // [7]  str x5, [sp, #32]
+    0xf90017e6,  // [8]  str x6, [sp, #40]
+    0xf9001be7,  // [9]  str x7, [sp, #48]
+    0x910003e3,  // [10] mov x3, sp        - Will patch register number
+    0xd2800009,  // [11] movz x9, #0x0000  - Will patch vfunc bits [15:0]
+    0xf2a00009,  // [12] movk x9, #0x0000, lsl #16 - Will patch [31:16]
+    0xf2c00009,  // [13] movk x9, #0x0000, lsl #32 - Will patch [47:32]
+    0xf2e00009,  // [14] movk x9, #0x0000, lsl #48 - Will patch [63:48]
+    0xd63f0120,  // [15] blr x9
+    0x910103ff,  // [16] add sp, sp, #64
+    0xa8c17bfd,  // [17] ldp x29, x30, [sp], #16
+    0xd65f03c0,  // [18] ret
+};
+#define TEMPLATE_SIZE sizeof(g_trampoline_template)
+
+// Runtime patching of universal template
+static void *arm64_make_vararg_trampoline(void *vfunc, int variadic_type) {
+    uint64_t vfunc_addr = (uint64_t)vfunc;
+    int first_var_reg = 4 - variadic_type;  // 3, 2, or 1
+
+    // Allocate writable+executable memory
+    int flags = MAP_PRIVATE | MAP_ANONYMOUS;
+#ifdef __APPLE__
+    flags |= MAP_JIT;
+#endif
+
+    void *mem = mmap(NULL, TEMPLATE_SIZE, PROT_READ | PROT_WRITE, flags, -1, 0);
+    if (mem == MAP_FAILED) {
+        return NULL;
+    }
+
+    uint32_t *code = (uint32_t*)mem;
+    memcpy(code, g_trampoline_template, TEMPLATE_SIZE);
+
+    // PATCH 1: Disable unneeded str instructions (x1, x2, x3)
+    for (int reg = 1; reg < first_var_reg; reg++) {
+        code[3 + (reg - 1)] = 0xd503201f;  // nop
+    }
+
+    // PATCH 2: Adjust offsets for remaining str instructions
+    int offset = 0;
+    for (int reg = first_var_reg; reg <= 7; reg++) {
+        int idx = 3 + (reg - 1);
+        code[idx] = 0xf90003e0 | reg | ((offset / 8) << 10);
+        offset += 8;
+    }
+
+    // PATCH 3: Set va_list register
+    code[10] = 0x910003e0 | first_var_reg;  // mov xN, sp
+
+    // PATCH 4: Set vfunc address
+    code[11] = 0xd2800009 | ((vfunc_addr & 0xffff) << 5);
+    code[12] = 0xf2a00009 | (((vfunc_addr >> 16) & 0xffff) << 5);
+    code[13] = 0xf2c00009 | (((vfunc_addr >> 32) & 0xffff) << 5);
+    code[14] = 0xf2e00009 | (((vfunc_addr >> 48) & 0xffff) << 5);
+
+    if (mprotect(mem, TEMPLATE_SIZE, PROT_READ | PROT_EXEC) != 0) {
+        munmap(mem, TEMPLATE_SIZE);
+        return NULL;
+    }
+
+    __builtin___clear_cache(mem, (char*)mem + TEMPLATE_SIZE);
+
+    return mem;
+}
+
+void *cosmo_trampoline_arm64_vararg(void *vfunc, int variadic_type, const char *name) {
+    if (!vfunc) return NULL;
+
+    // Check if we already have a trampoline for this function
+    for (size_t i = 0; i < g_arm64_vararg_count; ++i) {
+        if (g_arm64_vararg_trampolines[i].orig == vfunc) {
+            return g_arm64_vararg_trampolines[i].stub;
+        }
+    }
+
+    // Create new trampoline
+    void *stub = arm64_make_vararg_trampoline(vfunc, variadic_type);
+    if (stub && g_arm64_vararg_count < ARM64_MAX_VARARGS_TRAMPOLINES) {
+        g_arm64_vararg_trampolines[g_arm64_vararg_count].orig = vfunc;
+        g_arm64_vararg_trampolines[g_arm64_vararg_count].stub = stub;
+        g_arm64_vararg_trampolines[g_arm64_vararg_count].name = name;
+        ++g_arm64_vararg_count;
+    }
+
+    return stub ? stub : vfunc;
+}
+
+size_t cosmo_trampoline_arm64_count(void) {
+    return g_arm64_vararg_count;
+}
+
+#endif // __aarch64__
+
+// ============================================================================
+// Generic Interface
+// ============================================================================
+
+void cosmo_trampoline_init(void *host_module) {
+#ifdef __x86_64__
+    if (!g_win_initialized) {
+        cosmo_trampoline_win_init(host_module);
+    }
+#else
+    (void)host_module;
+#endif
+}
+
+void *cosmo_trampoline_wrap(void *module, void *addr) {
+    if (!addr) return NULL;
+
+#ifdef __x86_64__
+    // Windows CC conversion on x86_64
+    // IsWindows(); should do better
+    return cosmo_trampoline_win_wrap(module, addr);
+#else
+    // No automatic wrapping on other platforms
+    (void)module;
+    return addr;
+#endif
+}
+
+// ============================================================================
+// Libc Function Resolution with Automatic Trampoline
+// ============================================================================
+
+// Forward declarations for dlopen/dlsym
+// Global library handles
+static void* g_libc = NULL;
+static void* g_libm = NULL;
+static int g_libc_init = 0;
+
+void cosmo_trampoline_libc_init(void) {
+    if (g_libc_init) return;
+
+    int dlopen_flag_win = 0;
+    int dlopen_flag_unx = 0x101;  // RTLD_LAZY | RTLD_GLOBAL
+
+    if (IsWindows()) {
+        // Windows: load msvcrt.dll
+        g_libc = xdl_open("msvcrt.dll", dlopen_flag_win);
+        g_libm = g_libc;  // Windows: math functions in msvcrt
+    }
+    else if (IsLinux()) {
+        // Linux: load libc.so.6 + libm.so.6
+        g_libc = xdl_open("libc.so.6", dlopen_flag_unx);
+        if (!g_libc) {
+            g_libc = xdl_open("libc.so", dlopen_flag_unx);
+        }
+
+        g_libm = xdl_open("libm.so.6", dlopen_flag_unx);
+        if (!g_libm) {
+            g_libm = xdl_open("libm.so", dlopen_flag_unx);
+        }
+    }
+    else {
+        // macOS/other Unix: load libSystem.B.dylib
+        g_libc = xdl_open("libSystem.B.dylib", dlopen_flag_unx);
+        g_libm = g_libc;  // macOS: unified libSystem
+    }
+
+    g_libc_init = 1;
+}
+
+void *cosmo_trampoline_libc_resolve(const char *name, int variadic_type) {
+    // Lazy initialization
+    if (!g_libc_init) {
+        cosmo_trampoline_libc_init();
+    }
+
+    // Resolve from libc/libm
+    void* addr = NULL;
+    if (g_libc) {
+        addr = cosmorun_dlsym(g_libc, name);  // Already applies Windows CC conversion
+    }
+    if (!addr && g_libm) {
+        addr = cosmorun_dlsym(g_libm, name);  // Already applies Windows CC conversion
+    }
+
+    if (!addr) {
+        return NULL;
+    }
+
+#ifdef __aarch64__
+    // ARM64: Create trampoline for variadic functions
+    if (variadic_type) {
+        // For variadic functions, resolve the v* variant (vsnprintf, vsprintf, vprintf)
+        char vname[64];
+        snprintf(vname, sizeof(vname), "v%s", name);
+        void *vfunc = cosmorun_dlsym(g_libc, vname);
+        if (!vfunc) {
+            // Fallback to original function if v* variant not found
+            return addr;
+        }
+
+        // Create trampoline for va_list marshalling
+        void* trampoline = cosmo_trampoline_arm64_vararg(vfunc, variadic_type, name);
+        if (trampoline) {
+            return trampoline;
+        }
+        // Fallback: if trampoline creation failed, use direct call
+    }
+#else
+    (void)variadic_type;  // Unused on non-ARM64 platforms
+#endif
+
+    return addr;
+}
+
+bool cosmo_trampoline_libc_is_initialized(void) {
+    return g_libc_init != 0;
+}
+

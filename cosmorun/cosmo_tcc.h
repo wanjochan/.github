@@ -1,7 +1,3 @@
-/* cosmo_tcc.h - TinyCC Integration Module Header
- * Extracted from cosmorun.c
- */
-
 #ifndef COSMO_TCC_H
 #define COSMO_TCC_H
 
@@ -74,7 +70,6 @@ void cosmo_tcc_state_cleanup(void* resource);
 void cosmo_tcc_register_include_paths(TCCState *s, const struct utsname *uts);
 void cosmo_tcc_register_library_paths(TCCState *s);
 void cosmo_tcc_add_path_if_exists(TCCState *s, const char *path, int include_mode);
-void cosmo_tcc_register_env_paths(TCCState *s, const char *env_name, int include_mode);
 bool cosmo_tcc_dir_exists(const char *path);
 int cosmo_tcc_get_cached_path_count(void);
 const char* cosmo_tcc_get_cached_path(int index);
@@ -84,6 +79,38 @@ void* __import(const char* path);
 void* __import_sym(void* module, const char* symbol);
 void __import_free(void* module);
 
+// ============================================================================
+// Trampoline System (from cosmo_trampoline.h)
+// ============================================================================
+
+// Windows x86_64 Calling Convention Trampolines
+#ifdef __x86_64__
+void cosmo_trampoline_win_init(void *host_module);
+void *cosmo_trampoline_win_wrap(void *module, void *addr);
+size_t cosmo_trampoline_win_count(void);
+#endif
+
+// ARM64 Variadic Function Trampolines
+#ifdef __aarch64__
+typedef enum {
+    VARARG_TYPE_1 = 1,  // 1 fixed param (e.g., printf)
+    VARARG_TYPE_2 = 2,  // 2 fixed params (e.g., sprintf)
+    VARARG_TYPE_3 = 3,  // 3 fixed params (e.g., snprintf)
+} cosmo_vararg_type_t;
+
+void *cosmo_trampoline_arm64_vararg(void *vfunc, int variadic_type, const char *name);
+size_t cosmo_trampoline_arm64_count(void);
+#endif
+
+// Generic Trampoline Interface
+void cosmo_trampoline_init(void *host_module);
+void *cosmo_trampoline_wrap(void *module, void *addr);
+
+// Libc Function Resolution with Automatic Trampoline
+void cosmo_trampoline_libc_init(void);
+void *cosmo_trampoline_libc_resolve(const char *name, int variadic_type);
+bool cosmo_trampoline_libc_is_initialized(void);
+
 // Options
 void cosmo_tcc_build_default_options(char *buffer, size_t size, const struct utsname *uts);
 void cosmo_tcc_append_option(char *buffer, size_t size, const char *opt);
@@ -91,6 +118,8 @@ void cosmo_tcc_append_option(char *buffer, size_t size, const char *opt);
 // Error handling
 void cosmo_tcc_error_func(void *opaque, const char *msg);
 void cosmo_tcc_set_error_handler(TCCState *s);
+
+void *cosmorun_dlsym(void *handle, const char *symbol);
 
 #ifdef __cplusplus
 }

@@ -1,5 +1,4 @@
 
-
 set -euo pipefail
 
 # Paths relative to cosmorun/ directory
@@ -9,19 +8,20 @@ COSMO_ARM="$COSMO_BIN/aarch64-unknown-cosmo-cc"
 APELINK="$COSMO_BIN/apelink"
 ##COMMON_FLAGS="-DCONFIG_TCC_SEMLOCK=1 -pthread"
 COMMON_FLAGS=""
+X86_64_FLAGS="-DTCC_TARGET_X86_64"
 ARM64_FLAGS="-DTCC_TARGET_ARM64"
 COSMO_RELEASE_DIR="../../.github/cosmorun/"
 
-SRC_FILES=(cosmorun.c cosmo_trampoline.c cosmo_tcc.c cosmo_utils.c ../third_party/tinycc.hack/libtcc.c)
+SRC_FILES=(cosmo_run.c cosmo_tcc.c cosmo_utils.c xdl.c ../third_party/tinycc.hack/libtcc.c)
 INC_FLAGS=(-I ../third_party/tinycc.hack/)
 
 rm -fv cosmorun.exe cosmorun.*.tmp cosmorun.x86_64 cosmorun.arm64
 
 echo "[cosmorun] building x86_64 variant"
-"$COSMO_X86" "${SRC_FILES[@]}" "${INC_FLAGS[@]}" $COMMON_FLAGS -o cosmorun.x86_64
+"$COSMO_X86" "${SRC_FILES[@]}" "${INC_FLAGS[@]}" $COMMON_FLAGS $X86_64_FLAGS -o cosmorun.x86_64
 
 echo "[cosmorun] building arm64 variant"
-"$COSMO_ARM" "${SRC_FILES[@]}" "${INC_FLAGS[@]}" $COMMON_FLAGS -o cosmorun.arm64
+"$COSMO_ARM" "${SRC_FILES[@]}" "${INC_FLAGS[@]}" $COMMON_FLAGS $ARM64_FLAGS -o cosmorun.arm64
 
 echo "[cosmorun] linking fat binary via apelink"
 "$APELINK" \
@@ -38,8 +38,8 @@ echo "[cosmorun] linking fat binary via apelink"
 ## original tcc (not yet solve osx jit problem):
 #../third_party/cosmocc/bin/cosmocc $COMMON_FLAGS "${SRC_FILES[@]}" -I ../third_party/tinycc/ -I. -o cosmorun_raw.exe
 
-## direct build (has problem for osx ape_link?)
-../third_party/cosmocc/bin/cosmocc $COMMON_FLAGS cosmorun.c cosmo_trampoline.c cosmo_tcc.c cosmo_utils.c ../third_party/tinycc.hack/libtcc.c -I ../third_party/tinycc.hack/ -o cosmorun_direct.exe
+## direct build (maybe has problem for osx ape_link??)
+../third_party/cosmocc/bin/cosmocc $COMMON_FLAGS cosmo_run.c cosmo_tcc.c cosmo_utils.c xdl.c ../third_party/tinycc.hack/libtcc.c -I ../third_party/tinycc.hack/ -o cosmorun_direct.exe
 
 ls -al cosmorun*.exe
 rm -fv *.o
@@ -55,9 +55,9 @@ RELEASE_FILES=(
     cosmorun_direct.exe
 
     # Core source files
-    cosmorun.c
-    cosmo_*.h
-    cosmo_*.c
+    cosmo_*.*
+    xdl.c
+    xdl.h
 
     # Documentation (optional)
     cosmorun.md
@@ -85,4 +85,4 @@ touch config.h
 ./cosmorun.exe test_libc.c
 
 ## quick dev osx
-##../third_party/cosmocc/bin/aarch64-unknown-cosmo-cc -DTCC_TARGET_ARM64 -I ../third_party/tinycc.hack cosmorun.c ../third_party/tinycc.hack/libtcc.c 
+##../third_party/cosmocc/bin/aarch64-unknown-cosmo-cc -DTCC_TARGET_ARM64 -I ../third_party/tinycc.hack cosmo_run.c ../third_party/tinycc.hack/libtcc.c 

@@ -17,7 +17,7 @@ extern "C" {
 #define COSMORUN_MAX_PATH_SIZE      4096
 #define COSMORUN_MAX_OPTIONS_SIZE   512     // TCC options buffer
 
-// 参数解析结果结构体
+/* Argument parsing result structure */
 typedef struct {
     int inline_mode;
     const char *inline_code;

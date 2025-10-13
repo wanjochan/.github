@@ -9,6 +9,7 @@
 
 #include "cosmo_libc.h"
 #include "cosmo_trampoline.h"
+#include "xdl.h"
 
 // ============================================================================
 // Windows x86_64 Calling Convention Trampolines
@@ -283,9 +284,6 @@ void *cosmo_trampoline_wrap(void *module, void *addr) {
 // ============================================================================
 
 // Forward declarations for dlopen/dlsym
-extern void *cosmo_dlopen(const char *filename, int flags);
-extern void *cosmo_dlsym(void *handle, const char *symbol);
-
 // Global library handles
 static void* g_libc = NULL;
 static void* g_libm = NULL;
@@ -293,13 +291,13 @@ static int g_libc_init = 0;
 
 // Wrapper for dlsym with trampoline
 static inline void *cosmorun_dlsym(void *handle, const char *symbol) {
-    void *addr = cosmo_dlsym(handle, symbol);
+    void *addr = xdl_sym(handle, symbol);
     return cosmo_trampoline_wrap(handle, addr);
 }
 
 // Wrapper for dlopen
 static inline void *cosmorun_dlopen(const char *filename, int flags) {
-    return cosmo_dlopen(filename, flags);
+    return xdl_open(filename, flags);
 }
 
 void cosmo_trampoline_libc_init(void) {

@@ -13,7 +13,7 @@
 #include "cosmo_tcc.h"
 #include "cosmo_utils.h"
 
-#define COSMORUN_VERSION "0.6.10"
+#define COSMORUN_VERSION "0.7.2"
 
 // Additional constants
 #define COSMORUN_MAX_EXEC_ARGS      256     // Maximum execution arguments
