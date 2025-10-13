@@ -72,6 +72,8 @@ for file_pattern in "${RELEASE_FILES[@]}"; do
     cp -v $file_pattern "$COSMO_RELEASE_DIR/" 2>/dev/null || true
 done
 
+cp -rfv ../third_party/tinycc.hack "$COSMO_RELEASE_DIR/../third_party/"
+
 touch config.h
 
 # core dump test
