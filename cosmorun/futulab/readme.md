@@ -237,7 +237,6 @@ cosmorun/futulab/
 ├── readme.md                   # 本文档
 ├── futu_utils.h/c              # ✅ 公共工具库（protobuf、SHA1、网络通信）
 ├── futu_cli.c                  # ✅ 完整CLI工具（支持基础命令+行情查询）
-├── futu_simple.c               # 简单TCP连接测试
 ├── futu_main.c                 # protobuf客户端示例（早期版本，参考用）
 ├── Common.pb.c/h               # 生成的protobuf代码
 ├── InitConnect.pb.c/h
@@ -318,21 +317,9 @@ cd /workspace/self-evolve-ai/cosmorun
 - ✅ 内置SHA1哈希计算
 - ✅ TCC兼容，无需GCC/Clang
 - ✅ 单文件实现，只依赖 `cosmo_libc.h`
-- ✅ 支持4个核心API + all命令
+- ✅ 支持16个API接口（init + 行情 + 交易）
 
-### 方式2: 使用 futu_simple.c (连接测试)
-
-```bash
-cd /workspace/self-evolve-ai/cosmorun
-./cosmorun.exe futulab/futu_simple.c
-```
-
-**限制**:
-- 只做TCP连接测试
-- 不使用protobuf协议
-- 适合验证网络连通性
-
-### 方式3: 使用 GCC/Clang (nanopb版本)
+### 方式2: 使用 GCC/Clang (nanopb版本)
 
 ```bash
 cd /workspace/self-evolve-ai/cosmorun/futulab
@@ -398,8 +385,8 @@ python3 /workspace/self-evolve-ai/third_party/nanopb/generator/nanopb_generator.
 ### 验证连接
 
 ```bash
-# 方式1: 使用测试程序
-./cosmorun.exe futulab/futu_simple.c
+# 方式1: 使用 futu_cli.c 测试连接
+./cosmorun.exe futulab/futu_cli.c futulab/futu_utils.c -- init
 
 # 方式2: 使用telnet
 telnet 127.0.0.1 11111
@@ -488,9 +475,9 @@ python3 /workspace/self-evolve-ai/third_party/nanopb/generator/nanopb_generator.
 cp /workspace/self-evolve-ai/third_party/nanopb/pb*.c .
 cp /workspace/self-evolve-ai/third_party/nanopb/pb*.h .
 
-# 7. 测试编译
+# 7. 测试连接
 cd /workspace/self-evolve-ai/cosmorun
-./cosmorun.exe futulab/futu_simple.c
+./cosmorun.exe futulab/futu_cli.c futulab/futu_utils.c -- init
 
 echo "✓ Setup completed!"
 ```
@@ -554,7 +541,7 @@ TCC Error: In file included from futulab/pb.h:87:
    API启用RSA: 否
    登录成功
    ```
-2. 使用 `futu_simple.c` 验证TCP连接
+2. 使用 `futu_cli.c init` 验证连接和协议
 3. 确认SHA1哈希正确计算 (body数据的SHA1)
 4. 确认使用小端序编码header
 
@@ -624,6 +611,18 @@ OpenD 9.04.5408 ← → Proto 9.0.5008 ← → futu-api 9.4.5408
 更新时优先保持三者版本一致性。
 
 ## 维护日志
+
+### 2025-10-17 (晚上): 🧹 代码清理和优化
+
+**代码清理**:
+- 🗑️ 删除 futu_simple.c（纯TCP连接测试，已被 futu_cli.c init 取代）
+- ✅ sync_cosmorun.sh 优化：使用 rsync 只显示有更新的文件
+- 📝 readme.md 清理：移除所有 futu_simple.c 引用
+
+**futulab 文件清单**（精简后）:
+- futu_cli.c + futu_utils.h/c = 完整功能CLI（16个API）
+- futu_main.c = 早期nanopb示例（仅供参考）
+- pb*.c/h = nanopb运行时（可选，仅用于扩展新API时参考）
 
 ### 2025-10-17 (晚上): 🎯 订单管理功能完善
 
@@ -711,5 +710,5 @@ OpenD 9.04.5408 ← → Proto 9.0.5008 ← → futu-api 9.4.5408
 - 克隆 nanopb 工具链
 - 下载 Futu API proto 文件 v9.0.5008
 - 生成基础 proto 的 C 代码（用于参考）
-- 创建测试程序 (futu_simple.c, futu_cli.c)
+- 创建完整CLI工具 (futu_cli.c + futu_utils.c)
 - 编写详细使用文档
