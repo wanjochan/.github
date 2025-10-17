@@ -2,6 +2,14 @@
 #include "xdl.h"
 
 #if defined(__COSMOPOLITAN__)
+//#if 0 & defined(__COSMOPOLITAN__)
+//#if 0 //TODO when future we rewrite the dlxxxx with our asm....
+
+extern void *cosmo_dlopen(const char *filename, int flags);
+extern void *cosmo_dlsym(void *handle, const char *symbol);
+extern int cosmo_dlclose(void *handle);
+extern char *cosmo_dlerror(void);
+
 #include "libc/dlopen/dlfcn.h"
 
 xdl_handle xdl_open(const char* filename, int flags) {
@@ -76,8 +84,16 @@ const char* xdl_error(void) {
 
 #else //use weak link to get the inner symbol...
 
+//#include "cosmo_libc.h"
+#include <stdio.h>
 #include <stdint.h>
 #include <stddef.h>
+//#include "dlfcn.h"
+
+//extern void *cosmo_dlopen(const char *filename, int flags);
+//extern void *cosmo_dlsym(void *handle, const char *symbol);
+//extern int cosmo_dlclose(void *handle);
+//extern char *cosmo_dlerror(void);
 
 __attribute__((weak)) void* __libc_dlopen_mode(const char*, int);
 __attribute__((weak)) void* __libc_dlsym(void*, const char*);
@@ -98,9 +114,20 @@ static inline int have_std_dl(void) {
 }
 
 xdl_handle xdl_open(const char* filename, int flags) {
-    if (have_libc_dl()) return __libc_dlopen_mode(filename, flags);
-    if (have_std_dl()) return dlopen(filename, flags);
-    return NULL;
+//printf("xdl_open %s %d\n",filename,flags);
+//printf("dbg %d,%d\n",__libc_dlopen_mode,dlopen);
+xdl_handle rt=NULL;
+    if (have_libc_dl()) {
+      rt = __libc_dlopen_mode(filename, flags);
+    }
+    if (have_std_dl()) {
+      rt = dlopen(filename, flags);
+      //printf("dbg1 have_std_dl %d =>%d\n",dlopen,rt);
+      //extern void *cosmo_dlopen(const char *filename, int flags);
+      //rt = cosmo_dlopen(filename, flags);
+      //printf("dbg2 have_std_dl %d =>%d\n",dlopen,rt);
+    }
+    return rt;
 }
 
 void* xdl_sym(xdl_handle handle, const char* symbol) {

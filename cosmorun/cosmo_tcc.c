@@ -32,6 +32,47 @@ void *cosmorun_memmove(void *dest, const void *src, size_t n);
 int cosmorun_uname(struct utsname *buf);
 int cosmorun_sigaction(int signum, const struct sigaction *act, struct sigaction *oldact);
 
+// Atomic operations wrappers - Phase 1: Fetch-and-Operate
+int sync_fetch_and_add_int(int *ptr, int val);
+int sync_fetch_and_sub_int(int *ptr, int val);
+long sync_fetch_and_add_long(long *ptr, long val);
+long sync_fetch_and_sub_long(long *ptr, long val);
+int sync_fetch_and_or_int(int *ptr, int val);
+int sync_fetch_and_and_int(int *ptr, int val);
+int sync_fetch_and_xor_int(int *ptr, int val);
+
+// Atomic operations wrappers - Phase 2: Operate-and-Fetch
+int sync_add_and_fetch_int(int *ptr, int val);
+int sync_sub_and_fetch_int(int *ptr, int val);
+long sync_add_and_fetch_long(long *ptr, long val);
+long sync_sub_and_fetch_long(long *ptr, long val);
+int sync_or_and_fetch_int(int *ptr, int val);
+int sync_and_and_fetch_int(int *ptr, int val);
+int sync_xor_and_fetch_int(int *ptr, int val);
+
+// Atomic operations wrappers - Phase 3: Compare-and-Swap
+int sync_bool_compare_and_swap_int(int *ptr, int oldval, int newval);
+int sync_val_compare_and_swap_int(int *ptr, int oldval, int newval);
+long sync_bool_compare_and_swap_long(long *ptr, long oldval, long newval);
+long sync_val_compare_and_swap_long(long *ptr, long oldval, long newval);
+void* sync_bool_compare_and_swap_ptr(void **ptr, void *oldval, void *newval);
+void* sync_val_compare_and_swap_ptr(void **ptr, void *oldval, void *newval);
+
+// Atomic operations wrappers - Phase 4: Lock/Synchronization
+int sync_lock_test_and_set_int(int *ptr, int val);
+void sync_lock_release_int(int *ptr);
+void sync_synchronize(void);
+
+// C11-style atomic operations
+int atomic_fetch_add_int(int *ptr, int val);
+int atomic_fetch_sub_int(int *ptr, int val);
+int atomic_fetch_or_int(int *ptr, int val);
+int atomic_fetch_and_int(int *ptr, int val);
+int atomic_fetch_xor_int(int *ptr, int val);
+int atomic_load_int(int *ptr);
+void atomic_store_int(int *ptr, int val);
+int atomic_exchange_int(int *ptr, int val);
+
 extern cosmorun_config_t g_config;
 extern cosmorun_result_t init_config(void);
 
@@ -252,6 +293,146 @@ int cosmorun_uname(struct utsname* uts) {
 // Signal handling (libcesque)
 int cosmorun_sigaction(int sig, const struct sigaction* act, struct sigaction* oldact) {
     return sigaction(sig, act, oldact);
+}
+
+/* ============================================================================
+ * Atomic Operations Wrapper Functions
+ * These wrappers provide atomic operations for TCC-compiled code
+ * ============================================================================ */
+
+// ===== Phase 1: Fetch-and-Operate (returns old value) =====
+
+int sync_fetch_and_add_int(int *ptr, int val) {
+    return __sync_fetch_and_add(ptr, val);
+}
+
+int sync_fetch_and_sub_int(int *ptr, int val) {
+    return __sync_fetch_and_sub(ptr, val);
+}
+
+long sync_fetch_and_add_long(long *ptr, long val) {
+    return __sync_fetch_and_add(ptr, val);
+}
+
+long sync_fetch_and_sub_long(long *ptr, long val) {
+    return __sync_fetch_and_sub(ptr, val);
+}
+
+int sync_fetch_and_or_int(int *ptr, int val) {
+    return __sync_fetch_and_or(ptr, val);
+}
+
+int sync_fetch_and_and_int(int *ptr, int val) {
+    return __sync_fetch_and_and(ptr, val);
+}
+
+int sync_fetch_and_xor_int(int *ptr, int val) {
+    return __sync_fetch_and_xor(ptr, val);
+}
+
+// ===== Phase 2: Operate-and-Fetch (returns new value) =====
+
+int sync_add_and_fetch_int(int *ptr, int val) {
+    return __sync_add_and_fetch(ptr, val);
+}
+
+int sync_sub_and_fetch_int(int *ptr, int val) {
+    return __sync_sub_and_fetch(ptr, val);
+}
+
+long sync_add_and_fetch_long(long *ptr, long val) {
+    return __sync_add_and_fetch(ptr, val);
+}
+
+long sync_sub_and_fetch_long(long *ptr, long val) {
+    return __sync_sub_and_fetch(ptr, val);
+}
+
+int sync_or_and_fetch_int(int *ptr, int val) {
+    return __sync_or_and_fetch(ptr, val);
+}
+
+int sync_and_and_fetch_int(int *ptr, int val) {
+    return __sync_and_and_fetch(ptr, val);
+}
+
+int sync_xor_and_fetch_int(int *ptr, int val) {
+    return __sync_xor_and_fetch(ptr, val);
+}
+
+// ===== Phase 3: Compare-and-Swap =====
+
+int sync_bool_compare_and_swap_int(int *ptr, int oldval, int newval) {
+    return __sync_bool_compare_and_swap(ptr, oldval, newval);
+}
+
+int sync_val_compare_and_swap_int(int *ptr, int oldval, int newval) {
+    return __sync_val_compare_and_swap(ptr, oldval, newval);
+}
+
+long sync_bool_compare_and_swap_long(long *ptr, long oldval, long newval) {
+    return __sync_bool_compare_and_swap(ptr, oldval, newval);
+}
+
+long sync_val_compare_and_swap_long(long *ptr, long oldval, long newval) {
+    return __sync_val_compare_and_swap(ptr, oldval, newval);
+}
+
+void* sync_bool_compare_and_swap_ptr(void **ptr, void *oldval, void *newval) {
+    return (void*)(long)__sync_bool_compare_and_swap(ptr, oldval, newval);
+}
+
+void* sync_val_compare_and_swap_ptr(void **ptr, void *oldval, void *newval) {
+    return __sync_val_compare_and_swap(ptr, oldval, newval);
+}
+
+// ===== Phase 4: Lock/Synchronization =====
+
+int sync_lock_test_and_set_int(int *ptr, int val) {
+    return __sync_lock_test_and_set(ptr, val);
+}
+
+void sync_lock_release_int(int *ptr) {
+    __sync_lock_release(ptr);
+}
+
+void sync_synchronize(void) {
+    __sync_synchronize();
+}
+
+// ===== C11-style atomic wrappers =====
+
+int atomic_fetch_add_int(int *ptr, int val) {
+    return __sync_fetch_and_add(ptr, val);
+}
+
+int atomic_fetch_sub_int(int *ptr, int val) {
+    return __sync_fetch_and_sub(ptr, val);
+}
+
+int atomic_fetch_or_int(int *ptr, int val) {
+    return __sync_fetch_and_or(ptr, val);
+}
+
+int atomic_fetch_and_int(int *ptr, int val) {
+    return __sync_fetch_and_and(ptr, val);
+}
+
+int atomic_fetch_xor_int(int *ptr, int val) {
+    return __sync_fetch_and_xor(ptr, val);
+}
+
+int atomic_load_int(int *ptr) {
+    return __sync_fetch_and_add(ptr, 0);  // Load with 0 addition
+}
+
+void atomic_store_int(int *ptr, int val) {
+    __sync_lock_test_and_set(ptr, val);
+    __sync_synchronize();  // Full memory barrier
+}
+
+int atomic_exchange_int(int *ptr, int val) {
+    return __sync_lock_test_and_set(ptr, val);
 }
 
 #include "cosmo_libc.h"
@@ -594,6 +775,11 @@ const SymbolEntry builtin_symbol_table[] = {
   {"cos", cos},
   {"sqrt", sqrt},
 
+  // OUR API
+  {"__import", __import},//./cosmorun.exe -e 'int main(){void* h=__import("std.c");printf("h=%d\n",h);}'
+  {"__import_sym", __import_sym},
+  {"__import_free", __import_free},
+
   // CosmoRun dynamic loading (platform abstraction)
   {"__dlopen", cosmorun_dlopen},
   {"__dlsym", cosmorun_dlsym},
@@ -680,10 +866,61 @@ const SymbolEntry builtin_symbol_table[] = {
   // POSIX Threading (pthread)
   {"pthread_create", pthread_create},
   {"pthread_join", pthread_join},
+  {"pthread_detach", pthread_detach},
+  {"pthread_self", pthread_self},
   {"pthread_mutex_init", pthread_mutex_init},
+  {"pthread_mutex_destroy", pthread_mutex_destroy},
   {"pthread_mutex_lock", pthread_mutex_lock},
   {"pthread_mutex_unlock", pthread_mutex_unlock},
-  {"pthread_mutex_destroy", pthread_mutex_destroy},
+  {"pthread_mutex_trylock", pthread_mutex_trylock},
+  {"pthread_cond_init", pthread_cond_init},
+  {"pthread_cond_destroy", pthread_cond_destroy},
+  {"pthread_cond_wait", pthread_cond_wait},
+  {"pthread_cond_signal", pthread_cond_signal},
+  {"pthread_cond_broadcast", pthread_cond_broadcast},
+
+  // ===== Atomic Operations (sync_* and atomic_* wrappers for TCC compatibility) =====
+
+  // Phase 1: sync_fetch_and_* (returns old value)
+  {"sync_fetch_and_add_int", sync_fetch_and_add_int},
+  {"sync_fetch_and_sub_int", sync_fetch_and_sub_int},
+  {"sync_fetch_and_add_long", sync_fetch_and_add_long},
+  {"sync_fetch_and_sub_long", sync_fetch_and_sub_long},
+  {"sync_fetch_and_or_int", sync_fetch_and_or_int},
+  {"sync_fetch_and_and_int", sync_fetch_and_and_int},
+  {"sync_fetch_and_xor_int", sync_fetch_and_xor_int},
+
+  // Phase 2: sync_*_and_fetch (returns new value)
+  {"sync_add_and_fetch_int", sync_add_and_fetch_int},
+  {"sync_sub_and_fetch_int", sync_sub_and_fetch_int},
+  {"sync_add_and_fetch_long", sync_add_and_fetch_long},
+  {"sync_sub_and_fetch_long", sync_sub_and_fetch_long},
+  {"sync_or_and_fetch_int", sync_or_and_fetch_int},
+  {"sync_and_and_fetch_int", sync_and_and_fetch_int},
+  {"sync_xor_and_fetch_int", sync_xor_and_fetch_int},
+
+  // Phase 3: sync_*_compare_and_swap
+  {"sync_bool_compare_and_swap_int", sync_bool_compare_and_swap_int},
+  {"sync_val_compare_and_swap_int", sync_val_compare_and_swap_int},
+  {"sync_bool_compare_and_swap_long", sync_bool_compare_and_swap_long},
+  {"sync_val_compare_and_swap_long", sync_val_compare_and_swap_long},
+  {"sync_bool_compare_and_swap_ptr", sync_bool_compare_and_swap_ptr},
+  {"sync_val_compare_and_swap_ptr", sync_val_compare_and_swap_ptr},
+
+  // Phase 4: sync_lock_* and sync_synchronize
+  {"sync_lock_test_and_set_int", sync_lock_test_and_set_int},
+  {"sync_lock_release_int", sync_lock_release_int},
+  {"sync_synchronize", sync_synchronize},
+
+  // C11-style atomic_* operations
+  {"atomic_fetch_add_int", atomic_fetch_add_int},
+  {"atomic_fetch_sub_int", atomic_fetch_sub_int},
+  {"atomic_fetch_or_int", atomic_fetch_or_int},
+  {"atomic_fetch_and_int", atomic_fetch_and_int},
+  {"atomic_fetch_xor_int", atomic_fetch_xor_int},
+  {"atomic_load_int", atomic_load_int},
+  {"atomic_store_int", atomic_store_int},
+  {"atomic_exchange_int", atomic_exchange_int},
 
   // POSIX Time Functions
   {"clock_gettime", clock_gettime}, // High-resolution clock (POSIX.1-2001)
@@ -740,15 +977,14 @@ const SymbolEntry builtin_symbol_table[] = {
   {"abort", abort},
   {"system", system},
 
-  // Dynamic module loading API
-  // {"__import", __import},
-  // {"__import_sym", __import_sym},
-  // {"__import_free", __import_free},
-  {"__import", __import},//./cosmorun.exe -e 'int main(){void* h=__import("std.c");printf("h=%d\n",h);}'
-  {"__import_sym", __import_sym},
-  {"__import_free", __import_free},
+//when remove cosmo_dlxxxx
+  {"cbrt", cbrt},
+  {"fmod", fmod},
+  {"hypot", hypot},
+  {"acosh", acosh},
+  {"log1p", log1p},
 
-  // TCC functions (testing nested TCC usage)
+  // libtcc functions
   //{"tcc_new", tcc_new},
   //{"tcc_delete", tcc_delete},
   //{"tcc_set_error_func", tcc_set_error_func},
@@ -764,13 +1000,6 @@ const SymbolEntry builtin_symbol_table[] = {
   //{"tcc_get_symbol", tcc_get_symbol},
   //{"tcc_set_options", tcc_set_options},
   //{"tcc_output_file", tcc_output_file},
-
-  // Coroutine support from libco (ARM64, x86-64, ARM32)
-  // TODO: Link libco properly
-//#if defined(__aarch64__) || defined(__arm64__) || defined(__x86_64__) || defined(__amd64__)
-//  {"coctx_swap", _coctx_swap},
-//  {"_coctx_swap", _coctx_swap},  // Also register with underscore for macOS
-//#endif
 
   {NULL, NULL}  // Sentinel - must be last
 };
@@ -1600,7 +1829,8 @@ void __import_free(void* module) {
 // ============================================================================
 
 // ============================================================================
-#ifdef __x86_64__
+//#ifdef __x86_64__
+#if defined(_WIN32) || defined(__x86_64__)
 
 extern void __sysv2nt14(void);
 
@@ -1809,27 +2039,27 @@ static void *arm64_make_vararg_trampoline(void *vfunc, int variadic_type) {
     return mem;
 }
 
-void *cosmo_trampoline_arm64_vararg(void *vfunc, int variadic_type, const char *name) {
-    if (!vfunc) return NULL;
-
-    // Check if we already have a trampoline for this function
-    for (size_t i = 0; i < g_arm64_vararg_count; ++i) {
-        if (g_arm64_vararg_trampolines[i].orig == vfunc) {
-            return g_arm64_vararg_trampolines[i].stub;
-        }
-    }
-
-    // Create new trampoline
-    void *stub = arm64_make_vararg_trampoline(vfunc, variadic_type);
-    if (stub && g_arm64_vararg_count < ARM64_MAX_VARARGS_TRAMPOLINES) {
-        g_arm64_vararg_trampolines[g_arm64_vararg_count].orig = vfunc;
-        g_arm64_vararg_trampolines[g_arm64_vararg_count].stub = stub;
-        g_arm64_vararg_trampolines[g_arm64_vararg_count].name = name;
-        ++g_arm64_vararg_count;
-    }
-
-    return stub ? stub : vfunc;
-}
+//void *cosmo_trampoline_arm64_vararg(void *vfunc, int variadic_type, const char *name) {
+//    if (!vfunc) return NULL;
+//
+//    // Check if we already have a trampoline for this function
+//    for (size_t i = 0; i < g_arm64_vararg_count; ++i) {
+//        if (g_arm64_vararg_trampolines[i].orig == vfunc) {
+//            return g_arm64_vararg_trampolines[i].stub;
+//        }
+//    }
+//
+//    // Create new trampoline
+//    void *stub = arm64_make_vararg_trampoline(vfunc, variadic_type);
+//    if (stub && g_arm64_vararg_count < ARM64_MAX_VARARGS_TRAMPOLINES) {
+//        g_arm64_vararg_trampolines[g_arm64_vararg_count].orig = vfunc;
+//        g_arm64_vararg_trampolines[g_arm64_vararg_count].stub = stub;
+//        g_arm64_vararg_trampolines[g_arm64_vararg_count].name = name;
+//        ++g_arm64_vararg_count;
+//    }
+//
+//    return stub ? stub : vfunc;
+//}
 
 size_t cosmo_trampoline_arm64_count(void) {
     return g_arm64_vararg_count;
@@ -1855,14 +2085,18 @@ void *cosmo_trampoline_wrap(void *module, void *addr) {
     if (!addr) return NULL;
 
 #ifdef __x86_64__
-    // Windows CC conversion on x86_64
-    // IsWindows(); should do better
-    return cosmo_trampoline_win_wrap(module, addr);
-#else
-    // No automatic wrapping on other platforms
-    (void)module;
-    return addr;
+    //if (IsWindows()) {
+      return (void*)cosmo_trampoline_win_wrap(module, addr);
+    //}
 #endif
+//    // Windows CC conversion on x86_64
+//    // IsWindows(); should do better
+//    return cosmo_trampoline_win_wrap(module, addr);
+//#else
+//    // No automatic wrapping on other platforms
+    (void)module;
+    return (void*)addr;
+//#endif
 }
 
 // ============================================================================
@@ -1907,50 +2141,50 @@ void cosmo_trampoline_libc_init(void) {
     g_libc_init = 1;
 }
 
-void *cosmo_trampoline_libc_resolve(const char *name, int variadic_type) {
-    // Lazy initialization
-    if (!g_libc_init) {
-        cosmo_trampoline_libc_init();
-    }
-
-    // Resolve from libc/libm
-    void* addr = NULL;
-    if (g_libc) {
-        addr = cosmorun_dlsym(g_libc, name);  // Already applies Windows CC conversion
-    }
-    if (!addr && g_libm) {
-        addr = cosmorun_dlsym(g_libm, name);  // Already applies Windows CC conversion
-    }
-
-    if (!addr) {
-        return NULL;
-    }
-
-#ifdef __aarch64__
-    // ARM64: Create trampoline for variadic functions
-    if (variadic_type) {
-        // For variadic functions, resolve the v* variant (vsnprintf, vsprintf, vprintf)
-        char vname[64];
-        snprintf(vname, sizeof(vname), "v%s", name);
-        void *vfunc = cosmorun_dlsym(g_libc, vname);
-        if (!vfunc) {
-            // Fallback to original function if v* variant not found
-            return addr;
-        }
-
-        // Create trampoline for va_list marshalling
-        void* trampoline = cosmo_trampoline_arm64_vararg(vfunc, variadic_type, name);
-        if (trampoline) {
-            return trampoline;
-        }
-        // Fallback: if trampoline creation failed, use direct call
-    }
-#else
-    (void)variadic_type;  // Unused on non-ARM64 platforms
-#endif
-
-    return addr;
-}
+//void *cosmo_trampoline_libc_resolve(const char *name, int variadic_type) {
+//    // Lazy initialization
+//    if (!g_libc_init) {
+//        cosmo_trampoline_libc_init();
+//    }
+//
+//    // Resolve from libc/libm
+//    void* addr = NULL;
+//    if (g_libc) {
+//        addr = cosmorun_dlsym(g_libc, name);  // Already applies Windows CC conversion
+//    }
+//    if (!addr && g_libm) {
+//        addr = cosmorun_dlsym(g_libm, name);  // Already applies Windows CC conversion
+//    }
+//
+//    if (!addr) {
+//        return NULL;
+//    }
+//
+//#ifdef __aarch64__
+//    // ARM64: Create trampoline for variadic functions
+//    if (variadic_type) {
+//        // For variadic functions, resolve the v* variant (vsnprintf, vsprintf, vprintf)
+//        char vname[64];
+//        snprintf(vname, sizeof(vname), "v%s", name);
+//        void *vfunc = cosmorun_dlsym(g_libc, vname);
+//        if (!vfunc) {
+//            // Fallback to original function if v* variant not found
+//            return addr;
+//        }
+//
+//        // Create trampoline for va_list marshalling
+//        void* trampoline = cosmo_trampoline_arm64_vararg(vfunc, variadic_type, name);
+//        if (trampoline) {
+//            return trampoline;
+//        }
+//        // Fallback: if trampoline creation failed, use direct call
+//    }
+//#else
+//    (void)variadic_type;  // Unused on non-ARM64 platforms
+//#endif
+//
+//    return addr;
+//}
 
 bool cosmo_trampoline_libc_is_initialized(void) {
     return g_libc_init != 0;

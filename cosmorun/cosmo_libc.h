@@ -993,16 +993,32 @@ extern char **environ;
 #define W_OK 2
 #define X_OK 1
 
-/* pthread types - simplified for TCC */
-typedef struct { int __reserved; } pthread_mutex_t;
-typedef struct { int __reserved; } pthread_cond_t;
+/* pthread types - sized to match Cosmopolitan implementation */
+typedef struct { unsigned long __data[10]; } pthread_mutex_t;
+typedef struct { unsigned long __data[12]; } pthread_cond_t;
 typedef struct { unsigned long __reserved; } pthread_t;
-typedef struct { int __reserved; } pthread_attr_t;
+typedef struct { unsigned long __data[7]; } pthread_attr_t;
 typedef struct { int __reserved; } pthread_mutexattr_t;
 
 #define PTHREAD_MUTEX_INITIALIZER {0}
 #define PTHREAD_CREATE_DETACHED 1
 #define PTHREAD_CREATE_JOINABLE 0
+
+/* pthread function declarations (implementations in cosmo_tcc.c) */
+int pthread_mutex_init(pthread_mutex_t *mutex, const pthread_mutexattr_t *attr);
+int pthread_mutex_destroy(pthread_mutex_t *mutex);
+int pthread_mutex_lock(pthread_mutex_t *mutex);
+int pthread_mutex_unlock(pthread_mutex_t *mutex);
+int pthread_mutex_trylock(pthread_mutex_t *mutex);
+int pthread_cond_init(pthread_cond_t *cond, const void *attr);
+int pthread_cond_destroy(pthread_cond_t *cond);
+int pthread_cond_wait(pthread_cond_t *cond, pthread_mutex_t *mutex);
+int pthread_cond_signal(pthread_cond_t *cond);
+int pthread_cond_broadcast(pthread_cond_t *cond);
+int pthread_create(pthread_t *thread, const pthread_attr_t *attr, void *(*start_routine)(void*), void *arg);
+int pthread_join(pthread_t thread, void **retval);
+int pthread_detach(pthread_t thread);
+pthread_t pthread_self(void);
 
 /* sigaction structure */
 typedef struct {
@@ -1106,11 +1122,11 @@ struct sigaction {
 #define RTLD_GLOBAL 256
 #define RTLD_LOCAL  0
 
-/* Cosmopolitan dynamic loading functions */
-extern void *cosmo_dlopen(const char *filename, int flags);
-extern void *cosmo_dlsym(void *handle, const char *symbol);
-extern int cosmo_dlclose(void *handle);
-extern char *cosmo_dlerror(void);
+///* Cosmopolitan dynamic loading functions */
+//extern void *cosmo_dlopen(const char *filename, int flags);
+//extern void *cosmo_dlsym(void *handle, const char *symbol);
+//extern int cosmo_dlclose(void *handle);
+//extern char *cosmo_dlerror(void);
 
 /* fenv.h floating-point environment (x86_64/aarch64 values) */
 #define FE_TONEAREST  0x0000
@@ -1125,10 +1141,16 @@ extern int fegetround(void);
 /* Atomic types (simplified for TCC) */
 typedef int atomic_int;
 #define ATOMIC_VAR_INIT(value) (value)
-#define atomic_load(ptr) (*(ptr))
-#define atomic_store(ptr, val) (*(ptr) = (val))
-#define atomic_fetch_add(ptr, val) __sync_fetch_and_add(ptr, val)
-#define atomic_fetch_sub(ptr, val) __sync_fetch_and_sub(ptr, val)
+//#define atomic_load(ptr) (*(ptr))
+//#define atomic_store(ptr, val) (*(ptr) = (val))
+//#define atomic_fetch_add(ptr, val) __sync_fetch_and_add(ptr, val)
+//#define atomic_fetch_sub(ptr, val) __sync_fetch_and_sub(ptr, val)
+// External declarations for atomic wrapper functions
+extern int atomic_fetch_add_int(int *ptr, int val);
+extern int atomic_fetch_sub_int(int *ptr, int val);
+extern int atomic_load_int(int *ptr);
+extern void atomic_store_int(int *ptr, int val);
+
 
 /* File descriptor sets for select() */
 #define FD_SETSIZE 1024
@@ -1211,6 +1233,7 @@ extern long lrint(double x);
 #include <sys/utsname.h>
 #include <sys/wait.h>
 #include <sys/resource.h>
+#include <libgen.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <getopt.h>

@@ -13,7 +13,7 @@
 #include "cosmo_tcc.h"
 #include "cosmo_utils.h"
 
-#define COSMORUN_VERSION "0.7.2"
+#define COSMORUN_VERSION "0.8.1"
 
 // Additional constants
 #define COSMORUN_MAX_EXEC_ARGS      256     // Maximum execution arguments
@@ -226,11 +226,6 @@ static inline void char_array_cleanup(char ***argv) {
 
 #define AUTO_CHAR_ARRAY(name) \
     char **__attribute__((cleanup(char_array_cleanup))) name = NULL
-
-//@hack tcc at tccelf.c: addr = cosmorun_resolve_symbol(name_ud);
-void* cosmorun_resolve_symbol(const char* symbol_name) {
-    return cosmorun_dlsym_libc(symbol_name);
-}
 
 static void tcc_error_func(void *opaque, const char *msg) {
     (void)opaque;
@@ -578,6 +573,11 @@ static int execute_direct_import(int argc, char **argv) {
     return ret;
 }
 
+#ifdef BUILD_COSMO_RUN
+//@hack tcc at tccelf.c: addr = cosmorun_resolve_symbol(name_ud);
+void* cosmorun_resolve_symbol(const char* symbol_name) {
+    return cosmorun_dlsym_libc(symbol_name);
+}
 int main(int argc, char **argv) {
     cosmorun_result_t config_result = init_config();
     if (config_result != COSMORUN_SUCCESS) {
@@ -608,6 +608,7 @@ int main(int argc, char **argv) {
 
     return execute_tcc_compilation_auto(argc, argv);
 }
+#endif
 
 static void show_verbose_info(int verbose_level, TCCState *s) {
     if (verbose_level == 0) return;

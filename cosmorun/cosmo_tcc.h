@@ -98,7 +98,7 @@ typedef enum {
     VARARG_TYPE_3 = 3,  // 3 fixed params (e.g., snprintf)
 } cosmo_vararg_type_t;
 
-void *cosmo_trampoline_arm64_vararg(void *vfunc, int variadic_type, const char *name);
+//void *cosmo_trampoline_arm64_vararg(void *vfunc, int variadic_type, const char *name);
 size_t cosmo_trampoline_arm64_count(void);
 #endif
 
@@ -108,7 +108,7 @@ void *cosmo_trampoline_wrap(void *module, void *addr);
 
 // Libc Function Resolution with Automatic Trampoline
 void cosmo_trampoline_libc_init(void);
-void *cosmo_trampoline_libc_resolve(const char *name, int variadic_type);
+//void *cosmo_trampoline_libc_resolve(const char *name, int variadic_type);
 bool cosmo_trampoline_libc_is_initialized(void);
 
 // Options
