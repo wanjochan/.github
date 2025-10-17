@@ -1292,8 +1292,13 @@ typedef SSIZE_T ssize_t;
 #endif
 #endif
 
+#ifndef _STDBOOL_H
 #define _STDBOOL_H
+#endif
+
+#ifndef _STDINT_H
 #define _STDINT_H
+#endif
 
 #ifndef _STDDEF_H
 #define _STDDEF_H

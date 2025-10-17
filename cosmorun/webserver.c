@@ -148,7 +148,7 @@ static void handle_client(int client_fd) {
     return;
   }
 
-  printf("[PID:%d] %s %s %s\n", getpid(), method, path, version);
+  // Disabled for performance: printf("[PID:%d] %s %s %s\n", getpid(), method, path, version);
 
   // Only support GET for now
   if (strcmp(method, "GET") != 0) {
@@ -298,14 +298,8 @@ static void* thread_worker(void* arg) {
       continue;
     }
 
-    printf("[Thread %d] Accepted connection on fd %d\n", ctx->thread_index, client_fd);
-    fflush(stdout);
-
     // Handle client with coroutine scheduler (currently synchronous)
     coroutine_handle_client(client_fd, ctx->config);
-
-    printf("[Thread %d] Finished handling fd %d\n", ctx->thread_index, client_fd);
-    fflush(stdout);
   }
 
   printf("Thread %d exiting from worker PID %d\n", ctx->thread_index, getpid());
