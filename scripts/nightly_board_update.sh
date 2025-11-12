@@ -65,7 +65,7 @@ read -r -d '' PROMPT <<'PROMPT'
 1. 读取 cointech_board.md
 2. 更新排名前 20 项目的关键指标（TVL、日活、费用等）
 3. 调整技术指数评分（基于 12 维度权重表）
-4. 更新顶部时间戳为当前 UTC 时间：`[最新更新时间] YYYY-MM-DD HH:MM UTC`
+4. **获取当前真实 UTC 时间**（使用 shell 命令 `date -u +"%Y-%m-%d %H:%M UTC"`），更新顶部时间戳为：`[最新更新时间] YYYY-MM-DD HH:MM UTC`
 5. 保存文件
 
 **禁止行为**：
