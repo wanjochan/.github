@@ -9,3 +9,5 @@ duckdb.dll
 # Large third-party tools (download separately)
 third_party/cosmocc/
 third_party/zig/
+logs/
+log/
