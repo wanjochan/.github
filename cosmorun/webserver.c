@@ -6,11 +6,6 @@
 ╚─────────────────────────────────────────────────────────────────────────────*/
 #include "cosmo_libc.h"
 
-extern uint16_t htons(uint16_t hostshort);
-extern int accept(int sockfd, struct sockaddr *addr, socklen_t *addrlen);
-extern int atoi(const char *str);
-extern int socket(int domain, int type, int protocol);
-
 // Core HTTP server configuration
 #define DEFAULT_PORT 8080
 #define BACKLOG 128

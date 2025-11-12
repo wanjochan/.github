@@ -1,13 +1,26 @@
-#ifndef COSMORUN_H
-#define COSMORUN_H
+#ifndef COSMO_LIBC_H
+#define COSMO_LIBC_H
 
 /* Cosmopolitan libc compatibility header for TCC runtime compilation */
 
-/* When using TCC with cosmorun, use auto-generated libc headers */
-#ifdef __COSMORUN__
+#ifdef __COSMORUN__ //cosmorun.exe
 
-/* va_list for variadic functions */
-typedef char* va_list;
+/* va_list for variadic functions - use TCC's builtin type */
+typedef __builtin_va_list va_list;
+
+/* stdarg.h macros for variadic functions */
+#ifndef va_start
+#define va_start(ap, last) __builtin_va_start(ap, last)
+#endif
+#ifndef va_end
+#define va_end(ap) __builtin_va_end(ap)
+#endif
+#ifndef va_copy
+#define va_copy(dest, src) __builtin_va_copy(dest, src)
+#endif
+#ifndef va_arg
+#define va_arg(ap, type) __builtin_va_arg(ap, type)
+#endif
 
 /* Define NULL pointer */
 #ifndef NULL
@@ -26,14 +39,59 @@ typedef _Bool bool;
 
 /* Basic type definitions for TCC */
 typedef unsigned long size_t;
+#ifndef _SSIZE_T_DEFINED
 typedef long ssize_t;
+#define _SSIZE_T_DEFINED
+#endif
+#ifndef _PTRDIFF_T_DEFINED
 typedef long ptrdiff_t;
+#define _PTRDIFF_T_DEFINED
+#endif
+#ifndef _TIME_T_DEFINED
 typedef long time_t;
+#define _TIME_T_DEFINED
+#endif
+#ifndef _PID_T_DEFINED
 typedef int pid_t;
+#define _PID_T_DEFINED
+#endif
+#ifndef _UID_T_DEFINED
 typedef unsigned int uid_t;
+#define _UID_T_DEFINED
+#endif
+#ifndef _GID_T_DEFINED
 typedef unsigned int gid_t;
+#define _GID_T_DEFINED
+#endif
+#ifndef _OFF_T_DEFINED
 typedef long off_t;
+#define _OFF_T_DEFINED
+#endif
+#ifndef _MODE_T_DEFINED
 typedef int mode_t;
+#define _MODE_T_DEFINED
+#endif
+#ifndef _SOCKLEN_T_DEFINED
+typedef unsigned int socklen_t;
+#define _SOCKLEN_T_DEFINED
+#endif
+typedef struct { long fds_bits[16]; } fd_set;
+typedef unsigned short sa_family_t;
+typedef unsigned short in_port_t;
+typedef unsigned int in_addr_t;
+
+/* Network structures - defined early for use in function declarations */
+struct in_addr { in_addr_t s_addr; };
+struct sockaddr { sa_family_t sa_family; char sa_data[14]; };
+struct sockaddr_in {
+    sa_family_t sin_family;
+    in_port_t sin_port;
+    struct in_addr sin_addr;
+    unsigned char sin_zero[8];
+};
+struct timeval { long tv_sec; long tv_usec; };
+struct timespec { long tv_sec; long tv_nsec; };
+
 typedef unsigned char uint8_t;
 typedef unsigned short uint16_t;
 typedef unsigned int uint32_t;
@@ -50,6 +108,128 @@ typedef unsigned int wint_t;
 typedef unsigned int char32_t;
 typedef unsigned short char16_t;
 typedef int bool32;
+
+/* Memory protection flags (mman.h) */
+#ifndef PROT_NONE
+#define PROT_NONE 0x0
+#endif
+#ifndef PROT_READ
+#define PROT_READ 0x1
+#endif
+#ifndef PROT_WRITE
+#define PROT_WRITE 0x2
+#endif
+#ifndef PROT_EXEC
+#define PROT_EXEC 0x4
+#endif
+
+/* mmap flags */
+#ifndef MAP_SHARED
+#define MAP_SHARED 0x01
+#endif
+#ifndef MAP_PRIVATE
+#define MAP_PRIVATE 0x02
+#endif
+#ifndef MAP_ANONYMOUS
+#define MAP_ANONYMOUS 0x20
+#endif
+#ifndef MAP_FIXED
+#define MAP_FIXED 0x10
+#endif
+#ifndef MAP_POPULATE
+#define MAP_POPULATE 0x00008000
+#endif
+#ifndef MAP_FAILED
+#define MAP_FAILED ((void*)-1)
+#endif
+
+/* memfd_create flags */
+#ifndef MFD_CLOEXEC
+#define MFD_CLOEXEC 0x0001
+#endif
+
+/* Windows NT API constants and structures */
+#ifdef _WIN32
+
+/* Page protection constants */
+#ifndef kNtPageExecute
+#define kNtPageExecute 0x00000010
+#define kNtPageExecuteRead 0x00000020
+#define kNtPageExecuteReadwrite 0x00000040
+#define kNtPageExecuteWritecopy 0x00000080
+#define kNtPageReadwrite 0x00000004
+#define kNtPageReadonly 0x00000002
+#endif
+
+/* Memory allocation flags */
+#ifndef MEM_COMMIT
+#define MEM_COMMIT 0x00001000
+#define MEM_RESERVE 0x00002000
+#define MEM_RELEASE 0x00008000
+#define MEM_DECOMMIT 0x00004000
+#define PAGE_READWRITE 0x04
+#define PAGE_EXECUTE_READ 0x20
+#define PAGE_EXECUTE_READWRITE 0x40
+#endif
+
+/* PE machine types */
+#ifndef IMAGE_FILE_MACHINE_AMD64
+#define IMAGE_FILE_MACHINE_AMD64 0x8664
+#define IMAGE_FILE_MACHINE_ARM64 0xAA64
+#define IMAGE_FILE_MACHINE_I386 0x014c
+#endif
+
+/* NT Memory Basic Information */
+struct NtMemoryBasicInformation {
+    void *BaseAddress;
+    void *AllocationBase;
+    unsigned AllocationProtect;
+    size_t RegionSize;
+    unsigned State;
+    unsigned Protect;
+    unsigned Type;
+};
+
+/* Windows API function declarations */
+extern void *VirtualAlloc(void *lpAddress, size_t dwSize, unsigned flAllocationType, unsigned flProtect);
+extern int VirtualFree(void *lpAddress, size_t dwSize, unsigned dwFreeType);
+extern int VirtualProtect(void *lpAddress, size_t dwSize, unsigned flNewProtect, unsigned *lpflOldProtect);
+extern size_t VirtualQuery(const void *lpAddress, struct NtMemoryBasicInformation *lpBuffer, size_t dwLength);
+extern int FlushInstructionCache(void *hProcess, const void *lpBaseAddress, size_t dwSize);
+extern void *GetCurrentProcess(void);
+extern void *LoadLibraryA(const char *lpLibFileName);
+extern void *GetProcAddress(void *hModule, const char *lpProcName);
+
+#endif /* _WIN32 */
+
+#ifndef MFD_ALLOW_SEALING
+#define MFD_ALLOW_SEALING 0x0002
+#endif
+
+/* Socket domains/types */
+#ifndef AF_UNIX
+#define AF_UNIX 1
+#endif
+#ifndef AF_LOCAL
+#define AF_LOCAL AF_UNIX
+#endif
+#ifndef SOCK_STREAM
+#define SOCK_STREAM 1
+#endif
+#ifndef SOCK_DGRAM
+#define SOCK_DGRAM 2
+#endif
+
+/* shutdown() how values */
+#ifndef SHUT_RD
+#define SHUT_RD 0
+#endif
+#ifndef SHUT_WR
+#define SHUT_WR 1
+#endif
+#ifndef SHUT_RDWR
+#define SHUT_RDWR 2
+#endif
 
 /* Special Cosmopolitan types */
 struct axdx_t { long ax, dx; };
@@ -395,6 +575,49 @@ size_t malloc_footprint_limit(void);
 size_t malloc_set_footprint_limit(size_t);
 void malloc_inspect_all(void (*)(void *, void *, size_t, void *), void *);
 
+/* Network structures and functions (POSIX socket API) */
+/* hostent structure for DNS resolution */
+struct hostent {
+    char *h_name;
+    char **h_aliases;
+    int h_addrtype;
+    int h_length;
+    char **h_addr_list;
+};
+
+/* Network function declarations */
+extern struct hostent *gethostbyname(const char *name);
+extern const char *inet_ntop(int af, const void *src, char *dst, socklen_t size);
+extern int inet_pton(int af, const char *src, void *dst);
+
+/* Socket system calls */
+extern int socket(int domain, int type, int protocol);
+extern int bind(int sockfd, const struct sockaddr *addr, socklen_t addrlen);
+extern int listen(int sockfd, int backlog);
+extern int accept(int sockfd, struct sockaddr *addr, socklen_t *addrlen);
+extern int connect(int sockfd, const struct sockaddr *addr, socklen_t addrlen);
+extern int setsockopt(int sockfd, int level, int optname, const void *optval, socklen_t optlen);
+extern int getsockname(int sockfd, struct sockaddr *addr, socklen_t *addrlen);
+extern int getpeername(int sockfd, struct sockaddr *addr, socklen_t *addrlen);
+extern int select(int nfds, fd_set *readfds, fd_set *writefds, fd_set *exceptfds, struct timeval *timeout);
+
+/* Socket I/O */
+extern ssize_t send(int sockfd, const void *buf, size_t len, int flags);
+extern ssize_t recv(int sockfd, void *buf, size_t len, int flags);
+extern ssize_t sendto(int sockfd, const void *buf, size_t len, int flags,
+                      const struct sockaddr *dest_addr, socklen_t addrlen);
+extern ssize_t recvfrom(int sockfd, void *buf, size_t len, int flags,
+                        struct sockaddr *src_addr, socklen_t *addrlen);
+
+/* Byte order conversion */
+extern uint16_t htons(uint16_t hostshort);
+extern uint16_t ntohs(uint16_t netshort);
+extern uint32_t htonl(uint32_t hostlong);
+extern uint32_t ntohl(uint32_t netlong);
+
+/* stdlib.h functions */
+extern int atoi(const char *str);
+
 /* From libc/calls/calls.h */
 typedef int sig_atomic_t;
 bool32 isatty(int);
@@ -498,6 +721,8 @@ int usleep(uint64_t);
 int vfork(void);
 int wait(int *);
 int waitpid(int, int *, int);
+int socketpair(int, int, int, int[2]);
+int shutdown(int, int);
 int64_t clock(void);
 int64_t time(int64_t *);
 ssize_t copy_file_range(int, long *, int, long *, size_t, unsigned);
@@ -713,17 +938,17 @@ extern int errno;
 #define STDOUT_FILENO 1
 #define STDERR_FILENO 2
 
-/* File flags */
+/* File flags - Linux x86-64 values */
 #define O_RDONLY    0x0000
 #define O_WRONLY    0x0001
 #define O_RDWR      0x0002
-#define O_NONBLOCK  0x0004
-#define O_APPEND    0x0008
-#define O_CREAT     0x0200
-#define O_TRUNC     0x0400
-#define O_EXCL      0x0800
-#define O_DIRECTORY 0x100000
-#define O_NOFOLLOW  0x0100
+#define O_CREAT     0x0040   /* 64 */
+#define O_EXCL      0x0080   /* 128 */
+#define O_TRUNC     0x0200   /* 512 */
+#define O_APPEND    0x0400   /* 1024 */
+#define O_NONBLOCK  0x0800   /* 2048 */
+#define O_DIRECTORY 0x010000 /* 65536 */
+#define O_NOFOLLOW  0x020000 /* 131072 */
 
 /* fcntl commands */
 #define F_GETFL     3
@@ -796,21 +1021,6 @@ void qsort(void *base, size_t nmemb, size_t size, int (*compar)(const void *, co
 
 /* Additional types and structures for QuickJS/wasm3 */
 
-/* Socket/network types */
-typedef unsigned int socklen_t;
-typedef unsigned short sa_family_t;
-typedef uint16_t in_port_t;
-typedef uint32_t in_addr_t;
-
-struct in_addr { in_addr_t s_addr; };
-struct sockaddr { sa_family_t sa_family; char sa_data[14]; };
-struct sockaddr_in {
-    sa_family_t sin_family;
-    in_port_t sin_port;
-    struct in_addr sin_addr;
-    unsigned char sin_zero[8];
-};
-
 /* termios structure */
 typedef unsigned int tcflag_t;
 typedef unsigned char cc_t;
@@ -857,9 +1067,6 @@ struct dirent {
 #define DT_WHT     14
 
 /* time structures */
-typedef long time_t;
-struct timeval { long tv_sec; long tv_usec; };
-struct timespec { long tv_nsec; long tv_sec; };
 struct tm {
     int tm_sec;
     int tm_min;
@@ -957,6 +1164,11 @@ struct rlimit {
     unsigned long rlim_cur;
     unsigned long rlim_max;
 };
+
+/* Resource limit functions */
+extern int getrlimit(int resource, struct rlimit *rlim);
+extern int setrlimit(int resource, const struct rlimit *rlim);
+
 #define RLIMIT_AS 9
 
 /* clock constants */
@@ -981,6 +1193,9 @@ extern int optind, opterr, optopt;
 
 /* environ global */
 extern char **environ;
+
+/* sysconf function */
+extern long sysconf(int name);
 
 /* sysconf constants */
 #define _SC_OPEN_MAX 4
@@ -1019,6 +1234,8 @@ int pthread_create(pthread_t *thread, const pthread_attr_t *attr, void *(*start_
 int pthread_join(pthread_t thread, void **retval);
 int pthread_detach(pthread_t thread);
 pthread_t pthread_self(void);
+int pthread_getattr_np(pthread_t thread, pthread_attr_t *attr);
+int pthread_attr_getstack(const pthread_attr_t *attr, void **stackaddr, size_t *stacksize);
 
 /* sigaction structure */
 typedef struct {
@@ -1032,17 +1249,27 @@ struct sigaction {
     void (*sa_restorer)(void);
 };
 
+/* Signal functions */
+extern int sigprocmask(int how, const sigset_t *set, sigset_t *oldset);
+extern int sigemptyset(sigset_t *set);
+extern int sigaddset(sigset_t *set, int signum);
+extern int sigaction(int signum, const struct sigaction *act, struct sigaction *oldact);
+extern int raise(int sig);
+extern int kill(pid_t pid, int sig);
+
 #define SA_RESTART  0x10000000
 #define SA_NOCLDSTOP 1
 
-/* Socket constants */
+/* Socket constants - Linux x86-64 values */
 #define AF_INET     2
 #define SOCK_STREAM 1
+#define SOCK_DGRAM  2
 #define IPPROTO_TCP 6
-#define SOL_SOCKET  0xFFFF
-#define SO_REUSEADDR 0x0004
-#define SO_RCVTIMEO  0x1006
-#define SO_SNDTIMEO  0x1005
+#define SOL_SOCKET  1          /* Linux uses 1, not 0xFFFF */
+#define SO_REUSEADDR 2         /* Linux uses 2, not 0x0004 */
+#define SO_ERROR    4
+#define SO_RCVTIMEO  20        /* Linux SO_RCVTIMEO */
+#define SO_SNDTIMEO  21        /* Linux SO_SNDTIMEO */
 #define INADDR_LOOPBACK 0x7f000001
 #define INADDR_ANY      0x00000000
 
@@ -1122,11 +1349,11 @@ struct sigaction {
 #define RTLD_GLOBAL 256
 #define RTLD_LOCAL  0
 
-///* Cosmopolitan dynamic loading functions */
-//extern void *cosmo_dlopen(const char *filename, int flags);
-//extern void *cosmo_dlsym(void *handle, const char *symbol);
-//extern int cosmo_dlclose(void *handle);
-//extern char *cosmo_dlerror(void);
+/* Cosmopolitan dynamic loading functions */
+extern void *cosmo_dlopen(const char *filename, int flags);
+extern void *cosmo_dlsym(void *handle, const char *symbol);
+extern int cosmo_dlclose(void *handle);
+extern char *cosmo_dlerror(void);
 
 /* fenv.h floating-point environment (x86_64/aarch64 values) */
 #define FE_TONEAREST  0x0000
@@ -1154,7 +1381,6 @@ extern void atomic_store_int(int *ptr, int val);
 
 /* File descriptor sets for select() */
 #define FD_SETSIZE 1024
-typedef struct { long fds_bits[16]; } fd_set;
 
 #define FD_ZERO(set) do { \
     int __i; \
@@ -1216,23 +1442,29 @@ extern long lrint(double x);
 
 #else /* !__COSMORUN__ */
 
-/* Normal compilation (including cosmocc): use system headers */
-#if defined(__APPLE__) || defined(__linux__) || defined(__COSMOPOLITAN__)
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <ctype.h>
-#include <unistd.h>
 #include <time.h>
 #include <signal.h>
 #include <stdarg.h>
+#include <fcntl.h>
+#include <errno.h>
+#include <sys/stat.h>
+
+#if defined(__APPLE__) || defined(__linux__) || defined(__COSMOPOLITAN__)
+
+#include <ctype.h>
+#include <unistd.h>
 #include <pthread.h>
+
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <sys/utsname.h>
 #include <sys/wait.h>
 #include <sys/resource.h>
+#include <sys/ioctl.h>
+
 #include <libgen.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
@@ -1241,9 +1473,6 @@ extern long lrint(double x);
 #include <sys/select.h>
 #include <sys/time.h>
 #include <termios.h>
-#include <fcntl.h>
-#include <errno.h>
-#include <sys/stat.h>
 #include <math.h>
 #include <stdbool.h>
 #include <stdint.h>
@@ -1254,43 +1483,34 @@ extern long lrint(double x);
 #include <sched.h>
 #include <poll.h>
 #include <netdb.h>
-#include <sys/ioctl.h>
 
 #ifdef __COSMOPOLITAN__
 
 #ifndef _COSMO_SOURCE
-//@see third_party/cosmopolitan/, important for dce.h
-#define _COSMO_SOURCE
+#define _COSMO_SOURCE //for dce.h
 #endif
 #include "libc/dce.h" //IsWindows,IsXnu
 #include "libc/log/backtrace.internal.h"
 #include "libc/nt/memory.h"
 #include "libc/nt/enum/pageflags.h"
 
-#endif
+#endif /* __COSMOPOLITAN__ */
 
-#endif
+#endif //#if defined(__APPLE__) || defined(__linux__) || defined(__COSMOPOLITAN__)
 
 #ifdef _WIN32
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <time.h>
-#include <signal.h>
-#include <stdarg.h>
 #include <io.h>
-#include <fcntl.h>
-#include <errno.h>
-#include <sys/stat.h>
 #include <winsock2.h>
 #include <ws2tcpip.h>
 #define sleep(x) Sleep((x) * 1000)
 #define usleep(x) Sleep((x) / 1000)
+
 #ifndef ssize_t
 #include <BaseTsd.h>
 typedef SSIZE_T ssize_t;
 #endif
-#endif
+
+#endif //_WIN32
 
 #ifndef _STDBOOL_H
 #define _STDBOOL_H
@@ -1314,4 +1534,4 @@ typedef SSIZE_T ssize_t;
 #define _GCC_WRAP_STDINT_H
 #endif
 
-#endif /* COSMORUN_H */
+#endif /* COSMO_LIBC_H */

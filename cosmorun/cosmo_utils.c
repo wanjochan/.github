@@ -85,21 +85,11 @@ void append_string_option(char *buffer, size_t size, const char *opt) {
 // ============================================================================
 
 int trace_enabled(void) {
-    static int cached = -1;
-    if (cached >= 0) return cached;
-    const char *env = getenv("COSMORUN_TRACE");
-    if (!env || !*env) {
-        cached = 0;
-    } else if (isdigit((unsigned char)env[0])) {
-        cached = atoi(env) > 0;
-    } else {
-        cached = 1;
-    }
-    return cached;
+    return g_config.trace_enabled;
 }
 
 void tracef(const char *fmt, ...) {
-    if (!trace_enabled()) return;
+    if (!g_config.trace_enabled) return;
     va_list ap;
     va_start(ap, fmt);
     fprintf(stderr, "[cosmorun] ");
@@ -164,6 +154,11 @@ const char *host_api_getenv_default(const char *name) {
 #undef malloc
 #undef free
 #undef realloc
+#endif
+
+#ifdef strdup
+#undef strdup
+extern char *strdup(const char *s);
 #endif
 
 // Re-declare dlopen functions after tcc.h (for non-Windows)
@@ -460,11 +455,25 @@ platform_ops_t g_platform_ops = {
 
 const char* get_platform_name(void) {
 #ifdef _WIN32
-    return "Windows";
+    #if defined(_M_ARM) || defined(__arm__)
+        return "Windows ARM32";
+    #elif defined(_M_ARM64) || defined(__aarch64__)
+        return "Windows ARM64";
+    #elif defined(_M_AMD64) || defined(__x86_64__)
+        return "Windows x64";
+    #else
+        return "Windows x86";
+    #endif
 #elif defined(__APPLE__)
     return "macOS";
 #elif defined(__linux__)
-    return "Linux";
+    #if defined(__aarch64__)
+        return "Linux ARM64";
+    #elif defined(__arm__)
+        return "Linux ARM32";
+    #else
+        return "Linux x64";
+    #endif
 #else
     return "Unknown";
 #endif
@@ -598,7 +607,7 @@ static void cosmo_crash_signal_handler(int sig) {
 
     fprintf(stderr, "\n🔧 RECOVERY OPTIONS:\n");
     fprintf(stderr, "- Add debug prints around the crash location\n");
-    fprintf(stderr, "- Use COSMORUN_TRACE=1 for detailed execution trace\n");
+    fprintf(stderr, "- Use -vv flag for detailed execution trace\n");
     fprintf(stderr, "- Try running with smaller input data\n");
     fprintf(stderr, "- Check memory usage patterns\n");
 
@@ -758,4 +767,133 @@ char** cosmo_args_build_filtered_argv(int argc, char** argv,
 void cosmo_args_free(char** argv) {
     if (!argv) return;
     free(argv);
+}
+
+// ============================================================================
+// Parallel Compilation Support
+// ============================================================================
+
+#include "cosmo_parallel.h"
+#include <string.h>
+
+// Module compilation task
+typedef struct {
+    char *source_file;
+    char *output_file;
+    char *compiler_flags;
+    int *success_count;
+    pthread_mutex_t *mutex;
+} module_compile_task_t;
+
+// Parallel compilation context
+struct parallel_compile_ctx_t {
+    thread_pool_t *pool;
+    int success_count;
+    pthread_mutex_t mutex;
+};
+
+// Task function for module compilation
+static void compile_module_task(void *arg) {
+    module_compile_task_t *task = (module_compile_task_t*)arg;
+
+    // Build command: gcc -c source -o output flags
+    char cmd[4096];
+    snprintf(cmd, sizeof(cmd), "gcc -c %s -o %s %s 2>&1",
+             task->source_file, task->output_file,
+             task->compiler_flags ? task->compiler_flags : "");
+
+    // Execute compilation
+    int ret = system(cmd);
+
+    // Update success count if compilation succeeded
+    if (ret == 0) {
+        pthread_mutex_lock(task->mutex);
+        (*task->success_count)++;
+        pthread_mutex_unlock(task->mutex);
+    }
+
+    // Cleanup
+    free(task->source_file);
+    free(task->output_file);
+    if (task->compiler_flags) {
+        free(task->compiler_flags);
+    }
+    free(task);
+}
+
+// Create parallel compilation context
+parallel_compile_ctx_t* parallel_compile_create(int num_threads) {
+    parallel_compile_ctx_t *ctx = (parallel_compile_ctx_t*)calloc(1, sizeof(parallel_compile_ctx_t));
+    if (!ctx) {
+        return NULL;
+    }
+
+    ctx->pool = thread_pool_create(num_threads);
+    if (!ctx->pool) {
+        free(ctx);
+        return NULL;
+    }
+
+    pthread_mutex_init(&ctx->mutex, NULL);
+    ctx->success_count = 0;
+
+    return ctx;
+}
+
+// Submit a module for parallel compilation
+int parallel_compile_submit_module(parallel_compile_ctx_t *ctx,
+                                    const char *source_file,
+                                    const char *output_file,
+                                    const char *compiler_flags) {
+    if (!ctx || !source_file || !output_file) {
+        return -1;
+    }
+
+    module_compile_task_t *task = (module_compile_task_t*)malloc(sizeof(module_compile_task_t));
+    if (!task) {
+        return -1;
+    }
+
+    task->source_file = strdup(source_file);
+    task->output_file = strdup(output_file);
+    task->compiler_flags = compiler_flags ? strdup(compiler_flags) : NULL;
+    task->success_count = &ctx->success_count;
+    task->mutex = &ctx->mutex;
+
+    thread_pool_submit(ctx->pool, compile_module_task, task);
+    return 0;
+}
+
+// Wait for all compilations to complete
+int parallel_compile_wait(parallel_compile_ctx_t *ctx) {
+    if (!ctx) {
+        return -1;
+    }
+
+    thread_pool_wait(ctx->pool);
+    return 0;
+}
+
+// Get number of successful compilations
+int parallel_compile_get_success_count(parallel_compile_ctx_t *ctx) {
+    if (!ctx) {
+        return 0;
+    }
+
+    pthread_mutex_lock(&ctx->mutex);
+    int count = ctx->success_count;
+    pthread_mutex_unlock(&ctx->mutex);
+
+    return count;
+}
+
+// Cleanup
+void parallel_compile_destroy(parallel_compile_ctx_t *ctx) {
+    if (!ctx) {
+        return;
+    }
+
+    thread_pool_destroy(ctx->pool);
+    pthread_mutex_destroy(&ctx->mutex);
+    free(ctx);
 }

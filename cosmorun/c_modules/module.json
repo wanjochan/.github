@@ -1,0 +1,14 @@
+{
+  "name": "mod_co",
+  "version": "1.0.0",
+  "description": "Stackful coroutine implementation with inline assembly for ARM64 and x86-64",
+  "sources": [
+    "mod_co.c"
+  ],
+  "exports": [
+    "co_new",
+    "co_start",
+    "co_yield_current",
+    "co_free"
+  ]
+}

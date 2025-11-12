@@ -1,0 +1,29 @@
+{
+  "name": "ui",
+  "version": "1.0.0",
+  "description": "Cross-platform UI module using system libraries via dlopen",
+  "main": "index.c",
+  "author": "cosmorun",
+  "dependencies": [],
+  "exports": [
+    "ui_init",
+    "ui_run",
+    "ui_quit",
+    "ui_cleanup",
+    "ui_window_create",
+    "ui_window_show",
+    "ui_window_center",
+    "ui_window_set_title",
+    "ui_button_create",
+    "ui_button_set_callback",
+    "ui_label_create",
+    "ui_label_set_text"
+  ],
+  "notes": [
+    "Loads system GUI libraries at runtime:",
+    "  macOS: AppKit.framework (built-in)",
+    "  Linux: libgtk-3.so.0 (install: apt install libgtk-3-0)",
+    "  Windows: User32.dll (built-in)",
+    "No external dependencies - pure dlopen approach"
+  ]
+}

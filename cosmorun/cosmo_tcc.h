@@ -2,11 +2,6 @@
 #define COSMO_TCC_H
 
 #include "cosmo_libc.h"
-
-//#define TCC_VERSION "0.9.28rc"
-//#define CONFIG_TCC_PREDEFS 1
-//#include "config.h"
-//#include "libtcc.h"
 #include "tcc.h"
 #include "libtcc.h"
 

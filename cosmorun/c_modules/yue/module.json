@@ -1,0 +1,23 @@
+{
+  "name": "yue",
+  "version": "0.15.6",
+  "description": "Yue cross-platform GUI library bindings for CosmoRun",
+  "main": "index.c",
+  "author": "cosmorun",
+  "dependencies": [],
+  "exports": [
+    "yue_init",
+    "yue_cleanup",
+    "yue_get_symbol",
+    "yue_demo",
+    "yue_create_window_example"
+  ],
+  "notes": [
+    "Requires compiled Yue library (libYue.dylib/so/dll)",
+    "Compile instructions:",
+    "  cd third_party/yue && mkdir build && cd build",
+    "  cmake .. -DCMAKE_BUILD_TYPE=Release",
+    "  make",
+    "  cp libYue.* ../../../cosmorun/lib/"
+  ]
+}

@@ -30,6 +30,21 @@ typedef struct {
     int compile_only;         // -c flag (object file only)
     int verbose;              // -v/-vv flag (show paths and config)
     int preprocess_only;      // -E flag (preprocessor only)
+    int optimization_level;   // -O0/-O1/-O2/-O3/-Os (0=O0, 1=O1, 2=O2, 3=O3, -1=Os)
+    // Dependency generation flags
+    int gen_deps;             // -M/-MM flag (generate dependencies, stop compilation)
+    int gen_deps_and_compile; // -MD/-MMD flag (generate dependencies and compile)
+    int exclude_system_deps;  // -MM/-MMD flag (exclude system headers)
+    int gen_phony_targets;    // -MP flag (generate phony targets for headers)
+    const char *dep_target;   // -MT target (custom dependency target name)
+    const char *dep_file;     // -MF file (custom dependency output file)
+    // GCC/Clang compatibility options (v0.9.1)
+    int warnings_as_errors;   // -Werror flag
+    const char *target_arch;  // -march=<arch> (e.g., "native", "x86-64", "armv7")
+    int target_m32;           // -m32 flag (32-bit target)
+    int target_m64;           // -m64 flag (64-bit target)
+    int static_link;          // -static flag (static linking)
+    int rdynamic;             // -rdynamic flag (export all symbols)
 } parse_result_t;
 
 // Global config structure
@@ -160,11 +175,14 @@ void cosmo_cleanup_char_array(char*** argv);
 #include <setjmp.h>
 #include <signal.h>
 
+typedef struct TCCState TCCState;  // Forward declaration
+
 typedef struct {
     const char* source_file;
     const char* function;
     int line;
     void* user_context;
+    TCCState* tcc_state;  // Support for TCC runtime context
     jmp_buf recovery;
     int recovery_active;
 } cosmo_crash_context_t;
@@ -209,6 +227,32 @@ char** cosmo_args_build_filtered_argv(int argc, char** argv,
 
 // Free argv array allocated by cosmo_args_* functions
 void cosmo_args_free(char** argv);
+
+// ============================================================================
+// Parallel Compilation Support
+// ============================================================================
+
+// Parallel module compilation context
+typedef struct parallel_compile_ctx_t parallel_compile_ctx_t;
+
+// Create parallel compilation context with N threads (0 = auto-detect)
+parallel_compile_ctx_t* parallel_compile_create(int num_threads);
+
+// Submit a module for parallel compilation
+// Each module will be compiled independently (e.g., different .c files to .o)
+int parallel_compile_submit_module(parallel_compile_ctx_t *ctx,
+                                    const char *source_file,
+                                    const char *output_file,
+                                    const char *compiler_flags);
+
+// Wait for all compilations to complete
+int parallel_compile_wait(parallel_compile_ctx_t *ctx);
+
+// Get number of successful compilations
+int parallel_compile_get_success_count(parallel_compile_ctx_t *ctx);
+
+// Cleanup
+void parallel_compile_destroy(parallel_compile_ctx_t *ctx);
 
 #ifdef __cplusplus
 }

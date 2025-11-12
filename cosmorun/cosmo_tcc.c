@@ -7,8 +7,12 @@
  * - Error handling
  */
 
+//#include <stdatomic.h>  // C11 atomic operations
+//#include <dirent.h>     // Directory operations for .S file discovery
 #include "cosmo_tcc.h"
 #include "cosmo_utils.h"
+#include "cosmo_ffi.h"
+#include "cosmo_lock.h"
 #include "xdl.h"
 
 // Forward declarations for wrapper functions
@@ -79,12 +83,36 @@ extern cosmorun_result_t init_config(void);
 //#include "cosmo_trampoline.h"
 extern void *cosmo_trampoline_wrap(void *module, void *addr);
 
+// Coroutine runtime support (from cosmo_co.c)
+// NOTE: Stackful coroutines use inline assembly, these old helpers are no longer needed
+// extern void* __co_stack_alloc(size_t size);       // REMOVED: stackful uses malloc directly
+// extern void __co_stack_free(void* stack);         // REMOVED: stackful uses free directly
+// extern void* __co_alloca(size_t size);            // REMOVED: copy-stack only
+// extern void* __co_read_sp(void);                  // REMOVED: copy-stack only
+// extern int __co_setjmp(jmp_buf env);              // REMOVED: copy-stack only
+// extern void __co_longjmp(jmp_buf env, int val);   // REMOVED: copy-stack only
+
+// pthread stack APIs (cosmopolitan cross-platform)
+extern int pthread_getattr_np(pthread_t thread, pthread_attr_t *attr);
+extern int pthread_attr_getstack(const pthread_attr_t *attr, void **stackaddr, size_t *stacksize);
+extern int pthread_attr_destroy(pthread_attr_t *attr);
+
+// Pure builtin coroutine API (from cosmo_co.c)
+typedef void (*co_builtin_func_t)(void* arg);
+extern void* __co_builtin_create(co_builtin_func_t func, void* arg);
+extern void* __co_builtin_resume_api(void* handle);
+extern int __co_builtin_yield(void* value);
+extern void __co_builtin_free(void* handle);
+extern int __co_builtin_state(void* handle);
+extern int __co_builtin_is_alive(void* handle);
+
 // Forward declarations
 void tcc_error_func(void *opaque, const char *msg);
 void register_default_include_paths(TCCState *s, const struct utsname *uts);
 void register_default_library_paths(TCCState *s);
 void register_builtin_symbols(TCCState *s);
 void link_tcc_runtime(TCCState *s);
+static void print_module_cache_stats(void);
 
 #if defined(__aarch64__) || defined(__arm64__)
 // ARM64: Long double (128-bit) runtime helpers
@@ -191,8 +219,29 @@ const char* tcc_runtime_lib =
 const char* tcc_runtime_lib = "";
 #endif
 
+// Universal stdarg definitions (works on all platforms)
+const char* tcc_stdarg_defs =
+"/* stdarg.h - variadic function support using TCC builtins */\n"
+"#ifndef _STDARG_H_DEFINED\n"
+"#define _STDARG_H_DEFINED\n"
+"\n"
+"/* Use TCC's builtin varargs support directly */\n"
+"typedef __builtin_va_list va_list;\n"
+"#define va_start(ap, last) __builtin_va_start(ap, last)\n"
+"#define va_arg(ap, type)   __builtin_va_arg(ap, type)\n"
+"#define va_end(ap)         __builtin_va_end(ap)\n"
+"#define va_copy(dest, src) __builtin_va_copy(dest, src)\n"
+"\n"
+"#endif /* _STDARG_H_DEFINED */\n";
+
 // Link runtime library into TCC state
 void link_tcc_runtime(TCCState *s) {
+    // First, inject stdarg definitions (required by many modules)
+    if (tcc_compile_string(s, tcc_stdarg_defs) < 0) {
+        fprintf(stderr, "[cosmorun] Warning: Failed to compile stdarg definitions\n");
+    }
+
+    // Then, inject platform-specific runtime helpers
     if (tcc_runtime_lib && tcc_runtime_lib[0] != '\0') {
         if (tcc_compile_string(s, tcc_runtime_lib) < 0) {
             fprintf(stderr, "[cosmorun] Warning: Failed to compile runtime library\n");
@@ -481,9 +530,9 @@ extern void *cosmorun_memset(void *s, int c, size_t n);
 extern void *cosmorun_memmove(void *dest, const void *src, size_t n);
 
 // Cosmopolitan dynamic module loading API
-extern void *__import(const char *module);
-extern void *__import_sym(void *handle, const char *symbol);
-extern void __import_free(void *handle);
+ void *__import(const char *module);
+ void *__import_sym(void *handle, const char *symbol);
+ void __import_free(void *handle);
 
 // Platform-specific functions
 extern int cosmorun_uname(struct utsname *buf);
@@ -708,6 +757,11 @@ int cosmorun_IsQemuUser(void) {
 }
 #endif
 
+// Forward declaration for ARM64 vararg trampoline wrapper
+#ifdef __aarch64__
+void *__dlsym_varg(void *vfunc, int variadic_type);
+#endif
+
 // Level 1: Builtin symbol table (O(1) lookup)
 const SymbolEntry builtin_symbol_table[] = {
   // I/O functions (most frequently used) - MUST be builtin for varargs compatibility
@@ -779,12 +833,18 @@ const SymbolEntry builtin_symbol_table[] = {
   {"__import", __import},//./cosmorun.exe -e 'int main(){void* h=__import("std.c");printf("h=%d\n",h);}'
   {"__import_sym", __import_sym},
   {"__import_free", __import_free},
-
+  {"__print_cache_stats", print_module_cache_stats},
   // CosmoRun dynamic loading (platform abstraction)
   {"__dlopen", cosmorun_dlopen},
   {"__dlsym", cosmorun_dlsym},
-  {"dlopen", cosmorun_dlopen},
-  {"dlsym", cosmorun_dlsym},
+#ifdef __aarch64__
+  {"__dlsym_varg", __dlsym_varg},  // ARM64 vararg trampoline wrapper
+#endif
+//   {"__dlclose", xdl_close},
+//   {"__dlerror", xdl_error},
+
+  {"dlopen", cosmorun_dlopen},//TODO xdl_open
+  {"dlsym", cosmorun_dlsym},//TODO xdl_sym
   {"dlclose", xdl_close},
   {"dlerror", xdl_error},
 
@@ -984,6 +1044,13 @@ const SymbolEntry builtin_symbol_table[] = {
   {"acosh", acosh},
   {"log1p", log1p},
 
+//   //TODO
+//   {"va_start",va_start},
+//   {"va_end",va_end},
+//   //va_list,__builtin_va_list
+//   {"va_copy",va_copy},
+//   {"va_arg",va_arg},
+
   // libtcc functions
   //{"tcc_new", tcc_new},
   //{"tcc_delete", tcc_delete},
@@ -1047,6 +1114,73 @@ void register_builtin_symbols(TCCState *s) {
             tracef("register_builtin_symbols: failed for %s", entry->name);
         }
     }
+
+    /* Register FFI generator symbols */
+    tcc_add_symbol(s, "ffi_context_create", ffi_context_create);
+    tcc_add_symbol(s, "ffi_context_destroy", ffi_context_destroy);
+    tcc_add_symbol(s, "ffi_parse_header", ffi_parse_header);
+    tcc_add_symbol(s, "ffi_generate_bindings", ffi_generate_bindings);
+    tcc_add_symbol(s, "ffi_parse_function_declaration", ffi_parse_function_declaration);
+    tcc_add_symbol(s, "ffi_parse_struct", ffi_parse_struct);
+    tcc_add_symbol(s, "ffi_parse_enum", ffi_parse_enum);
+    tcc_add_symbol(s, "ffi_parse_typedef", ffi_parse_typedef);
+    tcc_add_symbol(s, "ffi_get_type_category", ffi_get_type_category);
+    tcc_add_symbol(s, "ffi_generate_function_pointer", ffi_generate_function_pointer);
+    tcc_add_symbol(s, "ffi_generate_loader_code", ffi_generate_loader_code);
+    tcc_add_symbol(s, "ffi_trim_whitespace", ffi_trim_whitespace);
+    tcc_add_symbol(s, "ffi_is_comment_or_empty", ffi_is_comment_or_empty);
+    tcc_add_symbol(s, "ffi_remove_preprocessor", ffi_remove_preprocessor);
+
+    /* Register coroutine runtime symbols */
+    /* NOTE: Stackful coroutines no longer need these copy-stack helpers */
+    // tcc_add_symbol(s, "__co_stack_alloc", __co_stack_alloc);  /* REMOVED: stackful uses malloc */
+    // tcc_add_symbol(s, "__co_stack_free", __co_stack_free);    /* REMOVED: stackful uses free */
+    // tcc_add_symbol(s, "__co_alloca", __co_alloca);            /* REMOVED: copy-stack only */
+    // tcc_add_symbol(s, "__co_read_sp", __co_read_sp);          /* REMOVED: copy-stack only */
+    // tcc_add_symbol(s, "__co_setjmp", __co_setjmp);            /* REMOVED: copy-stack only */
+    // tcc_add_symbol(s, "__co_longjmp", __co_longjmp);          /* REMOVED: copy-stack only */
+
+    /* Register pthread stack APIs (cosmopolitan cross-platform) */
+    tcc_add_symbol(s, "pthread_getattr_np", pthread_getattr_np);
+    tcc_add_symbol(s, "pthread_attr_getstack", pthread_attr_getstack);
+    tcc_add_symbol(s, "pthread_attr_destroy", pthread_attr_destroy);
+
+    /* Register pure builtin coroutine API */
+    tcc_add_symbol(s, "__co_builtin_create", __co_builtin_create);
+    tcc_add_symbol(s, "__co_builtin_resume_api", __co_builtin_resume_api);
+    tcc_add_symbol(s, "__co_builtin_yield", __co_builtin_yield);
+    tcc_add_symbol(s, "__co_builtin_free", __co_builtin_free);
+    tcc_add_symbol(s, "__co_builtin_state", __co_builtin_state);
+    tcc_add_symbol(s, "__co_builtin_is_alive", __co_builtin_is_alive);
+
+    /* Register lockfile system symbols */
+    tcc_add_symbol(s, "cosmo_lock_create", cosmo_lock_create);
+    tcc_add_symbol(s, "cosmo_lock_destroy", cosmo_lock_destroy);
+    tcc_add_symbol(s, "cosmo_lock_set_lockfile_path", cosmo_lock_set_lockfile_path);
+    tcc_add_symbol(s, "cosmo_lock_set_package_json_path", cosmo_lock_set_package_json_path);
+    tcc_add_symbol(s, "cosmo_lock_generate", cosmo_lock_generate);
+    tcc_add_symbol(s, "cosmo_lock_load", cosmo_lock_load);
+    tcc_add_symbol(s, "cosmo_lock_save", cosmo_lock_save);
+    tcc_add_symbol(s, "cosmo_lock_verify", cosmo_lock_verify);
+    tcc_add_symbol(s, "cosmo_lock_update_dependency", cosmo_lock_update_dependency);
+    tcc_add_symbol(s, "cosmo_lock_add_dependency", cosmo_lock_add_dependency);
+    tcc_add_symbol(s, "cosmo_lock_find_dependency", cosmo_lock_find_dependency);
+    tcc_add_symbol(s, "cosmo_lock_remove_dependency", cosmo_lock_remove_dependency);
+    tcc_add_symbol(s, "cosmo_lock_resolve_conflicts", cosmo_lock_resolve_conflicts);
+    tcc_add_symbol(s, "cosmo_lock_version_compare", cosmo_lock_version_compare);
+    tcc_add_symbol(s, "cosmo_lock_version_satisfies", cosmo_lock_version_satisfies);
+    tcc_add_symbol(s, "cosmo_lock_parse_semver", cosmo_lock_parse_semver);
+    tcc_add_symbol(s, "cosmo_lock_calculate_integrity", cosmo_lock_calculate_integrity);
+    tcc_add_symbol(s, "cosmo_lock_verify_integrity", cosmo_lock_verify_integrity);
+    tcc_add_symbol(s, "cosmo_lock_to_json", cosmo_lock_to_json);
+    tcc_add_symbol(s, "cosmo_lock_from_json", cosmo_lock_from_json);
+    tcc_add_symbol(s, "cosmo_lock_should_install", cosmo_lock_should_install);
+    tcc_add_symbol(s, "cosmo_lock_mark_installed", cosmo_lock_mark_installed);
+    tcc_add_symbol(s, "cosmo_lock_get_install_version", cosmo_lock_get_install_version);
+    tcc_add_symbol(s, "cosmo_lock_print_summary", cosmo_lock_print_summary);
+    tcc_add_symbol(s, "cosmo_lock_get_error", cosmo_lock_get_error);
+    tcc_add_symbol(s, "cosmo_lock_clear_error", cosmo_lock_clear_error);
+    tcc_add_symbol(s, "cosmo_lock_validate", cosmo_lock_validate);
 }
 
 // ============================================================================
@@ -1272,7 +1406,6 @@ inline resource_manager_t create_resource_manager(void* resource,
 inline void cleanup_resource_manager(resource_manager_t* manager) {
     if (manager && manager->resource && manager->cleanup_fn) {
         if (g_config.trace_enabled) {
-            fprintf(stderr, "[cosmorun] Cleaning up resource: %s\n", manager->name);
         }
         manager->cleanup_fn(manager->resource);
         manager->resource = NULL;
@@ -1353,17 +1486,32 @@ void build_default_tcc_options(char *buffer, size_t size, const struct utsname *
         append_string_option(buffer, size, "-D_WIN32");
         append_string_option(buffer, size, "-DWIN32");
         append_string_option(buffer, size, "-D_WINDOWS");
+#if defined(_M_ARM) || defined(__arm__)
+        append_string_option(buffer, size, "-D_M_ARM");
+        append_string_option(buffer, size, "-D__ARM_ARCH_7__");
+        append_string_option(buffer, size, "-D__thumb2__");
+        append_string_option(buffer, size, "-DTCC_TARGET_ARM");
+#elif defined(_M_ARM64) || defined(__aarch64__)
+        append_string_option(buffer, size, "-DTCC_TARGET_ARM64");
+#endif
     } else if (is_macos) {
         append_string_option(buffer, size, "-D__APPLE__");
         append_string_option(buffer, size, "-D__MACH__");
         append_string_option(buffer, size, "-DTCC_TARGET_MACHO");
 #ifdef __aarch64__
         append_string_option(buffer, size, "-DTCC_TARGET_ARM64");
+#elif defined(__arm__)
+        append_string_option(buffer, size, "-DTCC_TARGET_ARM");
+        append_string_option(buffer, size, "-D__ARM_ARCH_7A__");
 #endif
     } else {
         append_string_option(buffer, size, "-D__unix__");
         if (is_linux) {
             append_string_option(buffer, size, "-D__linux__");
+#if defined(__arm__)
+            append_string_option(buffer, size, "-D__ARM_ARCH_7__");
+            append_string_option(buffer, size, "-DTCC_TARGET_ARM");
+#endif
         }
     }
 }
@@ -1407,7 +1555,6 @@ void register_default_include_paths(TCCState *s, const struct utsname *uts) {
     // Fast path: use cached paths (skip dir_exists checks ~2-4ms)
     if (g_paths_initialized) {
         if (g_config.trace_enabled) {
-            fprintf(stderr, "[cosmorun] Using %d cached include paths (fast path)\n", g_cached_path_count);
         }
         for (int i = 0; i < g_cached_path_count; i++) {
             tcc_add_include_path(s, g_cached_include_paths[i]);
@@ -1418,11 +1565,12 @@ void register_default_include_paths(TCCState *s, const struct utsname *uts) {
 
     // Slow path: first time, check and cache valid paths
     if (g_config.trace_enabled >= 2) {
-        fprintf(stderr, "[cosmorun] Initializing include paths for %s (slow path)\n", sysname);
     }
 
     // Universal local paths (checked on ALL platforms first)
     const char *local_candidates[] = {
+        ".",                   // Current directory (for root-level headers)
+        "./c_modules",         // Module directory (for module inter-dependencies)
         "./include",           // Current directory include
         "./lib/include",       // Local lib include
         "../include",          // Parent directory include (for project structures)
@@ -1488,7 +1636,6 @@ void register_default_include_paths(TCCState *s, const struct utsname *uts) {
     g_paths_initialized = 1;
 
     if (g_config.trace_enabled >= 2) {
-        fprintf(stderr, "[cosmorun] Path cache initialized with %d valid paths\n", g_cached_path_count);
     }
 }
 
@@ -1542,6 +1689,13 @@ TCCState* init_tcc_state(void) {
             cosmorun_perror(result, "init_config");
             return NULL;
         }
+
+        // Register cache stats printer (one-time, at first init)
+        static int stats_registered = 0;
+        if (!stats_registered && getenv("COSMORUN_DEBUG_CACHE")) {
+            atexit(print_module_cache_stats);
+            stats_registered = 1;
+        }
     }
 
     TCCState *s = tcc_new();
@@ -1558,7 +1712,6 @@ TCCState* init_tcc_state(void) {
     build_default_tcc_options(g_config.tcc_options, sizeof(g_config.tcc_options), &g_config.uts);
     if (g_config.tcc_options[0]) {
         if (g_config.trace_enabled) {
-            fprintf(stderr, "[cosmorun] TCC options: %s\n", g_config.tcc_options);
         }
         tcc_set_options(s, g_config.tcc_options);
     }
@@ -1649,16 +1802,728 @@ const char* cosmo_tcc_get_cached_path(int index) {
     return g_cached_include_paths[index];
 }
 
-void* __import(const char* path) {
+// Simple JSON parser to extract dependencies from module.json
+// Returns number of dependencies found (max 32), fills deps array with dependency names
+static int parse_module_dependencies(const char* module_dir, char deps[][256], int max_deps) {
+    char json_path[PATH_MAX];
+    snprintf(json_path, sizeof(json_path), "%s/module.json", module_dir);
+
+    FILE* f = fopen(json_path, "r");
+    if (!f) {
+        tracef("no module.json found at '%s'", json_path);
+        return 0;
+    }
+
+    // Read entire file into buffer
+    fseek(f, 0, SEEK_END);
+    long size = ftell(f);
+    fseek(f, 0, SEEK_SET);
+
+    if (size <= 0 || size > 1024 * 1024) {
+        fclose(f);
+        return 0;
+    }
+
+    char* content = malloc(size + 1);
+    if (!content) {
+        fclose(f);
+        return 0;
+    }
+
+    fread(content, 1, size, f);
+    content[size] = '\0';
+    fclose(f);
+
+    // Find "dependencies" field
+    char* deps_start = strstr(content, "\"dependencies\"");
+    if (!deps_start) {
+        free(content);
+        return 0;
+    }
+
+    // Find opening bracket [
+    char* array_start = strchr(deps_start, '[');
+    if (!array_start) {
+        free(content);
+        return 0;
+    }
+
+    // Find closing bracket ]
+    char* array_end = strchr(array_start, ']');
+    if (!array_end) {
+        free(content);
+        return 0;
+    }
+
+    // Extract dependency names from array
+    int dep_count = 0;
+    char* pos = array_start + 1;
+
+    while (pos < array_end && dep_count < max_deps) {
+        // Skip whitespace
+        while (*pos == ' ' || *pos == '\n' || *pos == '\r' || *pos == '\t' || *pos == ',') {
+            pos++;
+        }
+
+        if (*pos == '"') {
+            pos++; // Skip opening quote
+            char* name_start = pos;
+
+            // Find closing quote
+            while (*pos && *pos != '"') {
+                pos++;
+            }
+
+            if (*pos == '"') {
+                int len = pos - name_start;
+                if (len > 0 && len < 255) {
+                    strncpy(deps[dep_count], name_start, len);
+                    deps[dep_count][len] = '\0';
+                    tracef("found dependency: '%s'", deps[dep_count]);
+                    dep_count++;
+                }
+                pos++; // Skip closing quote
+            }
+        } else if (*pos == ']') {
+            break;
+        } else {
+            pos++;
+        }
+    }
+
+    free(content);
+    return dep_count;
+}
+
+// ============================================================================
+// Circular Dependency Detection
+// ============================================================================
+
+#define MAX_LOADING_DEPTH 32
+
+typedef struct {
+    char paths[MAX_LOADING_DEPTH][PATH_MAX];
+    int count;
+} loading_stack_t;
+
+// Thread-local storage: each thread has independent loading stack
+// This prevents interference when multiple threads load modules concurrently
+__thread loading_stack_t g_loading_stack = {0};
+
+// ============================================================================
+// Module Registry (Module Caching & Reference Counting)
+// ============================================================================
+
+// Module cache state
+typedef enum {
+    MODULE_ACTIVE = 0,    // Active (ref_count > 0)
+    MODULE_IDLE = 1,      // Idle in cache (ref_count == 0)
+    MODULE_EVICTED = 2    // Evicted from cache
+} module_state_t;
+
+typedef struct module {
+    char path[PATH_MAX];          // Module path (normalized)
+    TCCState* state;              // TCC state (compiled code)
+    atomic_int ref_count;         // Reference count (user references) - ATOMIC for thread-safety
+    module_state_t cache_state;   // Cache state (ACTIVE/IDLE/EVICTED)
+    time_t load_time;             // Load timestamp
+    atomic_long last_access;      // Last access timestamp (for LRU) - ATOMIC (time_t is long)
+    struct module* next;          // Linked list
+} module_t;
+
+typedef struct {
+    module_t* head;               // Linked list head (protected by g_registry_lock)
+    int count;                    // Total modules (ACTIVE + IDLE) - protected by g_registry_lock
+    atomic_int active_count;      // Active modules (ref_count > 0) - ATOMIC for lock-free incref/decref
+    atomic_int idle_count;        // Idle modules (ref_count == 0, cached) - ATOMIC
+    // Cache statistics (best-effort, lock-free updates acceptable)
+    atomic_long cache_hits;       // Cache hits (found IDLE module)
+    atomic_long cache_misses;     // Cache misses (need to compile)
+    atomic_long evictions;        // Cache evictions (LRU)
+} module_registry_t;
+
+static module_registry_t g_module_registry = {0};
+
+// Cache configuration
+#define MODULE_CACHE_MAX_IDLE 32  // Max idle modules to keep cached
+
+// Thread-safe access to registry with read-write lock
+// Read lock: multiple threads can search concurrently
+// Write lock: exclusive access for register/unregister operations
+static pthread_rwlock_t g_registry_lock = PTHREAD_RWLOCK_INITIALIZER;
+
+// Global compilation mutex to prevent concurrent TCC compilations
+// TCC is not thread-safe, so we need to serialize all compilation operations
+// This prevents TOCTOU race conditions where multiple threads try to compile
+// the same module simultaneously
+// IMPORTANT: This must be a RECURSIVE mutex to allow dependency loading within
+// the same thread (mod_net depends on std, both need compilation)
+static pthread_mutex_t g_compilation_lock;
+static pthread_once_t g_compilation_lock_once = PTHREAD_ONCE_INIT;
+
+static void init_compilation_lock(void) {
+    pthread_mutexattr_t attr;
+    pthread_mutexattr_init(&attr);
+    pthread_mutexattr_settype(&attr, PTHREAD_MUTEX_RECURSIVE);
+    pthread_mutex_init(&g_compilation_lock, &attr);
+    pthread_mutexattr_destroy(&attr);
+}
+
+// Forward declarations
+static void module_incref(module_t* mod);
+static int module_decref(module_t* mod);
+
+// Find module by path (thread-safe with read lock)
+// Returns module in any state (ACTIVE or IDLE)
+// NOTE: Caller must handle module_incref BEFORE releasing lock (use find_and_incref_module instead)
+static module_t* find_module_unlocked(const char* path) {
+    // Caller must hold g_registry_lock (rdlock or wrlock)
+    for (module_t* mod = g_module_registry.head; mod; mod = mod->next) {
+        // Skip evicted modules
+        if (mod->cache_state == MODULE_EVICTED) continue;
+
+        if (strcmp(mod->path, path) == 0) {
+            return mod;
+        }
+    }
+    return NULL;
+}
+
+// Find module and increment ref count atomically (thread-safe)
+// This is the CORRECT way to get a module reference safely
+// Returns module with ref_count already incremented, or NULL if not found
+static module_t* find_and_incref_module(const char* path) {
+    pthread_rwlock_rdlock(&g_registry_lock);
+
+    module_t* mod = find_module_unlocked(path);
+    if (mod) {
+        // Increment ref_count while holding lock (safe from eviction)
+        module_incref(mod);
+    }
+
+    pthread_rwlock_unlock(&g_registry_lock);
+    return mod;
+}
+
+// Increment module reference count (lock-free using atomic operations)
+// Transitions IDLE → ACTIVE when ref_count 0→1
+// NOTE: Caller must NOT hold g_registry_lock (to avoid deadlock)
+static void module_incref(module_t* mod) {
+    if (!mod) return;
+
+    // Atomically increment ref_count (no lock needed)
+    int old_refs = atomic_fetch_add(&mod->ref_count, 1);
+    atomic_store(&mod->last_access, time(NULL));
+
+    // Update cache state if transitioning IDLE→ACTIVE
+    // Use atomic CAS to avoid race (no lock needed for correctness)
+    // Stats update is best-effort (may be slightly inaccurate but acceptable)
+    if (old_refs == 0 && mod->cache_state == MODULE_IDLE) {
+        // Atomically transition IDLE→ACTIVE (lock-free)
+        // Multiple threads may race here, but only one will succeed
+        module_state_t expected = MODULE_IDLE;
+        if (__atomic_compare_exchange_n(&mod->cache_state, &expected, MODULE_ACTIVE,
+                                        0, __ATOMIC_SEQ_CST, __ATOMIC_SEQ_CST)) {
+            // Successfully transitioned - update stats (best-effort, no lock)
+            __atomic_fetch_sub(&g_module_registry.idle_count, 1, __ATOMIC_RELAXED);
+            __atomic_fetch_add(&g_module_registry.active_count, 1, __ATOMIC_RELAXED);
+            __atomic_fetch_add(&g_module_registry.cache_hits, 1, __ATOMIC_RELAXED);
+            tracef("module_incref: '%s' IDLE→ACTIVE (cache hit, lock-free)",
+                   mod->path);
+        }
+    }
+
+    tracef("module_incref: '%s' (refs=%d, state=%d)", mod->path,
+           atomic_load(&mod->ref_count), mod->cache_state);
+}
+
+// Decrement module reference count (lock-free using atomic operations)
+// Transitions ACTIVE → IDLE when ref_count 1→0 (keeps module cached)
+// Returns 1 if module was evicted/freed, 0 otherwise
+// NOTE: Caller must NOT hold g_registry_lock (to avoid deadlock)
+static int module_decref(module_t* mod) {
+    if (!mod) return 0;
+
+    // Atomically decrement ref_count (no lock needed)
+    int old_refs = atomic_fetch_sub(&mod->ref_count, 1);
+    atomic_store(&mod->last_access, time(NULL));
+
+    tracef("module_decref: '%s' (refs=%d→%d)", mod->path, old_refs, old_refs - 1);
+
+    // Update cache state if transitioning ACTIVE→IDLE
+    // Use atomic CAS to avoid race (no lock needed for correctness)
+    // Stats update is best-effort (may be slightly inaccurate but acceptable)
+    if (old_refs == 1 && mod->cache_state == MODULE_ACTIVE) {
+        // Double-check ref_count is still 0 (another thread may have incremented)
+        if (atomic_load(&mod->ref_count) == 0) {
+            // Atomically transition ACTIVE→IDLE (lock-free)
+            module_state_t expected = MODULE_ACTIVE;
+            if (__atomic_compare_exchange_n(&mod->cache_state, &expected, MODULE_IDLE,
+                                            0, __ATOMIC_SEQ_CST, __ATOMIC_SEQ_CST)) {
+                // Successfully transitioned - update stats (best-effort, no lock)
+                __atomic_fetch_sub(&g_module_registry.active_count, 1, __ATOMIC_RELAXED);
+                __atomic_fetch_add(&g_module_registry.idle_count, 1, __ATOMIC_RELAXED);
+                int idle = __atomic_load_n(&g_module_registry.idle_count, __ATOMIC_RELAXED);
+                tracef("module_decref: '%s' ACTIVE→IDLE (cached, idle=%d/%d, lock-free)",
+                       mod->path, idle, MODULE_CACHE_MAX_IDLE);
+            }
+        }
+    }
+
+    // Note: module stays in cache, not freed immediately
+    return 0;
+}
+
+// Evict least recently used IDLE module (caller must hold write lock)
+// Returns 1 if module was evicted, 0 otherwise
+static int evict_lru_idle_module(void) {
+    module_t* lru_mod = NULL;
+    time_t oldest_access = 0;
+
+    // Find LRU IDLE module (using atomic load for last_access)
+    for (module_t* m = g_module_registry.head; m; m = m->next) {
+        if (m->cache_state == MODULE_IDLE) {
+            time_t access_time = (time_t)atomic_load(&m->last_access);
+            if (!lru_mod || access_time < oldest_access) {
+                lru_mod = m;
+                oldest_access = access_time;
+            }
+        }
+    }
+
+    if (!lru_mod) return 0;  // No IDLE modules to evict
+
+    // Remove from linked list
+    if (g_module_registry.head == lru_mod) {
+        g_module_registry.head = lru_mod->next;
+    } else {
+        module_t* prev = g_module_registry.head;
+        while (prev && prev->next != lru_mod) {
+            prev = prev->next;
+        }
+        if (prev) {
+            prev->next = lru_mod->next;
+        }
+    }
+
+    g_module_registry.count--;
+    __atomic_fetch_sub(&g_module_registry.idle_count, 1, __ATOMIC_RELAXED);
+    long evict_num = __atomic_fetch_add(&g_module_registry.evictions, 1, __ATOMIC_RELAXED) + 1;
+
+    tracef("evicted LRU module '%s' (eviction #%ld, remaining=%d)",
+           lru_mod->path, evict_num, g_module_registry.count);
+
+    // Free TCC state (outside registry lock would be better, but acceptable here)
+    if (lru_mod->state) {
+        tcc_delete(lru_mod->state);
+    }
+    free(lru_mod);
+
+    return 1;
+}
+
+// Register new module (thread-safe with write lock)
+// Evicts LRU IDLE module if cache is full
+static module_t* register_module(const char* path, TCCState* state) {
+    module_t* mod = (module_t*)malloc(sizeof(module_t));
+    if (!mod) return NULL;
+
+    strncpy(mod->path, path, PATH_MAX - 1);
+    mod->path[PATH_MAX - 1] = '\0';
+    mod->state = state;
+    mod->ref_count = 1;
+    mod->cache_state = MODULE_ACTIVE;
+    mod->load_time = time(NULL);
+    mod->last_access = time(NULL);
+
+    pthread_rwlock_wrlock(&g_registry_lock);
+
+    // Evict LRU IDLE module if cache exceeds limit (use atomic load)
+    while (__atomic_load_n(&g_module_registry.idle_count, __ATOMIC_RELAXED) >= MODULE_CACHE_MAX_IDLE) {
+        if (!evict_lru_idle_module()) break;
+    }
+
+    mod->next = g_module_registry.head;
+    g_module_registry.head = mod;
+    g_module_registry.count++;
+    __atomic_fetch_add(&g_module_registry.active_count, 1, __ATOMIC_RELAXED);
+    long miss_num = __atomic_fetch_add(&g_module_registry.cache_misses, 1, __ATOMIC_RELAXED) + 1;
+
+    int active = __atomic_load_n(&g_module_registry.active_count, __ATOMIC_RELAXED);
+    int idle = __atomic_load_n(&g_module_registry.idle_count, __ATOMIC_RELAXED);
+    tracef("registered module '%s' (total=%d, active=%d, idle=%d, miss #%ld)",
+           path, g_module_registry.count, active, idle, miss_num);
+
+    pthread_rwlock_unlock(&g_registry_lock);
+    return mod;
+}
+
+// Print module cache statistics (debug mode)
+// Call this at program exit or on-demand for diagnostics
+static void print_module_cache_stats(void) {
+    if (!getenv("COSMORUN_DEBUG_CACHE")) return;
+
+    pthread_rwlock_rdlock(&g_registry_lock);
+
+    // Use atomic loads for thread-safe statistics reading
+    int active = __atomic_load_n(&g_module_registry.active_count, __ATOMIC_RELAXED);
+    int idle = __atomic_load_n(&g_module_registry.idle_count, __ATOMIC_RELAXED);
+    long hits = __atomic_load_n(&g_module_registry.cache_hits, __ATOMIC_RELAXED);
+    long misses = __atomic_load_n(&g_module_registry.cache_misses, __ATOMIC_RELAXED);
+    long evictions = __atomic_load_n(&g_module_registry.evictions, __ATOMIC_RELAXED);
+
+    fprintf(stderr, "\n=== Module Cache Statistics ===\n");
+    fprintf(stderr, "Total modules:  %d (active=%d, idle=%d)\n",
+            g_module_registry.count, active, idle);
+    fprintf(stderr, "Cache hits:     %ld\n", hits);
+    fprintf(stderr, "Cache misses:   %ld\n", misses);
+    fprintf(stderr, "Evictions:      %ld\n", evictions);
+
+    long total_access = hits + misses;
+    if (total_access > 0) {
+        double hit_rate = (double)hits * 100.0 / total_access;
+        fprintf(stderr, "Hit rate:       %.1f%%\n", hit_rate);
+    }
+
+    fprintf(stderr, "\nCached modules:\n");
+    for (module_t* m = g_module_registry.head; m; m = m->next) {
+        const char* state_str = (m->cache_state == MODULE_ACTIVE) ? "ACTIVE" :
+                                (m->cache_state == MODULE_IDLE) ? "IDLE" : "EVICTED";
+        int refs = atomic_load(&m->ref_count);
+        fprintf(stderr, "  %s [%s, refs=%d]\n", m->path, state_str, refs);
+    }
+    fprintf(stderr, "================================\n\n");
+
+    pthread_rwlock_unlock(&g_registry_lock);
+}
+
+// Push module path to loading stack
+// Returns 0 on success, -1 if circular dependency detected
+static int push_loading_module(const char* path) {
+    // Check for circular dependency
+    for (int i = 0; i < g_loading_stack.count; i++) {
+        if (strcmp(g_loading_stack.paths[i], path) == 0) {
+            // Circular dependency detected - print the chain
+            fprintf(stderr, "\n[cosmorun] ERROR: Circular dependency detected:\n");
+            for (int j = i; j < g_loading_stack.count; j++) {
+                fprintf(stderr, "  %s ->\n", g_loading_stack.paths[j]);
+            }
+            fprintf(stderr, "  %s (循环)\n\n", path);
+            return -1;
+        }
+    }
+
+    // Check stack depth limit
+    if (g_loading_stack.count >= MAX_LOADING_DEPTH) {
+        fprintf(stderr, "[cosmorun] ERROR: Module dependency depth exceeds limit (%d)\n",
+                MAX_LOADING_DEPTH);
+        return -1;
+    }
+
+    // Push to stack
+    strncpy(g_loading_stack.paths[g_loading_stack.count], path, PATH_MAX - 1);
+    g_loading_stack.paths[g_loading_stack.count][PATH_MAX - 1] = '\0';
+    g_loading_stack.count++;
+
+    tracef("loading stack push: '%s' (depth=%d)", path, g_loading_stack.count);
+    return 0;
+}
+
+// Pop module from loading stack
+static void pop_loading_module(void) {
+    if (g_loading_stack.count > 0) {
+        g_loading_stack.count--;
+        tracef("loading stack pop (depth=%d)", g_loading_stack.count);
+    }
+}
+
+// Recursively check if any .h files in a directory are newer than cache
+// Returns 1 if any header is newer, 0 otherwise
+static int check_headers_in_dir(const char* dir_path, time_t cache_mtime, int recursive) {
+    DIR *dir = opendir(dir_path);
+    if (!dir) return 0;
+
+    struct dirent *entry;
+    int headers_modified = 0;
+
+    while ((entry = readdir(dir)) != NULL) {
+        // Skip . and ..
+        if (strcmp(entry->d_name, ".") == 0 || strcmp(entry->d_name, "..") == 0) {
+            continue;
+        }
+
+        char full_path[PATH_MAX];
+        snprintf(full_path, sizeof(full_path), "%s/%s", dir_path, entry->d_name);
+
+        struct stat st;
+        if (stat(full_path, &st) != 0) continue;
+
+        if (S_ISDIR(st.st_mode) && recursive) {
+            // Recursively check subdirectory
+            if (check_headers_in_dir(full_path, cache_mtime, recursive)) {
+                headers_modified = 1;
+                break;
+            }
+        } else if (S_ISREG(st.st_mode)) {
+            // Check if it's a .h file
+            size_t len = strlen(entry->d_name);
+            if (len > 2 && strcmp(entry->d_name + len - 2, ".h") == 0) {
+                if (st.st_mtime > cache_mtime) {
+                    tracef("header '%s' newer than cache, invalidating", full_path);
+                    headers_modified = 1;
+                    break;
+                }
+            }
+        }
+    }
+
+    closedir(dir);
+    return headers_modified;
+}
+
+// Extract module name from file path (removes directory and extension)
+// Example: "c_modules/foo/index.c" -> "foo", "bar.c" -> "bar"
+static void extract_module_name(const char* path, char* out, size_t out_size) {
+    if (!path || !out || out_size == 0) {
+        return;
+    }
+
+    const char* last_slash = strrchr(path, '/');
+    const char* basename = last_slash ? (last_slash + 1) : path;
+    const char* dot = strrchr(basename, '.');
+    size_t name_len = dot ? (size_t)(dot - basename) : strlen(basename);
+
+    if (name_len > 0 && name_len < out_size) {
+        strncpy(out, basename, name_len);
+        out[name_len] = '\0';
+    }
+}
+
+// Hardcoded dependency map for non-package modules (Phase 1 quick fix)
+// Returns number of dependencies filled into deps array
+static int get_hardcoded_dependencies(const char* module_name, char deps[][256], int max_deps) {
+    // Dependency mapping table
+    struct {
+        const char* module;
+        const char* deps[8];
+    } dep_map[] = {
+        {"net", {"mod_std", NULL}},
+        {"http", {"mod_std", "net", NULL}},
+        {"os", {"mod_std", NULL}},
+        {NULL, {NULL}}
+    };
+
+    // Search for module in map
+    for (int i = 0; dep_map[i].module; i++) {
+        if (strcmp(module_name, dep_map[i].module) == 0) {
+            // Copy dependencies to output array
+            int count = 0;
+            for (int j = 0; dep_map[i].deps[j] && count < max_deps; j++) {
+                strncpy(deps[count], dep_map[i].deps[j], 255);
+                deps[count][255] = '\0';
+                count++;
+            }
+            return count;
+        }
+    }
+
+    return 0;  // No hardcoded dependencies found
+}
+
+// Forward declaration of internal import function
+static void* __import_internal(const char* path, int already_locked);
+
+// Load dependencies for a module package
+// Returns 0 on success, -1 on failure
+// NOTE: This function is called with g_compilation_lock already held
+static int load_module_dependencies(const char* module_name) {
+    char module_dir[PATH_MAX];
+    snprintf(module_dir, sizeof(module_dir), "c_modules/%s", module_name);
+
+    char deps[32][256];
+    int dep_count = parse_module_dependencies(module_dir, deps, 32);
+
+    // Fallback to hardcoded dependencies if no module.json found
+    if (dep_count == 0) {
+        dep_count = get_hardcoded_dependencies(module_name, deps, 32);
+        if (dep_count > 0) {
+            tracef("using hardcoded dependencies for module '%s'", module_name);
+        }
+    }
+
+    if (dep_count == 0) {
+        tracef("module '%s' has no dependencies", module_name);
+        return 0;
+    }
+
+    tracef("module '%s' has %d dependencies", module_name, dep_count);
+
+    // Load each dependency (lock already held, use internal version)
+    for (int i = 0; i < dep_count; i++) {
+        tracef("auto-loading dependency: '%s'", deps[i]);
+        void* dep_module = __import_internal(deps[i], 1);  // already_locked=1
+        if (!dep_module) {
+            tracef("failed to load dependency '%s' for module '%s'", deps[i], module_name);
+            return -1;
+        }
+        tracef("successfully loaded dependency '%s'", deps[i]);
+    }
+
+    return 0;
+}
+
+// Internal import function that can skip lock acquisition when already locked
+// already_locked: 0 = acquire lock, 1 = lock already held by caller
+static void* __import_internal(const char* path, int already_locked) {
     if (!path || !*path) {
         tracef("__import: null or empty path");
         return NULL;
     }
-    tracef("__import: path=%s", path);
+    tracef("__import: path=%s, already_locked=%d", path, already_locked);
+
+    // Module name resolution (Node.js-style)
+    // If path doesn't contain '/' and doesn't end with '.c', treat as module name
+    char resolved_path[PATH_MAX];
+    const char* actual_path = path;
+    char module_name[256] = {0};  // Store module name for dependency loading
+
+    if (!strchr(path, '/') && !ends_with(path, ".c") && !ends_with(path, ".o")) {
+        // Store original module name for potential dependency loading
+        strncpy(module_name, path, sizeof(module_name) - 1);
+
+        // Try c_modules/{name}.c
+        snprintf(resolved_path, sizeof(resolved_path), "c_modules/%s.c", path);
+        if (access(resolved_path, F_OK) == 0) {
+            tracef("__import: resolved module '%s' -> '%s'", path, resolved_path);
+            actual_path = resolved_path;
+            // Dependencies will be loaded after acquiring the lock
+        } else {
+            // Try c_modules/{name}/index.c (package)
+            snprintf(resolved_path, sizeof(resolved_path), "c_modules/%s/index.c", path);
+            if (access(resolved_path, F_OK) == 0) {
+                tracef("__import: resolved module '%s' -> '%s' (package)", path, resolved_path);
+                actual_path = resolved_path;
+                // Dependencies will be loaded after acquiring the lock
+            } else {
+                // Try c_modules/mod_{name}.c (backward compatibility)
+                snprintf(resolved_path, sizeof(resolved_path), "c_modules/mod_%s.c", path);
+                if (access(resolved_path, F_OK) == 0) {
+                    tracef("__import: resolved module '%s' -> '%s' (mod_ prefix)", path, resolved_path);
+                    actual_path = resolved_path;
+                    // Dependencies will be loaded after acquiring the lock
+                } else {
+                    // Fall back to original path
+                    tracef("__import: module '%s' not found in c_modules/, using as-is", path);
+                }
+            }
+        }
+    }
+
+    // Update path to resolved path
+    path = actual_path;
+
+    // === FAST PATH: Check cache first (read lock inside find_and_incref_module) ===
+    module_t* cached = find_and_incref_module(path);
+    if (cached) {
+        tracef("using cached module '%s'", path);
+        return cached->state;
+    }
+
+    // === SLOW PATH: Need to compile - acquire compilation lock ===
+    // Lock compilation phase to prevent TOCTOU race
+    // (TCC is not thread-safe, only one thread can compile at a time)
+    // If already_locked=1, skip lock acquisition (caller already holds it)
+    if (!already_locked) {
+        pthread_once(&g_compilation_lock_once, init_compilation_lock);
+        pthread_mutex_lock(&g_compilation_lock);
+
+        // Double-check: Another thread may have compiled while we waited
+        cached = find_and_incref_module(path);
+        if (cached) {
+            if (!already_locked) pthread_mutex_unlock(&g_compilation_lock);
+            return cached->state;
+        }
+    }
+
+    // *** Load module dependencies inside the lock (P2.4 fix) ***
+    // This must be done AFTER acquiring the lock to prevent race conditions
+    // Check if this is a C module that needs dependency loading
+    if (strstr(path, "c_modules/") != NULL) {
+        // Extract module name for dependency loading
+        char temp_module_name[256];
+        const char* base = strrchr(path, '/');
+        if (base) base++; else base = path;
+
+        // Remove extension and prefixes
+        strncpy(temp_module_name, base, sizeof(temp_module_name) - 1);
+        char* dot = strrchr(temp_module_name, '.');
+        if (dot) *dot = '\0';
+
+        // Remove "mod_" prefix if present
+        char* final_name = temp_module_name;
+        if (strncmp(final_name, "mod_", 4) == 0) {
+            final_name += 4;
+        }
+
+        tracef("loading dependencies for module '%s'", final_name);
+        if (load_module_dependencies(final_name) < 0) {
+            if (!already_locked) pthread_mutex_unlock(&g_compilation_lock);
+            tracef("failed to load dependencies for module '%s'", final_name);
+            return NULL;
+        }
+    }
+
+    // *** Circular dependency detection: push to loading stack ***
+    if (push_loading_module(path) < 0) {
+        if (!already_locked) pthread_mutex_unlock(&g_compilation_lock);
+        return NULL;  // Circular dependency detected
+    }
 
     // Check if it's already a .o file
+    // Normalize .o path to .c path for cache lookup
+    char normalized_path[PATH_MAX];
+    const char* cache_key = path;
+
     if (ends_with(path, ".o")) {
-        return load_o_file(path);
+        // Convert "path/file.x86_64.o" -> "path/file.c" for cache key
+        const char* last_dot = strrchr(path, '.');
+        if (last_dot) {
+            const char* second_last_dot = last_dot - 1;
+            while (second_last_dot > path && *second_last_dot != '.') {
+                second_last_dot--;
+            }
+            if (*second_last_dot == '.' && second_last_dot > path) {
+                // Found pattern ".arch.o", extract base path
+                size_t base_len = second_last_dot - path;
+                snprintf(normalized_path, sizeof(normalized_path), "%.*s.c", (int)base_len, path);
+                cache_key = normalized_path;
+            }
+        }
+
+        // *** Check cache first (with normalized .c path as key) ***
+        module_t* cached = find_and_incref_module(cache_key);
+        if (cached) {
+            tracef("using cached module for .o file '%s' (key='%s')", path, cache_key);
+            pop_loading_module();
+            if (!already_locked) pthread_mutex_unlock(&g_compilation_lock);
+            return cached->state;
+        }
+
+        // Cache miss - load .o file and register
+        tracef("cache miss for .o file '%s', loading fresh", path);
+        void* result = load_o_file(path);
+        if (result) {
+            // Register loaded .o file in cache (using normalized .c path as key)
+            module_t* mod = register_module(cache_key, (TCCState*)result);
+            if (!mod) {
+                tracef("WARNING: failed to register .o module '%s' in cache", cache_key);
+            } else {
+                tracef("registered .o module in cache with key '%s'", cache_key);
+            }
+        }
+        pop_loading_module();
+        if (!already_locked) pthread_mutex_unlock(&g_compilation_lock);
+        return result;
     }
 
     // Get architecture for cache naming
@@ -1686,29 +2551,32 @@ void* __import(const char* path) {
         if (cache_exists) {
             // Compare modification times
             if (src_st.st_mtime == cache_st.st_mtime) {
-                // Additional check: any .h file in current dir newer than cache?
+                // Enhanced check: recursively check .h files in multiple directories
                 // This catches header file changes without full dependency tracking
                 int headers_modified = 0;
-                DIR *dir = opendir(".");
-                if (dir) {
-                    struct dirent *entry;
-                    while ((entry = readdir(dir)) != NULL) {
-                        size_t len = strlen(entry->d_name);
-                        if (len > 2 && strcmp(entry->d_name + len - 2, ".h") == 0) {
-                            struct stat h_st;
-                            if (stat(entry->d_name, &h_st) == 0 && h_st.st_mtime > cache_st.st_mtime) {
-                                tracef("header '%s' newer than cache, invalidating", entry->d_name);
-                                headers_modified = 1;
-                                break;
-                            }
-                        }
-                    }
-                    closedir(dir);
+
+                // Check directories in order of likelihood
+                const char* check_dirs[] = {
+                    ".",                  // Current directory
+                    "c_modules",          // Module headers
+                    "include",            // Project includes
+                    NULL
+                };
+
+                for (int i = 0; check_dirs[i] && !headers_modified; i++) {
+                    // Use recursive check for c_modules, non-recursive for others
+                    int recursive = (strcmp(check_dirs[i], "c_modules") == 0);
+                    headers_modified = check_headers_in_dir(check_dirs[i],
+                                                            cache_st.st_mtime,
+                                                            recursive);
                 }
 
                 if (!headers_modified) {
                     tracef("using cached '%s' (mtime match)", cache_path);
-                    return load_o_file(cache_path);
+                    void* result = load_o_file(cache_path);
+                    pop_loading_module();
+                    if (!already_locked) pthread_mutex_unlock(&g_compilation_lock);
+                    return result;
                 } else {
                     tracef("cache outdated due to header changes, recompiling '%s'", path);
                     // Fall through to compile from source
@@ -1725,9 +2593,14 @@ void* __import(const char* path) {
         // Source doesn't exist
         if (cache_exists) {
             tracef("source not found, using cached '%s'", cache_path);
-            return load_o_file(cache_path);
+            void* result = load_o_file(cache_path);
+            pop_loading_module();
+            if (!already_locked) pthread_mutex_unlock(&g_compilation_lock);
+            return result;
         } else {
             tracef("neither source '%s' nor cache '%s' found", path, cache_path);
+            pop_loading_module();
+            if (!already_locked) pthread_mutex_unlock(&g_compilation_lock);
             return NULL;
         }
     }
@@ -1738,6 +2611,8 @@ void* __import(const char* path) {
     TCCState* s = tcc_new();
     if (!s) {
         tracef("__import: tcc_new failed");
+        pop_loading_module();
+        if (!already_locked) pthread_mutex_unlock(&g_compilation_lock);
         return NULL;
     }
 
@@ -1769,10 +2644,192 @@ void* __import(const char* path) {
     cosmo_tcc_link_runtime(s);
     tracef("__import: linked tcc runtime");
 
+    // Export symbols from already loaded modules to this new module
+    // This allows modules to use extern declarations to access symbols from other modules
+
+    // Define known exported symbols from various modules
+    const char* exported_symbols[] = {
+        // mod_std symbols
+        "std_string_new", "std_string_free", "std_string_clear",
+        "std_string_append", "std_string_append_char", "std_string_cstr",
+        "std_string_len", "std_string_format", "std_string_with_capacity",
+        "std_vector_new", "std_vector_free", "std_vector_push",
+        "std_vector_pop", "std_vector_get", "std_vector_set",
+        "std_vector_len", "std_vector_clear", "std_vector_with_capacity",
+        "std_hashmap_new", "std_hashmap_free", "std_hashmap_set",
+        "std_hashmap_get", "std_hashmap_remove", "std_hashmap_has",
+        "std_hashmap_size", "std_hashmap_foreach", "std_hashmap_clear",
+        "std_error_new", "std_error_free", "std_error_message",
+        "std_error_code", "std_error_wrap",
+        // mod_net symbols
+        "net_resolve", "net_ip_to_string", "net_string_to_ip",
+        "net_tcp_connect", "net_tcp_connect_timeout",
+        "net_tcp_listen", "net_tcp_accept", "net_tcp_accept_timeout",
+        "net_udp_socket", "net_udp_send", "net_udp_recv",
+        "net_send", "net_recv", "net_send_all", "net_recv_all",
+        "net_set_timeout", "net_set_nonblocking", "net_set_nodelay",
+        "net_set_reuseaddr", "net_set_sendbuf", "net_set_recvbuf",
+        "net_socket_close", "net_socket_error",
+        "net_socket_local_addr", "net_socket_remote_addr",
+        "net_htons", "net_ntohs", "net_htonl", "net_ntohl",
+        NULL
+    };
+
+    // Collect symbol addresses while holding lock (minimize lock time)
+    typedef struct { const char* name; void* addr; } symbol_export_t;
+    symbol_export_t exports[256];  // Max 256 symbols
+    int export_count = 0;
+
+    pthread_rwlock_rdlock(&g_registry_lock);
+    for (module_t* mod = g_module_registry.head; mod && export_count < 256; mod = mod->next) {
+        if (mod->state && mod->state != s) {
+            // Try to export symbols from loaded modules
+            for (int j = 0; exported_symbols[j] && export_count < 256; j++) {
+                void* addr = tcc_get_symbol(mod->state, exported_symbols[j]);
+                if (addr) {
+                    exports[export_count].name = exported_symbols[j];
+                    exports[export_count].addr = addr;
+                    export_count++;
+                    tracef("found symbol '%s' -> %p in loaded module", exported_symbols[j], addr);
+                }
+            }
+        }
+    }
+    pthread_rwlock_unlock(&g_registry_lock);
+
+    // Now add all collected symbols to new state (lock-free)
+    for (int i = 0; i < export_count; i++) {
+        tcc_add_symbol(s, exports[i].name, exports[i].addr);
+        tracef("exported symbol '%s' to new state", exports[i].name);
+    }
+    tracef("__import: exported %d symbols from loaded modules", export_count);
+
+    // Auto-link architecture-specific object files and assembly files if they exist
+    // This allows modules to provide pre-compiled assembly implementations
+    // Example: c_modules/mod_co.c -> c_modules/mod_co_arm64.o or c_modules/*.S
+    if (is_c_file) {
+        // Extract directory and base name from path
+        char dir_path[1024] = {0};
+        char base_name[256] = {0};
+
+        const char* last_slash = strrchr(path, '/');
+        if (last_slash) {
+            size_t dir_len = last_slash - path;
+            if (dir_len < sizeof(dir_path)) {
+                memcpy(dir_path, path, dir_len);
+                dir_path[dir_len] = '\0';
+            }
+
+            // Extract module name (e.g., "mod_co" from "mod_co.c")
+            const char* name_start = last_slash + 1;
+            const char* dot = strrchr(name_start, '.');
+            if (dot) {
+                size_t name_len = dot - name_start;
+                if (name_len < sizeof(base_name)) {
+                    memcpy(base_name, name_start, name_len);
+                    base_name[name_len] = '\0';
+                }
+            }
+        }
+
+        // Try to link architecture-specific object file or assembly files
+        if (dir_path[0] && base_name[0]) {
+            #if defined(__aarch64__) || defined(__arm64__)
+            const char* arch_suffix = "arm64";
+            #elif defined(__x86_64__) || defined(__amd64__)
+            const char* arch_suffix = "x64";
+            #else
+            const char* arch_suffix = "generic";
+            #endif
+
+            // Construct object file path: dir/basename_arch.o
+            char obj_path[1024];
+            int printed = snprintf(obj_path, sizeof(obj_path), "%s/%s_%s.o",
+                                  dir_path, base_name, arch_suffix);
+
+            if (printed > 0 && printed < (int)sizeof(obj_path)) {
+                // Check if object file exists
+                struct stat obj_st;
+                if (stat(obj_path, &obj_st) == 0) {
+                    tracef("found arch-specific object file: %s", obj_path);
+
+                    // Link the object file
+                    if (tcc_add_file(s, obj_path) == -1) {
+                        tracef("warning: failed to link '%s', continuing...", obj_path);
+                    } else {
+                        tracef("successfully linked '%s'", obj_path);
+                    }
+                }
+            }
+
+            // Check module.json for additional source files (especially .S files)
+            // This allows modules to explicitly declare their assembly dependencies
+            // Example: c_modules/mod_co/module.json declares co_ctx_*.S files
+            if (strstr(dir_path, "c_modules") != NULL) {
+                char module_json_path[1024];
+                snprintf(module_json_path, sizeof(module_json_path), "%s/module.json", dir_path);
+
+                FILE* json_file = fopen(module_json_path, "r");
+                if (json_file) {
+                    tracef("found module.json: %s", module_json_path);
+
+                    // Simple parser for "sources": [...] array
+                    char line[1024];
+                    int in_sources = 0;
+                    while (fgets(line, sizeof(line), json_file)) {
+                        // Look for "sources" key
+                        if (strstr(line, "\"sources\"")) {
+                            in_sources = 1;
+                            continue;
+                        }
+
+                        if (in_sources) {
+                            // End of array
+                            if (strchr(line, ']')) {
+                                in_sources = 0;
+                                break;
+                            }
+
+                            // Extract filename from "filename.S"
+                            char* quote1 = strchr(line, '"');
+                            if (quote1) {
+                                char* quote2 = strchr(quote1 + 1, '"');
+                                if (quote2) {
+                                    size_t len = quote2 - quote1 - 1;
+                                    if (len > 0 && len < 256) {
+                                        char source_file[256];
+                                        memcpy(source_file, quote1 + 1, len);
+                                        source_file[len] = '\0';
+
+                                        // Only process .S files (skip the main .c file)
+                                        if (strstr(source_file, ".S")) {
+                                            char source_path[1024];
+                                            snprintf(source_path, sizeof(source_path), "%s/%s", dir_path, source_file);
+
+                                            tracef("linking declared source: %s", source_path);
+                                            if (tcc_add_file(s, source_path) == -1) {
+                                                tracef("warning: failed to link '%s', continuing...", source_path);
+                                            } else {
+                                                tracef("successfully linked '%s'", source_path);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    fclose(json_file);
+                }
+            }
+        }
+    }
+
     // Compile source file
     if (tcc_add_file(s, path) == -1) {
         tracef("tcc_add_file failed for '%s'", path);
         tcc_delete(s);
+        pop_loading_module();
+        if (!already_locked) pthread_mutex_unlock(&g_compilation_lock);
         return NULL;
     }
 
@@ -1792,11 +2849,80 @@ void* __import(const char* path) {
     if (tcc_relocate(s) < 0) {
         tracef("tcc_relocate failed for '%s'", path);
         tcc_delete(s);
+        pop_loading_module();
+        if (!already_locked) pthread_mutex_unlock(&g_compilation_lock);
         return NULL;
     }
 
     tracef("successfully loaded '%s' -> %p", path, s);
+
+    // *** Auto-call module initialization function ***
+    // Try multiple naming conventions: mod_{name}_init, {name}_init, __init__
+    const char* init_candidates[] = {
+        NULL,  // Will be filled with module-specific name
+        NULL,  // Will be filled with module-specific name
+        "__init__",      // Python-style
+        "__module_init__",
+        NULL
+    };
+
+    // Extract module name from path for smart init function naming
+    // Reuse module_name from earlier if available, otherwise extract
+    char init_module_name[256] = {0};
+    if (module_name[0] != '\0') {
+        // Reuse module name extracted earlier (performance optimization)
+        strncpy(init_module_name, module_name, sizeof(init_module_name) - 1);
+    } else {
+        // Extract from path using helper function
+        extract_module_name(path, init_module_name, sizeof(init_module_name));
+    }
+
+    // Build init function names
+    // Use stack allocation for thread safety
+    char init_name1[300];
+    char init_name2[300];
+    if (init_module_name[0] != '\0') {
+        snprintf(init_name1, sizeof(init_name1), "%s_init", init_module_name);
+        snprintf(init_name2, sizeof(init_name2), "mod_%s_init", init_module_name);
+        init_candidates[0] = init_name2;  // Try mod_{name}_init first
+        init_candidates[1] = init_name1;  // Then {name}_init
+    }
+
+    // Try to find and call initialization function
+    // Init functions should return int: 0=success, non-zero=failure
+    for (int i = 0; init_candidates[i]; i++) {
+        int (*init_fn)(void) = (int (*)(void))tcc_get_symbol(s, init_candidates[i]);
+        if (init_fn) {
+            tracef("auto-calling init function: %s()", init_candidates[i]);
+            int init_result = init_fn();  // Call init
+            if (init_result != 0) {
+                // Init failed - cleanup and return NULL
+                tracef("init function %s() failed with code %d", init_candidates[i], init_result);
+                tcc_delete(s);
+                pop_loading_module();
+                if (!already_locked) pthread_mutex_unlock(&g_compilation_lock);
+                return NULL;
+            }
+            tracef("init function %s() completed successfully", init_candidates[i]);
+            break;
+        }
+    }
+
+    // *** Register module in cache ***
+    module_t* mod = register_module(path, s);
+    if (!mod) {
+        tracef("WARNING: failed to register module '%s' in cache", path);
+        // Still return the module, just won't be cached
+    }
+
+    pop_loading_module();  // Success - pop before returning
+    if (!already_locked) pthread_mutex_unlock(&g_compilation_lock);  // Release compilation lock
     return (void*)s;
+}
+
+// Public wrapper for __import - always acquires lock
+void* __import(const char* path) {
+    return __import_internal(path, 0);  // already_locked=0
 }
 
 void* __import_sym(void* module, const char* symbol) {
@@ -1820,9 +2946,72 @@ void* __import_sym(void* module, const char* symbol) {
 void __import_free(void* module) {
     if (!module) return;
 
-    tracef("__import_free: freeing module %p", module);
-    tcc_delete((TCCState*)module);
+    TCCState* state = (TCCState*)module;
+    tracef("__import_free: module %p", state);
+
+    // Find module in registry (thread-safe read)
+    // Hold rdlock ONLY during search, then immediately call decref
+    // (decref uses atomic ops, so no lock nesting issue)
+    pthread_rwlock_rdlock(&g_registry_lock);
+    module_t* mod = NULL;
+    for (module_t* m = g_module_registry.head; m; m = m->next) {
+        if (m->state == state) {
+            mod = m;
+            break;
+        }
+    }
+    pthread_rwlock_unlock(&g_registry_lock);
+
+    if (mod) {
+        // Module is in registry - decrement ref count (lock-free atomic)
+        // Safe to call after releasing rdlock because:
+        // 1. module_decref uses atomic operations for ref_count
+        // 2. Module won't be freed until ref_count reaches 0 and LRU eviction
+        // 3. Even if evicted, decref is safe (just decrements atomic counter)
+        module_decref(mod);
+    } else {
+        // Module not in registry - direct free (shouldn't happen normally)
+        tracef("WARNING: freeing unregistered module %p", state);
+        tcc_delete(state);
+    }
 }
+
+// ============================================================================
+// ARM64 Windows JIT Support
+// ============================================================================
+
+#if defined(_WIN32) && (defined(__aarch64__) || defined(_M_ARM64))
+
+/* ARM64 Windows calling convention helpers */
+static int make_executable_arm64_win(void *ptr, size_t size) {
+    unsigned old_protect;
+
+    /* Change protection to executable (RWX on Windows) */
+    if (!VirtualProtect(ptr, size, PAGE_EXECUTE_READWRITE, &old_protect)) {
+        return -1;
+    }
+
+    /* Flush instruction cache (critical on ARM64) */
+    FlushInstructionCache(GetCurrentProcess(), ptr, size);
+
+    return 0;
+}
+
+/* Allocate executable memory for JIT */
+static void* alloc_executable_memory_arm64(size_t size) {
+    void *ptr = VirtualAlloc(NULL, size, MEM_COMMIT | MEM_RESERVE, PAGE_EXECUTE_READWRITE);
+    if (ptr) {
+        FlushInstructionCache(GetCurrentProcess(), ptr, size);
+    }
+    return ptr;
+}
+
+/* Free executable memory */
+static int free_executable_memory_arm64(void *ptr, size_t size) {
+    return VirtualFree(ptr, 0, MEM_RELEASE) ? 0 : -1;
+}
+
+#endif /* _WIN32 && ARM64 */
 
 // ============================================================================
 // Trampoline System Implementation (from cosmo_trampoline.c)
@@ -2065,7 +3254,166 @@ size_t cosmo_trampoline_arm64_count(void) {
     return g_arm64_vararg_count;
 }
 
+/* Wrapper for external use: wrap variadic function for cross-ABI calls
+ * @param vfunc: Original variadic function pointer
+ * @param variadic_type: Number of fixed args before varargs (1, 2, or 3)
+ * @return: Wrapped trampoline function pointer, or original if wrapping fails
+ */
+void *__dlsym_varg(void *vfunc, int variadic_type) {
+    if (!vfunc) return NULL;
+
+    void *trampoline = arm64_make_vararg_trampoline(vfunc, variadic_type);
+    return trampoline ? trampoline : vfunc;
+}
+
 #endif // __aarch64__
+
+// ============================================================================
+// ARM32 Windows Support (Thumb-2 mode)
+// ============================================================================
+#if defined(_WIN32) && (defined(_M_ARM) || defined(__arm__))
+
+// Windows API for JIT memory management
+#ifndef PAGE_EXECUTE_READWRITE
+#define PAGE_EXECUTE_READWRITE 0x40
+#endif
+
+// ARM32 PE binary machine types
+#ifndef IMAGE_FILE_MACHINE_ARM
+#define IMAGE_FILE_MACHINE_ARM 0x01C0     // ARM Little-Endian
+#endif
+#ifndef IMAGE_FILE_MACHINE_THUMB
+#define IMAGE_FILE_MACHINE_THUMB 0x01C2   // ARM Thumb-2 LE
+#endif
+
+// ARM32 PE relocation types
+#ifndef IMAGE_REL_ARM_ABSOLUTE
+#define IMAGE_REL_ARM_ABSOLUTE 0x0000
+#endif
+#ifndef IMAGE_REL_ARM_ADDR32
+#define IMAGE_REL_ARM_ADDR32 0x0001
+#endif
+#ifndef IMAGE_REL_ARM_BRANCH24
+#define IMAGE_REL_ARM_BRANCH24 0x0003
+#endif
+#ifndef IMAGE_REL_ARM_BLX24
+#define IMAGE_REL_ARM_BLX24 0x0008
+#endif
+
+// ARM32 Windows calling convention helper
+// Arguments in R0-R3, rest on stack (8-byte aligned)
+// Return value in R0 (or S0/D0 for floats)
+// Thumb mode required (LSB=1 for function pointers)
+
+static int make_executable_arm32_win(void *ptr, size_t size) {
+#ifdef _WIN32
+    // VirtualProtect to make memory executable
+    extern int VirtualProtect(void *addr, size_t size, int prot, int *old);
+    int old_protect = 0;
+
+    if (!VirtualProtect(ptr, size, PAGE_EXECUTE_READWRITE, &old_protect)) {
+        return -1;
+    }
+
+    // Flush instruction cache (CRITICAL on ARM)
+    extern int FlushInstructionCache(void *process, void *addr, size_t size);
+    extern void* GetCurrentProcess(void);
+    FlushInstructionCache(GetCurrentProcess(), ptr, size);
+
+    return 0;
+#else
+    (void)ptr; (void)size;
+    return -1;
+#endif
+}
+
+// Encode Thumb-2 modified immediate constant
+static uint32_t encode_thumb_modified_imm(uint32_t imm) {
+    // Simple encoding for small values
+    // Full implementation would handle rotated patterns
+    if (imm < 256) {
+        return imm;
+    }
+    // For larger values, use a simple encoding
+    // Real implementation needs full Thumb-2 encoding logic
+    return imm & 0xFFFF;
+}
+
+// Generate Thumb-2 MOV instruction
+static void gen_thumb2_mov_imm(void *code_ptr, int *offset, int reg, uint32_t imm) {
+    uint16_t *code = (uint16_t*)((char*)code_ptr + *offset);
+
+    if (imm < 256) {
+        // MOVS Rreg, #imm (16-bit encoding)
+        uint16_t insn = 0x2000 | ((reg & 7) << 8) | (imm & 0xFF);
+        *code = insn;
+        *offset += 2;
+    } else {
+        // MOVW Rreg, #imm (32-bit encoding)
+        uint32_t insn = 0xF0400000 | ((reg & 0xF) << 8);
+        uint32_t imm16 = imm & 0xFFFF;
+        insn |= ((imm16 >> 12) & 0xF) << 16;
+        insn |= ((imm16 >> 11) & 1) << 26;
+        insn |= (imm16 & 0xFF);
+        insn |= ((imm16 >> 8) & 7) << 12;
+
+        *(uint32_t*)code = insn;
+        *offset += 4;
+    }
+}
+
+// Generate Thumb-2 BLX instruction (function call)
+static void gen_thumb2_blx(void *code_ptr, int *offset, uint32_t target_addr) {
+    uint32_t *code = (uint32_t*)((char*)code_ptr + *offset);
+    uint32_t current_pc = (uint32_t)code + 4;  // PC is current + 4 in Thumb
+    int32_t disp = (int32_t)((target_addr & ~1) - current_pc);
+
+    // BLX encoding (32-bit Thumb-2)
+    uint32_t s = (disp >> 24) & 1;
+    uint32_t j1 = (disp >> 23) & 1;
+    uint32_t j2 = (disp >> 22) & 1;
+    uint32_t imm10 = (disp >> 12) & 0x3FF;
+    uint32_t imm11 = (disp >> 1) & 0x7FF;
+
+    uint32_t insn = 0xF000D000;  // BLX base encoding
+    insn |= (s << 26) | (imm10 << 16) | (j1 << 13) | (j2 << 11) | imm11;
+
+    *code = insn;
+    *offset += 4;
+}
+
+// Create ARM32 Win32 calling convention wrapper
+void* create_arm32_win_wrapper(void *target_func, int arg_count) {
+    // Allocate executable memory
+    size_t code_size = 128;  // Enough for wrapper code
+    void *mem = malloc(code_size);
+    if (!mem) return NULL;
+
+    int offset = 0;
+
+    // Simple wrapper: just branch to target
+    // Real implementation would handle argument marshalling
+    // For now, assume ARM32 calling convention is compatible
+
+    // BLX target_func
+    gen_thumb2_blx(mem, &offset, (uint32_t)target_func);
+
+    // BX LR (return)
+    uint16_t *code = (uint16_t*)((char*)mem + offset);
+    *code = 0x4770;  // BX LR in Thumb mode
+    offset += 2;
+
+    // Make memory executable
+    if (make_executable_arm32_win(mem, code_size) != 0) {
+        free(mem);
+        return NULL;
+    }
+
+    // Return with Thumb bit set (LSB=1)
+    return (void*)((uintptr_t)mem | 1);
+}
+
+#endif // ARM32 Windows
 
 // ============================================================================
 // Generic Interface

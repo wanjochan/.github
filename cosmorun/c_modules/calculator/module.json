@@ -1,0 +1,17 @@
+{
+  "name": "calculator",
+  "version": "1.0.0",
+  "description": "Advanced calculator module with basic and advanced math operations",
+  "main": "index.c",
+  "author": "cosmorun",
+  "dependencies": [],
+  "exports": [
+    "calculator_init",
+    "calculator_add",
+    "calculator_subtract",
+    "calculator_multiply",
+    "calculator_divide",
+    "calculator_power",
+    "calculator_sqrt"
+  ]
+}

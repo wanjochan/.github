@@ -1,0 +1,14 @@
+{
+  "name": "mathlib",
+  "version": "2.0.0",
+  "description": "Advanced math library built on calculator",
+  "main": "index.c",
+  "author": "cosmorun",
+  "dependencies": ["calculator"],
+  "exports": [
+    "mathlib_init",
+    "mathlib_factorial",
+    "mathlib_fibonacci",
+    "mathlib_is_prime"
+  ]
+}
