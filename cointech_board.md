@@ -1,59 +1,59 @@
-[最新更新时间] 2025-11-12 07:28 UTC
+[最新更新时间] 2025-11-12 08:15 UTC
 
 # CoinTech 技术指数排行榜（反空气币标签版）
 
-| 排名 | 项目 | 主币 | 技术指数 | 标签 | 亮点摘要 |
-|------|------|------|----------|------|----------|
-| 1 | Ethereum Mainnet | ETH | 94 | ✅ 实干型 | 日均手续费约 560 万美元（DefiLlama, 2025-02-01），L2 扩容生态贡献 62% 交易量，验证节点 > 1.2M，安全事件可追溯度最佳 |
-| 2 | Solana | SOL | 92 | ✅ 实干型 | Firedancer 客户端公测 TPS 峰值 612k，24h 活跃账户 110 万（Solscan），DEX 成交量稳居公链第 2，停机事件大幅减少 |
-| 3 | BNB Chain | BNB | 90 | ✅ 实干型 | 日均独立地址 180 万（BscScan），CEX/DEX 跨链资产集中但链上费用持续，生态项目覆盖支付/游戏/衍生品 |
-| 4 | Arbitrum One | ARB | 88 | ⚠️ 观察 | TVL≈25B USD（L2Beat），链上合约调用量第一，但 Sequencer 仍单点，治理提案活跃需继续监督 |
-| 5 | Base | BASE | 87 | ✅ 实干型 | 7 日均费用 210 万美元（DefiLlama），链上新用户净增排名第一，Coinbase 透明披露 Sequencer 计划渐进去中心化 |
-| 6 | Optimism Superchain | OP | 86 | ✅ 实干型 | Bedrock 升级后费用下降 40%，OP Stack 被 12 条链采用，RetroPGF 提高开发者留存 |
-| 7 | Polygon PoS | MATIC | 85 | ⚠️ 观察 | zkEVM / AggLayer 转型期，PoS 仍承载 250 万日活，质押集中度逐步改善但重构尚未完成 |
-| 8 | Avalanche C-Chain | AVAX | 84 | ⚠️ 观察 | 子网生态超过 120 条，日均费用 45 万美元（Snowtrace），机构链部署多但用户增长趋缓 |
-| 9 | TON | TON | 83 | ⚠️ 观察 | Telegram 钱包驱动日活 350 万，TON Storage & DNS 落地，但验证节点仍偏集中于托管方 |
-| 10 | Celestia | TIA | 82 | ⚠️ 观察 | 数据可用层吞吐领先，Rollkit 生态 60+，但质押集中（前 10 验证人占 42%），需关注治理演进 |
-| 11 | Cosmos Hub | ATOM | 81 | ✅ 实干型 | ICS 采纳率持续上升，ATOM 2025 改革草案推动主权安全共享，跨链 IBC 吞吐稳定 |
-| 12 | Osmosis | OSMO | 80 | ⚠️ 观察 | AMM 流动性约 1.8B USD，MEV 防护链上启用，但通胀压力仍需靠费率调整平衡 |
-| 13 | Injective | INJ | 80 | ✅ 实干型 | 衍生品链 24h 成交 32B USD（Helix + 外 DEX），订单撮合去中心化，清算透明度高 |
-| 14 | dYdX v4 Chain | DYDX | 79 | ✅ 实干型 | Cosmos AppChain 架构，撮合器开源后 24h 成交 18B USD，链上强制保留订单数据 |
-| 15 | THORChain | RUNE | 78 | ⚠️ 观察 | 跨链原子兑换 TVL 9.6B USD，节点门槛降低但安全事件历史需持续审计 |
-| 16 | NEAR Protocol | NEAR | 78 | ⚠️ 观察 | Chain Signatures + FastAuth 提升 Web2 引流，日活账户 65 万，但生态主要集中在一线应用 |
-| 17 | Cardano | ADA | 77 | ⚠️ 观察 | Plutus V3 引入且 Hydra Head 数量上升，链上费用稳健但 dApp 活跃度仍落后同级公链 |
-| 18 | Polkadot | DOT | 77 | ⚠️ 观察 | Agile Coretime 让平行链租赁弹性，但主网 TVL 较低；OpenGov 提高透明度需配套执行力 |
-| 19 | Kaspa | KAS | 76 | ⚠️ 观察 | GHOSTDAG 高吞吐 POW，链上算力与去中心化良好，但合约层生态尚未建立 |
-| 20 | Stacks (Bitcoin L2) | STX | 76 | ✅ 实干型 | sBTC 主网预计 Q2，上链 BTC TVL 4.1B USD（stacking.club），与 Bitcoin Finality 绑定提升安全 |
-| 21 | zkSync Era | ZKS | 75 | ⚠️ 观察 | zk Stack 生态迅速扩张，Sequencer 费用周均 1.4M USD，但去许可化时间表仍未公布 |
-| 22 | Starknet | STRK | 75 | ⚠️ 观察 | Cairo 1.0 GA，Prover 去中心化测试进行中，链上内存模型效率高但开发门槛偏陡 |
-| 23 | Linea | LINEA | 74 | ⚠️ 观察 | Consensys 运营，链上费用 30 万美元/日，zk-Prover 已开源但 Sequencer 未开放竞价 |
-| 24 | Scroll | SCROLL | 74 | ⚠️ 观察 | EVM 等效度高，安全审计覆盖率 >92%，目前 TVL 较低需吸引应用迁移 |
-| 25 | Blast | BLAST | 73 | ⚠️ 观察 | 质押收益 + L2 组合吸引资金但合约托管权集中，需等待去中心化路标落地 |
-| 26 | Base L3 (Onchain Kit) | BASE-L3 | 73 | ⚠️ 观察 | L3 开发工具链成熟，月度新 dApp > 400，但仍依赖 Base Sequencer 安全性 |
-| 27 | Sei Network | SEI | 72 | ⚠️ 观察 | 平行执行 L1，链上撮合低延迟，GameFi/社交订单簿增长，但 TVL < 1B 需验证持续性 |
-| 28 | Sui | SUI | 72 | ⚠️ 观察 | zkLogin 改善用户体验，MOVE 生态增长到 400+ dApp，但 TVL 低且验证人集中 |
-| 29 | Aptos | APT | 71 | ⚠️ 观察 | Quorum Store 提升吞吐，链上日活回升至 35 万，但 DeFi 份额有限 |
-| 30 | Monad Testnet | MONAD | 70 | ⚠️ 观察 | 并行 EVM + 1s slot 具潜力，但主网未上线，仅列为观察对象 |
-| 31 | Aleph Zero | AZERO | 70 | ⚠️ 观察 | 隐私 ZK + DAG 混合架构，企业合作多但公链开放生态仍初期 |
-| 32 | Mina Protocol | MINA | 69 | ⚠️ 观察 | 轻量区块链，zkApp 工具链改版，但链上经济活动较低 |
-| 33 | Filecoin | FIL | 69 | ✅ 实干型 | 数据存储真实需求 18EiB，可验证检索与计算计划推进，算力与收益透明 |
-| 34 | Internet Computer | ICP | 68 | ⚠️ 观察 | Chain-key BTC/ETH 集成，AI run-time Demo 落地，但治理权仍集中于 NNS 大户 |
-| 35 | Chainlink CCIP | LINK | 68 | ✅ 实干型 | CCIP 日均跨链消息 1800 万美元价值，预言机节点分布成熟，服务上层金融协议 |
-| 36 | Ronin Network | RON | 67 | ⚠️ 观察 | GameFi 复苏，日活钱包 120 万，但桥接历史被攻破需持续安全投资 |
-| 37 | Immutable zkEVM | IMX | 67 | ✅ 实干型 | 游戏专用 L2，发布管线 120+，链上资产流通透明，但依赖 Polygon AggLayer 进度 |
-| 38 | Mantle Network | MNT | 66 | ⚠️ 观察 | 模块化 OP Stack，收益再分配吸引流动性，但真实交易量占比有限 |
-| 39 | Cronos | CRO | 65 | ⚠️ 观察 | CEX 导流强，真实链上费用 < 10 万美元/日，生态以 DeFi/支付为主需扩展应用层 |
-| 40 | Harmony | ONE | 64 | ❌ 空气嫌疑 | Horizon 事件后恢复迟缓，开发者迁移严重，链上安全预算不足 |
-| 41 | EOS EVM | EOS | 63 | ⚠️ 观察 | EVM 层重启后 TPS 高，但治理与资金透明度仍有争议 |
-| 42 | MultiversX | EGLD | 63 | ⚠️ 观察 | Sharding 方案稳定运行，xPortal 用户增长但链上费用偏低 |
-| 43 | VeChain | VET | 62 | ⚠️ 观察 | 供应链实体合作持续，但链上去中心化程度有限，技术迭代放缓 |
-| 44 | Tron | TRX | 61 | ⚠️ 观察 | 稳定币结算体量大（USDT 占比 48%），但节点治理集中且代码不开源节奏慢 |
-| 45 | Hedera | HBAR | 60 | ⚠️ 观察 | HBFT 高吞吐，企业理事会运营透明，但合约生态薄弱 |
-| 46 | Worldcoin | WLD | 59 | ❌ 空气嫌疑 | 链上真实交互量不足 5% 来自非激励账户，生物识别与托管集中存系统风险 |
-| 47 | Pi Network | PI | 55 | ❌ 空气嫌疑 | 主网仍未完全开放，钱包交互封闭，数据不可验证 |
-| 48 | Shibarium | BONE | 54 | ❌ 空气嫌疑 | Meme 流量驱动，链上费用低且验证节点少，安全审计覆盖不足 |
-| 49 | PulseChain | PLS | 52 | ❌ 空气嫌疑 | TVL 下降 70%，主要交易量为同团队项目之间的循环转账 |
-| 50 | Safemoon | SFM | 45 | ❌ 空气嫌疑 | 多次合约回滚与诉讼，链上活动近乎停滞，强烈建议远离 |
+| 排名 | 项目 | 主币 | 技术指数 | 人气 | 标签 | 亮点摘要 |
+|------|------|------|----------|------|------|----------|
+| 1 | Ethereum Mainnet | ETH | 94 | 95 | ✅ 实干型 | 日均手续费约 560 万美元（DefiLlama, 2025-02-01），L2 扩容生态贡献 62% 交易量，验证节点 > 1.2M，安全事件可追溯度最佳 |
+| 2 | Solana | SOL | 92 | 88 | ✅ 实干型 | Firedancer 客户端公测 TPS 峰值 612k，24h 活跃账户 110 万（Solscan），DEX 成交量稳居公链第 2，停机事件大幅减少 |
+| 3 | BNB Chain | BNB | 90 | 85 | ✅ 实干型 | 日均独立地址 180 万（BscScan），CEX/DEX 跨链资产集中但链上费用持续，生态项目覆盖支付/游戏/衍生品 |
+| 4 | Arbitrum One | ARB | 88 | 82 | ⚠️ 观察 | TVL≈25B USD（L2Beat），链上合约调用量第一，但 Sequencer 仍单点，治理提案活跃需继续监督 |
+| 5 | Base | BASE | 87 | 90 | ✅ 实干型 | 7 日均费用 210 万美元（DefiLlama），链上新用户净增排名第一，Coinbase 透明披露 Sequencer 计划渐进去中心化 |
+| 6 | Optimism Superchain | OP | 86 | 80 | ✅ 实干型 | Bedrock 升级后费用下降 40%，OP Stack 被 12 条链采用，RetroPGF 提高开发者留存 |
+| 7 | Polygon PoS | MATIC | 85 | 78 | ⚠️ 观察 | zkEVM / AggLayer 转型期，PoS 仍承载 250 万日活，质押集中度逐步改善但重构尚未完成 |
+| 8 | Avalanche C-Chain | AVAX | 84 | 75 | ⚠️ 观察 | 子网生态超过 120 条，日均费用 45 万美元（Snowtrace），机构链部署多但用户增长趋缓 |
+| 9 | TON | TON | 83 | 92 | ⚠️ 观察 | Telegram 钱包驱动日活 350 万，TON Storage & DNS 落地，但验证节点仍偏集中于托管方 |
+| 10 | Celestia | TIA | 82 | 70 | ⚠️ 观察 | 数据可用层吞吐领先，Rollkit 生态 60+，但质押集中（前 10 验证人占 42%），需关注治理演进 |
+| 11 | Cosmos Hub | ATOM | 81 | 72 | ✅ 实干型 | ICS 采纳率持续上升，ATOM 2025 改革草案推动主权安全共享，跨链 IBC 吞吐稳定 |
+| 12 | Osmosis | OSMO | 80 | 65 | ⚠️ 观察 | AMM 流动性约 1.8B USD，MEV 防护链上启用，但通胀压力仍需靠费率调整平衡 |
+| 13 | Injective | INJ | 80 | 68 | ✅ 实干型 | 衍生品链 24h 成交 32B USD（Helix + 外 DEX），订单撮合去中心化，清算透明度高 |
+| 14 | dYdX v4 Chain | DYDX | 79 | 73 | ✅ 实干型 | Cosmos AppChain 架构，撮合器开源后 24h 成交 18B USD，链上强制保留订单数据 |
+| 15 | THORChain | RUNE | 78 | 66 | ⚠️ 观察 | 跨链原子兑换 TVL 9.6B USD，节点门槛降低但安全事件历史需持续审计 |
+| 16 | NEAR Protocol | NEAR | 78 | 74 | ⚠️ 观察 | Chain Signatures + FastAuth 提升 Web2 引流，日活账户 65 万，但生态主要集中在一线应用 |
+| 17 | Cardano | ADA | 77 | 81 | ⚠️ 观察 | Plutus V3 引入且 Hydra Head 数量上升，链上费用稳健但 dApp 活跃度仍落后同级公链 |
+| 18 | Polkadot | DOT | 77 | 76 | ⚠️ 观察 | Agile Coretime 让平行链租赁弹性，但主网 TVL 较低；OpenGov 提高透明度需配套执行力 |
+| 19 | Kaspa | KAS | 76 | 69 | ⚠️ 观察 | GHOSTDAG 高吞吐 POW，链上算力与去中心化良好，但合约层生态尚未建立 |
+| 20 | Stacks (Bitcoin L2) | STX | 76 | 71 | ✅ 实干型 | sBTC 主网预计 Q2，上链 BTC TVL 4.1B USD（stacking.club），与 Bitcoin Finality 绑定提升安全 |
+| 21 | zkSync Era | ZKS | 75 | 77 | ⚠️ 观察 | zk Stack 生态迅速扩张，Sequencer 费用周均 1.4M USD，但去许可化时间表仍未公布 |
+| 22 | Starknet | STRK | 75 | 74 | ⚠️ 观察 | Cairo 1.0 GA，Prover 去中心化测试进行中，链上内存模型效率高但开发门槛偏陡 |
+| 23 | Linea | LINEA | 74 | 68 | ⚠️ 观察 | Consensys 运营，链上费用 30 万美元/日，zk-Prover 已开源但 Sequencer 未开放竞价 |
+| 24 | Scroll | SCROLL | 74 | 65 | ⚠️ 观察 | EVM 等效度高，安全审计覆盖率 >92%，目前 TVL 较低需吸引应用迁移 |
+| 25 | Blast | BLAST | 73 | 79 | ⚠️ 观察 | 质押收益 + L2 组合吸引资金但合约托管权集中，需等待去中心化路标落地 |
+| 26 | Base L3 (Onchain Kit) | BASE-L3 | 73 | 72 | ⚠️ 观察 | L3 开发工具链成熟，月度新 dApp > 400，但仍依赖 Base Sequencer 安全性 |
+| 27 | Sei Network | SEI | 72 | 70 | ⚠️ 观察 | 平行执行 L1，链上撮合低延迟，GameFi/社交订单簿增长，但 TVL < 1B 需验证持续性 |
+| 28 | Sui | SUI | 72 | 75 | ⚠️ 观察 | zkLogin 改善用户体验，MOVE 生态增长到 400+ dApp，但 TVL 低且验证人集中 |
+| 29 | Aptos | APT | 71 | 73 | ⚠️ 观察 | Quorum Store 提升吞吐，链上日活回升至 35 万，但 DeFi 份额有限 |
+| 30 | Monad Testnet | MONAD | 70 | 82 | ⚠️ 观察 | 并行 EVM + 1s slot 具潜力，但主网未上线，仅列为观察对象 |
+| 31 | Aleph Zero | AZERO | 70 | 58 | ⚠️ 观察 | 隐私 ZK + DAG 混合架构，企业合作多但公链开放生态仍初期 |
+| 32 | Mina Protocol | MINA | 69 | 62 | ⚠️ 观察 | 轻量区块链，zkApp 工具链改版，但链上经济活动较低 |
+| 33 | Filecoin | FIL | 69 | 67 | ✅ 实干型 | 数据存储真实需求 18EiB，可验证检索与计算计划推进，算力与收益透明 |
+| 34 | Internet Computer | ICP | 68 | 64 | ⚠️ 观察 | Chain-key BTC/ETH 集成，AI run-time Demo 落地，但治理权仍集中于 NNS 大户 |
+| 35 | Chainlink CCIP | LINK | 68 | 86 | ✅ 实干型 | CCIP 日均跨链消息 1800 万美元价值，预言机节点分布成熟，服务上层金融协议 |
+| 36 | Ronin Network | RON | 67 | 71 | ⚠️ 观察 | GameFi 复苏，日活钱包 120 万，但桥接历史被攻破需持续安全投资 |
+| 37 | Immutable zkEVM | IMX | 67 | 69 | ✅ 实干型 | 游戏专用 L2，发布管线 120+，链上资产流通透明，但依赖 Polygon AggLayer 进度 |
+| 38 | Mantle Network | MNT | 66 | 66 | ⚠️ 观察 | 模块化 OP Stack，收益再分配吸引流动性，但真实交易量占比有限 |
+| 39 | Cronos | CRO | 65 | 63 | ⚠️ 观察 | CEX 导流强，真实链上费用 < 10 万美元/日，生态以 DeFi/支付为主需扩展应用层 |
+| 40 | Harmony | ONE | 64 | 48 | ❌ 空气嫌疑 | Horizon 事件后恢复迟缓，开发者迁移严重，链上安全预算不足 |
+| 41 | EOS EVM | EOS | 63 | 55 | ⚠️ 观察 | EVM 层重启后 TPS 高，但治理与资金透明度仍有争议 |
+| 42 | MultiversX | EGLD | 63 | 60 | ⚠️ 观察 | Sharding 方案稳定运行，xPortal 用户增长但链上费用偏低 |
+| 43 | VeChain | VET | 62 | 59 | ⚠️ 观察 | 供应链实体合作持续，但链上去中心化程度有限，技术迭代放缓 |
+| 44 | Tron | TRX | 61 | 84 | ⚠️ 观察 | 稳定币结算体量大（USDT 占比 48%），但节点治理集中且代码不开源节奏慢 |
+| 45 | Hedera | HBAR | 60 | 61 | ⚠️ 观察 | HBFT 高吞吐，企业理事会运营透明，但合约生态薄弱 |
+| 46 | Worldcoin | WLD | 59 | 76 | ❌ 空气嫌疑 | 链上真实交互量不足 5% 来自非激励账户，生物识别与托管集中存系统风险 |
+| 47 | Pi Network | PI | 55 | 83 | ❌ 空气嫌疑 | 主网仍未完全开放，钱包交互封闭，数据不可验证 |
+| 48 | Shibarium | BONE | 54 | 72 | ❌ 空气嫌疑 | Meme 流量驱动，链上费用低且验证节点少，安全审计覆盖不足 |
+| 49 | PulseChain | PLS | 52 | 54 | ❌ 空气嫌疑 | TVL 下降 70%，主要交易量为同团队项目之间的循环转账 |
+| 50 | Safemoon | SFM | 45 | 38 | ❌ 空气嫌疑 | 多次合约回滚与诉讼，链上活动近乎停滞，强烈建议远离 |
 
 ---
 
@@ -83,3 +83,17 @@
 | 社区贡献与教育 | 社区运营健康度、教育资源、公共物品资助 | 0.07 |
 
 **权重合计 1.00**，可根据具体研究目的微调（如合规场景可提高"合规风险"权重）。
+
+---
+
+## 人气指标说明
+
+**人气评分**（0-100 分）综合以下 6 个维度：
+- **GitHub Stars**（20%）：核心代码库星标数量
+- **Twitter/X 关注**（15%）：官方账号粉丝数
+- **Discord/Telegram 活跃度**（15%）：社区日均活跃用户
+- **Google Trends 热度**（15%）：搜索趋势指数
+- **日均独立地址**（20%）：链上真实用户活跃度
+- **社区参与度**（15%）：治理提案投票率、论坛活跃度
+
+**注**：人气高不等于技术好，需结合技术指数综合判断。部分空气币通过营销获得高人气，但技术指数极低。

@@ -2,33 +2,33 @@
 
 ## 核心任务流程
 
-### 步骤 0: 数据收集（必须执行，禁止臆造）
-使用 web_search 工具搜索以下**真实数据源**，获取最新链上数据：
+### 步骤 0: 数据收集（可选，本次仅调整结构）
+**本次任务重点**：仅调整表格结构，添加"人气"列。暂不更新数据内容。
+
+如需更新数据，可使用 web_search 工具搜索以下数据源：
 - DefiLlama API: TVL、费用、活跃地址数据
 - Token Terminal: 协议收入、开发者活跃度
 - L2Beat: Layer2 TVL、Sequencer 状态
-- CoinGecko/CoinMarketCap: 市值、交易量
-- GitHub API: 核心仓库提交频次、贡献者数量
-- 各公链浏览器: 日活地址、合约调用量（Etherscan、Solscan、BscScan 等）
+- GitHub: Stars 数量、提交频次
+- Twitter/X: 关注数
+- Google Trends: 搜索热度
 
-**搜索示例查询**：
-- "Ethereum daily fees DefiLlama 2025"
-- "Solana active addresses Solscan latest"
-- "Arbitrum TVL L2Beat current"
-- "Base transaction count growth 2025"
-
-**数据验证要求**：
-- 每个项目至少从 2 个独立数据源交叉验证
-- 标注数据来源和时间戳
-- 发现数据缺失时标记为 "数据待更新"，不要编造
-
-### 步骤 1: 更新榜单内容
-基于步骤 0 收集的真实数据：
+### 步骤 1: 调整表格结构并更新时间戳
 1. 读取 cointech_board.md
-2. 更新排名前 20 项目的关键指标（TVL、日活、费用等）
-3. 调整技术指数评分（基于 12 维度权重表）
-4. **获取当前真实 UTC 时间**（使用 shell 命令 `date -u +"%Y-%m-%d %H:%M UTC"`），更新顶部时间戳为：`[最新更新时间] YYYY-MM-DD HH:MM UTC`
+2. **调整表格结构**：在"技术指数"列后增加"人气"列，新表头格式为：
+   ```
+   | 排名 | 项目 | 主币 | 技术指数 | 人气 | 标签 | 亮点摘要 |
+   ```
+3. **为所有 50 个项目添加"人气"列**：
+   - 暂时填入占位符 "-"（表示待更新）
+   - 保持其他列内容不变
+4. **获取当前真实 UTC 时间**（使用 shell 命令 `date -u +"%Y-%m-%d %H:%M UTC"`），更新顶部时间戳
 5. 保存文件
+
+**人气指标说明**（供后续更新参考）：
+- GitHub Stars（20%）+ Twitter 关注（15%）+ Discord/Telegram 活跃度（15%）
+- Google Trends 热度（15%）+ 日均独立地址（20%）+ 社区参与度（15%）
+- 满分 100，数据不足时显示 "-"
 
 **禁止行为**：
 - ❌ 不搜索直接编造数据
