@@ -14,15 +14,42 @@
 
 2.1 TGFT 描述
 
-TGFT采用群流形上的张量场作为自由度，引力相互作用对应的规范变量由PG(1.3)≡SP(1,3)⋊W¹,³描述，其中W¹,³负责手征平移，SP(1,3)约束旋量耦合，允许在量子场论中统一引力与其他规范相互作用。[1][3] 通过对群场做辛分解，可以将几何量编码为双标架自旋关联，为后续的实验态映射提供目标可观测量。
+TGFT以场 \(\varphi(g_1,\dots,g_d)\) 为基本自由度，其中 \(g_i \in PG(1.3)\equiv SP(1,3)\rtimes W^{1,3}\)，通过在群流形上定义局域作用量，将手征平移与自旋规范对称同时编码。[1][3] 典型的四阶模型可写为
+\[
+S[\varphi]=\int_{G^4}\overline{\varphi}\,(\mathcal{K}+\mu^2)\varphi+\frac{\lambda}{5!}\int_{G^{10}}\varphi_{1234}\varphi_{4567}\varphi_{7389}\varphi_{95\,10\,1}\varphi_{2\,8\,6\,10}
+\]
+其中 \(\mathcal{K}=-\sum_{i} \Delta_{g_i}\) 为群拉普拉斯算符。对场变量施加闭合约束 \(\delta(g_1 g_2 g_3 g_4)\) 可确保对应的费米框架满足平行移动条件，进而可从二点函数中抽取有效度规 \(\langle \varphi_{ab}\varphi_{cd}\rangle \sim h_{(ab)(cd)}\)。[1] 实验接口需要构造态映射算符 \(\mathcal{M}\) 将凝聚态可测量量（如涡旋拓扑数）投影到 \(\varphi\) 的群模展开系数，以对接TGFT可观测量。
 
-2.2 引力子模激发
+2.2 BEC-量子湍流模型
 
-当BEC体系进入量子湍流区时，量子化涡旋产生的能量级联可在临界尺度触发从“预几何态”到“几何态”的相变，使自旋2的引力子模集体浮现。[4][8][9][10] 该过程要求调和激发频率、散射长度与外场梯度，使宏观波函数在动量空间形成双峰结构，以便与TGFT态空间匹配。
+BEC的宏观波函数 \(\psi(\mathbf{r},t)\) 满足Gross-Pitaevskii方程
+\[
+i\hbar\frac{\partial\psi}{\partial t}=\left[-\frac{\hbar^2}{2m}\nabla^2+V_{\text{ext}}(\mathbf{r})+g|\psi|^2\right]\psi
+\]
+其中 \(g=4\pi\hbar^2 a_s/m\) 由散射长度 \(a_s\) 决定。[4][5] 当通过旋转势或光晶格驱动使平均角速度达到 \(\Omega\) 时，量子涡旋满足量子化环流
+\[
+\kappa=\oint \mathbf{v}\cdot d\mathbf{l} = \frac{h}{m} q,\quad q\in\mathbb{Z}
+\]
+涡旋间距近似为 \(l_v\simeq\sqrt{\hbar/(m\Omega)}\)，其动力学遵循Kolmogorov型谱 \(E(k)\sim k^{-5/3}\) 并在耗散区表现反能量级联。[6][8][9] 当Kelvin波被激发后，涡管弯曲度 \(\mathcal{C}=\langle|\partial^2 \mathbf{r}/\partial z^2|\rangle\) 与能量通量 \(\epsilon_\kappa\) 形成耦合，可通过调谐散射长度 \(a_s\) 与陷阱频率实现对 \(\epsilon_\kappa\) 的精准控制。[7][10]
 
-2.3 能量-动量闭合
+2.3 引力子模激发条件
 
-为了满足能量-动量守恒，需要在湍流源与TGFT激发层之间引入反馈耦合，确保引力场的应力能量张量由体系内能提供。通过在仿射连接上建立约束，可利用群场能量泛函将量子湍流的涡旋通量映射到有效引力子模能量，避免净外能流。[1]
+TGFT的相变可理解为群场态占据数 \(\eta=\langle\varphi^\dagger\varphi\rangle\) 超过临界值 \(\eta_c\) 时，几何序参数 \(Q_{ab}=\partial_{\chi_a}\varphi\,\partial_{\chi_b}\varphi\) 出现长程关联。[1] 将BEC量子湍流的涡旋张量 \(\mathcal{T}_{ab}=\rho_s \langle v_a v_b\rangle\) 通过映射 \(\mathcal{M}\) 投入TGFT态空间，可定义等效耦合
+\[
+\Lambda_{\text{eff}}(l_v)=\Lambda_0+\gamma\, \mathcal{M}[\mathcal{T}_{ab}(l_v)]
+\]
+当 \(\Lambda_{\text{eff}}=\Lambda_c\) 时系统从“预几何”态转入几何态，自旋2激发随之显现，其群表示满足 \(D^{(2)}(SP(1,3))\) 并对应角动量 \(\pm 2\)。[4][8] 在实验设计中，需要同时满足：
+1) \(l_v\) 与光学晶格常数 \(a_{\text{lat}}\) 匹配以形成相干涡旋超晶格；
+2) Feshbach共振调节 \(a_s\) 使 \(\eta\rightarrow\eta_c\)；
+3) 外加磁场梯度 \(\nabla B\) 限制非共线涡旋以避免退相干。
+
+2.4 能量-动量闭合
+
+体系总能动量张量写作 \(T^{\mu\nu}_{\text{tot}}=T^{\mu\nu}_{\text{BEC}}+T^{\mu\nu}_{\text{TGFT}}\)。前者由Gross-Pitaevskii拉格朗日量导出 \(T^{\mu\nu}_{\text{BEC}}=\frac{\partial\mathcal{L}_{\text{GP}}}{\partial(\partial_\mu\psi)}\partial^\nu\psi - \eta^{\mu\nu}\mathcal{L}_{\text{GP}}\)，后者来自群场Noether流 \(J^\mu_\xi=\delta_\xi \varphi \cdot \frac{\partial \mathcal{L}_{\text{TGFT}}}{\partial(\partial_\mu\varphi)}\)。[1] 通过在两层之间引入反馈耦合项
+\[
+\mathcal{L}_{\text{fb}} = \beta\, \mathcal{T}_{ab}\, Q^{ab}
+\]
+可确保 \(\partial_\mu T^{\mu\nu}_{\text{tot}}=0\)，即引力子模能量完全来自BEC内部能量级联，无需外部净能量注入。反馈系数 \(\beta\) 由实际装置的谐振腔品质因数与超晶格填充因子确定，设计时需以测量链路的噪声上限为约束。
 
 3 原型设计
 
