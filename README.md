@@ -10,7 +10,7 @@ wanjo 2025
 
 ### TGFT 统一理论框架
 
-- [TGFT 文档索引](docs_tgft/tgft-unified-framework.md) - 统一框架索引与约定说明
+- [TGFT 文档索引](docs_tgft/index.md) - 统一框架索引与约定说明
 - [TGFT 术语与范围提示](docs_tgft/tgft-theory.md) - 避免与主流 TGFT 混淆
 - [TGFT 数学基础](docs_tgft/tgft-mathematical-foundations.md) - 微分几何与纤维丛理论
 - [从 TGFT 推导广义相对论](docs_tgft/tgft-general-relativity.md) - 爱因斯坦场方程、测地线方程
