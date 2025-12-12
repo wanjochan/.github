@@ -13,6 +13,7 @@
 
 ## 文档清单（每篇一句话）
 
+- [TGFT-EXT 推演（工作稿）](tgft-ext.md)：TGFT-EXT 的模型定义、一致性清单、以及“人造重力/反重力/黑洞”三方向的可计算路线图。
 - [TGFT 术语与范围提示](tgft-theory.md)：避免与主流 TGFT 混淆；说明本文档体系的边界。
 - [TGFT 数学基础](tgft-mathematical-foundations.md)：微分几何、纤维丛与规范场的最小工具箱。
 - [从 TGFT 推导广义相对论](tgft-general-relativity.md)：标架/联络表述下的 GR 关键方程与弱场极限。
