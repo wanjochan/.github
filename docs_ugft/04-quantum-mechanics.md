@@ -23,7 +23,7 @@ $$ Z = \int \mathcal{D}[e, ω, ψ, \bar{ψ}, ...] e^{iS/\hbar} $$
 $$ [\hat{φ}(x), \hat{π}(y)] = i\hbar δ^3(x-y) $$
 
 对于费米子场，使用反对易关系：
-$$ \lbrace \hat{ψ}_α(x), \hat{ψ}^†_β(y)\rbrace  = \hbar δ_{αβ} δ^3(x-y) $$
+$$\lbrace \hat{ψ}_α(x), \hat{ψ}^†_β(y)\rbrace  = \hbar δ_{αβ} δ^3(x-y) $$
 
 ## 3. 非相对论量子力学
 
@@ -79,7 +79,7 @@ $$ (iγ^μ ∂_μ - m) ψ = 0 $$
 ### 4.3 狄拉克矩阵
 
 狄拉克矩阵 $\gamma^\mu$ 满足：
-$$ \lbrace γ^μ, γ^ν\rbrace  = 2η^{μν} $$
+$$\lbrace γ^μ, γ^ν\rbrace  = 2η^{μν} $$
 
 在 UGFT 框架下， $\gamma^\mu$ 与标架场相关：
 $$ γ^μ = e^μ_a γ^a $$

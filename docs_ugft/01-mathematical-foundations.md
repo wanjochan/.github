@@ -28,7 +28,7 @@
 
 ### 1.2 定义
 
-**$n$ 维（光滑）流形** $M$ 是一个 Hausdorff、具有可数基的拓扑空间，且配有一族开集 $\lbrace U_\alpha\rbrace $ 覆盖 $M$ ，每个 $U_\alpha$ 都同胚于 $\mathbb{R}^n$ 的开集，且两个覆盖块之间的过渡映射是光滑的（ $C^\infty$ ）。
+**$n$ 维（光滑）流形** $M$ 是一个 Hausdorff、具有可数基的拓扑空间，且配有一族开集 $\lbrace U_\alpha\rbrace$ 覆盖 $M$ ，每个 $U_\alpha$ 都同胚于 $\mathbb{R}^n$ 的开集，且两个覆盖块之间的过渡映射是光滑的（ $C^\infty$ ）。
 
 **直观**：用一堆"地图块"拼出整张地图，每张地图都是 $\mathbb{R}^n$ 的一片，相邻地图块的拼接处光滑相容。
 
@@ -68,7 +68,7 @@ $$
 
 ### 2.3 余切空间
 
-**余切空间** $T_p^* M = (T_p M)^*$ 是切空间的对偶（即所有线性映射 $T_p M \to \mathbb{R}$ ），其自然基记为 $\lbrace dx^\mu\rbrace $ ，满足
+**余切空间** $T_p^* M = (T_p M)^*$ 是切空间的对偶（即所有线性映射 $T_p M \to \mathbb{R}$ ），其自然基记为 $\lbrace dx^\mu\rbrace$ ，满足
 
 $$
 dx^\mu\!\left(\frac{\partial}{\partial x^\nu}\right) = \delta^\mu_\nu.
@@ -309,7 +309,7 @@ $$
 
 Lie 群 $G$ 单位元处的切空间记作 $\mathfrak{g} = T_e G$ ，配上李括号 $[\cdot, \cdot]$ ，称为 $G$ 的 **Lie 代数**。物理上， $\mathfrak{g}$ 的元素就是"无穷小生成元"。
 
-选定一组基 $\lbrace T_A\rbrace $ ，李括号写成
+选定一组基 $\lbrace T_A\rbrace$ ，李括号写成
 
 $$
 [T_A, T_B]   =   f^C{}_{AB}\, T_C,
@@ -319,7 +319,7 @@ $$
 
 ### 7.3 半直积
 
-如果 $N$ 是 $G$ 的正规子群、 $H$ 是另一子群、且 $G = N H$ 、 $N \cap H = \lbrace e\rbrace $ ，则 $G \cong N \rtimes H$ ，称为**半直积**。 UGFT 的规范群
+如果 $N$ 是 $G$ 的正规子群、 $H$ 是另一子群、且 $G = N H$ 、 $N \cap H = \lbrace e\rbrace$ ，则 $G \cong N \rtimes H$ ，称为**半直积**。 UGFT 的规范群
 
 $$
 PG(1,3)   =   SP(1,3)   \rtimes   W^{1,3}
