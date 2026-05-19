@@ -58,7 +58,7 @@ $$ \Gamma^\rho_{\mu\nu} = \frac{1}{2} g^{\rho\sigma} (\partial_\mu g_{\nu\sigma}
 ### 4.1 UGFT 引力作用量
 
 在 UGFT 框架下，引力作用量写为：
-$$ S_G = \frac{1}{16\pi G} \int R e \, d^4x $$
+$$ S_G = \frac{1}{16\pi G} \int R e d^4x $$
 
 其中 $R$ 是里奇标量， $e = \det(e^a_\mu)$ 。
 
@@ -76,16 +76,16 @@ $$ R^\rho_{\sigma\mu\nu} = e^\rho_a e^b_\sigma R^{ab}_{\mu\nu} $$
 ### 4.3 对标架场的变分
 
 对标架场 $e^a_\mu$ 变分作用量：
-$$ \delta S_G = \frac{1}{16\pi G} \int \left[ R \, \delta e + e \, \delta R \right] d^4x $$
+$$ \delta S_G = \frac{1}{16\pi G} \int \left[ R \delta e + e \delta R \right] d^4x $$
 
 计算 $\delta e$ ：
-$$ \delta e = e \, e_a^\mu \, \delta e^a_\mu $$
+$$ \delta e = e e_a^\mu \delta e^a_\mu $$
 
 计算 $\delta R$ ：
 $$ \delta R = \delta(e^\mu_a e^\nu_b R^{ab}_{\mu\nu}) = -R^{\mu\nu} e^a_\mu \delta e^a_\nu + e^\mu_a e^\nu_b \delta R^{ab}_{\mu\nu} $$
 
 其中 $\delta R^{ab}_{\mu\nu}$ 项在积分后为零（边界项），因此：
-$$ \delta S_G = \frac{1}{16\pi G} \int \left( R \, e_a^\mu - R^{\mu\nu} e^a_\nu \right) \delta e^a_\mu \, e \, d^4x $$
+$$ \delta S_G = \frac{1}{16\pi G} \int \left( R e_a^\mu - R^{\mu\nu} e^a_\nu \right) \delta e^a_\mu e d^4x $$
 
 ### 4.4 爱因斯坦张量
 
@@ -93,12 +93,12 @@ $$ \delta S_G = \frac{1}{16\pi G} \int \left( R \, e_a^\mu - R^{\mu\nu} e^a_\nu 
 $$ G_{\mu\nu} = R_{\mu\nu} - \frac{1}{2} g_{\mu\nu} R $$
 
 则变分可以写为：
-$$ \delta S_G = -\frac{1}{16\pi G} \int G_{\mu\nu} e^\mu_a \delta e^a_\nu \, e \, d^4x $$
+$$ \delta S_G = -\frac{1}{16\pi G} \int G_{\mu\nu} e^\mu_a \delta e^a_\nu e d^4x $$
 
 ### 4.5 物质场的作用量
 
 物质场的作用量：
-$$ S_m = \int \mathcal{L}_m \, e \, d^4x $$
+$$ S_m = \int \mathcal{L}_m e d^4x $$
 
 能量-动量张量定义为：
 $$ T_{\mu\nu} = -\frac{2}{e} \frac{\delta(\mathcal{L}_m e)}{\delta g^{\mu\nu}} = -\frac{2}{e} \frac{\delta(\mathcal{L}_m e)}{\delta e^a_\mu} e^a_\nu $$
@@ -106,7 +106,7 @@ $$ T_{\mu\nu} = -\frac{2}{e} \frac{\delta(\mathcal{L}_m e)}{\delta g^{\mu\nu}} =
 ### 4.6 爱因斯坦场方程
 
 总作用量 $S = S_G + S_m$ 的变分给出：
-$$ G_{\mu\nu} = 8\pi G \, T_{\mu\nu} $$
+$$ G_{\mu\nu} = 8\pi G T_{\mu\nu} $$
 
 这就是爱因斯坦场方程，从 UGFT 框架严格推导得出。
 
@@ -115,7 +115,7 @@ $$ G_{\mu\nu} = 8\pi G \, T_{\mu\nu} $$
 ### 5.1 自由粒子的作用量
 
 自由粒子的作用量：
-$$ S = -m \int ds = -m \int \sqrt{-g_{\mu\nu} \frac{dx^\mu}{d\tau} \frac{dx^\nu}{d\tau}} \, d\tau $$
+$$ S = -m \int ds = -m \int \sqrt{-g_{\mu\nu} \frac{dx^\mu}{d\tau} \frac{dx^\nu}{d\tau}} d\tau $$
 
 其中 $\tau$ 是固有时。
 

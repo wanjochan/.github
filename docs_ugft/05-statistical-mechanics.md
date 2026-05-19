@@ -34,7 +34,7 @@ $$ Z = \int \mathcal{D}[\varphi] e^{-S_E[\varphi]} $$
 将时间 $t$ 替换为虚时间 $\tau = it$ ，作用量变为欧几里得形式：
 $$ S_E = \int d^4x_E \mathcal{L}_E $$
 
-其中 $d^4x_E = d\tau\, d^3x$ ，度规变为欧几里得度规。
+其中 $d^4x_E = d\tau d^3x$ ，度规变为欧几里得度规。
 
 ### 3.2 有限温度场论
 
@@ -78,8 +78,8 @@ $$ P = -\frac{\partial F}{\partial V} $$
 ### 4.5 热力学关系
 
 这些量满足热力学关系：
-$$ dF = -S\, dT - P\, dV $$
-$$ dU = T\, dS - P\, dV $$
+$$ dF = -S dT - P dV $$
+$$ dU = T dS - P dV $$
 
 ## 5. 理想气体
 

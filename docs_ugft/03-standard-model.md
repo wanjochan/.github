@@ -203,7 +203,7 @@ $$ \mathcal{L}_Y = -y_f \bar{\psi}_L \phi \psi_R + \text{h.c.} $$
 ### 7.3 旋量场的作用量
 
 在 UGFT 框架下，旋量场的作用量为：
-$$ S_\psi = \int \bar{\psi} (i\gamma^\mu D_\mu - m) \psi\, e\, d^4x $$
+$$ S_\psi = \int \bar{\psi} (i\gamma^\mu D_\mu - m) \psi e d^4x $$
 
 其中协变导数：
 $$ D_\mu = \partial_\mu + \frac{1}{4} \omega^{ab}_\mu \gamma_{ab} + ig A_\mu + ig_w W^a_\mu T^a + ig_s G^a_\mu t^a $$
