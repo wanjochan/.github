@@ -9,7 +9,7 @@
 **UGFT** 的核心命题是：自然界四种已知的基本相互作用——引力、电磁、弱、强——可归结为同一个非齐次自旋规范群
 
 $$
-PG(1,3) \;=\; SP(1,3) \;\rtimes\; W^{1,3}
+PG(1,3)   =   SP(1,3)   \rtimes   W^{1,3}
 $$
 
 在时空各点局部成立时所必需引入的规范连接。半积分解中：
@@ -30,7 +30,7 @@ UGFT 的所有动力学建立在以下三个对象之上。
 将局部洛伦兹标架嫁接到时空流形每一点的基本几何量，通过
 
 $$
-g_{\mu\nu} \;=\; e^a_\mu \, e^b_\nu \, \eta_{ab}
+g_{\mu\nu}   =   e^a_\mu \, e^b_\nu \, \eta_{ab}
 $$
 
 构造时空度规 $g_{\mu\nu}$ ，其中 $\eta_{ab} = \mathrm{diag}(-1,1,1,1)$ 为闵可夫斯基度规。拉丁指标 $a,b$ 标记局部洛伦兹标架，希腊指标 $\mu,\nu$ 标记时空坐标。
@@ -42,13 +42,13 @@ $$
 刻画洛伦兹标架沿时空平移的非平凡转动，作为 $SP(1,3)$ 规范支的连接，给出旋量场的协变导数
 
 $$
-D_\mu \psi \;=\; \partial_\mu \psi \;+\; \tfrac{1}{4}\, \omega^{ab}_\mu \, \gamma_{ab} \, \psi.
+D_\mu \psi   =   \partial_\mu \psi   +   \tfrac{1}{4}\, \omega^{ab}_\mu \, \gamma_{ab} \, \psi.
 $$
 
 对应的曲率二形式即为标架表述下的黎曼曲率：
 
 $$
-R^{ab}_{\mu\nu} \;=\; \partial_\mu \omega^{ab}_\nu - \partial_\nu \omega^{ab}_\mu + \omega^{a}{}_{c\mu}\, \omega^{cb}_\nu - \omega^{a}{}_{c\nu}\, \omega^{cb}_\mu.
+R^{ab}_{\mu\nu}   =   \partial_\mu \omega^{ab}_\nu - \partial_\nu \omega^{ab}_\mu + \omega^{a}{}_{c\mu}\, \omega^{cb}_\nu - \omega^{a}{}_{c\nu}\, \omega^{cb}_\mu.
 $$
 
 ### 2.3 规范群 $PG(1,3) = SP(1,3) \rtimes W^{1,3}$
@@ -93,13 +93,13 @@ flowchart TB
 ### 4.1 总作用量
 
 $$
-S_{\mathrm{UGFT}} \;=\; \int d^4x \; e \; \Big[
+S_{\mathrm{UGFT}}   =   \int d^4x    e    \Big[
 \underbrace{\tfrac{1}{2\kappa}\, R(e,\omega)}_{\text{引力支} (W^{1,3})}
-\;+\;
+  +  
 \underbrace{-\tfrac{1}{4} F^A_{\mu\nu} F^{A\,\mu\nu}}_{\text{自旋规范支} (SP(1,3))}
-\;+\;
+  +  
 \underbrace{\bar\psi\, i\gamma^a e_a^\mu D_\mu \psi}_{\text{费米物质}}
-\;+\;
+  +  
 \underbrace{\mathcal{L}_{\mathrm{Higgs}}}_{\text{对称破缺}}
 \Big]
 $$
