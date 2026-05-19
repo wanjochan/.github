@@ -75,7 +75,7 @@ flowchart TB
   U -->|"非相对论极限<br/>+ 单粒子近似"| QM["量子力学<br/>薛定谔/狄拉克方程"]
   U -->|"欧氏化 + 配分函数"| ST["统计力学<br/>有限温度场论<br/>相变 & 临界现象"]
 
-  GR -.->|"凝聚态实现"| BEC["BEC 引力工程<br/>(becgravity.md)<br/>量子湍流 + 量子纠缠<br/>→ 引力子模 / 反引力"]
+  GR -.->|"凝聚态实现"| BEC["BEC 引力工程<br/>(07-application-becgravity.md)<br/>量子湍流 + 量子纠缠<br/>→ 引力子模 / 反引力"]
   SM -.-> CV["实验兼容性验证<br/>(对照清单)"]
   GR -.-> CV
 ```
@@ -136,31 +136,31 @@ $$
 
 按"先理解、再应用"的顺序：
 
-1. **数学基础** → `ugft-mathematical-foundations.md`
+1. **数学基础** → `01-mathematical-foundations.md`
    流形、纤维丛、联络、曲率、$PG(1,3)$ 的结构 — 进入下面任何一篇之前的必备工具箱。
 
-2. **回收 GR** → `ugft-general-relativity.md`
+2. **回收 GR** → `02-general-relativity.md`
    从 UGFT 作用量出发推爱因斯坦方程、测地线、弱场极限、引力波。
 
-3. **回收 SM** → `ugft-standard-model.md`
+3. **回收 SM** → `03-standard-model.md`
    $SP(1,3)$ 在合适破缺下变为 $SU(3)_C \times SU(2)_L \times U(1)_Y$，希格斯机制赋予质量。
 
-4. **回收 QM** → `ugft-quantum-mechanics.md`
+4. **回收 QM** → `04-quantum-mechanics.md`
    路径积分量子化、非相对论极限、狄拉克方程到薛定谔方程的下降。
 
-5. **回收统计力学** → `ugft-statistical-mechanics.md`
+5. **回收统计力学** → `05-statistical-mechanics.md`
    欧氏化、配分函数、临界指数、有限温度场论。
 
-6. **实验对照** → `ugft-compatibility-verification.md`
+6. **实验对照** → `06-compatibility-verification.md`
    把上面所有推论列成"实验值 vs UGFT 预测"对照表。
 
-7. **工程应用** → `becgravity.md`
+7. **工程应用** → `07-application-becgravity.md`
    一个具体设想：用 BEC 量子湍流 + **量子纠缠拓扑**触发 UGFT 相变，产生可定向的引力子模乃至**反引力**。
 
 辅助：
 
-- **索引页** → `ugft-unified-framework.md`（阅读顺序、记号约定）
-- **术语消歧** → `ugft-theory.md`（与主流 TGFT 的区别）
+- **索引页** → `README.md`（阅读顺序、记号约定）
+- **术语消歧** → `appendix-tgft-disambiguation.md`（与主流 TGFT 的区别）
 
 ---
 
@@ -174,10 +174,10 @@ $$
 | 出发点 | Poincaré-规范 / Cartan / Einstein-Cartan 形式 | 张量模型、Boulatov-Ooguri 作用量、spin foam |
 | 中心问题 | 把四种相互作用塞进同一个规范群 | 时空从离散组合数据中**涌现**；可重整化 |
 | 几何角色 | 几何由 $e^a_\mu$ 给定（背景独立但有标架） | 几何**事先不存在**，由群场的关联函数涌现 |
-| 与本仓库关系 | 本仓库的全部内容 | 仅在 `ugft-theory.md` 里被引用以做消歧 |
+| 与本仓库关系 | 本仓库的全部内容 | 仅在 `appendix-tgft-disambiguation.md` 里被引用以做消歧 |
 
 **记住一句话**：本仓库的 UGFT 是 "Poincaré-规范引力 + 标准模型放进同一个群"，主流 TGFT 是 "用张量模型/群场重建时空"。两者的研究对象、形式体系、最终目标都不相同。
 
 ---
 
-> **下一步**：如果你刚读完这页想动手算点东西，从 `ugft-mathematical-foundations.md` 开始；如果你想看 UGFT 在工程上能做什么疯狂的事，跳到 `becgravity.md`。
+> **下一步**：如果你刚读完这页想动手算点东西，从 `01-mathematical-foundations.md` 开始；如果你想看 UGFT 在工程上能做什么疯狂的事，跳到 `07-application-becgravity.md`。
