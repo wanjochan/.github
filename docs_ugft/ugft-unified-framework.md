@@ -4,6 +4,7 @@
 
 ## 1. 推荐阅读顺序
 
+0. **`ugft-overview.md`：单页入门总览（强烈建议先读这一篇）**——核心思想、关键对象、统一图景、关键公式、与主流 TGFT 的边界。
 1. `ugft-mathematical-foundations.md`：数学与几何底座（流形/纤维丛/联络/曲率/协变导数）。
 2. `ugft-general-relativity.md`：以标架/联络表述推导广义相对论关键方程。
 3. `ugft-standard-model.md`：标准模型的规范群与拉氏量结构（按本文档体系叙述）。
@@ -16,6 +17,7 @@
 
 ## 2. 文件清单（每篇一句话）
 
+- `ugft-overview.md`：单页入门总览。
 - `ugft-mathematical-foundations.md`：微分几何、纤维丛与规范场的最小工具箱。
 - `ugft-general-relativity.md`：从标架场构造度规、无挠条件、爱因斯坦方程与弱场极限。
 - `ugft-standard-model.md`：把非引力相互作用按规范场结构组织起来的推导式写法。

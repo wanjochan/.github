@@ -9,47 +9,47 @@
 ### 2.1 密度矩阵
 
 在量子统计力学中，系统由密度矩阵描述：
-$$ \hat{ρ} = \sum_i p_i |ψ_i⟩⟨ψ_i| $$
+$$ \hat{\rho} = \sum_i p_i |\psi_i\rangle\langle\psi_i| $$
 
-其中 p_i 是处于态 |ψ_i⟩ 的概率。
+其中 $p_i$ 是处于态 $|\psi_i\rangle$ 的概率。
 
 ### 2.2 配分函数
 
 正则系综的配分函数：
-$$ Z = \text{Tr}(e^{-β\hat{H}}) = \sum_n e^{-βE_n} $$
+$$ Z = \mathrm{Tr}(e^{-\beta\hat{H}}) = \sum_n e^{-\beta E_n} $$
 
-其中 β = 1/(k_B T)，k_B 是玻尔兹曼常数，T 是温度。
+其中 $\beta = 1/(k_B T)$，$k_B$ 是玻尔兹曼常数，$T$ 是温度。
 
 ### 2.3 在路径积分中的表示
 
 在路径积分框架下，配分函数可以写为：
-$$ Z = \int \mathcal{D}[φ] e^{-S_E[\varphi]} $$
+$$ Z = \int \mathcal{D}[\varphi] e^{-S_E[\varphi]} $$
 
-其中 S_E 是欧几里得作用量（虚时间）。
+其中 $S_E$ 是欧几里得作用量（虚时间）。
 
 ## 3. 从 UGFT 到配分函数
 
 ### 3.1 欧几里得化
 
-将时间 t 替换为虚时间 τ = it，作用量变为欧几里得形式：
+将时间 $t$ 替换为虚时间 $\tau = it$，作用量变为欧几里得形式：
 $$ S_E = \int d^4x_E \mathcal{L}_E $$
 
-其中 d^4x_E = dτ d^3x，度规变为欧几里得度规。
+其中 $d^4x_E = d\tau\, d^3x$，度规变为欧几里得度规。
 
 ### 3.2 有限温度场论
 
-在有限温度下，时间方向是周期性的，周期为 β = 1/(k_B T)。
+在有限温度下，时间方向是周期性的，周期为 $\beta = 1/(k_B T)$。
 
 对于玻色子场：
-$$ φ(τ + β, x) = φ(τ, x) $$
+$$ \varphi(\tau + \beta, x) = \varphi(\tau, x) $$
 
 对于费米子场：
-$$ ψ(τ + β, x) = -ψ(τ, x) $$
+$$ \psi(\tau + \beta, x) = -\psi(\tau, x) $$
 
 ### 3.3 UGFT 的配分函数
 
 在 UGFT 框架下，配分函数为：
-$$ Z = \int \mathcal{D}[e, ω, ψ, \bar{ψ}, ...] e^{-S_E} $$
+$$ Z = \int \mathcal{D}[e, \omega, \psi, \bar{\psi}, ...] e^{-S_E} $$
 
 其中积分对所有满足周期性条件的场构型进行。
 
@@ -63,32 +63,32 @@ $$ F = -k_B T \ln Z $$
 ### 4.2 内能
 
 内能：
-$$ U = \langle \hat{H} \rangle = -\frac{∂\ln Z}{∂β} $$
+$$ U = \langle \hat{H} \rangle = -\frac{\partial \ln Z}{\partial \beta} $$
 
 ### 4.3 熵
 
 熵：
-$$ S = k_B (\ln Z + βU) = -\frac{∂F}{∂T} $$
+$$ S = k_B (\ln Z + \beta U) = -\frac{\partial F}{\partial T} $$
 
 ### 4.4 压强
 
 压强：
-$$ P = -\frac{∂F}{∂V} $$
+$$ P = -\frac{\partial F}{\partial V} $$
 
 ### 4.5 热力学关系
 
 这些量满足热力学关系：
-$$ dF = -S dT - P dV $$
-$$ dU = T dS - P dV $$
+$$ dF = -S\, dT - P\, dV $$
+$$ dU = T\, dS - P\, dV $$
 
 ## 5. 理想气体
 
 ### 5.1 非相对论理想气体
 
 对于非相对论理想气体，配分函数：
-$$ Z = \frac{1}{N!} \left( \frac{V}{λ^3} \right)^N $$
+$$ Z = \frac{1}{N!} \left( \frac{V}{\lambda^3} \right)^N $$
 
-其中 λ = h/√(2πmk_B T) 是热德布罗意波长。
+其中 $\lambda = h/\sqrt{2\pi m k_B T}$ 是热德布罗意波长。
 
 ### 5.2 状态方程
 
@@ -112,18 +112,18 @@ $$ C_V = \frac{3}{2} N k_B $$
 ### 6.1 费米子配分函数
 
 对于费米子系统，使用反对易关系，配分函数：
-$$ Z = \prod_k (1 + e^{-β(ε_k - μ)}) $$
+$$ Z = \prod_k (1 + e^{-\beta(\epsilon_k - \mu)}) $$
 
-其中 μ 是化学势。
+其中 $\mu$ 是化学势。
 
 ### 6.2 费米分布
 
 费米子占据数：
-$$ n_k = \frac{1}{e^{β(ε_k - μ)} + 1} $$
+$$ n_k = \frac{1}{e^{\beta(\epsilon_k - \mu)} + 1} $$
 
 ### 6.3 费米能
 
-在零温下，费米子填充到费米能 ε_F。
+在零温下，费米子填充到费米能 $\epsilon_F$。
 
 ### 6.4 在 UGFT 中的对应
 
@@ -134,12 +134,12 @@ $$ n_k = \frac{1}{e^{β(ε_k - μ)} + 1} $$
 ### 7.1 玻色子配分函数
 
 对于玻色子系统，配分函数：
-$$ Z = \prod_k \frac{1}{1 - e^{-β(ε_k - μ)}} $$
+$$ Z = \prod_k \frac{1}{1 - e^{-\beta(\epsilon_k - \mu)}} $$
 
 ### 7.2 玻色分布
 
 玻色子占据数：
-$$ n_k = \frac{1}{e^{β(ε_k - μ)} - 1} $$
+$$ n_k = \frac{1}{e^{\beta(\epsilon_k - \mu)} - 1} $$
 
 ### 7.3 玻色-爱因斯坦凝聚
 
@@ -158,18 +158,18 @@ $$ n_k = \frac{1}{e^{β(ε_k - μ)} - 1} $$
 ### 8.2 普朗克分布
 
 光子能量分布（普朗克分布）：
-$$ u(ν, T) = \frac{8πh ν^3}{c^3} \frac{1}{e^{hν/(k_B T)} - 1} $$
+$$ u(\nu, T) = \frac{8\pi h \nu^3}{c^3} \frac{1}{e^{h\nu/(k_B T)} - 1} $$
 
 ### 8.3 斯特藩-玻尔兹曼定律
 
 总辐射能量：
-$$ U = σ T^4 V $$
+$$ U = \sigma T^4 V $$
 
-其中 σ = π²k_B⁴/(15ℏ³c³) 是斯特藩-玻尔兹曼常数。
+其中 $\sigma = \pi^2 k_B^4/(15\hbar^3 c^3)$ 是斯特藩-玻尔兹曼常数。
 
 ### 8.4 在 UGFT 中的对应
 
-在 UGFT 框架下，光子对应电磁规范场 A_μ 的量子激发。
+在 UGFT 框架下，光子对应电磁规范场 $A_\mu$ 的量子激发。
 
 ## 9. 相变
 
@@ -194,16 +194,16 @@ $$ U = σ T^4 V $$
 ### 10.1 标度变换
 
 重整化群研究系统在标度变换下的行为：
-$$ x → bx, \quad t → b^z t $$
+$$ x \to bx, \quad t \to b^z t $$
 
-其中 z 是动力学指数。
+其中 $z$ 是动力学指数。
 
 ### 10.2 临界指数
 
 临界指数描述相变点的奇异行为：
-- 关联长度：ξ ~ |T - T_c|^{-ν}
-- 比热：C ~ |T - T_c|^{-α}
-- 磁化率：χ ~ |T - T_c|^{-γ}
+- 关联长度：$\xi \sim |T - T_c|^{-\nu}$
+- 比热：$C \sim |T - T_c|^{-\alpha}$
+- 磁化率：$\chi \sim |T - T_c|^{-\gamma}$
 
 ### 10.3 在 UGFT 中的对应
 
@@ -218,9 +218,9 @@ $$ x → bx, \quad t → b^z t $$
 ### 11.2 涨落-耗散定理
 
 涨落-耗散定理联系响应函数和涨落：
-$$ \chi''(ω) = \frac{1}{2\hbar} \tanh\left(\frac{\hbar ω}{2k_B T}\right) S(ω) $$
+$$ \chi''(\omega) = \frac{1}{2\hbar} \tanh\left(\frac{\hbar \omega}{2k_B T}\right) S(\omega) $$
 
-其中 χ'' 是响应函数的虚部，S 是涨落的谱密度。
+其中 $\chi''$ 是响应函数的虚部，$S$ 是涨落的谱密度。
 
 ### 11.3 在 UGFT 中的对应
 
@@ -231,9 +231,9 @@ $$ \chi''(ω) = \frac{1}{2\hbar} \tanh\left(\frac{\hbar ω}{2k_B T}\right) S(ω)
 ### 12.1 主方程
 
 非平衡系统的演化由主方程描述：
-$$ \frac{∂P_n}{∂t} = \sum_m (W_{nm} P_m - W_{mn} P_n) $$
+$$ \frac{\partial P_n}{\partial t} = \sum_m (W_{nm} P_m - W_{mn} P_n) $$
 
-其中 W_{nm} 是跃迁速率。
+其中 $W_{nm}$ 是跃迁速率。
 
 ### 12.2 福克-普朗克方程
 
@@ -263,14 +263,14 @@ $$ S = -k_B \sum_i p_i \ln p_i $$
 ### 14.1 霍金温度
 
 黑洞具有温度（霍金温度）：
-$$ T_H = \frac{\hbar c^3}{8π G M k_B} $$
+$$ T_H = \frac{\hbar c^3}{8\pi G M k_B} $$
 
 ### 14.2 贝肯斯坦-霍金熵
 
 黑洞熵：
 $$ S_{BH} = \frac{k_B A}{4 l_P^2} $$
 
-其中 A 是事件视界面积，l_P 是普朗克长度。
+其中 $A$ 是事件视界面积，$l_P$ 是普朗克长度。
 
 ### 14.3 在 UGFT 中的对应
 
