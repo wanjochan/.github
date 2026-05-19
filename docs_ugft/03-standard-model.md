@@ -12,8 +12,8 @@ UGFT 的规范群为：
 $$ PG(1,3) = SP(1,3) \rtimes W^{1,3} $$
 
 其中：
-- $SP(1,3)$：自旋规范群，描述非引力相互作用
-- $W^{1,3}$：手征平移群，描述引力
+- $SP(1,3)$ ：自旋规范群，描述非引力相互作用
+- $W^{1,3}$ ：手征平移群，描述引力
 
 ### 2.2 SP(1,3) 的分解
 
@@ -21,9 +21,9 @@ $$ PG(1,3) = SP(1,3) \rtimes W^{1,3} $$
 $$ SP(1,3) \supset U(1)_Y \times SU(2)_L \times SU(3)_C $$
 
 其中：
-- $U(1)_Y$：超荷规范群（电磁+弱）
-- $SU(2)_L$：弱同位旋群
-- $SU(3)_C$：色规范群（强相互作用）
+- $U(1)_Y$ ：超荷规范群（电磁+弱）
+- $SU(2)_L$ ：弱同位旋群
+- $SU(3)_C$ ：色规范群（强相互作用）
 
 ### 2.3 自旋联络的分解
 
@@ -90,7 +90,7 @@ $$ W^a_\mu = \text{特定组合}(\omega^{ij}_\mu, \omega^{0i}_\mu) $$
 弱规范场强：
 $$ W^a_{\mu\nu} = \partial_\mu W^a_\nu - \partial_\nu W^a_\mu + g_w \epsilon^{abc} W^b_\mu W^c_\nu $$
 
-其中 $g_w$ 是弱耦合常数，$\epsilon^{abc}$ 是 $SU(2)$ 的结构常数。
+其中 $g_w$ 是弱耦合常数， $\epsilon^{abc}$ 是 $SU(2)$ 的结构常数。
 
 ### 4.3 弱作用量
 
@@ -110,7 +110,7 @@ $$ U(1)_{EM} $$
 温伯格角 $\theta_W$ 定义为：
 $$ \tan \theta_W = \frac{g'}{g} $$
 
-其中 $g'$ 是 $U(1)_Y$ 耦合常数，$g$ 是 $SU(2)_L$ 耦合常数。
+其中 $g'$ 是 $U(1)_Y$ 耦合常数， $g$ 是 $SU(2)_L$ 耦合常数。
 
 物理的 $W^\pm$ 和 $Z$ 玻色子场为：
 $$ W^\pm_\mu = \frac{1}{\sqrt{2}}(W^1_\mu \mp iW^2_\mu) $$
@@ -133,7 +133,7 @@ $$ G^a_\mu = \text{扩展组合}(\omega^{ab}_\mu, \text{额外自由度}) $$
 胶子场强：
 $$ G^a_{\mu\nu} = \partial_\mu G^a_\nu - \partial_\nu G^a_\mu + g_s f^{abc} G^b_\mu G^c_\nu $$
 
-其中 $g_s$ 是强耦合常数，$f^{abc}$ 是 $SU(3)$ 的结构常数。
+其中 $g_s$ 是强耦合常数， $f^{abc}$ 是 $SU(3)$ 的结构常数。
 
 ### 5.3 强作用量
 
@@ -160,7 +160,7 @@ $$ \phi = \begin{pmatrix} \phi^+ \\ \phi^0 \end{pmatrix} $$
 希格斯势：
 $$ V(\phi) = -\mu^2 |\phi|^2 + \lambda |\phi|^4 $$
 
-其中 $\mu^2 > 0$，$\lambda > 0$。
+其中 $\mu^2 > 0$ ， $\lambda > 0$ 。
 
 ### 6.3 自发对称性破缺
 
@@ -171,7 +171,7 @@ $$ \langle \phi \rangle = \frac{1}{\sqrt{2}} \begin{pmatrix} 0 \\ v \end{pmatrix
 
 ### 6.4 规范玻色子质量
 
-通过希格斯机制，$W$ 和 $Z$ 玻色子获得质量：
+通过希格斯机制， $W$ 和 $Z$ 玻色子获得质量：
 $$ m_W = \frac{1}{2} g v $$
 $$ m_Z = \frac{1}{2} \frac{g v}{\cos \theta_W} $$
 
@@ -218,10 +218,10 @@ $$ D_\mu = \partial_\mu + \frac{1}{4} \omega^{ab}_\mu \gamma_{ab} + ig A_\mu + i
 $$ \mathcal{L}_{SM} = \mathcal{L}_{gauge} + \mathcal{L}_{Higgs} + \mathcal{L}_{Yukawa} + \mathcal{L}_{fermion} $$
 
 其中：
-- $\mathcal{L}_{gauge}$：规范场动能项
-- $\mathcal{L}_{Higgs}$：希格斯场项
-- $\mathcal{L}_{Yukawa}$：汤川耦合项
-- $\mathcal{L}_{fermion}$：费米子动能项
+- $\mathcal{L}_{gauge}$ ：规范场动能项
+- $\mathcal{L}_{Higgs}$ ：希格斯场项
+- $\mathcal{L}_{Yukawa}$ ：汤川耦合项
+- $\mathcal{L}_{fermion}$ ：费米子动能项
 
 ### 8.2 在 UGFT 框架下的形式
 
@@ -229,9 +229,9 @@ $$ \mathcal{L}_{SM} = \mathcal{L}_{gauge} + \mathcal{L}_{Higgs} + \mathcal{L}_{Y
 $$ \mathcal{L}_{UGFT} = \mathcal{L}_G + \mathcal{L}_{SP(1,3)} + \mathcal{L}_m $$
 
 其中：
-- $\mathcal{L}_G$：引力部分（$W^{1,3}$）
-- $\mathcal{L}_{SP(1,3)}$：自旋规范部分（包含所有非引力相互作用）
-- $\mathcal{L}_m$：物质场部分
+- $\mathcal{L}_G$ ：引力部分（ $W^{1,3}$ ）
+- $\mathcal{L}_{SP(1,3)}$ ：自旋规范部分（包含所有非引力相互作用）
+- $\mathcal{L}_m$ ：物质场部分
 
 ## 9. 重整化
 
@@ -248,7 +248,7 @@ $$ \frac{dg_i}{d\ln \mu} = \beta_i(g_1, g_2, g_3, ...) $$
 
 ### 9.3 耦合常数的统一
 
-在大统一理论（GUT）中，三个耦合常数在极高能标（$\sim 10^{15}$ GeV）下统一。
+在大统一理论（GUT）中，三个耦合常数在极高能标（ $\sim 10^{15}$ GeV）下统一。
 
 ## 10. 与实验的符合
 
@@ -294,9 +294,9 @@ CKM 矩阵中的复相位导致 CP 破坏，已在实验中发现。
 ## 13. 结论
 
 从 UGFT 框架可以严格推导出标准模型的所有内容：
-1. 电磁相互作用（$U(1)$）
-2. 弱相互作用（$SU(2)_L$）
-3. 强相互作用（$SU(3)_C$）
+1. 电磁相互作用（ $U(1)$ ）
+2. 弱相互作用（ $SU(2)_L$ ）
+3. 强相互作用（ $SU(3)_C$ ）
 4. 希格斯机制
 5. 物质场
 6. CP 破坏

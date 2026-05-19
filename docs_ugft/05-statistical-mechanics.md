@@ -11,14 +11,14 @@
 在量子统计力学中，系统由密度矩阵描述：
 $$ \hat{\rho} = \sum_i p_i |\psi_i\rangle\langle\psi_i| $$
 
-其中 $p_i$ 是处于态 $|\psi_i\rangle$ 的概率。
+其中 $p_i$ 是处于态 $\lvert \psi_i\rangle$ 的概率。
 
 ### 2.2 配分函数
 
 正则系综的配分函数：
 $$ Z = \mathrm{Tr}(e^{-\beta\hat{H}}) = \sum_n e^{-\beta E_n} $$
 
-其中 $\beta = 1/(k_B T)$，$k_B$ 是玻尔兹曼常数，$T$ 是温度。
+其中 $\beta = 1/(k_B T)$ ， $k_B$ 是玻尔兹曼常数， $T$ 是温度。
 
 ### 2.3 在路径积分中的表示
 
@@ -31,14 +31,14 @@ $$ Z = \int \mathcal{D}[\varphi] e^{-S_E[\varphi]} $$
 
 ### 3.1 欧几里得化
 
-将时间 $t$ 替换为虚时间 $\tau = it$，作用量变为欧几里得形式：
+将时间 $t$ 替换为虚时间 $\tau = it$ ，作用量变为欧几里得形式：
 $$ S_E = \int d^4x_E \mathcal{L}_E $$
 
-其中 $d^4x_E = d\tau\, d^3x$，度规变为欧几里得度规。
+其中 $d^4x_E = d\tau\, d^3x$ ，度规变为欧几里得度规。
 
 ### 3.2 有限温度场论
 
-在有限温度下，时间方向是周期性的，周期为 $\beta = 1/(k_B T)$。
+在有限温度下，时间方向是周期性的，周期为 $\beta = 1/(k_B T)$ 。
 
 对于玻色子场：
 $$ \varphi(\tau + \beta, x) = \varphi(\tau, x) $$
@@ -123,7 +123,7 @@ $$ n_k = \frac{1}{e^{\beta(\epsilon_k - \mu)} + 1} $$
 
 ### 6.3 费米能
 
-在零温下，费米子填充到费米能 $\epsilon_F$。
+在零温下，费米子填充到费米能 $\epsilon_F$ 。
 
 ### 6.4 在 UGFT 中的对应
 
@@ -201,9 +201,9 @@ $$ x \to bx, \quad t \to b^z t $$
 ### 10.2 临界指数
 
 临界指数描述相变点的奇异行为：
-- 关联长度：$\xi \sim |T - T_c|^{-\nu}$
-- 比热：$C \sim |T - T_c|^{-\alpha}$
-- 磁化率：$\chi \sim |T - T_c|^{-\gamma}$
+- 关联长度： $\xi \sim \lvert T - T_c \rvert^{-\nu}$
+- 比热： $C \sim \lvert T - T_c \rvert^{-\alpha}$
+- 磁化率： $\chi \sim \lvert T - T_c \rvert^{-\gamma}$
 
 ### 10.3 在 UGFT 中的对应
 
@@ -220,7 +220,7 @@ $$ x \to bx, \quad t \to b^z t $$
 涨落-耗散定理联系响应函数和涨落：
 $$ \chi''(\omega) = \frac{1}{2\hbar} \tanh\left(\frac{\hbar \omega}{2k_B T}\right) S(\omega) $$
 
-其中 $\chi''$ 是响应函数的虚部，$S$ 是涨落的谱密度。
+其中 $\chi''$ 是响应函数的虚部， $S$ 是涨落的谱密度。
 
 ### 11.3 在 UGFT 中的对应
 
@@ -270,7 +270,7 @@ $$ T_H = \frac{\hbar c^3}{8\pi G M k_B} $$
 黑洞熵：
 $$ S_{BH} = \frac{k_B A}{4 l_P^2} $$
 
-其中 $A$ 是事件视界面积，$l_P$ 是普朗克长度。
+其中 $A$ 是事件视界面积， $l_P$ 是普朗克长度。
 
 ### 14.3 在 UGFT 中的对应
 

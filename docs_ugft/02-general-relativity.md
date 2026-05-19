@@ -60,7 +60,7 @@ $$ \Gamma^\rho_{\mu\nu} = \frac{1}{2} g^{\rho\sigma} (\partial_\mu g_{\nu\sigma}
 在 UGFT 框架下，引力作用量写为：
 $$ S_G = \frac{1}{16\pi G} \int R e \, d^4x $$
 
-其中 $R$ 是里奇标量，$e = \det(e^a_\mu)$。
+其中 $R$ 是里奇标量， $e = \det(e^a_\mu)$ 。
 
 ### 4.2 里奇标量的计算
 
@@ -78,10 +78,10 @@ $$ R^\rho_{\sigma\mu\nu} = e^\rho_a e^b_\sigma R^{ab}_{\mu\nu} $$
 对标架场 $e^a_\mu$ 变分作用量：
 $$ \delta S_G = \frac{1}{16\pi G} \int \left[ R \, \delta e + e \, \delta R \right] d^4x $$
 
-计算 $\delta e$：
+计算 $\delta e$ ：
 $$ \delta e = e \, e_a^\mu \, \delta e^a_\mu $$
 
-计算 $\delta R$：
+计算 $\delta R$ ：
 $$ \delta R = \delta(e^\mu_a e^\nu_b R^{ab}_{\mu\nu}) = -R^{\mu\nu} e^a_\mu \delta e^a_\nu + e^\mu_a e^\nu_b \delta R^{ab}_{\mu\nu} $$
 
 其中 $\delta R^{ab}_{\mu\nu}$ 项在积分后为零（边界项），因此：
@@ -124,7 +124,7 @@ $$ S = -m \int ds = -m \int \sqrt{-g_{\mu\nu} \frac{dx^\mu}{d\tau} \frac{dx^\nu}
 对路径 $x^\mu(\tau)$ 变分，得到欧拉-拉格朗日方程：
 $$ \frac{d}{d\tau} \left( \frac{\partial L}{\partial \dot{x}^\mu} \right) - \frac{\partial L}{\partial x^\mu} = 0 $$
 
-其中 $L = -m\sqrt{-g_{\mu\nu} \dot{x}^\mu \dot{x}^\nu}$。
+其中 $L = -m\sqrt{-g_{\mu\nu} \dot{x}^\mu \dot{x}^\nu}$ 。
 
 ### 5.3 测地线方程
 
@@ -166,21 +166,21 @@ $$ \nabla_\mu T^{\mu\nu} = 0 $$
 在弱场极限下，度规写为：
 $$ g_{\mu\nu} = \eta_{\mu\nu} + h_{\mu\nu} $$
 
-其中 $|h_{\mu\nu}| \ll 1$。
+其中 $\lvert h_{\mu\nu} \rvert \ll 1$ 。
 
 ### 7.2 标架场的展开
 
 标架场展开为：
 $$ e^a_\mu = \delta^a_\mu + \frac{1}{2} h^a_\mu + O(h^2) $$
 
-其中 $h^a_\mu = \eta^{ab} h_{b\mu}$。
+其中 $h^a_\mu = \eta^{ab} h_{b\mu}$ 。
 
 ### 7.3 牛顿极限
 
 在静态、弱场、低速极限下，爱因斯坦场方程退化为：
 $$ \nabla^2 \varphi = 4\pi G \rho $$
 
-其中 $\varphi$ 是牛顿引力势，$\rho$ 是质量密度。这就是泊松方程，描述牛顿引力。
+其中 $\varphi$ 是牛顿引力势， $\rho$ 是质量密度。这就是泊松方程，描述牛顿引力。
 
 ### 7.4 牛顿第二定律的恢复
 
@@ -193,17 +193,17 @@ $$ \frac{d^2 \mathbf{x}}{dt^2} = -\nabla \varphi $$
 
 ### 8.1 线性化场方程
 
-在真空中（$T_{\mu\nu} = 0$），弱场近似下的场方程为：
+在真空中（ $T_{\mu\nu} = 0$ ），弱场近似下的场方程为：
 $$ \Box \bar{h}_{\mu\nu} = 0 $$
 
-其中 $\Box = \eta^{\rho\sigma} \partial_\rho \partial_\sigma$ 是达朗贝尔算符，$\bar{h}_{\mu\nu} = h_{\mu\nu} - \tfrac{1}{2}\eta_{\mu\nu} h$ 是迹反转扰动。
+其中 $\Box = \eta^{\rho\sigma} \partial_\rho \partial_\sigma$ 是达朗贝尔算符， $\bar{h}_{\mu\nu} = h_{\mu\nu} - \tfrac{1}{2}\eta_{\mu\nu} h$ 是迹反转扰动。
 
 ### 8.2 平面波解
 
 平面波解：
 $$ h_{\mu\nu} = A_{\mu\nu} e^{i k_\rho x^\rho} $$
 
-其中 $k_\rho$ 是波矢，满足 $k_\rho k^\rho = 0$（光速传播）。
+其中 $k_\rho$ 是波矢，满足 $k_\rho k^\rho = 0$ （光速传播）。
 
 ### 8.3 引力子的自旋
 
@@ -232,7 +232,7 @@ $$ e^0_0 = \sqrt{1 - \frac{2GM}{r}}, \quad e^1_1 = \frac{1}{\sqrt{1 - \frac{2GM}
 在宇宙学原理（均匀、各向同性）下，度规为：
 $$ ds^2 = -dt^2 + a(t)^2 \left[ \frac{dr^2}{1-kr^2} + r^2 d\Omega^2 \right] $$
 
-其中 $a(t)$ 是尺度因子，$k$ 是曲率参数。
+其中 $a(t)$ 是尺度因子， $k$ 是曲率参数。
 
 ### 10.2 弗里德曼方程
 

@@ -21,7 +21,7 @@
 | **0** | **[`00-overview.md`](00-overview.md)** | **单页入门总览（强烈建议先读）** |
 | 1 | [`01-mathematical-foundations.md`](01-mathematical-foundations.md) | 数学底座：流形、纤维丛、联络、曲率、协变导数 |
 | 2 | [`02-general-relativity.md`](02-general-relativity.md) | 推导广义相对论：标架构造度规、爱因斯坦场方程、弱场极限 |
-| 3 | [`03-standard-model.md`](03-standard-model.md) | 推导标准模型：$SU(3)_C \times SU(2)_L \times U(1)_Y$、对称破缺 |
+| 3 | [`03-standard-model.md`](03-standard-model.md) | 推导标准模型： $SU(3)_C \times SU(2)_L \times U(1)_Y$ 、对称破缺 |
 | 4 | [`04-quantum-mechanics.md`](04-quantum-mechanics.md) | 推导量子力学：路径积分、非相对论极限、薛定谔/狄拉克方程 |
 | 5 | [`05-statistical-mechanics.md`](05-statistical-mechanics.md) | 推导统计力学：欧氏化、配分函数、临界现象 |
 | 6 | [`06-compatibility-verification.md`](06-compatibility-verification.md) | 实验兼容性核对：理论预测 vs 观测值 |

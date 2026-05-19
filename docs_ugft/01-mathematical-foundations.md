@@ -9,30 +9,30 @@
 - 具有可数基
 - 满足 Hausdorff 分离公理
 
-在 UGFT 中，时空被描述为 4 维伪黎曼流形 $(M, g)$，其中 $g$ 是洛伦兹度规。
+在 UGFT 中，时空被描述为 4 维伪黎曼流形 $(M, g)$ ，其中 $g$ 是洛伦兹度规。
 
 ### 1.2 切丛与余切丛
 
 切丛 $TM$ 是流形 $M$ 上所有切向量的集合：
 $$ TM = \bigcup_{p \in M} T_p M $$
 
-切空间 $T_p M$ 的基为 $\{\partial/\partial x^\mu\}$，其中 $x^\mu$ 是局部坐标。
+切空间 $T_p M$ 的基为 $\{\partial/\partial x^\mu\}$ ，其中 $x^\mu$ 是局部坐标。
 
 余切丛 $T^*M$ 是切丛的对偶：
 $$ T^*M = \bigcup_{p \in M} T_p^* M $$
 
-余切空间的基为 $\{dx^\mu\}$，满足 $dx^\mu(\partial/\partial x^\nu) = \delta^\mu_\nu$。
+余切空间的基为 $\{dx^\mu\}$ ，满足 $dx^\mu(\partial/\partial x^\nu) = \delta^\mu_\nu$ 。
 
 ### 1.3 标架场（Tetrad Field）
 
-在 UGFT 中，核心是标架场 $e^a_\mu$，它建立了局部洛伦兹标架与坐标标架之间的联系：
+在 UGFT 中，核心是标架场 $e^a_\mu$ ，它建立了局部洛伦兹标架与坐标标架之间的联系：
 
 $$ e^a_\mu e^b_\nu \eta_{ab} = g_{\mu\nu} $$
 
 其中：
-- $e^a_\mu$：标架场，$a$ 是洛伦兹指标（0,1,2,3），$\mu$ 是坐标指标
-- $\eta_{ab}$：闵可夫斯基度规 $\mathrm{diag}(-1,1,1,1)$
-- $g_{\mu\nu}$：时空度规
+- $e^a_\mu$ ：标架场， $a$ 是洛伦兹指标（0,1,2,3）， $\mu$ 是坐标指标
+- $\eta_{ab}$ ：闵可夫斯基度规 $\mathrm{diag}(-1,1,1,1)$
+- $g_{\mu\nu}$ ：时空度规
 
 逆标架场 $e_a^\mu$ 满足：
 $$ e^a_\mu e_a^\nu = \delta^\nu_\mu, \quad e^a_\mu e_b^\mu = \delta^a_b $$
@@ -42,27 +42,27 @@ $$ e^a_\mu e_a^\nu = \delta^\nu_\mu, \quad e^a_\mu e_b^\mu = \delta^a_b $$
 ### 2.1 纤维丛的定义
 
 一个纤维丛 $(E, M, \pi, F, G)$ 由以下要素组成：
-- $E$：全空间（总丛）
-- $M$：底空间（流形）
-- $\pi$：投影映射 $\pi: E \to M$
-- $F$：纤维（典型纤维）
-- $G$：结构群
+- $E$ ：全空间（总丛）
+- $M$ ：底空间（流形）
+- $\pi$ ：投影映射 $\pi: E \to M$
+- $F$ ：纤维（典型纤维）
+- $G$ ：结构群
 
-对于每一点 $p \in M$，存在邻域 $U$ 使得 $\pi^{-1}(U)$ 同胚于 $U \times F$。
+对于每一点 $p \in M$ ，存在邻域 $U$ 使得 $\pi^{-1}(U)$ 同胚于 $U \times F$ 。
 
 ### 2.2 主丛与伴随丛
 
-在 UGFT 中，核心是主丛 $P(M, G)$，其中：
-- $M$：4 维时空流形
-- $G$：规范群 $PG(1,3) = SP(1,3) \rtimes W^{1,3}$
+在 UGFT 中，核心是主丛 $P(M, G)$ ，其中：
+- $M$ ：4 维时空流形
+- $G$ ：规范群 $PG(1,3) = SP(1,3) \rtimes W^{1,3}$
 
 主丛的纤维是群 $G$ 本身，结构群 $G$ 在纤维上左作用。
 
-伴随丛 $\mathrm{Ad}(P)$ 的纤维是李代数 $\mathfrak{g}$，通过伴随表示构造。
+伴随丛 $\mathrm{Ad}(P)$ 的纤维是李代数 $\mathfrak{g}$ ，通过伴随表示构造。
 
 ### 2.3 规范场与联络
 
-规范场是主丛上的联络（connection）$\omega$，它是一个 $\mathfrak{g}$-值 1-形式：
+规范场是主丛上的联络（connection） $\omega$ ，它是一个 $\mathfrak{g}$-值 1-形式：
 
 $$ \omega = \omega^A_\mu T_A dx^\mu $$
 
@@ -92,15 +92,15 @@ UGFT 的规范群是：
 $$ PG(1,3) = SP(1,3) \rtimes W^{1,3} $$
 
 其中：
-- $SP(1,3)$：自旋规范群，描述电磁、弱、强相互作用
-- $W^{1,3}$：手征平移群，描述引力
+- $SP(1,3)$ ：自旋规范群，描述电磁、弱、强相互作用
+- $W^{1,3}$ ：手征平移群，描述引力
 
 ### 3.2 自旋联络 $\omega^{ab}_\mu$
 
 自旋联络是 $SP(1,3)$ 的规范势，满足：
 $$ \omega^{ab}_\mu = -\omega^{ba}_\mu $$
 
-在洛伦兹指标下，$\omega^{ab}_\mu$ 有 6 个独立分量，对应洛伦兹群的 6 个生成元。
+在洛伦兹指标下， $\omega^{ab}_\mu$ 有 6 个独立分量，对应洛伦兹群的 6 个生成元。
 
 ### 3.3 标架场 $e^a_\mu$ 与引力
 
@@ -118,22 +118,22 @@ $$ D_\mu e^a_\nu = \partial_\mu e^a_\nu + \omega^{a}_{b\mu} e^b_\nu - \Gamma^\rh
 
 ### 4.1 标量场的协变导数
 
-对于标量场 $\varphi$：
+对于标量场 $\varphi$ ：
 $$ D_\mu \varphi = \partial_\mu \varphi $$
 
 ### 4.2 旋量场的协变导数
 
-对于旋量场 $\psi$：
+对于旋量场 $\psi$ ：
 $$ D_\mu \psi = \partial_\mu \psi + \frac{1}{4} \omega^{ab}_\mu \gamma_{ab} \psi $$
 
 其中 $\gamma_{ab} = (1/2)[\gamma_a, \gamma_b]$ 是洛伦兹生成元。
 
 ### 4.3 矢量场的协变导数
 
-对于矢量场 $V^a$：
+对于矢量场 $V^a$ ：
 $$ D_\mu V^a = \partial_\mu V^a + \omega^{a}_{b\mu} V^b $$
 
-对于坐标矢量场 $V^\mu$：
+对于坐标矢量场 $V^\mu$ ：
 $$ \nabla_\mu V^\nu = \partial_\mu V^\nu + \Gamma^\nu_{\mu\rho} V^\rho $$
 
 ## 5. 曲率张量
@@ -169,7 +169,7 @@ $$ G_{\mu\nu} = R_{\mu\nu} - \frac{1}{2} g_{\mu\nu} R $$
 自旋规范场强：
 $$ F^{ab}_{\mu\nu} = \partial_\mu \omega^{ab}_\nu - \partial_\nu \omega^{ab}_\mu + [\omega_\mu, \omega_\nu]^{ab} $$
 
-其中 $[\omega_\mu, \omega_\nu]^{ab} = \omega^{ac}_\mu \omega_{c\nu}^b - \omega^{ac}_\nu \omega_{c\mu}^b$。
+其中 $[\omega_\mu, \omega_\nu]^{ab} = \omega^{ac}_\mu \omega_{c\nu}^b - \omega^{ac}_\nu \omega_{c\mu}^b$ 。
 
 ### 6.2 引力场强（挠率）
 
@@ -188,7 +188,7 @@ $$ S_G = \frac{1}{16\pi G} \int R \sqrt{-g} d^4x $$
 在 UGFT 框架下，这可以表示为：
 $$ S_G = \frac{1}{16\pi G} \int e R d^4x $$
 
-其中 $e = \det(e^a_\mu) = \sqrt{-g}$。
+其中 $e = \det(e^a_\mu) = \sqrt{-g}$ 。
 
 ### 7.2 规范场作用量
 
@@ -231,8 +231,8 @@ $$ D_\mu F^{ab\mu\nu} = J^{ab\nu} $$
 ### 9.1 规范对称性
 
 UGFT 具有规范对称性：
-- 局部洛伦兹对称性：$SP(1,3)$
-- 局部平移对称性：$W^{1,3}$
+- 局部洛伦兹对称性： $SP(1,3)$
+- 局部平移对称性： $W^{1,3}$
 
 ### 9.2 诺特定理
 
