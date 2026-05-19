@@ -134,6 +134,18 @@ $$
 
 所有物理可观测量在上述变换下保持不变，构成 UGFT 的内禀规范不变性要求。
 
+### 4.4 量子纠缠的 UGFT 表达
+
+UGFT 的形式体系并不止于经典场论与单粒子量子化——**量子纠缠**这一非定域关联也可以在标架/联络变量下被显式表达。核心结论可归纳为：
+
+| 量子信息量 | UGFT 几何/规范对应 |
+|---|---|
+| 约化密度矩阵 $\rho_A$ | 沿子区域 $B$ 粘合的欧氏路径积分 |
+| 模哈密顿量 $K_A = -\log\rho_A$ | $SP(1,3)$ 自旋规范支的 boost 生成元 |
+| 纠缠熵 $S_A$ | $\frac{1}{4 G_N}\int_{\gamma_A} e^{(d-2)}$ ，标架诱导的极小曲面面元 |
+
+纠缠对几何的反作用以"纠缠流密度" $\Sigma^{ab}_\mu$ 出现在标架场方程的右端。详尽推导见 [`01-mathematical-foundations.md`](01-mathematical-foundations.md) §12；具体的凝聚态实现见 [`07-application-becgravity.md`](07-application-becgravity.md) 。
+
 ---
 
 ## 5. 延伸阅读
