@@ -155,7 +155,7 @@ $$ [\hat{L}_i, \hat{L}_j] = i\hbar \epsilon_{ijk} \hat{L}_k $$
 在 UGFT 框架下，自旋源于旋量场的洛伦兹变换性质。自旋算符：
 $$ \hat{S}_i = \frac{\hbar}{2} σ_i $$
 
-其中 σ_i 是泡利矩阵。
+其中 $\sigma_i$ 是泡利矩阵。
 
 ### 7.3 总角动量
 
@@ -183,7 +183,7 @@ $$ E_n = -\frac{m e^4}{2(4π\epsilon_0)^2 \hbar^2 n^2} = -\frac{13.6 \text{ eV}}
 
 ### 8.4 在 UGFT 中的对应
 
-在 UGFT 框架下，库仑势来自电磁规范场 A_μ，通过最小耦合进入作用量。
+在 UGFT 框架下，库仑势来自电磁规范场 $A_\mu$，通过最小耦合进入作用量。
 
 ## 9. 量子场论
 
@@ -192,7 +192,7 @@ $$ E_n = -\frac{m e^4}{2(4π\epsilon_0)^2 \hbar^2 n^2} = -\frac{13.6 \text{ eV}}
 场算符可以展开为：
 $$ \hat{φ}(x) = \int \frac{d^3p}{(2π)^3} \frac{1}{\sqrt{2E_p}} \left[ \hat{a}_p e^{-ip·x} + \hat{a}^†_p e^{ip·x} \right] $$
 
-其中 \hat{a}_p 和 \hat{a}^†_p 是产生和湮灭算符。
+其中 $\hat{a}_p$ 和 $\hat{a}^\dagger_p$ 是产生和湮灭算符。
 
 ### 9.2 费曼图
 
